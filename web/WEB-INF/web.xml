@@ -16,6 +16,10 @@
         <param-name>INVALID_PAGE</param-name>
         <param-value>InvalidPage</param-value>
     </context-param>
+    <context-param>
+        <param-name>AUTH_FILE_NAME</param-name>
+        <param-value>auth.txt</param-value>
+    </context-param>
     <filter>
         <filter-name>FilterDispatcher</filter-name>
         <filter-class>fptu.swp.filter.FilterDispatcher</filter-class>

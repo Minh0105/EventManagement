@@ -1,4 +1,0 @@
-=login.html
-LoginPage=login.html
-login=LoginServlet
-InvalidPage=invalid.html
