@@ -1,2 +1,2 @@
-=login,LoginPage,InvalidPage
-ST=
+=LoginPage,InvalidPage,login
+STU=

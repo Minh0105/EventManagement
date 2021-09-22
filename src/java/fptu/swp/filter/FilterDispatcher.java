@@ -76,20 +76,20 @@ public class FilterDispatcher implements Filter {
 
             String url;
             RequestDispatcher rd;
-            System.out.println("----------start");
+//            System.out.println("----------start");
             if (roadmap != null) {
                 url = roadmap.get(resource); // get Url Pattern of label
-                System.out.println("URL người dùng nhập ====" + resource);
+//                System.out.println("URL người dùng nhập ====" + resource);
                 if (url != null) {
-                    System.out.println("Page trả về ====" + url);
+//                    System.out.println("Page trả về ====" + url);
                 } else {
                     url = roadmap.get(INVALID_PAGE);
-                    System.out.println("Page trả về ====" + url);
+//                    System.out.println("Page trả về ====" + url);
                 }
                 rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             }
-            System.out.println("-----------end");
+//            System.out.println("-----------end");
             // when roadmap or url not exist, forward to Invalid Page
 
         } catch (Exception t) {
