@@ -21,7 +21,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -72,7 +71,7 @@ public class FilterAuth implements Filter {
         if (servletPath.length() == 0) servletPath = LOGIN_PAGE;
         
         // test Case Data, Delete when release
-        UserDTO dto = new UserDTO(1, "haha@gmail.com", "Duong", "", "STU");
+        UserDTO dto = new UserDTO(1, "haha@gmail.com", "Duong", "", "ORG");
         HttpSession session = httpRequest.getSession();
         session.setAttribute("USER", dto);
         // End Test Case

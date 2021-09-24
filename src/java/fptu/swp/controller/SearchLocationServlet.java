@@ -5,12 +5,16 @@
  */
 package fptu.swp.controller;
 
-import com.sun.accessibility.internal.resources.accessibility;
-import fptu.swp.controller.accessgoogle.GooglePojo;
-import fptu.swp.controller.accessgoogle.GoogleUtils;
+import fptu.swp.entity.location.LocationDAO;
+import fptu.swp.entity.location.LocationDTO;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author admin
  */
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "SearchLocationServlet", urlPatterns = {"/SearchLocationServlet"})
+public class SearchLocationServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,29 +38,32 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String code = request.getParameter("code");
-        
+
+        ServletContext context = request.getServletContext();
+        HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
+        String INVALID_PAGE_PATH = context.getInitParameter("INVALID_PAGE");
+        String LOGIN_PAGE_PATH = context.getInitParameter("LOGIN_PAGE");
+        String url = roadmap.get(INVALID_PAGE_PATH);
+
+        // parameter catching 
+        String txtSearch = request.getParameter("txtSearch");
+
         try {
-            if (code == null || code.isEmpty()) {
-                RequestDispatcher dis = request.getRequestDispatcher("login.html");
-                dis.forward(request, response);
-            } else {
-                
-                String accessToken = GoogleUtils.getToken(code);
-                GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);
-                System.out.println("code: " + code);
-                System.out.println("access Token: " + accessToken);
-                request.setAttribute("id", googlePojo.getId());
-                request.setAttribute("name", googlePojo.getName());
-                request.setAttribute("email", googlePojo.getEmail());
-                request.setAttribute("icon", googlePojo.getPicture());
-
+            if (txtSearch != null) {
+                // create new Dao 
+                LocationDAO locationDao = new LocationDAO();
+                // select from database 
+                LocationDAO dao = new LocationDAO();
+                ArrayList<LocationDTO> listLocation = (ArrayList<LocationDTO>) dao.getLocationByName(txtSearch);
+                // store into attrubute
+                request.setAttribute("SeachedLocations", listLocation);
+                // store result in attribute
             }
-        } finally {
-            RequestDispatcher dis = request.getRequestDispatcher("infor.jsp");
-            dis.forward(request, response);
-        }
 
+        } finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

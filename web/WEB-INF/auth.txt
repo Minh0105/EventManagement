@@ -1,2 +1,3 @@
 =LoginPage,InvalidPage,login
 STU=
+ORG=searchLocation
