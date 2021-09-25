@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package fptu.swp.controller.accessgoogle;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import fptu.swp.controller.Constants;
