@@ -3,4 +3,3 @@ LoginPage=login.html
 login=LoginServlet
 InvalidPage=invalid.html
 searchLocation=SearchLocationServlet
-
