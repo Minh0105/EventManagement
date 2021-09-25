@@ -20,5 +20,8 @@
         <img src="${sessionScope.USER.avatar}">
         
         <p>test: ${sessionScope.USER.roleName}</p> 
+        <form action="logout">
+            <input type ="submit" name="action" value="Logout">
+        </form>
     </body>
 </html>

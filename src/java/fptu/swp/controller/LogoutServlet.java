@@ -5,25 +5,24 @@
  */
 package fptu.swp.controller;
 
-import fptu.swp.entity.location.LocationDAO;
-import fptu.swp.entity.location.LocationDTO;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 import java.util.HashMap;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 
 /**
  *
- * @author admin
+ * @author triet
  */
-@WebServlet(name = "SearchLocationServlet", urlPatterns = {"/SearchLocationServlet"})
-public class SearchLocationServlet extends HttpServlet {
+public class LogoutServlet extends HttpServlet {
+    
+    static final Logger LOGGER = Logger.getLogger(LogoutServlet.class);
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,6 +35,7 @@ public class SearchLocationServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         response.setContentType("text/html;charset=UTF-8");
         String url = "";
         ServletContext context = request.getServletContext();
@@ -44,25 +44,18 @@ public class SearchLocationServlet extends HttpServlet {
         String LOGIN_PAGE_LABEL = context.getInitParameter("LOGIN_PAGE_LABEL");
         String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
         String LOGIN_PAGE_PATH = roadmap.get(LOGIN_PAGE_LABEL);
-
-        // parameter catching 
-        String txtSearch = request.getParameter("txtSearch");
-
+        url = INVALID_PAGE_PATH;
         try {
-            if (txtSearch != null) {
-                // create new Dao 
-                LocationDAO locationDao = new LocationDAO();
-                // select from database 
-                LocationDAO dao = new LocationDAO();
-                ArrayList<LocationDTO> listLocation = (ArrayList<LocationDTO>) dao.getLocationByName(txtSearch);
-                // store into attrubute
-                request.setAttribute("SeachedLocations", listLocation);
-                // store result in attribute
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                session.invalidate();
+                url = LOGIN_PAGE_LABEL;
+                LOGGER.info("Logout successfully");
             }
-
+        } catch (Exception e) {
+            LOGGER.error(e);
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            response.sendRedirect(url);
         }
     }
 

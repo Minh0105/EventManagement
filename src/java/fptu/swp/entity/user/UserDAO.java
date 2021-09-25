@@ -64,7 +64,14 @@ public class UserDAO {
                     avatar = googlePojo.getPicture();
                     roleName = "STU";
                     user = new UserDTO(0, email, name, avatar, address, phoneNum, roleName);
-                    boolean checkInsert = insertUserNew(user);
+                    boolean checkInsert = insertNewUser(user);
+                    if (!checkInsert) user = null;
+                }else if(email.endsWith("@fe.edu.vn")){ //chua co thong tin trong DB va dang nhap bang mail fpt
+                    name = googlePojo.getName();
+                    avatar = googlePojo.getPicture();
+                    roleName = "LEC";
+                    user = new UserDTO(0, email, name, avatar, address, phoneNum, roleName);
+                    boolean checkInsert = insertNewUser(user);
                     if (!checkInsert) user = null;
                 }else{//dang nhap thanh cong nhung khong co trong DB va ko la mail FPT
                     user = null;
@@ -87,7 +94,7 @@ public class UserDAO {
     }
 
     //khi nguoi dung dang nhap bang mail fpt.edu.vn lan dau thi goi ham nay de insert thong tin vao DB
-    public boolean insertUserNew(UserDTO user) throws SQLException, NamingException {
+    public boolean insertNewUser(UserDTO user) throws SQLException, NamingException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
@@ -95,13 +102,14 @@ public class UserDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 String sql = "INSERT INTO tblUsers(email, name, avatar, address, phoneNum, roleID , statusId)"
-                        + " VALUES(?,?,?,?,?,1,'AC')";
+                        + " VALUES(?,?,?,?,?,?,'AC')";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, user.getEmail());
                 stm.setNString(2, user.getName());
                 stm.setString(3, user.getAvatar());
                 stm.setString(4, user.getAddress());
                 stm.setString(5, user.getPhoneNum());
+                stm.setInt(6, "STU".equals(user.getRoleName())? 1 : 2);
                 check = stm.executeUpdate() > 0;
             }
         } finally {

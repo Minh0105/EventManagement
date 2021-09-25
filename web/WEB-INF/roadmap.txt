@@ -1,7 +1,8 @@
-=login.html
-LoginPage=login.html
+=html/login.html
+LoginPage=html/login.html
 login=LoginServlet
 InvalidPage=invalid.html
 searchLocation=SearchLocationServlet
 updateProfile=UpdateProfileServlet
-UpdateProfilePage=testUpdate.jsp
+UpdateProfilePage=updateProfie.jsp
+logout=LogoutServlet
