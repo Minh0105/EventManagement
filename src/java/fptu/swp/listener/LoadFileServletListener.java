@@ -17,6 +17,7 @@ import java.util.Set;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 /**
@@ -25,7 +26,9 @@ import org.apache.log4j.PropertyConfigurator;
  * @author DuongMH
  */
 public class LoadFileServletListener implements ServletContextListener {
-
+    
+    private static Logger logger;
+    
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         configLog4J(sce);
@@ -42,6 +45,7 @@ public class LoadFileServletListener implements ServletContextListener {
         System.setProperty("PATH", context.getRealPath("/"));
         
         PropertyConfigurator.configure(fullpath);
+        logger = Logger.getLogger(LoadFileServletListener.class);
     }
     
 
@@ -49,7 +53,7 @@ public class LoadFileServletListener implements ServletContextListener {
         Map<String, String> roadmap = new HashMap<>();
 
         ServletContext context = sce.getServletContext();
-        String realPath = context.getRealPath("/") + "WEB-INF\\" + context.getInitParameter("ROAD_MAP_TXT_FILE_NAME");
+        String realPath = context.getRealPath("/") + "WEB-INF/" + context.getInitParameter("ROAD_MAP_TXT_FILE_NAME");
 
         FileReader fr = null;
         BufferedReader bf = null;
@@ -79,9 +83,10 @@ public class LoadFileServletListener implements ServletContextListener {
             roadmap.keySet().forEach((key) -> {
                 System.out.println(key + ":" + roadmap.get(key));
             });
-
+            logger.info("Load Roadmap Success");
         } catch (NullPointerException | UnsupportedOperationException | IOException npe) {
             npe.printStackTrace();
+            logger.fatal("Load Roadmap Failed: " + npe.getMessage());
         } finally {
             try {
                 if (fr != null) {
@@ -103,7 +108,7 @@ public class LoadFileServletListener implements ServletContextListener {
         Set<String> setOfServletPermission;
         
         ServletContext context = sce.getServletContext();
-        String realPath = context.getRealPath("/") + "WEB-INF\\" + context.getInitParameter("AUTH_FILE_NAME");
+        String realPath = context.getRealPath("/") + "WEB-INF/" + context.getInitParameter("AUTH_FILE_NAME");
 
         FileReader fr = null;
         BufferedReader bf = null;
