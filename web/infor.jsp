@@ -14,9 +14,11 @@
     </head>
     <body>
         <h1>Index</h1>
-        <p>id: ${requestScope.id}</p>
-        <p>name: ${requestScope.name}</p>
-        <p>email: ${requestScope.email}</p>       
-        <img src="${requestScope.icon}">
+        <p>email: ${sessionScope.USER.email}</p>
+        <p>name: ${sessionScope.USER.name}</p>
+        <p>phonenum: ${sessionScope.USER.phoneNum}</p>       
+        <img src="${sessionScope.USER.avatar}">
+        
+        <p>test: ${sessionScope.USER.roleName}</p> 
     </body>
 </html>

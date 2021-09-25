@@ -14,17 +14,18 @@ public class UserDTO {
     private String email;
     private String name;
     private String avatar;
+    private String address;
+    private String phoneNum;
     private String roleName;
 
-    public UserDTO(int id, String email, String name, String avatar, String roleName) {
+    public UserDTO(int id, String email, String name, String avatar, String address, String phoneNum, String roleName) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.avatar = avatar;
+        this.address = address;
+        this.phoneNum = phoneNum;
         this.roleName = roleName;
-    }
-
-    public UserDTO() {
     }
 
     public int getId() {
@@ -59,6 +60,22 @@ public class UserDTO {
         this.avatar = avatar;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
+
     public String getRoleName() {
         return roleName;
     }
@@ -66,7 +83,8 @@ public class UserDTO {
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
+
     
-    
+
     
 }

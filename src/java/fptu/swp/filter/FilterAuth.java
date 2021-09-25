@@ -71,7 +71,7 @@ public class FilterAuth implements Filter {
         if (servletPath.length() == 0) servletPath = LOGIN_PAGE;
         
         // test Case Data, Delete when release
-        UserDTO dto = new UserDTO(1, "haha@gmail.com", "Duong", "", "ORG");
+        UserDTO dto = new UserDTO(1, "trietnmse151127@fpt.edu.vn", "Nguyen Minh Triet K15 HCM", null, null, "0703190104","STU");
         HttpSession session = httpRequest.getSession();
         session.setAttribute("USER", dto);
         // End Test Case

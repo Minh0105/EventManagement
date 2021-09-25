@@ -8,12 +8,18 @@ package fptu.swp.controller;
 import com.sun.accessibility.internal.resources.accessibility;
 import fptu.swp.controller.accessgoogle.GooglePojo;
 import fptu.swp.controller.accessgoogle.GoogleUtils;
+import fptu.swp.entity.user.UserDAO;
+import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,7 +37,7 @@ public class LoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         String code = request.getParameter("code");
         
@@ -46,10 +52,18 @@ public class LoginServlet extends HttpServlet {
                 System.out.println("code: " + code);
                 System.out.println("access Token: " + accessToken);
                 request.setAttribute("id", googlePojo.getId());
-                request.setAttribute("name", googlePojo.getName());
-                request.setAttribute("email", googlePojo.getEmail());
-                request.setAttribute("icon", googlePojo.getPicture());
-
+//                request.setAttribute("name", googlePojo.getName());
+//                request.setAttribute("email", googlePojo.getEmail());
+//                request.setAttribute("icon", googlePojo.getPicture());
+                 String email =  googlePojo.getEmail();
+                
+                UserDAO dao = new UserDAO();
+                UserDTO user = dao.login(googlePojo);
+                if(user != null) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("USER", user);
+                }
+                
             }
         } finally {
             RequestDispatcher dis = request.getRequestDispatcher("infor.jsp");
@@ -70,7 +84,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -84,7 +102,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
