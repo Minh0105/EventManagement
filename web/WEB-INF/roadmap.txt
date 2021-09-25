@@ -4,5 +4,5 @@ login=LoginServlet
 InvalidPage=invalid.html
 searchLocation=SearchLocationServlet
 updateProfile=UpdateProfileServlet
-UpdateProfilePage=updateProfie.jsp
+UpdateProfilePage=updateProfile.jsp
 logout=LogoutServlet

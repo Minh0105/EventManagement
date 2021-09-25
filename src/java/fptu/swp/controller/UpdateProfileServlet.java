@@ -62,13 +62,17 @@ public class UpdateProfileServlet extends HttpServlet {
                 userError.setNameError("Tên của bạn phải từ 10 đến 50 kí tự!");
                 check = false;
             }
-            if ("".equals(phoneNum) || phoneNum != null || phoneNum.length() != 10 || !phoneNum.matches("[0-9]{10}")) {
-                userError.setPhoneNumError("Số điện thoại phải bao gồm 10 kí tự số hoặc để trống!");
-                check = false;
+            if (phoneNum.length() != 10 || !phoneNum.matches("[0-9]{10}")) {
+                if(!"".equals(phoneNum) && phoneNum != null ){
+                    userError.setPhoneNumError("Số điện thoại phải bao gồm 10 kí tự số hoặc để trống!");
+                    check = false;
+                }
             }
-            if ("".equals(address) || address != null || address.length() > 100 || address.length() < 20) {
-                userError.setNameError("Địa chỉ của bạn phải từ 20 đến 100 kí tự hoặc để trống!");
-                check = false;
+            if (address.length() > 100 || address.length() < 20) {
+                if(!"".equals(address) && address != null){
+                    userError.setAddressError("Địa chỉ của bạn phải từ 20 đến 100 kí tự hoặc để trống!");
+                    check = false;
+                }
             }
             if (check) {
                 UserDAO dao = new UserDAO();

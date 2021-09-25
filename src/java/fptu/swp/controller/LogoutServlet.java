@@ -42,9 +42,7 @@ public class LogoutServlet extends HttpServlet {
         HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
         String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
         String LOGIN_PAGE_LABEL = context.getInitParameter("LOGIN_PAGE_LABEL");
-        String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
-        String LOGIN_PAGE_PATH = roadmap.get(LOGIN_PAGE_LABEL);
-        url = INVALID_PAGE_PATH;
+        url = INVALID_PAGE_LABEL;
         try {
             HttpSession session = request.getSession(false);
             if (session != null) {
