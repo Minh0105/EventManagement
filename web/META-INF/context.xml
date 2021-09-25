@@ -3,7 +3,7 @@
     <Resource name="DBSlink" type="javax.sql.DataSource" auth="Container" 
                 maxActive="90" maxIdle="30" maxWait="10000"
                 driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" 
-                url="jdbc:sqlserver://localhost:1433;databaseName=EventManagement;instanceName=DUONGMH"
-                username="sa" password="root"/>
+                url="jdbc:sqlserver://localhost:1433;databaseName=EventManagement;"
+                username="sa" password="TangTai123"/>
     />
 </Context>
