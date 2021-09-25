@@ -5,7 +5,6 @@
  */
 package fptu.swp.controller;
 
-import com.sun.accessibility.internal.resources.accessibility;
 import fptu.swp.controller.accessgoogle.GooglePojo;
 import fptu.swp.controller.accessgoogle.GoogleUtils;
 import fptu.swp.entity.user.UserDAO;
@@ -20,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -27,6 +27,7 @@ import javax.servlet.http.HttpSession;
  */
 public class LoginServlet extends HttpServlet {
 
+    static final Logger LOGGER = Logger.getLogger(LoginServlet.class);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -49,6 +50,9 @@ public class LoginServlet extends HttpServlet {
                 
                 String accessToken = GoogleUtils.getToken(code);
                 GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);
+                if (googlePojo != null) {
+                    LOGGER.info("Login Success");
+                }
                 System.out.println("code: " + code);
                 System.out.println("access Token: " + accessToken);
                 request.setAttribute("id", googlePojo.getId());
@@ -65,7 +69,7 @@ public class LoginServlet extends HttpServlet {
                 }
                 
             }
-        } finally {
+        }finally {
             RequestDispatcher dis = request.getRequestDispatcher("infor.jsp");
             dis.forward(request, response);
         }

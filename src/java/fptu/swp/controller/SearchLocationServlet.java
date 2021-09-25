@@ -8,7 +8,6 @@ package fptu.swp.controller;
 import fptu.swp.entity.location.LocationDAO;
 import fptu.swp.entity.location.LocationDTO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
