@@ -21,28 +21,8 @@
         <param-value>auth.txt</param-value>
     </context-param>
     <context-param>
-        <param-name>GOOGLE_CLIENT_ID</param-name>
-        <param-value>253183940371-k316famgkbmmteshdv4ktc2021p1como.apps.googleusercontent.com</param-value>
-    </context-param>
-    <context-param>
-        <param-name>GOOGLE_CLIENT_SECRET</param-name>
-        <param-value>HpuBtTZxPOfR633Oq4T09Dp6</param-value>
-    </context-param>
-    <context-param>
-        <param-name>GOOGLE_REDIRECT_URI</param-name>
-        <param-value>http://localhost:8084/EventManagement/LoginPage</param-value>
-    </context-param>
-    <context-param>
-        <param-name>GOOGLE_LINK_GET_TOKEN</param-name>
-        <param-value>https://accounts.google.com/o/oauth2/token</param-value>
-    </context-param>
-    <context-param>
-        <param-name>GOOGLE_LINK_GET_USER_INFO</param-name>
-        <param-value>https://www.googleapis.com/oauth2/v1/userinfo?access_token=</param-value>
-    </context-param>
-    <context-param>
-        <param-name>GOOGLE_GRANT_TYPE</param-name>
-        <param-value>authorization_code</param-value>
+        <param-name>LOG4J_CONFIG_LOCATION</param-name>
+        <param-value>WEB-INF\\log4j.properties</param-value>
     </context-param>
     <filter>
         <filter-name>FilterAuth</filter-name>

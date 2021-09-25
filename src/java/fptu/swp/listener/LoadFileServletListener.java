@@ -17,6 +17,7 @@ import java.util.Set;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import org.apache.log4j.PropertyConfigurator;
 
 /**
  * Web application lifecycle listener.
@@ -27,10 +28,23 @@ public class LoadFileServletListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        configLog4J(sce);
         loadFileAuth(sce);
         loadFileRoadMap(sce);
     }
     
+
+    private void configLog4J(ServletContextEvent sce) {
+        ServletContext context= sce.getServletContext();
+        String log4jLocation = context.getInitParameter("LOG4J_CONFIG_LOCATION");
+        String fullpath = context.getRealPath("/") + log4jLocation; 
+        
+        System.setProperty("PATH", context.getRealPath("/"));
+        
+        PropertyConfigurator.configure(fullpath);
+    }
+    
+
     private void loadFileRoadMap(ServletContextEvent sce) {
         Map<String, String> roadmap = new HashMap<>();
 
@@ -82,6 +96,7 @@ public class LoadFileServletListener implements ServletContextListener {
         }
 
     }
+
 
     private void loadFileAuth(ServletContextEvent sce) {
         Map<String, Set<String>> authMap = new HashMap<>();
@@ -137,7 +152,6 @@ public class LoadFileServletListener implements ServletContextListener {
         }
     }
 
-    
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
@@ -149,4 +163,6 @@ public class LoadFileServletListener implements ServletContextListener {
             ex.printStackTrace();
         }
     }
+
+    
 }
