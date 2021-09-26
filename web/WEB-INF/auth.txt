@@ -1,3 +1,5 @@
 =LoginPage,InvalidPage,login
-STU=updateProfile,UpdateProfilePage,logout
-ORG=searchLocation
+STUDENT=updateProfile,UpdateProfilePage,logout
+LECTURER=updateProfile,UpdateProfilePage,logout
+CLUB'S LEADER=updateProfile,UpdateProfilePage,logout
+DEPARTMENT'S MANAGER=updateProfile,UpdateProfilePage,logout

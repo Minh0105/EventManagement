@@ -50,30 +50,30 @@ public class UserDAO {
 
                     //Set cung roleName bang roleId
                     if (roleId == 1) {
-                        roleName = "STU";
+                        roleName = "STUDENT";
                     } else if (roleId == 2) {
-                        roleName = "LEC";
+                        roleName = "LECTURER";
                     } else if (roleId == 3) {
-                        roleName = "CL";
+                        roleName = "CLUB'S LEADER";
                     } else if (roleId == 4) {
-                        roleName = "DM";
+                        roleName = "DEPARTMENT'S MANAGER";
                     }
                     user = new UserDTO(0, email, name, avatar, address, phoneNum, roleName);
                 }else if(email.endsWith("@fpt.edu.vn")){ //chua co thong tin trong DB va dang nhap bang mail fpt
                     name = googlePojo.getName();
                     avatar = googlePojo.getPicture();
-                    roleName = "STU";
+                    roleName = "STUDENT";
                     user = new UserDTO(0, email, name, avatar, address, phoneNum, roleName);
                     boolean checkInsert = insertNewUser(user);
                     if (!checkInsert) user = null;
                 }else if(email.endsWith("@fe.edu.vn")){ //chua co thong tin trong DB va dang nhap bang mail fpt
                     name = googlePojo.getName();
                     avatar = googlePojo.getPicture();
-                    roleName = "LEC";
+                    roleName = "LECTURER";
                     user = new UserDTO(0, email, name, avatar, address, phoneNum, roleName);
                     boolean checkInsert = insertNewUser(user);
                     if (!checkInsert) user = null;
-                }else{//dang nhap thanh cong nhung khong co trong DB va ko la mail FPT
+                }else{ //dang nhap thanh cong nhung khong co trong DB va ko la mail FPT
                     user = null;
                 }
             }
@@ -109,7 +109,7 @@ public class UserDAO {
                 stm.setString(3, user.getAvatar());
                 stm.setString(4, user.getAddress());
                 stm.setString(5, user.getPhoneNum());
-                stm.setInt(6, "STU".equals(user.getRoleName())? 1 : 2);
+                stm.setInt(6, "STUDENT".equals(user.getRoleName())? 1 : 2);
                 check = stm.executeUpdate() > 0;
             }
         } finally {
