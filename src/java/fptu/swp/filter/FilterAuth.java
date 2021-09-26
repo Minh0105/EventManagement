@@ -62,7 +62,8 @@ public class FilterAuth implements Filter {
         HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
         HashMap<String, HashSet<String>> auth = (HashMap<String, HashSet<String>>) context.getAttribute("AUTH");
         RequestDispatcher rd;
-
+        HttpSession session = null;
+        
         final String INVALID_PAGE = context.getInitParameter("INVALID_PAGE");
         final String LOGIN_PAGE = context.getInitParameter("LOGIN_PAGE");
 
@@ -73,17 +74,17 @@ public class FilterAuth implements Filter {
 
         // test Case Data, Delete when release
         UserDTO dto = new UserDTO(1, "haha@gmail.com", "Duong", "", "ORG");
-        HttpSession session = httpRequest.getSession();
-        session.setAttribute("USER", dto);
+//        session = httpRequest.getSession();
+//        session.setAttribute("USER", dto);
         // End Test Case
 
         String url = null;
         session = httpRequest.getSession(false);
-
+        UserDTO userDto = null;
         if (session != null) {
-            UserDTO userDto = (UserDTO) session.getAttribute("USER");
+            userDto = (UserDTO) session.getAttribute("USER");
             String roleName = userDto.getRoleName();
-
+            
             boolean authorized = auth.get(roleName).contains(servletPath) || auth.get("").contains(servletPath);
 
             System.out.println("role Name : " + roleName + ", Servlet to go: " + servletPath + ", PERMISSION = " + authorized);
@@ -98,12 +99,21 @@ public class FilterAuth implements Filter {
                 url = roadmap.get(servletPath);
                 rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
-//                return;
             }
         } else {
-            url = roadmap.get(LOGIN_PAGE);
-            rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            boolean authorized = auth.get("").contains(servletPath);
+            if (servletPath.contains("resources")) {
+                System.out.println("User need resource");
+                chain.doFilter(request, response);
+            } else if (authorized) {
+                url = roadmap.get(servletPath);
+                rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            } else {
+                url = roadmap.get(LOGIN_PAGE);
+                rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            }
         }
 
     }
