@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+=html/login.html
+LoginPage=html/login.html
+=======
 =resources/html/login.html
 LoginPage=resources/html/login.html
+>>>>>>> main
 login=LoginServlet
 InvalidPage=invalid.html
 searchLocation=SearchLocationServlet

@@ -29,7 +29,6 @@ public class LoadFileServletListener implements ServletContextListener {
     
     private static Logger logger;
     
-    @Override
     public void contextInitialized(ServletContextEvent sce) {
         configLog4J(sce);
         loadFileAuth(sce);
@@ -158,7 +157,6 @@ public class LoadFileServletListener implements ServletContextListener {
     }
 
 
-    @Override
     public void contextDestroyed(ServletContextEvent sce) {
         try {
             ServletContext context = sce.getServletContext();
