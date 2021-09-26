@@ -65,16 +65,16 @@ public class FilterAuth implements Filter {
         RequestDispatcher rd;
         HttpSession session = null;
         
-        final String INVALID_PAGE = context.getInitParameter("INVALID_PAGE");
-        final String LOGIN_PAGE = context.getInitParameter("LOGIN_PAGE");
+        final String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
+        final String LOGIN_PAGE_LABEL = context.getInitParameter("LOGIN_PAGE_LABEL");
 
         String servletPath = httpRequest.getServletPath().substring(1);
         if (servletPath.length() == 0) {
-            servletPath = LOGIN_PAGE;
+            servletPath = LOGIN_PAGE_LABEL;
         }
 
         // test Case Data, Delete when release
-        UserDTO dto = new UserDTO(1, "haha@gmail.com", "Duong", "", "ORG");
+//        UserDTO dto = new UserDTO(1, "haha@gmail.com", "Duong", "", "CLUB'S LEADER");
 //        session = httpRequest.getSession();
 //        session.setAttribute("USER", dto);
         // End Test Case
@@ -92,7 +92,7 @@ public class FilterAuth implements Filter {
                 System.out.println("User need resource");
                 chain.doFilter(request, response);
             } else if (authorized == false) {
-                url = roadmap.get(INVALID_PAGE);
+                url = roadmap.get(INVALID_PAGE_LABEL);
                 rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else {
@@ -110,7 +110,7 @@ public class FilterAuth implements Filter {
                 rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             } else {
-                url = roadmap.get(LOGIN_PAGE);
+                url = roadmap.get(LOGIN_PAGE_LABEL);
                 rd = request.getRequestDispatcher(url);
                 rd.forward(request, response);
             }
