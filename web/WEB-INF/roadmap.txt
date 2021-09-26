@@ -1,5 +1,5 @@
-=login.html
-LoginPage=login.html
+=resources/html/login.html
+LoginPage=resources/html/login.html
 login=LoginServlet
 InvalidPage=invalid.html
 searchLocation=SearchLocationServlet

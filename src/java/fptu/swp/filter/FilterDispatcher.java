@@ -57,11 +57,11 @@ public class FilterDispatcher implements Filter {
         final String LOGIN_PAGE = context.getInitParameter("LOGIN_PAGE");
         final String INVALID_PAGE = context.getInitParameter("INVALID_PAGE");
         String resource;
-        
+
         try {
             // DuongMH Code here
             resource = uri.substring(1);
-            
+
             // get roadmap mapping
             HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
             // print the roadmap for testing
@@ -77,12 +77,13 @@ public class FilterDispatcher implements Filter {
                 System.out.println("URL người dùng nhập ====" + resource);
                 if (url != null) {
                     System.out.println("Page trả về ====" + url);
+                    rd = request.getRequestDispatcher(url);
+                    rd.forward(request, response);
                 } else {
-                    url = roadmap.get(INVALID_PAGE);
+                    chain.doFilter(request, response);
                     System.out.println("Page trả về ====" + url);
                 }
-                rd = request.getRequestDispatcher(url);
-                rd.forward(request, response);
+
             }
             System.out.println("-----------end");
             // when roadmap or url not exist, forward to Invalid Page
