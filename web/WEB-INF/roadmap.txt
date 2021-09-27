@@ -6,3 +6,4 @@ searchLocation=SearchLocationServlet
 updateProfile=UpdateProfileServlet
 UpdateProfilePage=updateProfile.jsp
 logout=LogoutServlet
+ViewInfoPage=infor.jsp

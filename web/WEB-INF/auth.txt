@@ -1,5 +1,5 @@
 =LoginPage,InvalidPage,login
-STUDENT=updateProfile,UpdateProfilePage,logout
-LECTURER=updateProfile,UpdateProfilePage,logout
-CLUB'S LEADER=updateProfile,UpdateProfilePage,logout
-DEPARTMENT'S MANAGER=updateProfile,UpdateProfilePage,logout
+STUDENT=updateProfile,UpdateProfilePage,logout,ViewInfoPage
+LECTURER=updateProfile,UpdateProfilePage,logout,ViewInfoPage
+CLUB'S LEADER=updateProfile,UpdateProfilePage,logout,ViewInfoPage
+DEPARTMENT'S MANAGER=updateProfile,UpdateProfilePage,logout,ViewInfoPage
