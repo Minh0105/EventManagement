@@ -7,17 +7,20 @@ package fptu.swp.entity.user;
 
 import fptu.swp.controller.accessgoogle.GooglePojo;
 import fptu.swp.utils.DBHelper;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.naming.NamingException;
 
 /**
  *
  * @author admin
  */
-public class UserDAO {
+public class UserDAO  implements Serializable{
     //ham login 
     public UserDTO login(GooglePojo googlePojo) throws SQLException { 
         UserDTO user = null;
@@ -25,6 +28,8 @@ public class UserDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         String email = googlePojo.getEmail();
+        int userId = 0;
+        String avatarGoogle = googlePojo.getPicture();
         String name = "";
         String avatar = "";
         String address = "";
@@ -34,13 +39,14 @@ public class UserDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT name, avatar, address, phoneNum, roleId, statusId"
+                String sql = "SELECT id, name, avatar, address, phoneNum, roleId, statusId"
                         + " FROM tblUsers"
                         + " WHERE email=?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
                 if (rs.next()) { //neu da co thong tin trong DB
+                    userId = rs.getInt("id");
                     name = rs.getString("name");
                     avatar = rs.getString("avatar");
                     address = rs.getString("address");
@@ -58,21 +64,56 @@ public class UserDAO {
                     } else if (roleId == 4) {
                         roleName = "DEPARTMENT'S MANAGER";
                     }
-                    user = new UserDTO(0, email, name, avatar, address, phoneNum, roleName);
+                    if(!avatarGoogle.equals(avatar)){
+                        String sql2 = "UPDATE tblUsers"
+                        + " SET avatar=?"
+                        + " WHERE email=?";
+                        PreparedStatement stm2 = conn.prepareStatement(sql2);
+                        stm2.setString(1, avatarGoogle);
+                        stm2.setString(2, email);
+                        boolean checkSetAvatar = stm2.executeUpdate() > 0;
+                    }
+                    user = new UserDTO(userId, email, name, avatarGoogle, address, phoneNum, roleName);
                 }else if(email.endsWith("@fpt.edu.vn")){ //chua co thong tin trong DB va dang nhap bang mail fpt
                     name = googlePojo.getName();
                     avatar = googlePojo.getPicture();
                     roleName = "STUDENT";
                     user = new UserDTO(0, email, name, avatar, address, phoneNum, roleName);
                     boolean checkInsert = insertNewUser(user);
-                    if (!checkInsert) user = null;
+                    if (!checkInsert) {
+                        user = null;
+                    }else{
+                        sql = "SELECT id"
+                        + " FROM tblUsers"
+                        + " WHERE email=?";
+                        stm = conn.prepareStatement(sql);
+                        stm.setString(1, email);
+                        rs = stm.executeQuery();
+                        if(rs.next()) {
+                            userId = rs.getInt("id");
+                            user.setId(userId);
+                        }
+                    }
                 }else if(email.endsWith("@fe.edu.vn")){ //chua co thong tin trong DB va dang nhap bang mail fpt
                     name = googlePojo.getName();
                     avatar = googlePojo.getPicture();
                     roleName = "LECTURER";
                     user = new UserDTO(0, email, name, avatar, address, phoneNum, roleName);
                     boolean checkInsert = insertNewUser(user);
-                    if (!checkInsert) user = null;
+                    if (!checkInsert) {
+                        user = null;
+                    }else{
+                        sql = "SELECT id"
+                        + " FROM tblUsers"
+                        + " WHERE email=?";
+                        stm = conn.prepareStatement(sql);
+                        stm.setString(1, email);
+                        rs = stm.executeQuery();
+                        if(rs.next()) {
+                            userId = rs.getInt("id");
+                            user.setId(userId);
+                        }
+                    }
                 }else{ //dang nhap thanh cong nhung khong co trong DB va ko la mail FPT
                     user = null;
                 }
@@ -90,6 +131,7 @@ public class UserDAO {
                 conn.close();
             }
         }
+        System.out.println(user.toString());
         return user;
     }
 
@@ -155,4 +197,86 @@ public class UserDAO {
         return check;
     }
 
+    //ham lay list lecture boi event ID
+    public List<LecturerBriefInfoDTO> getListLecturerBriefInfoDTO(int eventId) throws SQLException{
+        List<LecturerBriefInfoDTO> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int id = 0;
+        String name = "";
+        String avatar = "";
+        String description = "";
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT v.id id, v.name name, v.avatar avatar, v.description description" +
+                                " FROM tblLecturersInEvents u, tblUsers v" +
+                                " WHERE u.eventId = ? AND u.lecturerId = v.id AND u.statusId = 1;";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, eventId);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    id = rs.getInt("id");
+                    avatar = rs.getString("avatar");
+                    name = rs.getString("name");
+                    description = rs.getString("description");
+                    list.add(new LecturerBriefInfoDTO(id, avatar, name, description));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }     
+        return list;
+    }
+    
+    public List<LecturerBriefInfoDTO> getAllLecturer() throws SQLException, NamingException {       
+        List<LecturerBriefInfoDTO> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+              
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT id, name, avatar " 
+                            +"FROM tblUsers "
+                            +"WHERE roleId = 2 ";
+                stm = conn.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String avatar = rs.getString("avatar");
+                    String name = rs.getString("name");
+                    list.add(new LecturerBriefInfoDTO(id, avatar, name));
+                }
+                
+                return list;
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }     
+        
+        return null;
+    }
+    
+    
 }

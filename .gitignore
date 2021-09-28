@@ -11,6 +11,5 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
-web/META-INF/context.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/netbeans

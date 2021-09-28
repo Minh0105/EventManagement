@@ -32,6 +32,26 @@
         <param-name>UPDATE_PAGE_LABEL</param-name>
         <param-value>UpdateProfilePage</param-value>
     </context-param>
+    <context-param>
+        <param-name>LOC_AND_TIME_PAGE_LABEL</param-name>
+        <param-value>locAndTimePage</param-value>
+    </context-param>
+    <context-param>
+        <param-name>SEARCH_LOCATION_SERVLET</param-name>
+        <param-value>searchLocation</param-value>
+    </context-param>
+    <context-param>
+        <param-name>VIEW_FREE_LOC_AND_TIME_SERVLET</param-name>
+        <param-value>viewSlotAndTimeFree</param-value>
+    </context-param>
+    <context-param>
+        <param-name>MODIFY_LOCATION_SERVLET</param-name>
+        <param-value>modifyLocation</param-value>
+    </context-param>
+    <context-param>
+        <param-name>APPEND_EVENT_DETAIL_PAGE</param-name>
+        <param-value>appendEventDetailPage</param-value>
+    </context-param>
     <filter>
         <filter-name>FilterAuth</filter-name>
         <filter-class>fptu.swp.filter.FilterAuth</filter-class>
@@ -44,7 +64,7 @@
         <filter-name>FilterAuth</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-<!--    <filter-mapping>
+    <!--    <filter-mapping>
         <filter-name>FilterDispatcher</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>-->

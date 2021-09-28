@@ -5,6 +5,7 @@
  */
 package fptu.swp.entity.datetimelocation;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
@@ -12,7 +13,7 @@ import java.util.Date;
  *
  * @author admin
  */
-public class DateTimeLocationDTO {
+public class DateTimeLocationDTO implements Serializable {
     private int eventId;
     private int rangeId;
     private int locationId;
@@ -22,6 +23,11 @@ public class DateTimeLocationDTO {
     public DateTimeLocationDTO() {
     }
 
+    public DateTimeLocationDTO(int locationId, Date date) {
+        this.locationId = locationId;
+        this.date = date;
+    }
+    
     public DateTimeLocationDTO(int eventId, int rangeId, int locationId, Date date, String statusName) {
         this.eventId = eventId;
         this.rangeId = rangeId;

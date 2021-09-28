@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fptu.swp.entity.location;
+package fptu.swp.entity.range;
 
 import fptu.swp.utils.DBHelper;
 import java.io.Serializable;
@@ -19,34 +19,28 @@ import javax.naming.NamingException;
  *
  * @author admin
  */
-public class LocationDAO implements Serializable{
-
-    public List<LocationDTO> getLocationByName(String txtSearch) throws NamingException, SQLException {
-        List<LocationDTO> listDto = new ArrayList<>();
-        LocationDTO dto;
+public class RangeDAO implements Serializable {
+    
+    public List<String>  getAllDetailSlot() throws NamingException, SQLException {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-
+        List<String> details;
+        
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "select id, name "
-                        + "from tblLocations "
-                        + "where name LIKE ?";
-
+                String sql = "select detail "
+                            +"from tblTimeRanges ";
                 ps = con.prepareStatement(sql);
-                ps.setNString(1, "%" + txtSearch + "%");
-
                 rs = ps.executeQuery();
-                while (rs.next()) {
-                    dto = new LocationDTO(rs.getInt(1), rs.getString(2));
-                    listDto.add(dto);
+                details = new ArrayList<>();
+                while(rs.next()) {
+                    details.add(rs.getString(1));
                 }
-
-                return listDto;
+                
+                return details;
             }
-
         } finally {
             if (con != null) {
                 con.close();
@@ -58,37 +52,32 @@ public class LocationDAO implements Serializable{
                 rs.close();
             }
         }
-
+        
         return null;
     }
-
-    public List<LocationDTO> getListLocationIdName(List<Integer> listLocationId) throws NamingException, SQLException {
-        List<LocationDTO> listDto = new ArrayList<>();
-        LocationDTO dto;
+    
+    public String getDetailSlotById(int id) throws NamingException, SQLException {
+        
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-
+        String detail = null;
+        
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "select id, name "
-                        + "from tblLocations "
-                        + "where id = ? ";
-
+                String sql = "select detail "
+                            +"from tblTimeRanges "
+                            +"where id = ? ";
                 ps = con.prepareStatement(sql);
-                for (int locationId : listLocationId) {
-                    ps.setInt(1, locationId);
-
-                    rs = ps.executeQuery();
-
-                    dto = new LocationDTO(rs.getInt(1), rs.getString(2));
-                    listDto.add(dto);
-                }
-
-                return listDto;
+                ps.setInt(1, id);
+                
+                rs = ps.executeQuery();
+                
+                if (rs.next()) detail = rs.getString("detail");
+                
+                return detail;
             }
-
         } finally {
             if (con != null) {
                 con.close();
@@ -100,8 +89,9 @@ public class LocationDAO implements Serializable{
                 rs.close();
             }
         }
-
+        
         return null;
+        
     }
-
+    
 }

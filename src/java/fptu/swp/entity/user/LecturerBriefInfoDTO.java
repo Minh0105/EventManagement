@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fptu.swp.entity.location;
+package fptu.swp.entity.user;
 
 import java.io.Serializable;
 
@@ -11,26 +11,38 @@ import java.io.Serializable;
  *
  * @author admin
  */
-public class LocationDTO  implements Serializable{
+
+    /*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author triet
+ */
+public class LecturerBriefInfoDTO implements Serializable{
     private int id;
+    private String avatar;
     private String name;
     private String description;
-    private String image;
 
-    public LocationDTO() {
+    public LecturerBriefInfoDTO() {
     }
 
-    public LocationDTO(int id, String name, String description, String image) {
+    public LecturerBriefInfoDTO(int id, String avatar, String name, String description) {
         this.id = id;
-        this.name = name;
-        this.description = description;
-        this.image = image;
-    }
-
-    public LocationDTO(int id, String name) {
-        this.id = id;
+        this.avatar = avatar;
         this.name = name;
     }
+
+    public LecturerBriefInfoDTO(int id, String avatar, String name) {
+        this.id = id;
+        this.avatar = avatar;
+        this.name = name;
+    }
+    
     
 
     public int getId() {
@@ -39,6 +51,14 @@ public class LocationDTO  implements Serializable{
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getName() {
@@ -56,18 +76,12 @@ public class LocationDTO  implements Serializable{
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
+    
+    
 
     @Override
     public String toString() {
-        return "LocationDTO{" + "id=" + id + ", name=" + name + '}';
+        return "LecturerBriefInfoDTO{" +  id + ", " + avatar + ", " + name + '}';
     }
     
     
