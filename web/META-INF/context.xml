@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/EventManagement">
     <Resource name="DBSlink" type="javax.sql.DataSource" auth="Container" 
-                maxActive="100" maxIdle="30" maxWait="10000"
+                maxActive="90" maxIdle="30" maxWait="10000"
                 driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" 
-                url="jdbc:sqlserver://localhost:1433;databaseName=EventManagement;instanceName=TRIETNM"
-                username="sa" password="1234"/>
+                url="jdbc:sqlserver://localhost:1433;databaseName=EventManagement;instanceName=DUONGMH"
+                username="sa" password="root"/>
 </Context>
