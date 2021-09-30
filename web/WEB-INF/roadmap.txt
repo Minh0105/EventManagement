@@ -7,3 +7,5 @@ updateProfile=UpdateProfileServlet
 UpdateProfilePage=resources/html/updateProfile.jsp
 logout=LogoutServlet
 ViewInfoPage=resources/html/infor.jsp
+StudentNewfeedPage=resources/html/studentNewfeed.jsp
+viewNewfeed=NewfeedServlet

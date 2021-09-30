@@ -3,17 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/controller/UpdateProfileServlet.java</file>
-            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/WEB-INF/web.xml</file>
-            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/WEB-INF/roadmap.txt</file>
-            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/controller/LogoutServlet.java</file>
-            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/resources/html/location_and_time.html</file>
-            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/filter/FilterDispatcher.java</file>
-            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/controller/SearchLocationServlet.java</file>
-            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/listener/LoadFileServletListener.java</file>
-            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/utils/DBHelper.java</file>
-            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/infor.jsp</file>
-            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/controller/LoginServlet.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/entity/event/EventCard.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/entity/event/EventDAO.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/NewfeedServlet.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/resources/html/studentNewfeed.jsp</file>
         </group>
     </open-files>
 </project-private>

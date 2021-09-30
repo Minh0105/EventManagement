@@ -36,6 +36,10 @@
         <param-name>INFO_PAGE_LABEL</param-name>
         <param-value>ViewInfoPage</param-value>
     </context-param>
+    <context-param>
+        <param-name>STUDENT_NEWFEED_PAGE_LABEL</param-name>
+        <param-value>StudentNewfeedPage</param-value>
+    </context-param>
     <filter>
         <filter-name>FilterAuth</filter-name>
         <filter-class>fptu.swp.filter.FilterAuth</filter-class>

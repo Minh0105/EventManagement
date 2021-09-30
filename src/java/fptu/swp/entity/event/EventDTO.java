@@ -16,7 +16,7 @@ public class EventDTO {
     private String name;
     private String description;
     private String poster;
-    private Date createDate;
+    private String createDate;
     private int statusId;
     private int userId;
     private String postAfterEvent;
@@ -25,7 +25,7 @@ public class EventDTO {
     public EventDTO() {
     }
 
-    public EventDTO(int id, String name, String description, String poster, Date createDate, int statusId, int userId, String postAfterEvent, String imageAfterEvent) {
+    public EventDTO(int id, String name, String description, String poster, String createDate, int statusId, int userId, String postAfterEvent, String imageAfterEvent) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -36,12 +36,6 @@ public class EventDTO {
         this.postAfterEvent = postAfterEvent;
         this.imageAfterEvent = imageAfterEvent;
     }
-
-    public EventDTO(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-    
 
     public int getId() {
         return id;
@@ -75,11 +69,11 @@ public class EventDTO {
         this.poster = poster;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
@@ -114,8 +108,6 @@ public class EventDTO {
     public void setImageAfterEvent(String imageAfterEvent) {
         this.imageAfterEvent = imageAfterEvent;
     }
-    
-    
-    
+
     
 }
