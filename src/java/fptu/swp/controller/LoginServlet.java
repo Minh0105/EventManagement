@@ -11,8 +11,10 @@ import fptu.swp.entity.user.UserDAO;
 import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +42,14 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         String code = request.getParameter("code");
+        String url ="";
+        ServletContext context = request.getServletContext();
+        HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
+        String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
+        String INFO_PAGE_LABEL = context.getInitParameter("INFO_PAGE_LABEL");
+        String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
+        String INFO_PAGE_PATH = roadmap.get(INFO_PAGE_LABEL);
+        url = INVALID_PAGE_PATH;
         
         try {
             if (code == null || code.isEmpty()) {
@@ -55,9 +65,6 @@ public class LoginServlet extends HttpServlet {
                 System.out.println("code: " + code);
                 System.out.println("access Token: " + accessToken);
                 request.setAttribute("id", googlePojo.getId());
-//                request.setAttribute("name", googlePojo.getName());
-//                request.setAttribute("email", googlePojo.getEmail());
-//                request.setAttribute("icon", googlePojo.getPicture());
                  String email =  googlePojo.getEmail();
                 
                 UserDAO dao = new UserDAO();
@@ -65,11 +72,12 @@ public class LoginServlet extends HttpServlet {
                 if(user != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute("USER", user);
+                    url = INFO_PAGE_PATH;
                 }
                 
             }
         }finally {
-            RequestDispatcher dis = request.getRequestDispatcher("infor.jsp");
+            RequestDispatcher dis = request.getRequestDispatcher(url);
             dis.forward(request, response);
         }
 

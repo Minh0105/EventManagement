@@ -4,5 +4,5 @@
                 maxActive="100" maxIdle="30" maxWait="10000"
                 driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" 
                 url="jdbc:sqlserver://localhost:1433;databaseName=EventManagement"
-                username="minh" password="123456"/>
+                username="sa" password="1234"/>
 </Context>

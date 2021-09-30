@@ -32,6 +32,10 @@
         <param-name>UPDATE_PAGE_LABEL</param-name>
         <param-value>UpdateProfilePage</param-value>
     </context-param>
+    <context-param>
+        <param-name>INFO_PAGE_LABEL</param-name>
+        <param-value>ViewInfoPage</param-value>
+    </context-param>
     <filter>
         <filter-name>FilterAuth</filter-name>
         <filter-class>fptu.swp.filter.FilterAuth</filter-class>
@@ -44,7 +48,7 @@
         <filter-name>FilterAuth</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-<!--    <filter-mapping>
+    <!--    <filter-mapping>
         <filter-name>FilterDispatcher</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>-->

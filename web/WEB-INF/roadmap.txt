@@ -1,9 +1,9 @@
 =resources/html/login.html
 LoginPage=resources/html/login.html
 login=LoginServlet
-InvalidPage=invalid.html
+InvalidPage=resources/html/invalid.html
 searchLocation=SearchLocationServlet
 updateProfile=UpdateProfileServlet
-UpdateProfilePage=updateProfile.jsp
+UpdateProfilePage=resources/html/updateProfile.jsp
 logout=LogoutServlet
-ViewInfoPage=infor.jsp
+ViewInfoPage=resources/html/infor.jsp
