@@ -5,6 +5,7 @@
  */
 package fptu.swp.entity.event;
 
+import fptu.swp.entity.user.UserDTO;
 import fptu.swp.utils.DBHelper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -251,7 +253,7 @@ public class EventDAO {
 //        return list;
 //    }
     
-    public List<EventCard> getNewFeedEventList() throws SQLException {
+    public List<EventCard> getNewFeedEventList(UserDTO loginUser) throws SQLException {
         List<EventCard> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
@@ -266,18 +268,38 @@ public class EventDAO {
         int following = 0;
         int joining = 0;
         List<String> listLocation = new ArrayList<>();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatter = null;
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql
-                        = "SELECT s.id eventId, s.name eventName, s.poster eventPoster, m.name organizerName, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants"
-                        + " FROM tblEvents s"
-                        + " LEFT JOIN tblUsers m ON s.userId = m.id"
-                        + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
-                        + "                  LEFT JOIN tblLocations u ON locationId = u.id) t ON s.id = t.eventId"
-                        + " WHERE s.statusId = 1";
-                stm = conn.prepareStatement(sql);
+                String sql = "";
+                if("STUDENT".equals(loginUser.getRoleName())){
+                    sql = "SELECT s.id eventId, s.name eventName, s.poster eventPoster, m.name organizerName, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants"
+                            + " FROM tblEvents s"
+                            + " LEFT JOIN tblUsers m ON s.userId = m.id"
+                            + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
+                            + "                  LEFT JOIN tblLocations u ON locationId = u.id) t ON s.id = t.eventId"
+                            + " WHERE s.statusId = 1";
+                    stm = conn.prepareStatement(sql);
+                } else if("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName()) ){
+                    sql = "SELECT s.id eventId, s.name eventName, s.poster eventPoster, m.name organizerName, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants"
+                            + " FROM tblEvents s"
+                            + " LEFT JOIN tblUsers m ON s.userId = m.id"
+                            + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
+                            + "                  LEFT JOIN tblLocations u ON locationId = u.id) t ON s.id = t.eventId"
+                            + " WHERE s.userId = ?";
+                     stm = conn.prepareStatement(sql);
+                     stm.setInt(1, loginUser.getId());
+                } else if("LECTURER".equals(loginUser.getRoleName())){
+                    sql = "SELECT s.id eventId, s.name eventName, s.poster eventPoster, m.name organizerName, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants"
+                            + " FROM tblEvents s"
+                            + " LEFT JOIN tblUsers m ON s.userId = m.id"
+                            + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
+                            + "                  LEFT JOIN tblLocations u ON locationId = u.id) t ON s.id = t.eventId"
+                            + " WHERE s.id IN (SELECT eventId FROM tblLecturersInEvents WHERE lecturerId = ? AND statusId = 1)";
+                     stm = conn.prepareStatement(sql);
+                     stm.setInt(1, loginUser.getId());
+                }
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     eventId = rs.getInt("eventId");
@@ -297,7 +319,11 @@ public class EventDAO {
                         eventName = rs.getString("eventName");
                         eventPoster = rs.getString("eventPoster");
                         organizerName = rs.getString("organizerName");
-                        date = formatter.format(rs.getTimestamp("date")).toString();
+                        formatter = new SimpleDateFormat("dd/MM/yyyy");
+                        Date dateFromDB = rs.getTimestamp("date");
+                        date = formatter.format(dateFromDB).toString();
+                        formatter = new SimpleDateFormat("EEEE");
+                        date = formatter.format(dateFromDB).toString() + ", "+ date;
                         locationName = rs.getString("locationName");
                         following = rs.getInt("followers");
                         joining = rs.getInt("participants");

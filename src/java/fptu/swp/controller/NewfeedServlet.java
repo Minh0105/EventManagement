@@ -46,22 +46,18 @@ public class NewfeedServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
         String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
-        String STUDENT_NEWFEED_PAGE_LABEL = context.getInitParameter("STUDENT_NEWFEED_PAGE_LABEL");
+        String NEWFEED_PAGE_LABEL = context.getInitParameter("NEWFEED_PAGE_LABEL");
         String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
-        String STUDENT_NEWFEED_PAGE_PATH = roadmap.get(STUDENT_NEWFEED_PAGE_LABEL);
+        String NEWFEED_PAGE_PATH = roadmap.get(NEWFEED_PAGE_LABEL);
         url = INVALID_PAGE_PATH;
-
         try {
             HttpSession session = request.getSession();
             UserDTO loginUser = (UserDTO) session.getAttribute("USER");
             EventDAO eventDao = new EventDAO();
             List<EventCard> listCard = null;
-            if ("STUDENT".equals(loginUser.getRoleName())) {
-                listCard = eventDao.getNewFeedEventList();
-                request.setAttribute("LIST_CARD", listCard);
-                url = STUDENT_NEWFEED_PAGE_PATH;
-            }
-
+            listCard = eventDao.getNewFeedEventList(loginUser);
+            request.setAttribute("LIST_CARD", listCard);
+            url = NEWFEED_PAGE_PATH;
         } catch (Exception e) {
             LOGGER.error(e);
         } finally {

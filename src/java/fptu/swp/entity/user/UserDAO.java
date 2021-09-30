@@ -25,6 +25,7 @@ public class UserDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         String email = googlePojo.getEmail();
+        int userId = 0;
         String name = "";
         String avatar = "";
         String address = "";
@@ -34,13 +35,14 @@ public class UserDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT name, avatar, address, phoneNum, roleId, statusId"
+                String sql = "SELECT id, name, avatar, address, phoneNum, roleId, statusId"
                         + " FROM tblUsers"
                         + " WHERE email=?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
                 if (rs.next()) { //neu da co thong tin trong DB
+                    userId = rs.getInt("id");
                     name = rs.getString("name");
                     avatar = rs.getString("avatar");
                     address = rs.getString("address");
@@ -58,21 +60,47 @@ public class UserDAO {
                     } else if (roleId == 4) {
                         roleName = "DEPARTMENT'S MANAGER";
                     }
-                    user = new UserDTO(0, email, name, avatar, address, phoneNum, roleName);
+                    user = new UserDTO(userId, email, name, avatar, address, phoneNum, roleName);
                 }else if(email.endsWith("@fpt.edu.vn")){ //chua co thong tin trong DB va dang nhap bang mail fpt
                     name = googlePojo.getName();
                     avatar = googlePojo.getPicture();
                     roleName = "STUDENT";
                     user = new UserDTO(0, email, name, avatar, address, phoneNum, roleName);
                     boolean checkInsert = insertNewUser(user);
-                    if (!checkInsert) user = null;
+                    if (!checkInsert) {
+                        user = null;
+                    }else{
+                        sql = "SELECT id"
+                        + " FROM tblUsers"
+                        + " WHERE email=?";
+                        stm = conn.prepareStatement(sql);
+                        stm.setString(1, email);
+                        rs = stm.executeQuery();
+                        if(rs.next()) {
+                            userId = rs.getInt("id");
+                            user.setId(userId);
+                        }
+                    }
                 }else if(email.endsWith("@fe.edu.vn")){ //chua co thong tin trong DB va dang nhap bang mail fpt
                     name = googlePojo.getName();
                     avatar = googlePojo.getPicture();
                     roleName = "LECTURER";
                     user = new UserDTO(0, email, name, avatar, address, phoneNum, roleName);
                     boolean checkInsert = insertNewUser(user);
-                    if (!checkInsert) user = null;
+                    if (!checkInsert) {
+                        user = null;
+                    }else{
+                        sql = "SELECT id"
+                        + " FROM tblUsers"
+                        + " WHERE email=?";
+                        stm = conn.prepareStatement(sql);
+                        stm.setString(1, email);
+                        rs = stm.executeQuery();
+                        if(rs.next()) {
+                            userId = rs.getInt("id");
+                            user.setId(userId);
+                        }
+                    }
                 }else{ //dang nhap thanh cong nhung khong co trong DB va ko la mail FPT
                     user = null;
                 }
@@ -90,6 +118,7 @@ public class UserDAO {
                 conn.close();
             }
         }
+        System.out.println(user.toString());
         return user;
     }
 
