@@ -9,3 +9,5 @@ logout=LogoutServlet
 ViewInfoPage=resources/html/infor.jsp
 NewfeedPage=resources/html/newfeed.jsp
 viewNewfeed=NewfeedServlet
+viewEventDetail=ViewEventDetailServlet
+EventDetailPage=resources/html/eventDetail.jsp

@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.naming.NamingException;
 
 /**
@@ -184,4 +186,46 @@ public class UserDAO {
         return check;
     }
 
+    //ham lay list lecture boi event ID
+    public List<LecturerBriefInfo> getListLecturerBriefInfo(int eventId) throws SQLException{
+        List<LecturerBriefInfo> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int id = 0;
+        String name = "";
+        String avatar = "";
+        String description = "";
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT v.id id, v.name name, v.avatar avatar, v.description description" +
+                                " FROM tblLecturersInEvents u, tblUsers v" +
+                                " WHERE u.eventId = ? AND u.lecturerId = v.id AND u.statusId = 1;";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, eventId);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    id = rs.getInt("id");
+                    avatar = rs.getString("avatar");
+                    name = rs.getString("name");
+                    description = rs.getString("description");
+                    list.add(new LecturerBriefInfo(id, avatar, name, description));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }     
+        return list;
+    }
 }

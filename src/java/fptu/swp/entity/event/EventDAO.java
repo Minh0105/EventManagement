@@ -347,6 +347,8 @@ public class EventDAO {
         int following = 0;
         int joining = 0;
         String description = "";
+        String organizerDescription = "";
+        String organizerAvatar = "";
         List<String> listLocation = new ArrayList<>();
         List<String> listTime = new ArrayList<>();
         SimpleDateFormat formatter = null;
@@ -354,7 +356,9 @@ public class EventDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 String sql
-                        = "SELECT s.name eventName, s.poster eventPoster, m.name organizerName, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants, s.description description"
+                        = "SELECT s.name eventName, s.poster eventPoster, m.name organizerName, t.date date,"
+                        + " t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants,"
+                        + " s.description description, m.description organizerDescription, m.avatar organizerAvatar"
                         + " FROM tblEvents s"
                         + " LEFT JOIN tblUsers m ON s.userId = m.id"
                         + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
@@ -376,6 +380,8 @@ public class EventDAO {
                     following = rs.getInt("followers");
                     joining = rs.getInt("participants");
                     description = rs.getString("description");
+                    organizerDescription = rs.getString("organizerDescription");
+                    organizerAvatar = rs.getString("organizerAvatar");
                     listLocation.add(locationName);
                 }
                 int i = 0;
@@ -398,13 +404,13 @@ public class EventDAO {
                     rangeName = rs.getString("rangeName");
                     listTime.add(locationName);
                 }
-                //format location string
+                //format time string (gan name cua cac time range)
                 String time = "";
                 for (i = 0; i < listTime.size() - 1; i++) {
                     time += listTime.get(i) + ", ";
                 }
                 time += listTime.get(i);
-                detail = new EventDetail(eventId, eventName, eventPoster, location, date, time, organizerName, following, joining, description);
+                detail = new EventDetail(eventId, eventName, eventPoster, location, date, time, organizerName, following, joining, description, organizerDescription, organizerAvatar);
             }
 
         } catch (Exception e) {

@@ -20,11 +20,13 @@ public class EventDetail {
     private int following;
     private int joining;
     private String description;
+    private String organizerDescription;
+    private String organizerAvatar;
 
     public EventDetail() {
     }
 
-    public EventDetail(int id, String name, String poster, String location, String date, String time, String organizerName, int following, int joining, String description) {
+    public EventDetail(int id, String name, String poster, String location, String date, String time, String organizerName, int following, int joining, String description, String organizerDescription, String organizerAvatar) {
         this.id = id;
         this.name = name;
         this.poster = poster;
@@ -35,6 +37,12 @@ public class EventDetail {
         this.following = following;
         this.joining = joining;
         this.description = description;
+        this.organizerDescription = organizerDescription;
+        this.organizerAvatar = organizerAvatar;
+    }
+    
+    public EventDetail(String organizerAvatar) {
+        this.organizerAvatar = organizerAvatar;
     }
 
     public int getId() {
@@ -117,5 +125,19 @@ public class EventDetail {
         this.description = description;
     }
 
- 
+    public String getOrganizerDescription() {
+        return organizerDescription;
+    }
+
+    public void setOrganizerDescription(String organizerDescription) {
+        this.organizerDescription = organizerDescription;
+    }
+
+    public String getOrganizerAvatar() {
+        return organizerAvatar;
+    }
+
+    public void setOrganizerAvatar(String organizerAvatar) {
+        this.organizerAvatar = organizerAvatar;
+    }
 }

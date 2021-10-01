@@ -40,6 +40,10 @@
         <param-name>NEWFEED_PAGE_LABEL</param-name>
         <param-value>NewfeedPage</param-value>
     </context-param>
+    <context-param>
+        <param-name>EVENTDETAIL_PAGE_LABEL</param-name>
+        <param-value>EventDetailPage</param-value>
+    </context-param>
     <filter>
         <filter-name>FilterAuth</filter-name>
         <filter-class>fptu.swp.filter.FilterAuth</filter-class>
@@ -72,6 +76,10 @@
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>fptu.swp.controller.LogoutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewEventDetailServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.ViewEventDetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -83,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/LogoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewEventDetailServlet</servlet-name>
+        <url-pattern>/ViewEventDetailServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
