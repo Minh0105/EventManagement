@@ -52,9 +52,10 @@ public class ViewEventDetailServlet extends HttpServlet {
             String type = request.getParameter("type");
             EventDAO eventDao = new EventDAO();
             EventDetail detail = eventDao.getEventDetail(eventId);
+            System.out.println(detail.toString());
             UserDAO userDao = new UserDAO();
             List<LecturerBriefInfo> listLecturer = userDao.getListLecturerBriefInfo(eventId);
-            request.setAttribute("EVENT_DETAIL", url);
+            request.setAttribute("EVENT_DETAIL", detail);
             request.setAttribute("LIST_LECTURER", listLecturer);
             url = EVENTDETAIL_PAGE_PATH;
             

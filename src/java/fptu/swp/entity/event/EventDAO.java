@@ -367,7 +367,7 @@ public class EventDAO {
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, eventId);
                 rs = stm.executeQuery();
-                while (rs.next()) {
+                if(rs.next()) {
                     eventName = rs.getString("eventName");
                     eventPoster = rs.getString("eventPoster");
                     organizerName = rs.getString("organizerName");
@@ -384,6 +384,10 @@ public class EventDAO {
                     organizerAvatar = rs.getString("organizerAvatar");
                     listLocation.add(locationName);
                 }
+                while(rs.next()){
+                    locationName = rs.getString("locationName");
+                    listLocation.add(locationName);
+                }
                 int i = 0;
                 //format location string
                 String location = "";
@@ -391,18 +395,18 @@ public class EventDAO {
                     location += listLocation.get(i) + ", ";
                 }
                 location += listLocation.get(i);
-                sql = "SELECT u.rangeName rangeName"
-                        + " FROM tblTimeRanges u"
-                        + " RIGHT JOIN (SELECT DISTINCT v.rangeId\n"
-                        + " FROM tblEvents u, tblDateTimeLocation v\n"
-                        + " WHERE u.id = v.eventId AND v.eventId = 1) v\n"
-                        + " ON u.id = v.rangeId";
+                sql = "SELECT v.rangeId rangeId, u.rangeName rangeName\n" +
+                        " FROM tblTimeRanges u" +
+                        " RIGHT JOIN (SELECT DISTINCT v.rangeId\n" +
+                        "                   FROM tblEvents u, tblDateTimeLocation v" +
+                        "                   WHERE u.id = v.eventId AND v.eventId = ?) v" +
+                        " ON u.id = v.rangeId";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, eventId);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     rangeName = rs.getString("rangeName");
-                    listTime.add(locationName);
+                    listTime.add(rangeName);
                 }
                 //format time string (gan name cua cac time range)
                 String time = "";

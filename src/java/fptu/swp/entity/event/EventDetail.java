@@ -140,4 +140,9 @@ public class EventDetail {
     public void setOrganizerAvatar(String organizerAvatar) {
         this.organizerAvatar = organizerAvatar;
     }
+
+    @Override
+    public String toString() {
+        return "EventDetail{" + "id=" + id + ", name=" + name + ", poster=" + poster + ", location=" + location + ", date=" + date + ", time=" + time + ", organizerName=" + organizerName + ", following=" + following + ", joining=" + joining + ", description=" + description + ", organizerDescription=" + organizerDescription + ", organizerAvatar=" + organizerAvatar + '}';
+    }
 }

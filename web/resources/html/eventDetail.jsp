@@ -19,34 +19,35 @@
         EventDetail detail = (EventDetail) request.getAttribute("EVENT_DETAIL");
         List<LecturerBriefInfo> listLecturer = (List<LecturerBriefInfo>) request.getAttribute("LIST_LECTURER");
         %>
-        <%= detail.getPoster() %>
-        <%= detail.getDate() %> - <%= detail.getLocation() %>
-        <%= detail.getName()%>
-        <%= detail.getOrganizerName() %>
-        <%= detail.getDescription() %>
-        ______________________________________________________________
-        
+        <br>        <img src="<%= detail.getPoster() %>" alt="">
+        <br><%= detail.getDate() %> - <%= detail.getLocation() %>
+        <br><%= detail.getName()%>
+        <br><%= detail.getOrganizerName() %>
+        <br><%= detail.getDescription() %>
+       <br> ______________________________________________________________
+       <br> <br>  GIẢNG VIÊN
         <%
         for (LecturerBriefInfo lecturer : listLecturer){
             %>
-        <%= lecturer.getAvatar() %>
-        <%= lecturer.getName() %>
-        <%= lecturer.getDescription() %>
-        
+          
+       <br> <img src="<%= lecturer.getAvatar() %>" alt="">
+       <br> <%= lecturer.getName() %>
+       <br> <%= lecturer.getDescription() %>
+       <br> 
        
         <%
         }
         %>
         
         
-        _______________________________________________________________
+      <br>  _______________________________________________________________
+       <br> 
         
         
         
         
-        
-        <%= detail.getOrganizerName() %>
-        <%= detail.getOrganizerAvatar() %>
-        <%= detail.getOrganizerDescription() %>
+       <br> <%= detail.getOrganizerName() %>
+       <img src="<%= detail.getOrganizerAvatar() %>" alt=""> 
+     <br>   <%= detail.getOrganizerDescription() %>
     </body>
 </html>

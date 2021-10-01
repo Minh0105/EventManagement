@@ -111,11 +111,12 @@
                                 </div>
                             </div>
 
-                            <div class="item2Button">
-                                <form action="viewEventDetail"
-                                <input type="submit" value ="Chi tiết"> 
-                                <input type="hidden" name="eventId" value="${card.id}">
-                            </div>
+                           
+                                <form action="viewEventDetail">
+                                 <input type="submit" value="Chi tiết">
+                                 <input type="hidden" name="eventId" value="<%= card.getId() %>">
+                                </form>
+                      
                         </div>
                     </div>
                     <% }
