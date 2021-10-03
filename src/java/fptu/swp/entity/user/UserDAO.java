@@ -28,6 +28,7 @@ public class UserDAO {
         ResultSet rs = null;
         String email = googlePojo.getEmail();
         int userId = 0;
+        String avatarGoogle = googlePojo.getPicture();
         String name = "";
         String avatar = "";
         String address = "";
@@ -62,7 +63,16 @@ public class UserDAO {
                     } else if (roleId == 4) {
                         roleName = "DEPARTMENT'S MANAGER";
                     }
-                    user = new UserDTO(userId, email, name, avatar, address, phoneNum, roleName);
+                    if(!avatarGoogle.equals(avatar)){
+                        String sql2 = "UPDATE tblUsers"
+                        + " SET avatar=?"
+                        + " WHERE email=?";
+                        PreparedStatement stm2 = conn.prepareStatement(sql2);
+                        stm2.setString(1, avatarGoogle);
+                        stm2.setString(2, email);
+                        boolean checkSetAvatar = stm2.executeUpdate() > 0;
+                    }
+                    user = new UserDTO(userId, email, name, avatarGoogle, address, phoneNum, roleName);
                 }else if(email.endsWith("@fpt.edu.vn")){ //chua co thong tin trong DB va dang nhap bang mail fpt
                     name = googlePojo.getName();
                     avatar = googlePojo.getPicture();

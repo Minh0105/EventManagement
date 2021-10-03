@@ -65,7 +65,7 @@ public class LoginServlet extends HttpServlet {
                 System.out.println("code: " + code);
                 System.out.println("access Token: " + accessToken);
                 request.setAttribute("id", googlePojo.getId());
-                 String email =  googlePojo.getEmail();
+                String email =  googlePojo.getEmail();
                 
                 UserDAO dao = new UserDAO();
                 UserDTO user = dao.login(googlePojo);

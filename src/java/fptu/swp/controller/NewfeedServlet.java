@@ -28,7 +28,7 @@ import org.apache.log4j.Logger;
 @WebServlet(name = "NewfeedServlet", urlPatterns = {"/NewfeedServlet"})
 public class NewfeedServlet extends HttpServlet {
 
-    static final Logger LOGGER = Logger.getLogger(LoginServlet.class);
+    static final Logger LOGGER = Logger.getLogger(NewfeedServlet.class);
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

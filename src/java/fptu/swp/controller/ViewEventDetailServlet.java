@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
  * @author triet
  */
 public class ViewEventDetailServlet extends HttpServlet {
-   static final Logger LOGGER = Logger.getLogger(UpdateProfileServlet.class);
+   static final Logger LOGGER = Logger.getLogger(ViewEventDetailServlet.class);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
