@@ -367,7 +367,7 @@ public class EventDAO {
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, eventId);
                 rs = stm.executeQuery();
-                if(rs.next()) {
+                if (rs.next()) {
                     eventName = rs.getString("eventName");
                     eventPoster = rs.getString("eventPoster");
                     organizerName = rs.getString("organizerName");
@@ -384,7 +384,7 @@ public class EventDAO {
                     organizerAvatar = rs.getString("organizerAvatar");
                     listLocation.add(locationName);
                 }
-                while(rs.next()){
+                while (rs.next()) {
                     locationName = rs.getString("locationName");
                     listLocation.add(locationName);
                 }
@@ -395,12 +395,12 @@ public class EventDAO {
                     location += listLocation.get(i) + ", ";
                 }
                 location += listLocation.get(i);
-                sql = "SELECT v.rangeId rangeId, u.rangeName rangeName\n" +
-                        " FROM tblTimeRanges u" +
-                        " RIGHT JOIN (SELECT DISTINCT v.rangeId\n" +
-                        "                   FROM tblEvents u, tblDateTimeLocation v" +
-                        "                   WHERE u.id = v.eventId AND v.eventId = ?) v" +
-                        " ON u.id = v.rangeId";
+                sql = "SELECT v.rangeId rangeId, u.rangeName rangeName\n"
+                        + " FROM tblTimeRanges u"
+                        + " RIGHT JOIN (SELECT DISTINCT v.rangeId\n"
+                        + "                   FROM tblEvents u, tblDateTimeLocation v"
+                        + "                   WHERE u.id = v.eventId AND v.eventId = ?) v"
+                        + " ON u.id = v.rangeId";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, eventId);
                 rs = stm.executeQuery();
@@ -432,5 +432,60 @@ public class EventDAO {
         }
         return detail;
     }
-    
+
+    public List<CommentDTO> getListCommentByEventId(int eventId) throws SQLException {
+        List<CommentDTO> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        PreparedStatement stm2 = null;
+        ResultSet rs2 = null;
+        int commentId = 0;
+        String contents = "";
+        String userAvatar="";
+        String userName="";
+        boolean isQuestion = false;
+        String commentDatetime;
+        List<ReplyDTO> replyList = new ArrayList<>();
+
+        SimpleDateFormat formatter = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT u.commentId commentId, u.contents contents, v.avatar userAvatar,"
+                              + " v.name userName, u.isQuestion isQuestion, u.commentDatetime"
+                              + " FROM tblComments"
+                              + " LEFT JOIN tblUsers v ON u.userId = v.id"
+                              + " WHERE eventId = 1 AND replyId IS NULL";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, eventId);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    commentId = rs.getInt("commentId");
+                    contents= rs.getString("contents");
+                    
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs2 != null) {
+                rs.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm2 != null) {
+                stm.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
+    }
 }
