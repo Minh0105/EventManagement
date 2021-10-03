@@ -5,7 +5,7 @@
  */
 package fptu.swp.controller;
 
-import fptu.swp.entity.event.EventCard;
+import fptu.swp.entity.event.EventCardDTO;
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
@@ -54,7 +54,7 @@ public class NewfeedServlet extends HttpServlet {
             HttpSession session = request.getSession();
             UserDTO loginUser = (UserDTO) session.getAttribute("USER");
             EventDAO eventDao = new EventDAO();
-            List<EventCard> listCard = null;
+            List<EventCardDTO> listCard = null;
             listCard = eventDao.getNewFeedEventList(loginUser);
             request.setAttribute("LIST_CARD", listCard);
             url = NEWFEED_PAGE_PATH;

@@ -5,12 +5,8 @@
  */
 package fptu.swp.entity.event;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -23,13 +19,13 @@ public class CommentDTO implements Comparable<CommentDTO>{
     private String userAvatar;
     private String userName;
     private boolean isQuestion;
-    private String commentDatetime;
+    private Date commentDatetime;
     private List<ReplyDTO> replyList;
 
     public CommentDTO() {
     }
 
-    public CommentDTO(int commentId, String contents, int eventId, String userAvatar, String userName, boolean isQuestion, String commentDatetime, List<ReplyDTO> replyList) {
+    public CommentDTO(int commentId, String contents, int eventId, String userAvatar, String userName, boolean isQuestion, Date commentDatetime, List<ReplyDTO> replyList) {
         this.commentId = commentId;
         this.contents = contents;
         this.eventId = eventId;
@@ -38,22 +34,6 @@ public class CommentDTO implements Comparable<CommentDTO>{
         this.isQuestion = isQuestion;
         this.commentDatetime = commentDatetime;
         this.replyList = replyList;
-    }
-
-    public String getUserAvatar() {
-        return userAvatar;
-    }
-
-    public void setUserAvatar(String userAvatar) {
-        this.userAvatar = userAvatar;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public int getCommentId() {
@@ -80,6 +60,22 @@ public class CommentDTO implements Comparable<CommentDTO>{
         this.eventId = eventId;
     }
 
+    public String getUserAvatar() {
+        return userAvatar;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public boolean isIsQuestion() {
         return isQuestion;
     }
@@ -88,11 +84,11 @@ public class CommentDTO implements Comparable<CommentDTO>{
         this.isQuestion = isQuestion;
     }
 
-    public String getCommentDatetime() {
+    public Date getCommentDatetime() {
         return commentDatetime;
     }
 
-    public void setCommentDatetime(String commentDatetime) {
+    public void setCommentDatetime(Date commentDatetime) {
         this.commentDatetime = commentDatetime;
     }
 
@@ -106,13 +102,12 @@ public class CommentDTO implements Comparable<CommentDTO>{
 
     @Override
     public int compareTo(CommentDTO t) {
-       try {
-            Date date1 = new SimpleDateFormat("yyyy/MM/dd h:m").parse(this.getCommentDatetime());
-            Date date2 = new SimpleDateFormat("yyyy/MM/dd h:m").parse(t.getCommentDatetime());        
-            return date1.compareTo(date2);
-        } catch (ParseException ex) {
-            Logger.getLogger(ReplyDTO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       return 0;
+            return this.getCommentDatetime().compareTo(t.getCommentDatetime());
     }
+
+    @Override
+    public String toString() {
+        return "CommentDTO{" + "commentId=" + commentId + ", contents=" + contents + ", eventId=" + eventId + ", userAvatar=" + userAvatar + ", userName=" + userName + ", isQuestion=" + isQuestion + ", commentDatetime=" + commentDatetime + ", replyList=" + replyList.toString() + '}';
+    }
+    
 }

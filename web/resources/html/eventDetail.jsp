@@ -4,9 +4,11 @@
     Author     : triet
 --%>
 
-<%@page import="fptu.swp.entity.user.LecturerBriefInfo"%>
+<%@page import="fptu.swp.entity.event.ReplyDTO"%>
+<%@page import="fptu.swp.entity.event.CommentDTO"%>
+<%@page import="fptu.swp.entity.user.LecturerBriefInfoDTO"%>
 <%@page import="java.util.List"%>
-<%@page import="fptu.swp.entity.event.EventDetail"%>
+<%@page import="fptu.swp.entity.event.EventDetailDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,8 +18,8 @@
     </head>
     <body>
         <%
-        EventDetail detail = (EventDetail) request.getAttribute("EVENT_DETAIL");
-        List<LecturerBriefInfo> listLecturer = (List<LecturerBriefInfo>) request.getAttribute("LIST_LECTURER");
+        EventDetailDTO detail = (EventDetailDTO) request.getAttribute("EVENT_DETAIL");
+        List<LecturerBriefInfoDTO> listLecturer = (List<LecturerBriefInfoDTO>) request.getAttribute("LIST_LECTURER");
         %>
         <br>        <img src="<%= detail.getPoster() %>" alt="">
         <br><%= detail.getDate() %> - <%= detail.getLocation() %>
@@ -27,7 +29,7 @@
        <br> ______________________________________________________________
        <br> <br>  GIẢNG VIÊN
         <%
-        for (LecturerBriefInfo lecturer : listLecturer){
+        for (LecturerBriefInfoDTO lecturer : listLecturer){
             %>
           
        <br> <img src="<%= lecturer.getAvatar() %>" alt="">
@@ -50,4 +52,40 @@
        <img src="<%= detail.getOrganizerAvatar() %>" alt=""> 
      <br>   <%= detail.getOrganizerDescription() %>
     </body>
+    <br>  _______________________________________________________________
+       <br> 
+        <br>  _______________________________________________________________
+       <br> 
+        <br>  _______________________________________________________________
+       <br> 
+        <br>  _______________________________________________________________
+       <br> 
+        <%
+            List<CommentDTO> listComment = (List<CommentDTO>) request.getAttribute("LIST_COMMENT");
+            for (CommentDTO comment : listComment){
+            %>
+          
+       <br> <img src="<%= comment.getUserAvatar() %>" alt="">
+       <br> <%= comment.getUserName() %>
+       <br> <%= comment.getContents()%>
+       <br> <%= comment.getCommentDatetime()%>
+       <%
+           List<ReplyDTO> listReply = comment.getReplyList();
+           for (ReplyDTO reply : listReply){
+               %>
+       
+       <br> ----<img src="<%= reply.getUserAvatar() %>" alt="">
+       <br> ----<%= reply.getUserName() %>
+       <br> ----<%= reply.getContents()%>
+       <br> ----<%= reply.getReplyDatetime()%>
+       
+       <%
+                   
+           }
+       %>
+       <br> 
+       
+        <%
+        }
+        %>
 </html>

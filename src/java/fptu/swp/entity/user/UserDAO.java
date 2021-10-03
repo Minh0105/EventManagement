@@ -25,6 +25,7 @@ public class UserDAO {
         UserDTO user = null;
         Connection conn = null;
         PreparedStatement stm = null;
+        PreparedStatement stm2 = null;
         ResultSet rs = null;
         String email = googlePojo.getEmail();
         int userId = 0;
@@ -67,7 +68,7 @@ public class UserDAO {
                         String sql2 = "UPDATE tblUsers"
                         + " SET avatar=?"
                         + " WHERE email=?";
-                        PreparedStatement stm2 = conn.prepareStatement(sql2);
+                        stm2 = conn.prepareStatement(sql2);
                         stm2.setString(1, avatarGoogle);
                         stm2.setString(2, email);
                         boolean checkSetAvatar = stm2.executeUpdate() > 0;
@@ -122,6 +123,9 @@ public class UserDAO {
         } finally {
             if (rs != null) {
                 rs.close();
+            }
+            if (stm2 != null) {
+                stm2.close();
             }
             if (stm != null) {
                 stm.close();
@@ -197,8 +201,8 @@ public class UserDAO {
     }
 
     //ham lay list lecture boi event ID
-    public List<LecturerBriefInfo> getListLecturerBriefInfo(int eventId) throws SQLException{
-        List<LecturerBriefInfo> list = new ArrayList<>();
+    public List<LecturerBriefInfoDTO> getListLecturerBriefInfo(int eventId) throws SQLException{
+        List<LecturerBriefInfoDTO> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -209,9 +213,9 @@ public class UserDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT v.id id, v.name name, v.avatar avatar, v.description description" +
-                                " FROM tblLecturersInEvents u, tblUsers v" +
-                                " WHERE u.eventId = ? AND u.lecturerId = v.id AND u.statusId = 1;";
+                String sql = "ELECT v.id id, v.name name, v.avatar avatar, v.description description" +
+                                " FROM tblLecturersInEvents u INNER JOIN tblUsers v ON u.lecturerId = v.id" +
+                                " WHERE u.eventId = 1 AND u.statusId = 1";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, eventId);
                 rs = stm.executeQuery();
@@ -220,7 +224,7 @@ public class UserDAO {
                     avatar = rs.getString("avatar");
                     name = rs.getString("name");
                     description = rs.getString("description");
-                    list.add(new LecturerBriefInfo(id, avatar, name, description));
+                    list.add(new LecturerBriefInfoDTO(id, avatar, name, description));
                 }
             }
         } catch (Exception e) {

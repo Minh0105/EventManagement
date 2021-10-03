@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author triet
  */
-public class EventCard {
+public class EventCardDTO {
     private int id;
     private String name;
     private String poster;
@@ -21,10 +21,10 @@ public class EventCard {
     private int following;
     private int joining;
 
-    public EventCard() {
+    public EventCardDTO() {
     }
 
-    public EventCard(int id, String name, String poster, String location, String date, String organizerName, int following, int joining) {
+    public EventCardDTO(int id, String name, String poster, String location, String date, String organizerName, int following, int joining) {
         this.id = id;
         this.name = name;
         this.poster = poster;

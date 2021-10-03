@@ -5,9 +5,10 @@
  */
 package fptu.swp.controller;
 
+import fptu.swp.entity.event.CommentDTO;
 import fptu.swp.entity.event.EventDAO;
-import fptu.swp.entity.event.EventDetail;
-import fptu.swp.entity.user.LecturerBriefInfo;
+import fptu.swp.entity.event.EventDetailDTO;
+import fptu.swp.entity.user.LecturerBriefInfoDTO;
 import fptu.swp.entity.user.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -51,12 +52,14 @@ public class ViewEventDetailServlet extends HttpServlet {
             int eventId = Integer.parseInt(request.getParameter("eventId"));
             String type = request.getParameter("type");
             EventDAO eventDao = new EventDAO();
-            EventDetail detail = eventDao.getEventDetail(eventId);
+            EventDetailDTO detail = eventDao.getEventDetail(eventId);
             System.out.println(detail.toString());
             UserDAO userDao = new UserDAO();
-            List<LecturerBriefInfo> listLecturer = userDao.getListLecturerBriefInfo(eventId);
+            List<LecturerBriefInfoDTO> listLecturer = userDao.getListLecturerBriefInfo(eventId);
+            List<CommentDTO> listComment = eventDao.getListCommentByEventId(eventId);
             request.setAttribute("EVENT_DETAIL", detail);
             request.setAttribute("LIST_LECTURER", listLecturer);
+            request.setAttribute("LIST_COMMENT", listComment);
             url = EVENTDETAIL_PAGE_PATH;
             
         } catch (Exception e) {

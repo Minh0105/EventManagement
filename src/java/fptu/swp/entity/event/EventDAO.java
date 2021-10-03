@@ -13,6 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -22,39 +25,39 @@ import java.util.List;
  */
 public class EventDAO {
 
-    public boolean insertNewEvent(EventDTO event) throws SQLException {
-        boolean check = false;
-        Connection conn = null;
-        PreparedStatement stm = null;
-        try {
-            conn = DBHelper.makeConnection();
-            if (conn != null) {
-                String sql = "INSERT INTO tblEvents(name, description, poster, createDate, statusId, userId) "
-                        + " VALUES(?,?,?,CURRENT_TIMESTAMP,1,?)";
-                stm = conn.prepareStatement(sql);
-                stm.setString(1, event.getName());
-                stm.setString(2, event.getDescription());
-                stm.setString(3, event.getPoster());
-                stm.setInt(4, event.getUserId());
-                check = stm.executeUpdate() > 0;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (stm != null) {
-                stm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return check;
-    }
+//    public boolean insertNewEvent(EventDTO event) throws SQLException {
+//        boolean check = false;
+//        Connection conn = null;
+//        PreparedStatement stm = null;
+//        try {
+//            conn = DBHelper.makeConnection();
+//            if (conn != null) {
+//                String sql = "INSERT INTO tblEvents(name, description, poster, createDate, statusId, userId) "
+//                        + " VALUES(?,?,?,CURRENT_TIMESTAMP,1,?)";
+//                stm = conn.prepareStatement(sql);
+//                stm.setString(1, event.getName());
+//                stm.setString(2, event.getDescription());
+//                stm.setString(3, event.getPoster());
+//                stm.setInt(4, event.getUserId());
+//                check = stm.executeUpdate() > 0;
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (stm != null) {
+//                stm.close();
+//            }
+//            if (conn != null) {
+//                conn.close();
+//            }
+//        }
+//        return check;
+//    }
 
     //Ham lay danh sach event card hs da bam Quan tam
     //Cac comment ap dung cho 3 ham get list EventCard
-    public List<EventCard> getFollowedEventList(int studentId) throws SQLException {
-        List<EventCard> list = new ArrayList<>();
+    public List<EventCardDTO> getFollowedEventList(int studentId) throws SQLException {
+        List<EventCardDTO> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -92,7 +95,7 @@ public class EventDAO {
                                 location += listLocation.get(i) + ", ";
                             }//format cuoi location
                             location += listLocation.get(i);
-                            EventCard card = new EventCard(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                            EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
                             list.add(card);
                         }
                         listLocation.clear(); //qua moi event khoi tao lai list dia diem
@@ -120,7 +123,7 @@ public class EventDAO {
                     location += listLocation.get(i) + ", ";
                 } //format chuoi location
                 location += listLocation.get(i);
-                EventCard card = new EventCard(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
                 list.add(card);
             }
 
@@ -140,8 +143,8 @@ public class EventDAO {
         return list;
     }
 
-    public List<EventCard> getJoiningEventList(int studentId) throws SQLException {
-        List<EventCard> list = new ArrayList<>();
+    public List<EventCardDTO> getJoiningEventList(int studentId) throws SQLException {
+        List<EventCardDTO> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -179,7 +182,7 @@ public class EventDAO {
                                 location += listLocation.get(i) + ", ";
                             }
                             location += listLocation.get(i);
-                            EventCard card = new EventCard(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                            EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
                             list.add(card);
                         }
                         listLocation.clear();
@@ -207,7 +210,7 @@ public class EventDAO {
                     location += listLocation.get(i) + ", ";
                 }
                 location += listLocation.get(i);
-                EventCard card = new EventCard(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
                 list.add(card);
             }
 
@@ -227,8 +230,8 @@ public class EventDAO {
         return list;
     }
 
-    public List<EventCard> getNewFeedEventList(UserDTO loginUser) throws SQLException {
-        List<EventCard> list = new ArrayList<>();
+    public List<EventCardDTO> getNewFeedEventList(UserDTO loginUser) throws SQLException {
+        List<EventCardDTO> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -285,7 +288,7 @@ public class EventDAO {
                                 location += listLocation.get(i) + ", ";
                             }
                             location += listLocation.get(i);
-                            EventCard card = new EventCard(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                            EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
                             list.add(card);
                         }
                         listLocation.clear();
@@ -313,7 +316,7 @@ public class EventDAO {
                     location += listLocation.get(i) + ", ";
                 }
                 location += listLocation.get(i);
-                EventCard card = new EventCard(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
                 list.add(card);
 
             }
@@ -333,8 +336,8 @@ public class EventDAO {
         return list;
     }
 
-    public EventDetail getEventDetail(int eventId) throws SQLException {
-        EventDetail detail = null;
+    public EventDetailDTO getEventDetail(int eventId) throws SQLException {
+        EventDetailDTO detail = null;
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -414,7 +417,7 @@ public class EventDAO {
                     time += listTime.get(i) + ", ";
                 }
                 time += listTime.get(i);
-                detail = new EventDetail(eventId, eventName, eventPoster, location, date, time, organizerName, following, joining, description, organizerDescription, organizerAvatar);
+                detail = new EventDetailDTO(eventId, eventName, eventPoster, location, date, time, organizerName, following, joining, description, organizerDescription, organizerAvatar);
             }
 
         } catch (Exception e) {
@@ -442,10 +445,10 @@ public class EventDAO {
         ResultSet rs2 = null;
         int commentId = 0;
         String contents = "";
-        String userAvatar="";
-        String userName="";
+        String userAvatar= "";
+        String userName= "";
         boolean isQuestion = false;
-        String commentDatetime;
+        Date commentDatetime;
         List<ReplyDTO> replyList = new ArrayList<>();
 
         SimpleDateFormat formatter = null;
@@ -453,31 +456,57 @@ public class EventDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 String sql = "SELECT u.commentId commentId, u.contents contents, v.avatar userAvatar,"
-                              + " v.name userName, u.isQuestion isQuestion, u.commentDatetime"
-                              + " FROM tblComments"
+                              + " v.name userName, u.isQuestion isQuestion, u.commentDatetime commentDatetime"
+                              + " FROM tblComments u"
                               + " LEFT JOIN tblUsers v ON u.userId = v.id"
-                              + " WHERE eventId = 1 AND replyId IS NULL";
+                              + " WHERE u.eventId = ? AND u.replyId IS NULL";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, eventId);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     commentId = rs.getInt("commentId");
                     contents= rs.getString("contents");
-                    
+                    userAvatar = rs.getString("userAvatar");
+                    userName = rs.getString("userName");
+                    isQuestion = rs.getBoolean("isQuestion");
+                    commentDatetime = rs.getTimestamp("commentDatetime");
+                    String sql2 = "SELECT u.commentId commentId, u.contents contents, v.avatar userAvatar, v.name userName, u.commentDatetime replyDatetime" 
+                                     + " FROM tblComments u" 
+                                     + " LEFT JOIN tblUsers v ON u.userId = v.id" 
+                                     + " WHERE eventId = ? AND replyId = ?;";
+                    stm2 = conn.prepareStatement(sql2);
+                    stm2.setInt(1, eventId);
+                    stm2.setInt(2, commentId);
+                    rs2 = stm2.executeQuery();
+                    while(rs2.next()){
+                         int replyCommentId = rs2.getInt("commentId");
+                         String replyContents= rs2.getString("contents");
+                         String replyUserAvatar = rs2.getString("userAvatar");
+                         String replyUserName = rs2.getString("userName");
+                         Date replyCommentDatetime = rs2.getTimestamp("replyDatetime");
+                         replyList.add(new ReplyDTO(replyCommentId, replyContents, replyUserAvatar, replyUserName, replyCommentDatetime));
+                    }
+                    if(replyList.size()>0){
+                        Collections.sort(replyList);
+                    }
+                    CommentDTO tmp = new CommentDTO(commentId, contents, eventId, userAvatar, userName, isQuestion, commentDatetime, replyList);
+                    list.add(tmp);
+                    System.out.println();
+                    replyList = new ArrayList<>();
                 }
+                Collections.sort(list);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             if (rs2 != null) {
-                rs.close();
+                rs2.close();
             }
             if (rs != null) {
                 rs.close();
             }
             if (stm2 != null) {
-                stm.close();
+                stm2.close();
             }
             if (stm != null) {
                 stm.close();

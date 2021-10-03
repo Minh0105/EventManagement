@@ -4,7 +4,7 @@
     Author     : triet
 --%>
 
-<%@page import="fptu.swp.entity.event.EventCard"%>
+<%@page import="fptu.swp.entity.event.EventCardDTO"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -85,9 +85,9 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                     <%
-                        List<EventCard> listCard = (List<EventCard>) request.getAttribute("LIST_CARD");
+                        List<EventCardDTO> listCard = (List<EventCardDTO>) request.getAttribute("LIST_CARD");
                         if (listCard != null) {
-                            for (EventCard card : listCard){
+                            for (EventCardDTO card : listCard){
                            %>
                     <div class="item">
                         <div class="item1">

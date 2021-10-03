@@ -9,7 +9,7 @@ package fptu.swp.entity.event;
  *
  * @author triet
  */
-public class EventDetail {
+public class EventDetailDTO {
     private int id;
     private String name;
     private String poster;
@@ -22,11 +22,10 @@ public class EventDetail {
     private String description;
     private String organizerDescription;
     private String organizerAvatar;
-
-    public EventDetail() {
+    public EventDetailDTO() {
     }
 
-    public EventDetail(int id, String name, String poster, String location, String date, String time, String organizerName, int following, int joining, String description, String organizerDescription, String organizerAvatar) {
+    public EventDetailDTO(int id, String name, String poster, String location, String date, String time, String organizerName, int following, int joining, String description, String organizerDescription, String organizerAvatar) {
         this.id = id;
         this.name = name;
         this.poster = poster;
@@ -41,7 +40,7 @@ public class EventDetail {
         this.organizerAvatar = organizerAvatar;
     }
     
-    public EventDetail(String organizerAvatar) {
+    public EventDetailDTO(String organizerAvatar) {
         this.organizerAvatar = organizerAvatar;
     }
 

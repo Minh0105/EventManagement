@@ -9,16 +9,16 @@ package fptu.swp.entity.user;
  *
  * @author triet
  */
-public class LecturerBriefInfo {
+public class LecturerBriefInfoDTO {
     private int id;
     private String avatar;
     private String name;
     private String description;
 
-    public LecturerBriefInfo() {
+    public LecturerBriefInfoDTO() {
     }
 
-    public LecturerBriefInfo(int id, String avatar, String name, String description) {
+    public LecturerBriefInfoDTO(int id, String avatar, String name, String description) {
         this.id = id;
         this.avatar = avatar;
         this.name = name;
