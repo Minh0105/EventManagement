@@ -33,6 +33,7 @@
         <param-value>UpdateProfilePage</param-value>
     </context-param>
     <context-param>
+<<<<<<< HEAD
         <param-name>INFO_PAGE_LABEL</param-name>
         <param-value>ViewInfoPage</param-value>
     </context-param>
@@ -43,8 +44,7 @@
     <context-param>
         <param-name>EVENTDETAIL_PAGE_LABEL</param-name>
         <param-value>EventDetailPage</param-value>
-    </context-param>
-<context-param>
+=======
         <param-name>LOC_AND_TIME_PAGE_LABEL</param-name>
         <param-value>locAndTimePage</param-value>
     </context-param>
@@ -63,6 +63,7 @@
     <context-param>
         <param-name>APPEND_EVENT_DETAIL_PAGE</param-name>
         <param-value>appendEventDetailPage</param-value>
+>>>>>>> DuongMh
     </context-param>
     <filter>
         <filter-name>FilterAuth</filter-name>
@@ -76,7 +77,7 @@
         <filter-name>FilterAuth</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-<!--    <filter-mapping>
+    <!--    <filter-mapping>
         <filter-name>FilterDispatcher</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>-->

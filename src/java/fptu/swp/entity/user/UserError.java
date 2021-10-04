@@ -5,11 +5,13 @@
  */
 package fptu.swp.entity.user;
 
+import java.io.Serializable;
+
 /**
  *
  * @author triet
  */
-public class UserError {
+public class UserError implements Serializable {
     private String nameError;
     private String phoneNumError;
     private String addressError;

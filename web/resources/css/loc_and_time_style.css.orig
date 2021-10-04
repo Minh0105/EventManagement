@@ -151,8 +151,9 @@ div.scrollmenu div > p {
 /* DATE & TIME TABLE */
 
 
-#date_and_slot_section {
+#date_and_time_table {
     height: 80vh;
+    width: 88.916%;
     margin-right: 6px;
     margin-left: 12px;
     margin-top: 12px;
@@ -188,6 +189,15 @@ div.scrollmenu div > p {
     border-radius: 0px 5px 0px 0px;
 }
 
+<<<<<<< HEAD
+table {
+    height: 100%;
+}
+
+table, th, td {
+    border: 1px black solid;
+}
+=======
 
 #date_and_slot_table, td {
     border-top: #5d5d5d 0.7px solid;
@@ -253,3 +263,4 @@ div.scrollmenu div > p {
 
 
 
+>>>>>>> DuongMh

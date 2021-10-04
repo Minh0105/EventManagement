@@ -5,6 +5,8 @@
  */
 package fptu.swp.entity.user;
 
+<<<<<<< HEAD
+=======
 import java.io.Serializable;
 
 /**
@@ -18,11 +20,16 @@ import java.io.Serializable;
  * and open the template in the editor.
  */
 
+>>>>>>> DuongMh
 /**
  *
  * @author triet
  */
+<<<<<<< HEAD
+public class LecturerBriefInfoDTO {
+=======
 public class LecturerBriefInfoDTO implements Serializable{
+>>>>>>> DuongMh
     private int id;
     private String avatar;
     private String name;
@@ -35,7 +42,11 @@ public class LecturerBriefInfoDTO implements Serializable{
         this.id = id;
         this.avatar = avatar;
         this.name = name;
-	this.description = description;
+<<<<<<< HEAD
+        this.description = description;
+    }
+
+=======
     }
 
     public LecturerBriefInfoDTO(int id, String avatar, String name) {
@@ -46,6 +57,7 @@ public class LecturerBriefInfoDTO implements Serializable{
     
     
 
+>>>>>>> DuongMh
     public int getId() {
         return id;
     }
@@ -78,6 +90,8 @@ public class LecturerBriefInfoDTO implements Serializable{
         this.description = description;
     }
     
+<<<<<<< HEAD
+=======
     
 
     @Override
@@ -87,4 +101,5 @@ public class LecturerBriefInfoDTO implements Serializable{
     
     
     
+>>>>>>> DuongMh
 }

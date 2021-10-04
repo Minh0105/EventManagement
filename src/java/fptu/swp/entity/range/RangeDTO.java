@@ -5,11 +5,13 @@
  */
 package fptu.swp.entity.range;
 
+import java.io.Serializable;
+
 /**
  *
  * @author admin
  */
-public class RangeDTO {
+public class RangeDTO implements Serializable {
     private int id;
     private String rangeName;
     private String detail;

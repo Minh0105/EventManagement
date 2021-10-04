@@ -5,13 +5,14 @@
  */
 package fptu.swp.entity.event;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
  *
  * @author admin
  */
-public class EventDTO {
+public class EventDTO  implements Serializable{
     private int id;
     private String name;
     private String description;

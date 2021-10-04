@@ -7,6 +7,7 @@ package fptu.swp.entity.user;
 
 import fptu.swp.controller.accessgoogle.GooglePojo;
 import fptu.swp.utils.DBHelper;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +20,7 @@ import javax.naming.NamingException;
  *
  * @author admin
  */
-public class UserDAO {
+public class UserDAO  implements Serializable{
     //ham login 
     public UserDTO login(GooglePojo googlePojo) throws SQLException { 
         UserDTO user = null;
@@ -68,7 +69,11 @@ public class UserDAO {
                         String sql2 = "UPDATE tblUsers"
                         + " SET avatar=?"
                         + " WHERE email=?";
+<<<<<<< HEAD
                         stm2 = conn.prepareStatement(sql2);
+=======
+                        PreparedStatement stm2 = conn.prepareStatement(sql2);
+>>>>>>> DuongMh
                         stm2.setString(1, avatarGoogle);
                         stm2.setString(2, email);
                         boolean checkSetAvatar = stm2.executeUpdate() > 0;
@@ -201,7 +206,11 @@ public class UserDAO {
     }
 
     //ham lay list lecture boi event ID
+<<<<<<< HEAD
     public List<LecturerBriefInfoDTO> getListLecturerBriefInfo(int eventId) throws SQLException{
+=======
+    public List<LecturerBriefInfoDTO> getListLecturerBriefInfoDTO(int eventId) throws SQLException{
+>>>>>>> DuongMh
         List<LecturerBriefInfoDTO> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
@@ -213,9 +222,15 @@ public class UserDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
+<<<<<<< HEAD
                 String sql = "ELECT v.id id, v.name name, v.avatar avatar, v.description description" +
                                 " FROM tblLecturersInEvents u INNER JOIN tblUsers v ON u.lecturerId = v.id" +
                                 " WHERE u.eventId = 1 AND u.statusId = 1";
+=======
+                String sql = "SELECT v.id id, v.name name, v.avatar avatar, v.description description" +
+                                " FROM tblLecturersInEvents u, tblUsers v" +
+                                " WHERE u.eventId = ? AND u.lecturerId = v.id AND u.statusId = 1;";
+>>>>>>> DuongMh
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, eventId);
                 rs = stm.executeQuery();
@@ -242,6 +257,9 @@ public class UserDAO {
         }     
         return list;
     }
+<<<<<<< HEAD
+}
+=======
     
     public List<LecturerBriefInfoDTO> getAllLecturer() throws SQLException, NamingException {       
         List<LecturerBriefInfoDTO> list = new ArrayList<>();
@@ -283,3 +301,4 @@ public class UserDAO {
     
     
 }
+>>>>>>> DuongMh

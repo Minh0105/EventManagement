@@ -5,11 +5,13 @@
  */
 package fptu.swp.entity.user;
 
+import java.io.Serializable;
+
 /**
  *
  * @author admin
  */
-public class UserDTO {
+public class UserDTO implements Serializable {
     private int id;
     private String email;
     private String name;
@@ -27,6 +29,8 @@ public class UserDTO {
         this.phoneNum = phoneNum;
         this.roleName = roleName;
     }
+    
+    
 
     public int getId() {
         return id;

@@ -1,7 +1,3 @@
-/build
-/dist
-/web/META-INF/context.xml
-web/META-INF/context.xml
 
 # Created by https://www.toptal.com/developers/gitignore/api/netbeans
 # Edit at https://www.toptal.com/developers/gitignore?templates=netbeans

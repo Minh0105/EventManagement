@@ -5,11 +5,13 @@
  */
 package fptu.swp.entity.location;
 
+import java.io.Serializable;
+
 /**
  *
  * @author admin
  */
-public class LocationDTO {
+public class LocationDTO  implements Serializable{
     private int id;
     private String name;
     private String description;

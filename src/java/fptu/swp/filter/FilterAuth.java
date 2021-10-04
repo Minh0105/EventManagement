@@ -72,16 +72,16 @@ public class FilterAuth implements Filter {
         if (servletPath.length() == 0) {
             servletPath = LOGIN_PAGE_LABEL;
         }
-
+        UserDTO userDto = null;
         // test Case Data, Delete when release
-//        UserDTO dto = new UserDTO(1, "haha@gmail.com", "Duong", "", "CLUB'S LEADER");
-//        session = httpRequest.getSession();
-//        session.setAttribute("USER", dto);
+        userDto = new UserDTO(1, "duongmhse140196@fpt.edu.vn", "Mai Hoang Duong", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png", "No Home", "1234567890", "CLUB'S LEADER");
+        session = httpRequest.getSession();
+        session.setAttribute("USER", userDto);
         // End Test Case
         
         String url = null;
         session = httpRequest.getSession(false);
-        UserDTO userDto = null;
+        
         if (session != null) {
             userDto = (UserDTO) session.getAttribute("USER");
             String roleName = userDto.getRoleName();
