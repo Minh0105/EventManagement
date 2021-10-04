@@ -27,7 +27,7 @@
         <c:set var="txtSearch" value="${param.txtSearch}"></c:set>
         
         <c:set var="chosenSlotList" value="${requestScope.ChosenSlotList}"></c:set>
-        <c:set var="chosenLocationList" value="${sessionScope.ChosenLocationList}"></c:set>
+        <c:set var="chosenLocationList" value="${requestScope.ChosenLocationList}"></c:set>
         <c:set var="searchedLocationList" value="${requestScope.SearchedLocationList}"></c:set>
        
         

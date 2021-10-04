@@ -19,7 +19,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -61,8 +60,8 @@ public class ModifyLocationServlet extends HttpServlet {
         String[] chosenLocationId = request.getParameterValues("chosenLocationId");
                
         try {
-            HttpSession session = request.getSession(false);
-            if (session != null) {
+            
+            
                 
                 for(String locationParam : Arrays.asList(chosenLocationId)) {
                     int index = locationParam.indexOf("-");
@@ -71,10 +70,10 @@ public class ModifyLocationServlet extends HttpServlet {
                     chosenLocationList.add(new LocationDTO(locationId, locationName));
                 }
                 LOGGER.info("Chosen Location Id-Name List: " + chosenLocationList);
-                session.setAttribute("ChosenLocationList", chosenLocationList);               
+                request.setAttribute("ChosenLocationList", chosenLocationList);               
                 
                 url = roadmap.get(VIEW_FREE_LOC_AND_TIME_SERVLET);
-            }
+            
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             LOGGER.info("Forward From ModifyLocationServlet to " + url);
