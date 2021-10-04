@@ -1,4 +1,17 @@
 ///////////////////////|
+// RELOCATION - AFTER /|
+///////////////////////|
+
+function onSearchLocationButtonClick () {
+    if (chosenLocationList.length == 0) {
+        sendGetRequest('searchLocation');
+        
+    } else { // Chose some locations
+        sendGetRequest('modifyLocation');
+    }
+}
+
+///////////////////////|
 ///// JSP SET UP //////|
 ///////////////////////|
 

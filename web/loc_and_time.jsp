@@ -56,7 +56,7 @@
                     </div>
 
                     <div style="width: 19%" class="pr-6px">
-                        <button onclick="sendGetRequest('viewSlotAndTimeFree')" class="top-btn btn btn-secondary wh-full-parent ">
+                        <button onclick="onSearchLocationButtonClick()" class="top-btn btn btn-secondary wh-full-parent ">
                             Tìm kiếm
                         </button>
                     </div>
