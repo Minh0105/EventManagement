@@ -335,7 +335,7 @@ function onWeekChange (weekSelectTag) {
     var day = startDateInfor[0];
     var month = startDateInfor[1];
     chosenStartDate = day + "/" + month;
-    sendGetRequestWithoutChosenSlot('viewSlotAndTimeFree');
+    sendGetRequestWithoutChosenSlot('modifyLocation');
 }
 
 function get2DigitFormat (number) {
@@ -357,7 +357,7 @@ function today() {
 
 function onYearChange (yearSelect) {  
     chosenStartDate = "01/01";
-    sendGetRequestWithoutChosenSlot('viewSlotAndTimeFree');
+    sendGetRequestWithoutChosenSlot('modifyLocation');
 }
 
 
