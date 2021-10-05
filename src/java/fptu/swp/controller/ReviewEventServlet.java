@@ -74,6 +74,8 @@ public class ReviewEventServlet extends HttpServlet {
         String organizerAvatar = "";
         String inputName = null;
         int i = 0;
+        String eventName = "";
+        String description = "";
 
         // get roadmap
         ServletContext context = request.getServletContext();
@@ -84,10 +86,6 @@ public class ReviewEventServlet extends HttpServlet {
         final String REVIEW_EVENT_PAGE_LABEL = context.getInitParameter("REVIEW_EVENT_PAGE_LABEL");
         String REVIEW_EVENT_PAGE_PATH = roadmap.get(REVIEW_EVENT_PAGE_LABEL);
         String url = INVALID_PAGE_LABEL;
-
-        // parameter
-        String eventName = "";
-        String description = "";
 
         try {
             session = request.getSession(false);

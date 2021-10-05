@@ -41,18 +41,27 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        String code = request.getParameter("code");
-        String url ="";
+        LOGGER.info("Begin LoginServlet");
+        //declare var
+        
+        //get roadmap
         ServletContext context = request.getServletContext();
         HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
-        String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
-        String INFO_PAGE_LABEL = context.getInitParameter("INFO_PAGE_LABEL");
-        String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
-        String INFO_PAGE_PATH = roadmap.get(INFO_PAGE_LABEL);
-        url = INVALID_PAGE_PATH;
+        
+        //default url
+        final String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
+        final String INFO_PAGE_LABEL = context.getInitParameter("INFO_PAGE_LABEL");
+        final String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
+        final String INFO_PAGE_PATH = roadmap.get(INFO_PAGE_LABEL);
+        String url = INVALID_PAGE_PATH;
+        
+        //parameter
+        String code = request.getParameter("code");
+        
         
         try {
             if (code == null || code.isEmpty()) {
+                LOGGER.error("Account not found!!!");
                 RequestDispatcher dis = request.getRequestDispatcher("login.html");
                 dis.forward(request, response);
             } else {
@@ -71,6 +80,7 @@ public class LoginServlet extends HttpServlet {
                 UserDTO user = dao.login(googlePojo);
                 if(user != null) {
                     HttpSession session = request.getSession();
+                    LOGGER.info("USER: "+ user);
                     session.setAttribute("USER", user);
                     url = INFO_PAGE_PATH;
                 }

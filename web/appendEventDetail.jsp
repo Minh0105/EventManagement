@@ -26,12 +26,16 @@
         <h1>Session Scope - ChosenTimeRange</h1>
         <p>ChosenTimeRange : ${sessionScope.ChosenTimeRange}</p>
         --------
+        
+<!--        FORM SEARCH TEN GIANG VIEN-->
         <form action="searchLecturer">
             search lec's name <input type ="text" name ="search" value="${param.search}">
             <input type="submit" value="Submit" />
         </form>
+            
+            
         <h1>Session Scope - LecturerList</h1>
-
+<!--        FORM DUA DU LIEU VE CHO ReviewEventController-->
         <form action="reviewEvent" method="POST" enctype="multipart/form-data">
         <c:forEach var="lec" items="${sessionScope.LecturerList}" >
             <input type="checkbox" name="chosenLecturer" value="${lec.id}">
@@ -42,5 +46,6 @@
             File <input type="file" accept=".png .jpg .jpeg" name="fileUp" required="" value="${param.fileUp}"><br>
             <input type="submit" value="Submit" />
         </form>
+            
     </body>
 </html>

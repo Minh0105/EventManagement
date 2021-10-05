@@ -412,7 +412,7 @@ public class EventDAO {
         return detail;
     }
 
-    public List<CommentDTO> getListCommentByEventId(int eventId) throws SQLException {
+    public List<CommentDTO> getListCommentByEventId(int eventId, boolean isQuestion) throws SQLException {
         List<CommentDTO> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
@@ -423,7 +423,6 @@ public class EventDAO {
         String contents = "";
         String userAvatar= "";
         String userName= "";
-        boolean isQuestion = false;
         Date commentDatetime;
         List<ReplyDTO> replyList = new ArrayList<>();
 
@@ -435,9 +434,10 @@ public class EventDAO {
                               + " v.name userName, u.isQuestion isQuestion, u.commentDatetime commentDatetime"
                               + " FROM tblComments u"
                               + " LEFT JOIN tblUsers v ON u.userId = v.id"
-                              + " WHERE u.eventId = ? AND u.replyId IS NULL";
+                              + " WHERE u.eventId = ? AND u.replyId IS NULL AND u.isQuestion = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, eventId);
+                stm.setBoolean(2, isQuestion);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     commentId = rs.getInt("commentId");
@@ -449,7 +449,7 @@ public class EventDAO {
                     String sql2 = "SELECT u.commentId commentId, u.contents contents, v.avatar userAvatar, v.name userName, u.commentDatetime replyDatetime" 
                                      + " FROM tblComments u" 
                                      + " LEFT JOIN tblUsers v ON u.userId = v.id" 
-                                     + " WHERE eventId = ? AND replyId = ?;";
+                                     + " WHERE eventId = ? AND replyId = ? AND isQuestion = 0";
                     stm2 = conn.prepareStatement(sql2);
                     stm2.setInt(1, eventId);
                     stm2.setInt(2, commentId);
@@ -493,7 +493,7 @@ public class EventDAO {
         }
         return list;
     }
-    
+     
     public boolean saveEventPicture(FileInputStream savedPic) throws SQLException, FileNotFoundException, IOException, NamingException {
         boolean check = false;
         Connection con = null;

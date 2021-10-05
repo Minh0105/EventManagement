@@ -25,7 +25,9 @@ import javax.servlet.http.HttpSession;
  * @author triet
  */
 public class SearchLecturerServlet extends HttpServlet {
+
     static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(SearchLecturerServlet.class);
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,11 +40,11 @@ public class SearchLecturerServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        LOGGER.info("Begin ReviewEventServlet");
+        LOGGER.info("Begin SearchLecturerServlet");
 
         // declare var
         UserDAO userDao = new UserDAO();
-        List<LecturerBriefInfoDTO> lecturerList;         
+        List<LecturerBriefInfoDTO> lecturerList;
         HttpSession session;
         // get roadmap
         ServletContext context = request.getServletContext();
@@ -64,12 +66,11 @@ public class SearchLecturerServlet extends HttpServlet {
             url = APPEND_EVENT_DETAIL_PAGE_PATH;
         } catch (Exception ex) {
             LOGGER.error(ex);
+        } finally {
+            LOGGER.info("Forward from SearchLecturerServlet to" + url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
-        finally {
-                LOGGER.info("Forward from SearchLecturerServlet to" + url);
-                RequestDispatcher rd = request.getRequestDispatcher(url);
-                rd.forward(request, response);
-    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

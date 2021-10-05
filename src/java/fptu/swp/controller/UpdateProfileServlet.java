@@ -39,16 +39,19 @@ public class UpdateProfileServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url ="";
+        LOGGER.info("Begin UpdateProfileServlet");
+        //get roadmap
         ServletContext context = request.getServletContext();
         HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
+        //default url
         String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
         String UPDATE_PAGE_LABEL = context.getInitParameter("UPDATE_PAGE_LABEL");
         String LOGOUT_LABEL = context.getInitParameter("LOGOUT_LABEL");
         String UPDATE_PAGE_PATH = roadmap.get(UPDATE_PAGE_LABEL);
         String LOGOUT_PATH = roadmap.get(LOGOUT_LABEL);
         String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
-        url = INVALID_PAGE_PATH;
+        String url = INVALID_PAGE_PATH;
+        
         try {
             HttpSession session = request.getSession();
             UserDTO loginUser = (UserDTO) session.getAttribute("USER");
@@ -83,9 +86,10 @@ public class UpdateProfileServlet extends HttpServlet {
                 boolean checkUpdate = dao.updateUser(user);
                 if (checkUpdate) {
                     url = LOGOUT_PATH;
-                    LOGGER.info("UPDATE SUCCESFULLY");
+                    LOGGER.info("UPDATE SUCCESFULLY!!! FORWARD TO LOGOUT SERVLET");
                 }
             } else {
+                LOGGER.info("Invalidate input!!!" + userError);
                 request.setAttribute("USER_ERROR", userError);
                 url = UPDATE_PAGE_PATH;
             }

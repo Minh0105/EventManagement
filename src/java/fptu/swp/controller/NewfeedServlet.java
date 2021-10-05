@@ -42,20 +42,27 @@ public class NewfeedServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = "";
+        LOGGER.info("Begin NewfeedServlet");
+        //declare var
+        List<EventCardDTO> listCard = null;
+        
+        //get roadmap
         ServletContext context = request.getServletContext();
         HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
+        
+        //default url
         String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
         String NEWFEED_PAGE_LABEL = context.getInitParameter("NEWFEED_PAGE_LABEL");
         String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
         String NEWFEED_PAGE_PATH = roadmap.get(NEWFEED_PAGE_LABEL);
-        url = INVALID_PAGE_PATH;
+        String url = INVALID_PAGE_PATH;
+        
         try {
             HttpSession session = request.getSession();
             UserDTO loginUser = (UserDTO) session.getAttribute("USER");
             EventDAO eventDao = new EventDAO();
-            List<EventCardDTO> listCard = null;
             listCard = eventDao.getNewFeedEventList(loginUser);
+            LOGGER.info("LIST EVENT CARD:" + listCard);
             request.setAttribute("LIST_CARD", listCard);
             url = NEWFEED_PAGE_PATH;
         } catch (Exception e) {

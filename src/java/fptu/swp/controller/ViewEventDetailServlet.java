@@ -12,6 +12,7 @@ import fptu.swp.entity.user.LecturerBriefInfoDTO;
 import fptu.swp.entity.user.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.ServletContext;
@@ -26,7 +27,9 @@ import org.apache.log4j.Logger;
  * @author triet
  */
 public class ViewEventDetailServlet extends HttpServlet {
-   static final Logger LOGGER = Logger.getLogger(ViewEventDetailServlet.class);
+
+    static final Logger LOGGER = Logger.getLogger(ViewEventDetailServlet.class);
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,15 +42,18 @@ public class ViewEventDetailServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url ="";
+        LOGGER.info("Begin ViewEventDetailServlet");
+        //get roadmap
         ServletContext context = request.getServletContext();
         HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
         String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
         String EVENTDETAIL_PAGE_LABEL = context.getInitParameter("EVENTDETAIL_PAGE_LABEL");
         String EVENTDETAIL_PAGE_PATH = roadmap.get(EVENTDETAIL_PAGE_LABEL);
         String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
-        url = INVALID_PAGE_PATH;
-        
+
+        //default url
+        String url = INVALID_PAGE_PATH;
+
         try {
             int eventId = Integer.parseInt(request.getParameter("eventId"));
             String type = request.getParameter("type");
@@ -56,17 +62,28 @@ public class ViewEventDetailServlet extends HttpServlet {
             System.out.println(detail.toString());
             UserDAO userDao = new UserDAO();
             List<LecturerBriefInfoDTO> listLecturer = userDao.getListLecturerBriefInfo(eventId);
-            List<CommentDTO> listComment = eventDao.getListCommentByEventId(eventId);
+            List<CommentDTO> listComment = eventDao.getListCommentByEventId(eventId, false);
+            List<CommentDTO> listQuestion = eventDao.getListCommentByEventId(eventId, true);
+
+            LOGGER.info("Event detail: " + detail);
             request.setAttribute("EVENT_DETAIL", detail);
+
+            LOGGER.info("List lecturer of event: " + listLecturer);
             request.setAttribute("LIST_LECTURER", listLecturer);
+
+            LOGGER.info("List comment of detail: " + listComment);
             request.setAttribute("LIST_COMMENT", listComment);
-            url = EVENTDETAIL_PAGE_PATH;
             
+            LOGGER.info("List question of detail: " + listQuestion);
+            request.setAttribute("LIST_QUESTION", listQuestion);
+            
+            url = EVENTDETAIL_PAGE_PATH;
+
         } catch (Exception e) {
             LOGGER.error(e);
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
-        }        
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

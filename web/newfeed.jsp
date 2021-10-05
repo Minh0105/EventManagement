@@ -102,11 +102,11 @@
                         <div class="item2">
                             <div class="item2Img">
                                 <div class="item2Img1">
-                                    <img src="../image/student4.png" alt="">
+                                    <img src="resources/image/student4.png" alt="">
                                     <p><%= card.getFollowing()%> lượt quan tâm</p>
                                 </div>
                                 <div class="item2Img1">
-                                    <img src="../image/student5.png" alt="">
+                                    <img src="resources/image/student5.png" alt="">
                                     <p><%= card.getJoining()%> bạn sẽ tham gia</p>
                                 </div>
                             </div>
