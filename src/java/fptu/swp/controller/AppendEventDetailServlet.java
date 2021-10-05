@@ -49,7 +49,7 @@ public class AppendEventDetailServlet extends HttpServlet {
         RangeDTO endSlot = new RangeDTO(Integer.MIN_VALUE);
         RangeDAO rangeDao = new RangeDAO();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdfOut = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdfOut = new SimpleDateFormat("EEEE, dd/MM/yyyy");
         Calendar caledar = Calendar.getInstance();
         UserDAO userDao = new UserDAO();
         List<LecturerBriefInfoDTO> lecturerList;

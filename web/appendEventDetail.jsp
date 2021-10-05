@@ -26,9 +26,19 @@
         <h1>Session Scope - ChosenTimeRange</h1>
         <p>ChosenTimeRange : ${sessionScope.ChosenTimeRange}</p>
         --------
+        <form action="searchLecturer">
+            search lec's name <input type ="text" name ="search" value="${param.search}">
+            <input type="submit" value="Submit" />
+        </form>
         <h1>Session Scope - LecturerList</h1>
         <c:forEach var="lec" items="${sessionScope.LecturerList}" >
             <p>Lecturer Id: ${lec.id} - Name : ${lec.name} - avatar : ${lec.avatar} </p>
         </c:forEach>
+        <form action="reviewEvent" method="POST" enctype="multipart/form-data">
+            eventName <input type ="text" name ="eventName" value="${param.eventName}">
+            description <input type ="text" name ="description" value="${param.description}">  
+            File <input type="file" accept=".png .jpg .jpeg" name="fileUp" required="" value="${param.fileUp}"><br>
+            <input type="submit" value="Submit" />
+        </form>
     </body>
 </html>

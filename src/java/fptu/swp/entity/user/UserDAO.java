@@ -252,7 +252,7 @@ public class UserDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT id, name, avatar " 
+                String sql = "SELECT id, name, avatar, description " 
                             +"FROM tblUsers "
                             +"WHERE roleId = 2 ";
                 stm = conn.prepareStatement(sql);
@@ -261,10 +261,9 @@ public class UserDAO {
                     int id = rs.getInt("id");
                     String avatar = rs.getString("avatar");
                     String name = rs.getString("name");
-                    list.add(new LecturerBriefInfoDTO(id, avatar, name));
+                    String description = rs.getString("description");
+                    list.add(new LecturerBriefInfoDTO(id, avatar, name, description));
                 }
-                
-                return list;
             }
         } finally {
             if (rs != null) {
@@ -277,9 +276,77 @@ public class UserDAO {
                 conn.close();
             }
         }     
-        
-        return null;
+        return list;
     }
     
     
+      public String getDescription(int userId) throws SQLException, NamingException {       
+        String description = "";
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+              
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT description " 
+                            +"FROM tblUsers "
+                            +"WHERE id = ? ";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, userId);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    description = rs.getString("description");
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }     
+        return description;
+    }  
+      
+    public List<LecturerBriefInfoDTO> getLecturerBySearchName(String txtSearch) throws SQLException, NamingException {       
+        List<LecturerBriefInfoDTO> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+              
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT id, name, avatar, description " 
+                            +"FROM tblUsers "
+                            +"WHERE roleId = 2 AND name LIKE ? ";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1,"%" + txtSearch + "%");
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String avatar = rs.getString("avatar");
+                    String name = rs.getString("name");
+                    String description = rs.getString("description");
+                    list.add(new LecturerBriefInfoDTO(id, avatar, name, description));
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }     
+        return list;
+    }
 }

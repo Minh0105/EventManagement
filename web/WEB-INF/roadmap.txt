@@ -17,3 +17,6 @@ viewSlotAndTimeFree=ViewLocationAndTimeServlet
 appendEventDetailPage=appendEventDetail.jsp
 appendEventDetail=AppendEventDetailServlet
 uploadFile=UploadFileServlet
+reviewEventPage=resources/html/reviewEvent.jsp
+reviewEvent=ReviewEventServlet
+searchLecturer=SearchLecturerServlet

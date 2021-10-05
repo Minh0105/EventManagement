@@ -74,9 +74,9 @@ public class FilterAuth implements Filter {
         }
         UserDTO userDto = null;
         // test Case Data, Delete when release
-        userDto = new UserDTO(1, "duongmhse140196@fpt.edu.vn", "Mai Hoang Duong", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png", "No Home", "1234567890", "CLUB'S LEADER");
-        session = httpRequest.getSession();
-        session.setAttribute("USER", userDto);
+//        userDto = new UserDTO(1, "duongmhse140196@fpt.edu.vn", "Mai Hoang Duong", "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png", "No Home", "1234567890", "CLUB'S LEADER");
+//        session = httpRequest.getSession();
+//        session.setAttribute("USER", userDto);
         // End Test Case
         
         String url = null;

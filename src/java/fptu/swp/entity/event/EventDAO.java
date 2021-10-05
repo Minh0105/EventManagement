@@ -18,41 +18,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import javax.naming.NamingException;
 
 /**
  *
  * @author triet
  */
 public class EventDAO {
-
-//    public boolean insertNewEvent(EventDTO event) throws SQLException {
-//        boolean check = false;
-//        Connection conn = null;
-//        PreparedStatement stm = null;
-//        try {
-//            conn = DBHelper.makeConnection();
-//            if (conn != null) {
-//                String sql = "INSERT INTO tblEvents(name, description, poster, createDate, statusId, userId) "
-//                        + " VALUES(?,?,?,CURRENT_TIMESTAMP,1,?)";
-//                stm = conn.prepareStatement(sql);
-//                stm.setString(1, event.getName());
-//                stm.setString(2, event.getDescription());
-//                stm.setString(3, event.getPoster());
-//                stm.setInt(4, event.getUserId());
-//                check = stm.executeUpdate() > 0;
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            if (stm != null) {
-//                stm.close();
-//            }
-//            if (conn != null) {
-//                conn.close();
-//            }
-//        }
-//        return check;
-//    }
 
     //Ham lay danh sach event card hs da bam Quan tam
     //Cac comment ap dung cho 3 ham get list EventCard
@@ -517,4 +493,64 @@ public class EventDAO {
         }
         return list;
     }
+    
+    public boolean saveEventPicture(FileInputStream savedPic) throws SQLException, FileNotFoundException, IOException, NamingException {
+        boolean check = false;
+        Connection con = null;
+        PreparedStatement ps = null;
+        FileInputStream inputStream = savedPic;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "INSERT INTO tblEvents(poster) " +
+                                " VALUES (?)";
+                ps = con.prepareStatement(sql);
+                ps.setBinaryStream(1, inputStream);
+                
+                check = ps.executeUpdate() > 0; 
+            }
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (inputStream != null) {
+                inputStream.close();
+            }
+        }
+        return check;
+    }
+    
+//    public boolean insert
+    
+//    public boolean insertNewEvent(EventDetailDTO event) throws SQLException {
+//        boolean check = false;
+//        Connection conn = null;
+//        PreparedStatement stm = null;
+//        try {
+//            conn = DBHelper.makeConnection();
+//            if (conn != null) {
+//                String sql = "INSERT INTO tblEvents(name, description, poster, createDate, statusId, userId) "
+//                        + " VALUES(?,?,?,CURRENT_TIMESTAMP,1,?)";
+//                stm = conn.prepareStatement(sql);
+//                stm.setString(1, event.getName());
+//                stm.setString(2, event.getDescription());
+//                stm.setString(3, event.getPoster());
+//                stm.setInt(4, event.getUserId());
+//                check = stm.executeUpdate() > 0;
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (stm != null) {
+//                stm.close();
+//            }
+//            if (conn != null) {
+//                conn.close();
+//            }
+//        }
+//        return check;
+//    }
 }
