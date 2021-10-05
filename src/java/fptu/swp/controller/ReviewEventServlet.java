@@ -64,7 +64,7 @@ public class ReviewEventServlet extends HttpServlet {
         HttpSession session;
         String chosenDate = "";
         String chosenTimeRange = "";
-        List<LecturerBriefInfoDTO> lecturerList = null;
+        List<LecturerBriefInfoDTO> chosenLecturerList = new ArrayList<>();
         List<LocationDTO> chosenLocationList = null;
         UserDTO loginUser = null;
         String poster = "";
@@ -99,7 +99,6 @@ public class ReviewEventServlet extends HttpServlet {
             organizerAvatar = loginUser.getAvatar();
             chosenDate = (String) session.getAttribute("ChosenDate");
             chosenTimeRange = (String) session.getAttribute("ChosenTimeRange");
-            lecturerList = (List<LecturerBriefInfoDTO>) session.getAttribute("LecturerList");
             chosenLocationList = (List<LocationDTO>) session.getAttribute("ChosenLocationList");
 
             for (i = 0; i < chosenLocationList.size() - 1; i++) {
@@ -134,6 +133,11 @@ public class ReviewEventServlet extends HttpServlet {
                         if (inputName.equalsIgnoreCase("description")) {
                             description = (String) item.getString();
                         }
+                        if(inputName.equalsIgnoreCase("chosenLecturer")){
+                            int lecId = Integer.parseInt((String) item.getString());
+                            LecturerBriefInfoDTO lecturerInfo = userDao.getLecturerById(lecId);
+                            chosenLecturerList.add(lecturerInfo);
+                        }
                     } else {
                         try {
 //                                String itemName = item.getName();
@@ -156,6 +160,7 @@ public class ReviewEventServlet extends HttpServlet {
                 EventDetailDTO review = new EventDetailDTO(0, eventName, poster, location, chosenDate,
                         chosenTimeRange, organizerName, 0, 0, description, organizerDescription, organizerAvatar);
                 request.setAttribute("EVENT_DETAIL_REVIEW", review);
+                request.setAttribute("CHOSEN_LECTURER_LIST", chosenLecturerList);
                 url = REVIEW_EVENT_PAGE_PATH;
 
             }

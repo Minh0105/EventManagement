@@ -31,10 +31,12 @@
             <input type="submit" value="Submit" />
         </form>
         <h1>Session Scope - LecturerList</h1>
+
+        <form action="reviewEvent" method="POST" enctype="multipart/form-data">
         <c:forEach var="lec" items="${sessionScope.LecturerList}" >
+            <input type="checkbox" name="chosenLecturer" value="${lec.id}">
             <p>Lecturer Id: ${lec.id} - Name : ${lec.name} - avatar : ${lec.avatar} </p>
         </c:forEach>
-        <form action="reviewEvent" method="POST" enctype="multipart/form-data">
             eventName <input type ="text" name ="eventName" value="${param.eventName}">
             description <input type ="text" name ="description" value="${param.description}">  
             File <input type="file" accept=".png .jpg .jpeg" name="fileUp" required="" value="${param.fileUp}"><br>

@@ -313,7 +313,7 @@ public class UserDAO {
         return description;
     }  
       
-    public List<LecturerBriefInfoDTO> getLecturerBySearchName(String txtSearch) throws SQLException, NamingException {       
+    public List<LecturerBriefInfoDTO> getListLecturerBySearchName(String txtSearch) throws SQLException, NamingException {       
         List<LecturerBriefInfoDTO> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
@@ -348,5 +348,41 @@ public class UserDAO {
             }
         }     
         return list;
+    }
+    
+    public LecturerBriefInfoDTO getLecturerById(int id) throws SQLException, NamingException {       
+        LecturerBriefInfoDTO lecturerInfo = null;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+              
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT name, avatar, description " 
+                            +"FROM tblUsers "
+                            +"WHERE roleId = 2 AND id = ? ";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1,id);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    String avatar = rs.getString("avatar");
+                    String name = rs.getString("name");
+                    String description = rs.getString("description");
+                    lecturerInfo = new LecturerBriefInfoDTO(id, avatar, name, description);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }     
+        return lecturerInfo;
     }
 }

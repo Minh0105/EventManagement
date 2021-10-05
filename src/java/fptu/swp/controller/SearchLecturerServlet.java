@@ -58,7 +58,7 @@ public class SearchLecturerServlet extends HttpServlet {
         String txtSearch = request.getParameter("search");
         try {
             session = request.getSession(false);
-            lecturerList = userDao.getLecturerBySearchName(txtSearch);
+            lecturerList = userDao.getListLecturerBySearchName(txtSearch);
             LOGGER.info("Session Attribute - LecturerList : " + lecturerList);
             session.setAttribute("LecturerList", lecturerList);
             url = APPEND_EVENT_DETAIL_PAGE_PATH;

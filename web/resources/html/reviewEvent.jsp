@@ -19,7 +19,7 @@
     <body>
         <%
             EventDetailDTO detail = (EventDetailDTO) request.getAttribute("EVENT_DETAIL_REVIEW");
-            List<LecturerBriefInfoDTO> listLecturer = (List<LecturerBriefInfoDTO>) request.getAttribute("LIST_LECTURER");
+            List<LecturerBriefInfoDTO> listLecturer = (List<LecturerBriefInfoDTO>) request.getAttribute("CHOSEN_LECTURER_LIST");
             
         %>
         <img id="ItemPreview" src="data:image/jpg;base64,<%= detail.getPoster() %>">
