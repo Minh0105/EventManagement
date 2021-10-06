@@ -20,12 +20,23 @@
               crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-        <link rel="stylesheet" href="../css/student.css">
+
+        <script src='bootstrap/js/bootstrap.js'></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="resources/sweetalert2.all.min.js"></script> 
+
+        <link rel="stylesheet" type="text/css" href="resources/css/newfeed.css"/>
+        <link rel='stylesheet' type='text/css' media='screen' href='resources/css/style.css'>
+
     </head>
 
     <body>
+
         <nav class="navbar navbar-expand-md navbar-light navbar-color sticky-top">
-            <div class="container-fluid ">
+            <div class="container-fluid " >
                 <a class="navbar-branch" href="#">
                     <img src="resources/image/FPTlogo.png" height="50">
                 </a>
@@ -39,9 +50,12 @@
                             <a class="nav-link active rounded-circle" href="ViewInfoPage"> <img class="nav-avatar rounded-circle" src="${sessionScope.USER.avatar}"> ${sessionScope.USER.name}</img></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-bell-fill" viewBox="0 0 22 22">
-                                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-                                </svg></a>
+                            <a class="nav-link" href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-bell-fill" viewBox="0 0 22 22">
+                                <path class="titleRight2Bell" d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+
+                                </svg>
+                            </a>
                         </li>
                         <li class="nav-item dropdown">
 
@@ -60,6 +74,7 @@
                 </div>
             </div>
         </nav>
+
         <section class="button">
             <div class="buttonWord">
                 Discover the event world
@@ -83,18 +98,19 @@
 
         <div class="container">
             <div class="row">
+
+                <%
+                    List<EventCardDTO> listCard = (List<EventCardDTO>) request.getAttribute("LIST_CARD");
+                    if (listCard != null) {
+                        for (EventCardDTO card : listCard) {
+                %>
                 <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                    <%
-                        List<EventCardDTO> listCard = (List<EventCardDTO>) request.getAttribute("LIST_CARD");
-                        if (listCard != null) {
-                            for (EventCardDTO card : listCard){
-                           %>
                     <div class="item">
                         <div class="item1">
-                            <img src="<%= card.getPoster() %>" alt="">
+                            <img src="<%= card.getPoster()%>" alt="">
                             <div class="item1Word">
-                                <p><%= card.getDate() %> - <%= card.getLocation() %> </p>
-                                <h4><%= card.getName() %></h4>
+                                <p><%= card.getDate()%> - <%= card.getLocation()%> </p>
+                                <h4><%= card.getName()%></h4>
                                 <p><%= card.getOrganizerName()%></p>
                             </div>
                         </div>
@@ -102,35 +118,38 @@
                         <div class="item2">
                             <div class="item2Img">
                                 <div class="item2Img1">
-                                    <img src="resources/image/student4.png" alt="">
+                                    <img src="../image/student4.png" alt="">
                                     <p><%= card.getFollowing()%> lượt quan tâm</p>
                                 </div>
                                 <div class="item2Img1">
-                                    <img src="resources/image/student5.png" alt="">
+                                    <img src="../image/student5.png" alt="">
                                     <p><%= card.getJoining()%> bạn sẽ tham gia</p>
                                 </div>
                             </div>
 
-                           
-                                <form action="viewEventDetail">
-                                 <input type="submit" value="Chi tiết">
-                                 <input type="hidden" name="eventId" value="<%= card.getId() %>">
-                                </form>
-                      
+
+                            <form action="viewEventDetail">
+                                <input type="submit" value="Chi tiết">
+                                <input type="hidden" name="eventId" value="<%= card.getId()%>">
+                            </form>
+
                         </div>
                     </div>
-                    <% }
-                    %>
                 </div>
+                <% }
+                    }
+                %>
 
 
 
 
 
+
+
+
+            </div>
         </div>
-        <%
-            }
-        %>
+
         <section class="end">
             <h4>Developed By Aladudu Group</h4>
             <p>COVID-19, 20/9/2021</p>

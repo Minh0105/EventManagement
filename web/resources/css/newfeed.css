@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-     
+    
 }
 /* Header */
 
@@ -127,7 +127,7 @@
     3% { -moz-transform: rotate(-28deg); }
     5% { -moz-transform: rotate(34deg); }
     7% { -moz-transform: rotate(-32deg); }
-    9% { -moz-transform: rotate(30deg); }
+9% { -moz-transform: rotate(30deg); }
     11% { -moz-transform: rotate(-28deg); }
     13% { -moz-transform: rotate(26deg); }
     15% { -moz-transform: rotate(-24deg); }
@@ -242,10 +242,12 @@
 .buttonAction2 button:hover{
     background-color: #25be2f; 
 }
+
+/*CONTAINER*/
+
 .container{
     padding: 0.5rem;
 }
-
 /* Row */
 .row {
     margin: auto 0;
@@ -268,15 +270,37 @@
 }
 /* Item 1 Word */
 .item1Word{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
     padding: 1rem 2rem;
 }
 .item1Word h4{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
     font-weight:900;
    color: #f15827;
 }
+.item1Word h4:hover{
+    overflow: visible;
+    
+}
+.item1Word p{
+    word-wrap:break-word;
+   white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}   
+.item1Word p:hover{
+    overflow:visible;
+}
 
 /* item2 */
-.item2{
+.item2{ 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
     padding: 0 2rem;
     display: flex;
     justify-content:space-between
@@ -286,6 +310,9 @@
     display: flex;
 }
 .item2Img1 p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
     font-size: 15px;
     font-weight: 300;
     margin: 0.5rem;
@@ -298,6 +325,7 @@
 }
 /* Item2 Button */
 .item2Button{
+    
     margin: 1rem;
 }
 .item2Button button{
@@ -325,8 +353,3 @@
     flex-direction: column;
     width: 100%;
 }
-
-
-
-
-
