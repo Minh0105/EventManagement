@@ -213,9 +213,9 @@ public class UserDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "ELECT v.id id, v.name name, v.avatar avatar, v.description description" +
+                String sql = "SELECT v.id id, v.name name, v.avatar avatar, v.description description" +
                                 " FROM tblLecturersInEvents u INNER JOIN tblUsers v ON u.lecturerId = v.id" +
-                                " WHERE u.eventId = 1 AND u.statusId = 1";
+                                " WHERE u.eventId = ? AND u.statusId = 1";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, eventId);
                 rs = stm.executeQuery();

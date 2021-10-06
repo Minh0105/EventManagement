@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Base64;
 import javax.naming.NamingException;
 
 /**
@@ -77,13 +78,12 @@ public class EventDAO {
                         listLocation.clear(); //qua moi event khoi tao lai list dia diem
                         currentEventId = eventId;
                         eventName = rs.getString("eventName");
-                        eventPoster = rs.getString("eventPoster");
+                        byte[] tmp = rs.getBytes("eventPoster");
+                        eventPoster = Base64.getEncoder().encodeToString(tmp);
                         organizerName = rs.getString("organizerName");
-                        formatter = new SimpleDateFormat("dd/MM/yyyy");
+                        formatter = new SimpleDateFormat("EEEE, dd/MM/yyyy");
                         Date dateFromDB = rs.getTimestamp("date");
                         date = formatter.format(dateFromDB).toString();
-                        formatter = new SimpleDateFormat("EEEE");
-                        date = formatter.format(dateFromDB).toString() + ", " + date; //gop thu ngay thang thanh chuoi date
                         locationName = rs.getString("locationName"); //lay location cua 1 record
                         following = rs.getInt("followers");
                         joining = rs.getInt("participants");
@@ -164,13 +164,12 @@ public class EventDAO {
                         listLocation.clear();
                         currentEventId = eventId;
                         eventName = rs.getString("eventName");
-                        eventPoster = rs.getString("eventPoster");
+                        byte[] tmp = rs.getBytes("eventPoster");
+                        eventPoster = Base64.getEncoder().encodeToString(tmp);
                         organizerName = rs.getString("organizerName");
-                        formatter = new SimpleDateFormat("dd/MM/yyyy");
+                        formatter = new SimpleDateFormat("EEEE, dd/MM/yyyy");
                         Date dateFromDB = rs.getTimestamp("date");
                         date = formatter.format(dateFromDB).toString();
-                        formatter = new SimpleDateFormat("EEEE");
-                        date = formatter.format(dateFromDB).toString() + ", " + date;
                         locationName = rs.getString("locationName");
                         following = rs.getInt("followers");
                         joining = rs.getInt("participants");
@@ -270,13 +269,12 @@ public class EventDAO {
                         listLocation.clear();
                         currentEventId = eventId;
                         eventName = rs.getString("eventName");
-                        eventPoster = rs.getString("eventPoster");
+                        byte[] tmp = rs.getBytes("eventPoster");
+                        eventPoster = Base64.getEncoder().encodeToString(tmp);
                         organizerName = rs.getString("organizerName");
-                        formatter = new SimpleDateFormat("dd/MM/yyyy");
+                        formatter = new SimpleDateFormat("EEEE, dd/MM/yyyy");
                         Date dateFromDB = rs.getTimestamp("date");
                         date = formatter.format(dateFromDB).toString();
-                        formatter = new SimpleDateFormat("EEEE");
-                        date = formatter.format(dateFromDB).toString() + ", " + date;
                         locationName = rs.getString("locationName");
                         following = rs.getInt("followers");
                         joining = rs.getInt("participants");
@@ -348,13 +346,12 @@ public class EventDAO {
                 rs = stm.executeQuery();
                 if (rs.next()) {
                     eventName = rs.getString("eventName");
-                    eventPoster = rs.getString("eventPoster");
+                    byte[] tmp = rs.getBytes("eventPoster");
+                    eventPoster = Base64.getEncoder().encodeToString(tmp);
                     organizerName = rs.getString("organizerName");
-                    formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    formatter = new SimpleDateFormat("EEEE, dd/MM/yyyy");
                     Date dateFromDB = rs.getTimestamp("date");
                     date = formatter.format(dateFromDB).toString();
-                    formatter = new SimpleDateFormat("EEEE");
-                    date = formatter.format(dateFromDB).toString() + ", " + date;
                     locationName = rs.getString("locationName");
                     following = rs.getInt("followers");
                     joining = rs.getInt("participants");
@@ -494,63 +491,62 @@ public class EventDAO {
         return list;
     }
      
-    public boolean saveEventPicture(FileInputStream savedPic) throws SQLException, FileNotFoundException, IOException, NamingException {
-        boolean check = false;
-        Connection con = null;
-        PreparedStatement ps = null;
-        FileInputStream inputStream = savedPic;
-        try {
-            con = DBHelper.makeConnection();
-            if (con != null) {
-                String sql = "INSERT INTO tblEvents(poster) " +
-                                " VALUES (?)";
-                ps = con.prepareStatement(sql);
-                ps.setBinaryStream(1, inputStream);
-                
-                check = ps.executeUpdate() > 0; 
-            }
-        } finally {
-            if (con != null) {
-                con.close();
-            }
-            if (ps != null) {
-                ps.close();
-            }
-            if (inputStream != null) {
-                inputStream.close();
-            }
-        }
-        return check;
-    }
-    
-//    public boolean insert
-    
-//    public boolean insertNewEvent(EventDetailDTO event) throws SQLException {
+//    public boolean saveEventPicture(FileInputStream savedPic) throws SQLException, FileNotFoundException, IOException, NamingException {
 //        boolean check = false;
-//        Connection conn = null;
-//        PreparedStatement stm = null;
+//        Connection con = null;
+//        PreparedStatement ps = null;
+//        FileInputStream inputStream = savedPic;
 //        try {
-//            conn = DBHelper.makeConnection();
-//            if (conn != null) {
-//                String sql = "INSERT INTO tblEvents(name, description, poster, createDate, statusId, userId) "
-//                        + " VALUES(?,?,?,CURRENT_TIMESTAMP,1,?)";
-//                stm = conn.prepareStatement(sql);
-//                stm.setString(1, event.getName());
-//                stm.setString(2, event.getDescription());
-//                stm.setString(3, event.getPoster());
-//                stm.setInt(4, event.getUserId());
-//                check = stm.executeUpdate() > 0;
+//            con = DBHelper.makeConnection();
+//            if (con != null) {
+//                String sql = "INSERT INTO tblEvents(poster) " +
+//                                " VALUES (?)";
+//                ps = con.prepareStatement(sql);
+//                ps.setBinaryStream(1, inputStream);   
+//                check = ps.executeUpdate() > 0; 
 //            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
 //        } finally {
-//            if (stm != null) {
-//                stm.close();
+//            if (con != null) {
+//                con.close();
 //            }
-//            if (conn != null) {
-//                conn.close();
+//            if (ps != null) {
+//                ps.close();
+//            }
+//            if (inputStream != null) {
+//                inputStream.close();
 //            }
 //        }
 //        return check;
 //    }
+//    
+//    public boolean insert
+    
+    public boolean insertNewEvent(EventDetailDTO detail, int organizerId, FileInputStream savedPic) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "INSERT INTO tblEvents(name, description, poster, createDate, statusId, userId, numberOfFollowers, numberOfParticipants) "
+                        + " VALUES(?,?,?,CURRENT_TIMESTAMP,1,?,0,0)";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, detail.getName());
+                stm.setString(2, detail.getDescription());
+                stm.setBinaryStream(3, savedPic);
+                stm.setInt(4, organizerId);
+                check = stm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
 }

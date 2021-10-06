@@ -18,8 +18,8 @@
     </head>
     <body>
         <%
-            EventDetailDTO detail = (EventDetailDTO) request.getAttribute("EVENT_DETAIL_REVIEW");
-            List<LecturerBriefInfoDTO> listLecturer = (List<LecturerBriefInfoDTO>) request.getAttribute("CHOSEN_LECTURER_LIST");
+            EventDetailDTO detail = (EventDetailDTO) session.getAttribute("EVENT_DETAIL_REVIEW");
+            List<LecturerBriefInfoDTO> listLecturer = (List<LecturerBriefInfoDTO>) session.getAttribute("ChosenLecturerList");
             
         %>
         <img id="ItemPreview" src="data:image/jpg;base64,<%= detail.getPoster() %>">
@@ -33,7 +33,7 @@
         <br> ______________________________________________________________
         <br> <br>  GIẢNG VIÊN
         <%
-            for (LecturerBriefInfoDTO lecturer : listLecturer) {
+            if(listLecturer != null) for (LecturerBriefInfoDTO lecturer : listLecturer) {
         %>
         <br> <img src="<%= lecturer.getAvatar()%>" alt="">
         <br> <%= lecturer.getName()%>
@@ -47,15 +47,12 @@
         <br> <%= detail.getOrganizerName()%>
         <img src="<%= detail.getOrganizerAvatar()%>" alt=""> 
         <br>   <%= detail.getOrganizerDescription()%>
+            <br>  _______________________________________________________________
+    <br> 
+    <br>  _______________________________________________________________
+    <a href="createEvent">CREATE EVENT</a>
     </body>
-    <br>  _______________________________________________________________
-    <br> 
-    <br>  _______________________________________________________________
-    <br> 
-    <br>  _______________________________________________________________
-    <br> 
-    <br>  _______________________________________________________________
-    <br> 
+
 
 </html>
 

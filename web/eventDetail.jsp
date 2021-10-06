@@ -21,7 +21,7 @@
             EventDetailDTO detail = (EventDetailDTO) request.getAttribute("EVENT_DETAIL");
             List<LecturerBriefInfoDTO> listLecturer = (List<LecturerBriefInfoDTO>) request.getAttribute("LIST_LECTURER");
         %>
-        <br>        <img src="<%= detail.getPoster()%>" alt="">
+        <br>        <img src="data:image/jpg;base64,<%= detail.getPoster() %>" alt="">
         <br><%= detail.getDate()%> - <%= detail.getLocation()%>
         <br><%= detail.getName()%>
         <br><%= detail.getOrganizerName()%>
@@ -100,6 +100,7 @@
     %>
 
     <br> <img src="<%= question.getUserAvatar()%>" alt="">
+    <br> <%= question.getUserName()%>
     <br> <%= question.getContents()%>
     <br> <%= question.getCommentDatetime()%>
     <%

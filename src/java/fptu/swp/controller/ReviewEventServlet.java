@@ -64,7 +64,7 @@ public class ReviewEventServlet extends HttpServlet {
         HttpSession session;
         String chosenDate = "";
         String chosenTimeRange = "";
-        List<LecturerBriefInfoDTO> chosenLecturerList = new ArrayList<>();
+
         List<LocationDTO> chosenLocationList = null;
         UserDTO loginUser = null;
         String poster = "";
@@ -76,6 +76,7 @@ public class ReviewEventServlet extends HttpServlet {
         int i = 0;
         String eventName = "";
         String description = "";
+        FileInputStream posterStream = null;
 
         // get roadmap
         ServletContext context = request.getServletContext();
@@ -98,6 +99,7 @@ public class ReviewEventServlet extends HttpServlet {
             chosenDate = (String) session.getAttribute("ChosenDate");
             chosenTimeRange = (String) session.getAttribute("ChosenTimeRange");
             chosenLocationList = (List<LocationDTO>) session.getAttribute("ChosenLocationList");
+
 
             for (i = 0; i < chosenLocationList.size() - 1; i++) {
                 location += chosenLocationList.get(i).getName() + ", ";
@@ -131,11 +133,6 @@ public class ReviewEventServlet extends HttpServlet {
                         if (inputName.equalsIgnoreCase("description")) {
                             description = (String) item.getString();
                         }
-                        if(inputName.equalsIgnoreCase("chosenLecturer")){
-                            int lecId = Integer.parseInt((String) item.getString());
-                            LecturerBriefInfoDTO lecturerInfo = userDao.getLecturerById(lecId);
-                            chosenLecturerList.add(lecturerInfo);
-                        }
                     } else {
                         try {
 //                                String itemName = item.getName();
@@ -145,6 +142,7 @@ public class ReviewEventServlet extends HttpServlet {
                             //EventDAO  = new PictureDAO();
                             //request.setAttribute("result", picDAO.savePicture((FileInputStream) item.getInputStream()));
                             // show Uploaded Pic
+                            posterStream = (FileInputStream) item.getInputStream();       
                             poster = Base64.getEncoder().encodeToString(item.get());
 
 //                                request.setAttribute("eventPoster", data);
@@ -157,8 +155,10 @@ public class ReviewEventServlet extends HttpServlet {
                 }
                 EventDetailDTO review = new EventDetailDTO(0, eventName, poster, location, chosenDate,
                         chosenTimeRange, organizerName, 0, 0, description, organizerDescription, organizerAvatar);
-                request.setAttribute("EVENT_DETAIL_REVIEW", review);
-                request.setAttribute("CHOSEN_LECTURER_LIST", chosenLecturerList);
+                LOGGER.info("Session attribute: EVENT_DETAIL_REVIEW: " + review);
+                session.setAttribute("EVENT_DETAIL_REVIEW", review);
+                LOGGER.info("Session attribute: EVENT_POSTER_STREAM: " + review);
+                session.setAttribute("EVENT_POSTER_STREAM", posterStream);
                 url = REVIEW_EVENT_PAGE_PATH;
 
             }

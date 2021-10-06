@@ -21,7 +21,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
-        <script src='bootstrap/js/bootstrap.js'></script>
+<!--        <script src='bootstrap/js/bootstrap.js'></script>-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -107,7 +107,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                     <div class="item">
                         <div class="item1">
-                            <img src="<%= card.getPoster()%>" alt="">
+                            <img src="data:image/jpg;base64,<%= card.getPoster()%>" alt="">
                             <div class="item1Word">
                                 <p><%= card.getDate()%> - <%= card.getLocation()%> </p>
                                 <h4><%= card.getName()%></h4>
@@ -118,11 +118,11 @@
                         <div class="item2">
                             <div class="item2Img">
                                 <div class="item2Img1">
-                                    <img src="../image/student4.png" alt="">
+                                    <img src="resources/image/student4.png" alt="">
                                     <p><%= card.getFollowing()%> lượt quan tâm</p>
                                 </div>
                                 <div class="item2Img1">
-                                    <img src="../image/student5.png" alt="">
+                                    <img src="resources/image/student5.png" alt="">
                                     <p><%= card.getJoining()%> bạn sẽ tham gia</p>
                                 </div>
                             </div>

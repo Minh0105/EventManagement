@@ -68,6 +68,10 @@
         <param-name>REVIEW_EVENT_PAGE_LABEL</param-name>
         <param-value>reviewEventPage</param-value>
     </context-param>
+    <context-param>
+        <param-name>VIEW_NEWFEED_SERVLET</param-name>
+        <param-value>viewNewfeed</param-value>
+    </context-param>
     <filter>
         <filter-name>FilterAuth</filter-name>
         <filter-class>fptu.swp.filter.FilterAuth</filter-class>
@@ -109,8 +113,16 @@
         <servlet-class>fptu.swp.controller.ReviewEventServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SearchLecturerServlet</servlet-name>
-        <servlet-class>fptu.swp.controller.SearchLecturerServlet</servlet-class>
+        <servlet-name>ChooseLecturerServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.ChooseLecturerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RemoveChosenLecturerServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.RemoveChosenLecturerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateEventServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.CreateEventServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -133,8 +145,16 @@
         <url-pattern>/ReviewEventServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SearchLecturerServlet</servlet-name>
-        <url-pattern>/SearchLecturerServlet</url-pattern>
+        <servlet-name>ChooseLecturerServlet</servlet-name>
+        <url-pattern>/ChooseLecturerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveChosenLecturerServlet</servlet-name>
+        <url-pattern>/RemoveChosenLecturerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateEventServlet</servlet-name>
+        <url-pattern>/CreateEventServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

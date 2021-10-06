@@ -78,11 +78,27 @@ public class LecturerBriefInfoDTO implements Serializable{
         this.description = description;
     }
     
-    
-
     @Override
     public String toString() {
         return "LecturerBriefInfoDTO{" +  id + ", " + avatar + ", " + name + '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final LecturerBriefInfoDTO other = (LecturerBriefInfoDTO) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
     }
     
     
