@@ -68,13 +68,11 @@
                             <form action="logout" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <button class="btn btn-outline-light profile-button logout " type="submit"><img src="resources/icon/log_out_logo.png">Log Out</button> 
                             </form>   
-
                         </li>				
                     </ul>
                 </div>
             </div>
         </nav>
-
         <section class="button">
             <div class="buttonWord">
                 Discover the event world
@@ -114,7 +112,6 @@
                                 <p><%= card.getOrganizerName()%></p>
                             </div>
                         </div>
-
                         <div class="item2">
                             <div class="item2Img">
                                 <div class="item2Img1">
@@ -126,10 +123,8 @@
                                     <p><%= card.getJoining()%> bạn sẽ tham gia</p>
                                 </div>
                             </div>
-
-
                             <form action="viewEventDetail">
-                                <input type="submit" value="Chi tiết">
+                                <input class ="btnSubmit" type="submit" value="Chi tiết">
                                 <input type="hidden" name="eventId" value="<%= card.getId()%>">
                             </form>
 
@@ -139,14 +134,6 @@
                 <% }
                     }
                 %>
-
-
-
-
-
-
-
-
             </div>
         </div>
 
@@ -154,7 +141,6 @@
             <h4>Developed By Aladudu Group</h4>
             <p>COVID-19, 20/9/2021</p>
         </section>
-
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
                 integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN"
         crossorigin="anonymous"></script>
