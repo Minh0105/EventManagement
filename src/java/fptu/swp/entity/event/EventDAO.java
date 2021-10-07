@@ -5,6 +5,8 @@
  */
 package fptu.swp.entity.event;
 
+import fptu.swp.entity.location.LocationDTO;
+import fptu.swp.entity.user.LecturerBriefInfoDTO;
 import fptu.swp.entity.user.UserDTO;
 import fptu.swp.utils.DBHelper;
 import java.sql.Connection;
@@ -22,6 +24,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Statement;
 import java.util.Base64;
 import javax.naming.NamingException;
 
@@ -418,8 +421,8 @@ public class EventDAO {
         ResultSet rs2 = null;
         int commentId = 0;
         String contents = "";
-        String userAvatar= "";
-        String userName= "";
+        String userAvatar = "";
+        String userName = "";
         Date commentDatetime;
         List<ReplyDTO> replyList = new ArrayList<>();
 
@@ -428,38 +431,38 @@ public class EventDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 String sql = "SELECT u.commentId commentId, u.contents contents, v.avatar userAvatar,"
-                              + " v.name userName, u.isQuestion isQuestion, u.commentDatetime commentDatetime"
-                              + " FROM tblComments u"
-                              + " LEFT JOIN tblUsers v ON u.userId = v.id"
-                              + " WHERE u.eventId = ? AND u.replyId IS NULL AND u.isQuestion = ?";
+                        + " v.name userName, u.isQuestion isQuestion, u.commentDatetime commentDatetime"
+                        + " FROM tblComments u"
+                        + " LEFT JOIN tblUsers v ON u.userId = v.id"
+                        + " WHERE u.eventId = ? AND u.replyId IS NULL AND u.isQuestion = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, eventId);
                 stm.setBoolean(2, isQuestion);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     commentId = rs.getInt("commentId");
-                    contents= rs.getString("contents");
+                    contents = rs.getString("contents");
                     userAvatar = rs.getString("userAvatar");
                     userName = rs.getString("userName");
                     isQuestion = rs.getBoolean("isQuestion");
                     commentDatetime = rs.getTimestamp("commentDatetime");
-                    String sql2 = "SELECT u.commentId commentId, u.contents contents, v.avatar userAvatar, v.name userName, u.commentDatetime replyDatetime" 
-                                     + " FROM tblComments u" 
-                                     + " LEFT JOIN tblUsers v ON u.userId = v.id" 
-                                     + " WHERE eventId = ? AND replyId = ? AND isQuestion = 0";
+                    String sql2 = "SELECT u.commentId commentId, u.contents contents, v.avatar userAvatar, v.name userName, u.commentDatetime replyDatetime"
+                            + " FROM tblComments u"
+                            + " LEFT JOIN tblUsers v ON u.userId = v.id"
+                            + " WHERE eventId = ? AND replyId = ? AND isQuestion = 0";
                     stm2 = conn.prepareStatement(sql2);
                     stm2.setInt(1, eventId);
                     stm2.setInt(2, commentId);
                     rs2 = stm2.executeQuery();
-                    while(rs2.next()){
-                         int replyCommentId = rs2.getInt("commentId");
-                         String replyContents= rs2.getString("contents");
-                         String replyUserAvatar = rs2.getString("userAvatar");
-                         String replyUserName = rs2.getString("userName");
-                         Date replyCommentDatetime = rs2.getTimestamp("replyDatetime");
-                         replyList.add(new ReplyDTO(replyCommentId, replyContents, replyUserAvatar, replyUserName, replyCommentDatetime));
+                    while (rs2.next()) {
+                        int replyCommentId = rs2.getInt("commentId");
+                        String replyContents = rs2.getString("contents");
+                        String replyUserAvatar = rs2.getString("userAvatar");
+                        String replyUserName = rs2.getString("userName");
+                        Date replyCommentDatetime = rs2.getTimestamp("replyDatetime");
+                        replyList.add(new ReplyDTO(replyCommentId, replyContents, replyUserAvatar, replyUserName, replyCommentDatetime));
                     }
-                    if(replyList.size()>0){
+                    if (replyList.size() > 0) {
                         Collections.sort(replyList);
                     }
                     CommentDTO tmp = new CommentDTO(commentId, contents, eventId, userAvatar, userName, isQuestion, commentDatetime, replyList);
@@ -490,7 +493,7 @@ public class EventDAO {
         }
         return list;
     }
-     
+
 //    public boolean saveEventPicture(FileInputStream savedPic) throws SQLException, FileNotFoundException, IOException, NamingException {
 //        boolean check = false;
 //        Connection con = null;
@@ -520,22 +523,103 @@ public class EventDAO {
 //    }
 //    
 //    public boolean insert
-    
-    public boolean insertNewEvent(EventDetailDTO detail, int organizerId, FileInputStream savedPic) throws SQLException {
+    public int insertNewEvent(EventDetailDTO detail, int organizerId, FileInputStream savedPic) throws SQLException {
+        int eventId = 0;
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet generatedKeys = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "INSERT INTO tblEvents(name, description, poster, createDate, statusId, userId, numberOfFollowers, numberOfParticipants) "
+                        + " VALUES(?,?,?,CURRENT_TIMESTAMP,1,?,0,0)";
+                stm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                stm.setString(1, detail.getName());
+                stm.setString(2, detail.getDescription());
+                stm.setBinaryStream(3, savedPic);
+                stm.setInt(4, organizerId);
+                check = stm.executeUpdate() > 0;
+                if (check) {
+                    generatedKeys = stm.getGeneratedKeys();
+                    if (generatedKeys.next()) {
+                        eventId = generatedKeys.getInt(1);
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (generatedKeys != null) {
+                generatedKeys.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return eventId;
+    }
+
+    public boolean insertNewEventDateTimeLocation(String chosenDate, List<LocationDTO> chosenLocationList, String chosenTimeRange, int eventId) throws SQLException {
+        boolean check = false;
+        int startSlot = Integer.parseInt(String.valueOf(chosenTimeRange.charAt(0)));
+        int endSlot = Integer.parseInt(String.valueOf(chosenTimeRange.charAt(4)));
+
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            Date date = new SimpleDateFormat("EEEE, dd/MM/yyyy").parse(chosenDate);
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                for (LocationDTO location : chosenLocationList) {
+                    for (int i = startSlot; i <= endSlot; i++) {
+                        String sql = "INSERT INTO tblDateTimeLocation(eventId, rangeId, locationId, date, statusId) "
+                                + " VALUES(?,?,?,?,1)";
+                        stm = conn.prepareStatement(sql);
+                        stm.setInt(1, eventId);
+                        stm.setInt(2, i);
+                        stm.setInt(3, location.getId());
+                        stm.setDate(4, new java.sql.Date(date.getTime()));
+                        check = stm.executeUpdate() > 0;
+                    }
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
+    public boolean insertNewEventLecturer(List<LecturerBriefInfoDTO> chosenLecturerList, int eventId) throws SQLException {
+        if(chosenLecturerList.size() == 0){
+            return true;
+        }
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "INSERT INTO tblEvents(name, description, poster, createDate, statusId, userId, numberOfFollowers, numberOfParticipants) "
-                        + " VALUES(?,?,?,CURRENT_TIMESTAMP,1,?,0,0)";
-                stm = conn.prepareStatement(sql);
-                stm.setString(1, detail.getName());
-                stm.setString(2, detail.getDescription());
-                stm.setBinaryStream(3, savedPic);
-                stm.setInt(4, organizerId);
-                check = stm.executeUpdate() > 0;
+                for (LecturerBriefInfoDTO lecturer : chosenLecturerList) {
+                    String sql = "INSERT INTO tblLecturersInEvents(eventId, lecturerId, statusId) "
+                            + " VALUES(?,?,3)";
+                    stm = conn.prepareStatement(sql);
+                    stm.setInt(1, eventId);
+                    stm.setInt(2, lecturer.getId());
+                    check = stm.executeUpdate() > 0;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

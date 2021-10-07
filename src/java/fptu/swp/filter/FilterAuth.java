@@ -59,6 +59,7 @@ public class FilterAuth implements Filter {
         
         
         HttpServletRequest httpRequest = (HttpServletRequest) request;
+        request.setCharacterEncoding("UTF-8");
         ServletContext context = request.getServletContext();
         HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
         HashMap<String, HashSet<String>> auth = (HashMap<String, HashSet<String>>) context.getAttribute("AUTH");

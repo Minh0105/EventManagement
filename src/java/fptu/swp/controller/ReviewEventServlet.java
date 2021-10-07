@@ -59,7 +59,7 @@ public class ReviewEventServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("multipart/*");
         LOGGER.info("Begin ReviewEventServlet");
-
+        request.setCharacterEncoding("UTF-8");
         // declare var
         HttpSession session;
         String chosenDate = "";
@@ -129,29 +129,20 @@ public class ReviewEventServlet extends HttpServlet {
                         inputName = (String) item.getFieldName();
                         if (inputName.equalsIgnoreCase("eventName")) {
                             eventName = (String) item.getString();
+                            eventName = new String (eventName.getBytes ("iso-8859-1"), "UTF-8");
                         }
                         if (inputName.equalsIgnoreCase("description")) {
                             description = (String) item.getString();
+                            description = new String (description.getBytes ("iso-8859-1"), "UTF-8");
                         }
                     } else {
                         try {
-//                                String itemName = item.getName();
-//                                fileName = itemName.substring(itemName.lastIndexOf("\\") + 1);
-//                                System.out.println("path " + fileName);
-
-                            //EventDAO  = new PictureDAO();
-                            //request.setAttribute("result", picDAO.savePicture((FileInputStream) item.getInputStream()));
-                            // show Uploaded Pic
                             posterStream = (FileInputStream) item.getInputStream();       
                             poster = Base64.getEncoder().encodeToString(item.get());
-
-//                                request.setAttribute("eventPoster", data);
                         } catch (Exception ex) {
                             LOGGER.error(ex);
                         }
-
                     }
-
                 }
                 EventDetailDTO review = new EventDetailDTO(0, eventName, poster, location, chosenDate,
                         chosenTimeRange, organizerName, 0, 0, description, organizerDescription, organizerAvatar);
@@ -160,9 +151,7 @@ public class ReviewEventServlet extends HttpServlet {
                 LOGGER.info("Session attribute: EVENT_POSTER_STREAM: " + review);
                 session.setAttribute("EVENT_POSTER_STREAM", posterStream);
                 url = REVIEW_EVENT_PAGE_PATH;
-
             }
-
         } catch (Exception ex) {
             LOGGER.error(ex);
         } finally {

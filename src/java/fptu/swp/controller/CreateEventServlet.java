@@ -53,7 +53,7 @@ public class CreateEventServlet extends HttpServlet {
         String chosenTimeRange;
         HttpSession session;
         LecturerBriefInfoDTO lecturer;
-        boolean checkInsertEvent = false;
+        int eventId;
         boolean checkInsertLecturersInEvent = false;
         boolean checkInsertDateTimeLocation = false;
         EventDetailDTO detail;
@@ -80,11 +80,20 @@ public class CreateEventServlet extends HttpServlet {
             }
             detail = (EventDetailDTO) session.getAttribute("EVENT_DETAIL_REVIEW");
             posterStream = (FileInputStream) session.getAttribute("EVENT_POSTER_STREAM");
-            if(checkInsertEvent = eventDao.insertNewEvent(detail, loginUser.getId(), posterStream)){
-                 url = VIEW_NEWFEED_SERVLET;
+            eventId = eventDao.insertNewEvent(detail, loginUser.getId(), posterStream);
+            if (eventId > 0){
+                if((checkInsertDateTimeLocation = eventDao.insertNewEventDateTimeLocation(chosenDate, chosenLocationList, chosenTimeRange, eventId)) 
+                        && (checkInsertLecturersInEvent = eventDao.insertNewEventLecturer(chosenLecturerList, eventId))){
+                    url = VIEW_NEWFEED_SERVLET;
+                    session.removeAttribute("ChosenLecturerList");
+                    session.removeAttribute("ChosenLocationList");
+                    session.removeAttribute("ChosenDate");
+                    session.removeAttribute("ChosenTimeRange");
+                    session.removeAttribute("EVENT_DETAIL_REVIEW");
+                    session.removeAttribute("EVENT_POSTER_STREAM");
+                }
+                 
             }
-           
-
         } catch (Exception e) {
             LOGGER.error(e);
         } finally {
