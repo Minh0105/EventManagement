@@ -242,7 +242,7 @@ public class EventDAO {
                             + " LEFT JOIN tblUsers m ON s.userId = m.id"
                             + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
                             + "                  LEFT JOIN tblLocations u ON locationId = u.id) t ON s.id = t.eventId"
-                            + " WHERE s.userId = ?";
+                            + " WHERE s.userId = ? AND s.statusId = 1";
                     stm = conn.prepareStatement(sql);
                     stm.setInt(1, loginUser.getId());
                 } else if ("LECTURER".equals(loginUser.getRoleName())) {
@@ -251,7 +251,7 @@ public class EventDAO {
                             + " LEFT JOIN tblUsers m ON s.userId = m.id"
                             + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
                             + "                  LEFT JOIN tblLocations u ON locationId = u.id) t ON s.id = t.eventId"
-                            + " WHERE s.id IN (SELECT eventId FROM tblLecturersInEvents WHERE lecturerId = ? AND statusId = 1)";
+                            + " WHERE s.statusId = 1 AND s.id IN (SELECT eventId FROM tblLecturersInEvents WHERE lecturerId = ? AND statusId = 1)";
                     stm = conn.prepareStatement(sql);
                     stm.setInt(1, loginUser.getId());
                 }
@@ -329,6 +329,7 @@ public class EventDAO {
         String description = "";
         String organizerDescription = "";
         String organizerAvatar = "";
+        int statusId = 0;
         List<String> listLocation = new ArrayList<>();
         List<String> listTime = new ArrayList<>();
         SimpleDateFormat formatter = null;
@@ -338,7 +339,7 @@ public class EventDAO {
                 String sql
                         = "SELECT s.name eventName, s.poster eventPoster, m.name organizerName, t.date date,"
                         + " t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants,"
-                        + " s.description description, m.description organizerDescription, m.avatar organizerAvatar"
+                        + " s.description description, m.description organizerDescription, m.avatar organizerAvatar, s.statusId statusId"
                         + " FROM tblEvents s"
                         + " LEFT JOIN tblUsers m ON s.userId = m.id"
                         + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
@@ -361,6 +362,7 @@ public class EventDAO {
                     description = rs.getString("description");
                     organizerDescription = rs.getString("organizerDescription");
                     organizerAvatar = rs.getString("organizerAvatar");
+                    statusId = rs.getInt("statusId");
                     listLocation.add(locationName);
                 }
                 while (rs.next()) {
@@ -393,7 +395,7 @@ public class EventDAO {
                     time += listTime.get(i) + ", ";
                 }
                 time += listTime.get(i);
-                detail = new EventDetailDTO(eventId, eventName, eventPoster, location, date, time, organizerName, following, joining, description, organizerDescription, organizerAvatar);
+                detail = new EventDetailDTO(eventId, eventName, eventPoster, location, date, time, organizerName, following, joining, description, organizerDescription, organizerAvatar, statusId);
             }
 
         } catch (Exception e) {

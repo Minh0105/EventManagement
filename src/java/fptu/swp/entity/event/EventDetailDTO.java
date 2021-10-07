@@ -22,10 +22,11 @@ public class EventDetailDTO {
     private String description;
     private String organizerDescription;
     private String organizerAvatar;
+    private int statusId;
     public EventDetailDTO() {
     }
 
-    public EventDetailDTO(int id, String name, String poster, String location, String date, String time, String organizerName, int following, int joining, String description, String organizerDescription, String organizerAvatar) {
+    public EventDetailDTO(int id, String name, String poster, String location, String date, String time, String organizerName, int following, int joining, String description, String organizerDescription, String organizerAvatar, int statusId) {
         this.id = id;
         this.name = name;
         this.poster = poster;
@@ -38,6 +39,7 @@ public class EventDetailDTO {
         this.description = description;
         this.organizerDescription = organizerDescription;
         this.organizerAvatar = organizerAvatar;
+        this.statusId = statusId;
     }
     
     public EventDetailDTO(String organizerAvatar) {
@@ -138,6 +140,14 @@ public class EventDetailDTO {
 
     public void setOrganizerAvatar(String organizerAvatar) {
         this.organizerAvatar = organizerAvatar;
+    }
+
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
     }
 
     @Override

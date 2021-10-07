@@ -145,7 +145,7 @@ public class ReviewEventServlet extends HttpServlet {
                     }
                 }
                 EventDetailDTO review = new EventDetailDTO(0, eventName, poster, location, chosenDate,
-                        chosenTimeRange, organizerName, 0, 0, description, organizerDescription, organizerAvatar);
+                        chosenTimeRange, organizerName, 0, 0, description, organizerDescription, organizerAvatar,1);
                 LOGGER.info("Session attribute: EVENT_DETAIL_REVIEW: " + review);
                 session.setAttribute("EVENT_DETAIL_REVIEW", review);
                 LOGGER.info("Session attribute: EVENT_POSTER_STREAM: " + review);
