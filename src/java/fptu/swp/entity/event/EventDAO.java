@@ -6,6 +6,7 @@
 package fptu.swp.entity.event;
 
 import fptu.swp.entity.location.LocationDTO;
+import fptu.swp.entity.range.RangeDTO;
 import fptu.swp.entity.user.LecturerBriefInfoDTO;
 import fptu.swp.entity.user.UserDTO;
 import fptu.swp.utils.DBHelper;
@@ -322,7 +323,6 @@ public class EventDAO {
         String eventPoster = "";
         String organizerName = "";
         String date = "";
-        String rangeName = "";
         String locationName = "";
         int following = 0;
         int joining = 0;
@@ -331,7 +331,7 @@ public class EventDAO {
         String organizerAvatar = "";
         int statusId = 0;
         List<String> listLocation = new ArrayList<>();
-        List<String> listTime = new ArrayList<>();
+        List<RangeDTO> listTime = new ArrayList<>();
         SimpleDateFormat formatter = null;
         try {
             conn = DBHelper.makeConnection();
@@ -376,25 +376,37 @@ public class EventDAO {
                     location += listLocation.get(i) + ", ";
                 }
                 location += listLocation.get(i);
-                sql = "SELECT v.rangeId rangeId, u.rangeName rangeName\n"
+                sql = "SELECT v.rangeId rangeId, u.rangeName rangeName, u.detail detail"
                         + " FROM tblTimeRanges u"
-                        + " RIGHT JOIN (SELECT DISTINCT v.rangeId\n"
+                        + " RIGHT JOIN (SELECT DISTINCT v.rangeId"
                         + "                   FROM tblEvents u, tblDateTimeLocation v"
                         + "                   WHERE u.id = v.eventId AND v.eventId = ?) v"
                         + " ON u.id = v.rangeId";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, eventId);
                 rs = stm.executeQuery();
+
                 while (rs.next()) {
-                    rangeName = rs.getString("rangeName");
-                    listTime.add(rangeName);
+                    int rangeId = rs.getInt("rangeId");
+                    String rangeName = rs.getString("rangeName");
+                    String rangeDetail = rs.getString("detail");
+                    RangeDTO range = new RangeDTO(rangeId, rangeName, rangeDetail);
+                    listTime.add(range);
                 }
                 //format time string (gan name cua cac time range)
-                String time = "";
-                for (i = 0; i < listTime.size() - 1; i++) {
-                    time += listTime.get(i) + ", ";
+                RangeDTO startSlot = new RangeDTO(Integer.MAX_VALUE);
+                RangeDTO endSlot = new RangeDTO(Integer.MIN_VALUE);
+                for (RangeDTO range : listTime) {
+                    int slotId = range.getId();
+                    if (slotId < startSlot.getId()) {
+                        startSlot = range;
+                    }
+                    if (slotId > endSlot.getId()) {
+                        endSlot = range;
+                    }
                 }
-                time += listTime.get(i);
+                String time = "Slot " + startSlot.getId() + " - " + endSlot.getId()
+                        + " (" + startSlot.getDetail().substring(0, 5) + " - " + endSlot.getDetail().substring(7) + ")";
                 detail = new EventDetailDTO(eventId, eventName, eventPoster, location, date, time, organizerName, following, joining, description, organizerDescription, organizerAvatar, statusId);
             }
 
@@ -496,35 +508,6 @@ public class EventDAO {
         return list;
     }
 
-//    public boolean saveEventPicture(FileInputStream savedPic) throws SQLException, FileNotFoundException, IOException, NamingException {
-//        boolean check = false;
-//        Connection con = null;
-//        PreparedStatement ps = null;
-//        FileInputStream inputStream = savedPic;
-//        try {
-//            con = DBHelper.makeConnection();
-//            if (con != null) {
-//                String sql = "INSERT INTO tblEvents(poster) " +
-//                                " VALUES (?)";
-//                ps = con.prepareStatement(sql);
-//                ps.setBinaryStream(1, inputStream);   
-//                check = ps.executeUpdate() > 0; 
-//            }
-//        } finally {
-//            if (con != null) {
-//                con.close();
-//            }
-//            if (ps != null) {
-//                ps.close();
-//            }
-//            if (inputStream != null) {
-//                inputStream.close();
-//            }
-//        }
-//        return check;
-//    }
-//    
-//    public boolean insert
     public int insertNewEvent(EventDetailDTO detail, int organizerId, FileInputStream savedPic) throws SQLException {
         int eventId = 0;
         boolean check = false;
@@ -605,7 +588,7 @@ public class EventDAO {
     }
 
     public boolean insertNewEventLecturer(List<LecturerBriefInfoDTO> chosenLecturerList, int eventId) throws SQLException {
-        if(chosenLecturerList.size() == 0){
+        if (chosenLecturerList.size() == 0) {
             return true;
         }
         boolean check = false;
@@ -634,5 +617,79 @@ public class EventDAO {
             }
         }
         return check;
+    }
+
+    public boolean checkFollowed(int studentId, int eventId) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT eventId, studentId, isFollowing"
+                        + " FROM tblStudentsInEvents"
+                        + " WHERE eventId = ? AND studentId = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, eventId);
+                stm.setInt(2, studentId);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    check = rs.getBoolean("isFollowing");
+                }else{
+                    check = false;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            return check;
+        }
+    }
+    
+    public boolean checkJoining(int studentId, int eventId) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT eventId, studentId, isJoining"
+                        + " FROM tblStudentsInEvents"
+                        + " WHERE eventId = ? AND studentId = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, eventId);
+                stm.setInt(2, studentId);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    check = rs.getBoolean("isJoining");
+                }else{
+                    check = false;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            return check;
+        }
     }
 }

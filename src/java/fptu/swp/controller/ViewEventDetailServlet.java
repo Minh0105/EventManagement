@@ -10,6 +10,7 @@ import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
 import fptu.swp.entity.user.LecturerBriefInfoDTO;
 import fptu.swp.entity.user.UserDAO;
+import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 /**
@@ -57,6 +59,8 @@ public class ViewEventDetailServlet extends HttpServlet {
         try {
             int eventId = Integer.parseInt(request.getParameter("eventId"));
             String type = request.getParameter("type");
+            HttpSession session = request.getSession();
+            UserDTO loginUser = (UserDTO) session.getAttribute("USER");
             EventDAO eventDao = new EventDAO();
             EventDetailDTO detail = eventDao.getEventDetail(eventId);
             System.out.println(detail.toString());
@@ -76,6 +80,14 @@ public class ViewEventDetailServlet extends HttpServlet {
             
             LOGGER.info("List question of detail: " + listQuestion);
             request.setAttribute("LIST_QUESTION", listQuestion);
+            
+            if("STUDENT".equals(loginUser.getRoleName())){
+                boolean checkFollowed = eventDao.checkFollowed( loginUser.getId(), eventId);
+                boolean checkJoining = eventDao.checkJoining(loginUser.getId(), eventId);
+                request.setAttribute("IS_FOLLOWED",checkFollowed);
+                request.setAttribute("IS_JOINING", checkJoining);
+                LOGGER.info("This student is following: " + checkFollowed + " - is joining: "+ checkJoining);
+            }
             
             url = EVENTDETAIL_PAGE_PATH;
 

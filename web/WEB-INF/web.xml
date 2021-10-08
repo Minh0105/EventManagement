@@ -124,6 +124,10 @@
         <servlet-name>CreateEventServlet</servlet-name>
         <servlet-class>fptu.swp.controller.CreateEventServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FollowEventServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.FollowEventServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -155,6 +159,10 @@
     <servlet-mapping>
         <servlet-name>CreateEventServlet</servlet-name>
         <url-pattern>/CreateEventServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FollowEventServlet</servlet-name>
+        <url-pattern>/FollowEventServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -4,6 +4,7 @@
     Author     : triet
 --%>
 
+<%@page import="fptu.swp.entity.user.UserDTO"%>
 <%@page import="fptu.swp.entity.event.ReplyDTO"%>
 <%@page import="fptu.swp.entity.event.CommentDTO"%>
 <%@page import="fptu.swp.entity.user.LecturerBriefInfoDTO"%>
@@ -74,6 +75,7 @@
             </div>
         </nav>
         <%
+            UserDTO loginUser = (UserDTO) session.getAttribute("USER");
             EventDetailDTO detail = (EventDetailDTO) request.getAttribute("EVENT_DETAIL");
             List<LecturerBriefInfoDTO> listLecturer = (List<LecturerBriefInfoDTO>) request.getAttribute("LIST_LECTURER");
         %>
@@ -106,26 +108,55 @@
                     <%= detail.getTime()%>
                 </h3>
             </div>
-
+            <%
+                if ("STUDENT".equals(loginUser.getRoleName())) {
+                    boolean checkFollowed = (boolean) request.getAttribute("IS_FOLLOWED");
+                    boolean checkJoining = (boolean) request.getAttribute("IS_JOINING");
+            %>
 
             <div class="carouselButton">
-
-                <div class="carouselButton1">
-
-                    <button class="hight">  
-                        <img src="resources/image/eventDetail 2.png" alt="">
-                        <p>Sẽ Tham Gia</p>
-                    </button>
-                </div>
-
-                <div class="carouselButton1">
-
-                    <button class="hight">
-                        <img src="resources/image/eventDetail 3.png" alt="">
-                        <p>Quan Tâm</p>
-                    </button>
-                </div>
+                <form action="joinEvent">
+                    <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                    <input type="hidden" name="isJoining" value="<%= checkJoining%>"/>
+                    <div class="carouselButton1">
+                        <button class="hight" type="submit">
+                            <%if (checkJoining) {
+                            %>
+                            <img src="resources/image/eventDetail 2.png" alt="">
+                            <p>Hủy Tham Gia</p>
+                            <%
+                            } else {
+                            %>
+                            <img src="resources/image/eventDetail 2.png" alt="">
+                            <p>Sẽ Tham Gia</p>
+                            <%
+                                }
+                            %>
+                        </button>
+                    </div>
+                </form>
+                <form action="followEvent">
+                    <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                    <input type="hidden" name="isFollowed" value="<%= checkFollowed%>"/>
+                    <div class="carouselButton1" type="submit">
+                        <button class="hight">
+                            <%if (checkFollowed) {
+                            %>
+                            <img src="resources/image/eventDetail 3.png" alt="">
+                            <p>Hủy Quan Tâm</p>
+                            <%
+                            } else { %>
+                            <img src="resources/image/eventDetail 3.png" alt="">
+                            <p>Quan Tâm</p>
+                            <%
+                                    }
+                                }
+                            %>
+                        </button>
+                    </div>
+                </form>
             </div>
+
         </section>
 
         <section class="fast">
@@ -245,9 +276,9 @@
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                     <div class="ask">
                         <textarea placeholder="Vui lòng nhập câu hỏi của bạn....."></textarea>
-                    <div style="width: 100%; display:flex; justify-content:flex-end">
-                        <button class="sendButton">Gửi</button>
-                    </div>
+                        <div style="width: 100%; display:flex; justify-content:flex-end">
+                            <button class="sendButton">Gửi</button>
+                        </div>
                         <%
                             List<CommentDTO> listQuestion = (List<CommentDTO>) request.getAttribute("LIST_QUESTION");
                             for (CommentDTO question : listQuestion) {
