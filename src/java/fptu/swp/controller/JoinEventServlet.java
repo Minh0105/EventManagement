@@ -21,10 +21,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author triet
  */
-public class FollowEventServlet extends HttpServlet {
-
-    static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(FollowEventServlet.class);
-
+public class JoinEventServlet extends HttpServlet {
+static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(JoinEventServlet.class);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,7 +35,7 @@ public class FollowEventServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        LOGGER.info("Begin FollowEventServlet");
+                LOGGER.info("Begin JoinEventServlet");
 
         // declare var
         HttpSession session;
@@ -54,20 +52,19 @@ public class FollowEventServlet extends HttpServlet {
         String url = INVALID_PAGE_LABEL;
 
         try {
-            //parameter
             session = request.getSession();
             loginUser = (UserDTO) session.getAttribute("USER");
             int studentId = loginUser.getId();
             int eventId = Integer.parseInt(request.getParameter("eventId"));
-            boolean isFollowed = Boolean.parseBoolean(request.getParameter("isFollowed"));
+            boolean isJoining = Boolean.parseBoolean(request.getParameter("isJoining"));
 
-            if (isFollowed) {     //Followed (have info in DB) => Unfollow
-                if (eventDao.setFollowingStatus(eventId, studentId, false)) {
+            if (isJoining) {     //Joining (have info in DB) => Unjoin
+                if (eventDao.setJoiningStatus(eventId, studentId, false)) {
                     url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
                 }
             } else {
                 if (eventDao.checkExistenceAndOrInsertStudentInEvent(eventId, studentId)) {
-                    if (eventDao.setFollowingStatus(eventId, studentId, true)) {
+                    if (eventDao.setJoiningStatus(eventId, studentId, true)) {
                         url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
                     }
                 }

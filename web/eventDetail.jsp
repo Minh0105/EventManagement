@@ -236,7 +236,12 @@
                 <!-- Comment -->
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="comment">
-                        <input type="text" placeholder="Vui lòng nhập bình luận của bạn">
+                        <form action ="comment">
+                            <input type="text" placeholder="Vui lòng nhập bình luận của bạn" name="contents"/>
+                            <input type="hidden" name="eventId" value="<%= detail.getId() %>"/>
+                            <input type="hidden" name="userId" value="<%= detail.getId() %>"/>
+                            <input type="submit" value="Comment"/>
+                        </form>
                         <%
                             List<CommentDTO> listComment = (List<CommentDTO>) request.getAttribute("LIST_COMMENT");
                             for (CommentDTO comment : listComment) {
@@ -259,7 +264,6 @@
                             <div class="repComment2a">
                                 <img src="<%= reply.getUserAvatar()%>" class="rounded-circle" class="rounded-circle" alt="">
                             </div>
-
                             <div class="repComment2b">
                                 <h5><%= reply.getUserName()%></h5>
                                 <p><%= reply.getContents()%></p>

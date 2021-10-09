@@ -72,6 +72,10 @@
         <param-name>VIEW_NEWFEED_SERVLET</param-name>
         <param-value>viewNewfeed</param-value>
     </context-param>
+    <context-param>
+        <param-name>VIEW_EVENTDETAIL_SERVLET</param-name>
+        <param-value>viewEventDetail</param-value>
+    </context-param>
     <filter>
         <filter-name>FilterAuth</filter-name>
         <filter-class>fptu.swp.filter.FilterAuth</filter-class>
@@ -128,6 +132,10 @@
         <servlet-name>FollowEventServlet</servlet-name>
         <servlet-class>fptu.swp.controller.FollowEventServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>JoinEventServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.JoinEventServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -163,6 +171,10 @@
     <servlet-mapping>
         <servlet-name>FollowEventServlet</servlet-name>
         <url-pattern>/FollowEventServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JoinEventServlet</servlet-name>
+        <url-pattern>/JoinEventServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

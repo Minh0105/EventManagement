@@ -636,7 +636,7 @@ public class EventDAO {
                 rs = stm.executeQuery();
                 if (rs.next()) {
                     check = rs.getBoolean("isFollowing");
-                }else{
+                } else {
                     check = false;
                 }
             }
@@ -655,7 +655,7 @@ public class EventDAO {
             return check;
         }
     }
-    
+
     public boolean checkJoining(int studentId, int eventId) throws SQLException {
         boolean check = false;
         Connection conn = null;
@@ -673,7 +673,7 @@ public class EventDAO {
                 rs = stm.executeQuery();
                 if (rs.next()) {
                     check = rs.getBoolean("isJoining");
-                }else{
+                } else {
                     check = false;
                 }
             }
@@ -691,5 +691,164 @@ public class EventDAO {
             }
             return check;
         }
+    }
+
+    //ham check ton tai xem da co thong tin cua student va event nay trong tblStudentsInEvents hay chua
+    //neu da co -> return true;
+    //neu chua co -> insert them (set isJoining and isFollowing = false) -> return true;
+    //con lai return false;
+    public boolean checkExistenceAndOrInsertStudentInEvent(int eventId, int studentId) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT eventId, studentId" //check if this student is already in tblStudentsInEvents
+                        + " FROM tblStudentsInEvents"
+                        + " WHERE eventId = ? AND studentId = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, eventId);
+                stm.setInt(2, studentId);
+                rs = stm.executeQuery();
+                if (!rs.next()) {
+                    sql = "INSERT INTO tblStudentsInEvents(eventId, studentId, isFollowing, isJoining) "
+                            + " VALUES(?,?,0,0)";
+                    stm = conn.prepareStatement(sql);
+                    stm.setInt(1, eventId);
+                    stm.setInt(2, studentId);
+                    check = stm.executeUpdate() > 0;
+                } else {
+                    check = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            return check;
+        }
+    }
+
+    public boolean setFollowingStatus(int eventId, int studentId, boolean isFollowing) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "UPDATE tblStudentsInEvents"
+                        + " SET isFollowing = ?"
+                        + " WHERE eventId = ? AND studentId = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setBoolean(1, isFollowing);
+                stm.setInt(2, eventId);
+                stm.setInt(3, studentId);
+                if (stm.executeUpdate() > 0) {
+                    if (isFollowing) {
+                        sql = "UPDATE tblEvents"
+                                + " SET numberOfFollowers = numberOfFollowers + 1"
+                                + " WHERE id = ?";
+                    } else {
+                        sql = "UPDATE tblEvents"
+                                + " SET numberOfFollowers = numberOfFollowers - 1"
+                                + " WHERE id = ?";
+                    }
+                    stm = conn.prepareStatement(sql);
+                    stm.setInt(1, eventId);
+                    check = stm.executeUpdate() > 0;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            return check;
+        }
+    }
+
+    public boolean setJoiningStatus(int eventId, int studentId, boolean isJoining) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "UPDATE tblStudentsInEvents"
+                        + " SET isJoining = ?"
+                        + " WHERE eventId = ? AND studentId = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setBoolean(1, isJoining);
+                stm.setInt(2, eventId);
+                stm.setInt(3, studentId);
+                if (stm.executeUpdate() > 0) {
+                    if (isJoining) {
+                        sql = "UPDATE tblEvents"
+                                + " SET numberOfParticipants = numberOfParticipants + 1"
+                                + " WHERE id = ?";
+                    } else {
+                        sql = "UPDATE tblEvents"
+                                + " SET numberOfParticipants = numberOfParticipants - 1"
+                                + " WHERE id = ?";
+                    }
+                    stm = conn.prepareStatement(sql);
+                    stm.setInt(1, eventId);
+                    check = stm.executeUpdate() > 0;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            return check;
+        }
+    }
+
+    public boolean insertComment(int eventId, int userId, String contents) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+
+                String sql = "INSERT INTO tblComments(contents, replyId, eventId, userId, isQuestion, commentDatetime)"
+                        + " VALUES(?, NULL, ?, ?, 0, CURRENT_TIMESTAMP)";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1,contents);
+                stm.setInt(2, eventId);
+                stm.setInt(3, userId);
+                check = stm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
     }
 }

@@ -25,7 +25,6 @@
         --------
         <h1>Session Scope - ChosenTimeRange</h1>
         <p>ChosenTimeRange : ${sessionScope.ChosenTimeRange}</p>
-        --------
 
         ________________________________LIST GIANG VIEN DA CHON____________________________________________________<br>
         <c:forEach var="lec" items="${sessionScope.ChosenLecturerList}" >
@@ -45,15 +44,6 @@
                 <p>Lecturer Id: ${lec.id} - Name : ${lec.name} - avatar : ${lec.avatar} -- <input type="submit" value="add"/></p>
             </form>
         </c:forEach>
-
-        <!--        FORM SEARCH TEN GIANG VIEN-->
-        <!--        <form action="searchLecturer">
-                    
-                    <input type="submit" value="Submit" />
-                </form>-->
-
-
-        <h1>Session Scope - LecturerList</h1>
         <!--        FORM DUA DU LIEU VE CHO ReviewEventController-->
         <form action="reviewEvent" method="POST" enctype="multipart/form-data">
             <c:set var = "eventDetail" value = "${sessionScope.EVENT_DETAIL_REVIEW}"/>

@@ -21,3 +21,5 @@ reviewEvent=ReviewEventServlet
 removeChosenLecturer=RemoveChosenLecturerServlet
 chooseLecturer=ChooseLecturerServlet
 createEvent=CreateEventServlet
+followEvent=FollowEventServlet
+joinEvent=JoinEventServlet
