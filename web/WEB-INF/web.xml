@@ -76,6 +76,14 @@
         <param-name>VIEW_EVENTDETAIL_SERVLET</param-name>
         <param-value>viewEventDetail</param-value>
     </context-param>
+    <context-param>
+        <param-name>REMOVE_CHOSEN_LECTURER_SERVLET</param-name>
+        <param-value>removeChosenLecturer</param-value>
+    </context-param>
+    <context-param>
+        <param-name>ADD_CHOSEN_LECTURER_SERVLET</param-name>
+        <param-value>chooseLecturer</param-value>
+    </context-param>
     <filter>
         <filter-name>FilterAuth</filter-name>
         <filter-class>fptu.swp.filter.FilterAuth</filter-class>
@@ -113,10 +121,6 @@
         <servlet-class>fptu.swp.controller.ViewEventDetailServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ReviewEventServlet</servlet-name>
-        <servlet-class>fptu.swp.controller.ReviewEventServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ChooseLecturerServlet</servlet-name>
         <servlet-class>fptu.swp.controller.ChooseLecturerServlet</servlet-class>
     </servlet>
@@ -136,6 +140,10 @@
         <servlet-name>JoinEventServlet</servlet-name>
         <servlet-class>fptu.swp.controller.JoinEventServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HandleMultipartServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.HandleMultipartServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -151,10 +159,6 @@
     <servlet-mapping>
         <servlet-name>ViewEventDetailServlet</servlet-name>
         <url-pattern>/ViewEventDetailServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ReviewEventServlet</servlet-name>
-        <url-pattern>/ReviewEventServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChooseLecturerServlet</servlet-name>
@@ -175,6 +179,10 @@
     <servlet-mapping>
         <servlet-name>JoinEventServlet</servlet-name>
         <url-pattern>/JoinEventServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HandleMultipartServlet</servlet-name>
+        <url-pattern>/HandleMultipartServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

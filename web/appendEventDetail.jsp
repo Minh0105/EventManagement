@@ -25,32 +25,31 @@
         --------
         <h1>Session Scope - ChosenTimeRange</h1>
         <p>ChosenTimeRange : ${sessionScope.ChosenTimeRange}</p>
-
+        <form action="handleMultipart" method="POST" enctype="multipart/form-data">
         ________________________________LIST GIANG VIEN DA CHON____________________________________________________<br>
         <c:forEach var="lec" items="${sessionScope.ChosenLecturerList}" >
-            <form action ="removeChosenLecturer">
-                <input type="hidden" name="lecturerId" value="${lec.id}">
-                <p>Lecturer Id: ${lec.id} - Name : ${lec.name} - avatar : ${lec.avatar} -- <input type="submit" value="remove"/></p>
-            </form>
+            
+<!--                <input type="hidden" name="lecturerRemoveId" value="${lec.id}">-->
+                <p>Lecturer Id: ${lec.id} - Name : ${lec.name} - avatar : ${lec.avatar} -- <button type="submit" name="removeLec" value="${lec.id}">REMOVE</button></p>
+            
         </c:forEach>
         <br>
         <br>
-
          ________________________________LIST GIANG VIEN DE SEARCH____________________________________________________<br>
          search lec's name <input type ="text" name ="search" value="${param.search}">
         <c:forEach var="lec" items="${sessionScope.LecturerList}" >
-            <form action ="chooseLecturer">
-                <input type="hidden" name="lecturerId" value="${lec.id}">
-                <p>Lecturer Id: ${lec.id} - Name : ${lec.name} - avatar : ${lec.avatar} -- <input type="submit" value="add"/></p>
-            </form>
+           
+<!--                <input type="hidden" name="lecturerAddId" value="${lec.id}">-->
+                <p>Lecturer Id: ${lec.id} - Name : ${lec.name} - avatar : ${lec.avatar} -- <button type="submit" name="addLec" value="${lec.id}">ADD</button></p>
+            
         </c:forEach>
         <!--        FORM DUA DU LIEU VE CHO ReviewEventController-->
-        <form action="reviewEvent" method="POST" enctype="multipart/form-data">
+        
             <c:set var = "eventDetail" value = "${sessionScope.EVENT_DETAIL_REVIEW}"/>
             eventName <input type ="text" name ="eventName" value="${eventDetail.name}">
             description <input type ="text" name ="description" value="${eventDetail.description}">  
-            File <input type="file" accept=".png .jpg .jpeg" name="fileUp" required="" value=""><br>
-            <input type="submit" value="Submit" />
+            File <input type="file" accept=".png .jpg .jpeg" name="fileUp"><br>
+            <input type="submit" name="action" value="Review" />
         </form>
 
     </body>

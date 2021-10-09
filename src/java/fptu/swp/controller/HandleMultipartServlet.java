@@ -8,12 +8,11 @@ package fptu.swp.controller;
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
 import fptu.swp.entity.location.LocationDTO;
-import fptu.swp.entity.user.LecturerBriefInfoDTO;
 import fptu.swp.entity.user.UserDAO;
 import fptu.swp.entity.user.UserDTO;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -23,7 +22,6 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,9 +40,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
         maxFileSize = 1024 * 1024 * 50,
         maxRequestSize = 1024 * 1024 * 100
 )
-public class ReviewEventServlet extends HttpServlet {
+public class HandleMultipartServlet extends HttpServlet {
 
-    static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(ReviewEventServlet.class);
+    static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(HandleMultipartServlet.class);
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -57,8 +55,9 @@ public class ReviewEventServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         response.setContentType("multipart/*");
-        LOGGER.info("Begin ReviewEventServlet");
+        LOGGER.info("Begin HandleMultipartServlet");
         request.setCharacterEncoding("UTF-8");
         // declare var
         HttpSession session;
@@ -78,6 +77,11 @@ public class ReviewEventServlet extends HttpServlet {
         String description = "";
         FileInputStream posterStream = null;
 
+        int lecturerRemoveId = 0;
+        int lecturerAddId = 0;
+
+        String action = "";
+        EventDetailDTO detail;
         // get roadmap
         ServletContext context = request.getServletContext();
         HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
@@ -85,8 +89,13 @@ public class ReviewEventServlet extends HttpServlet {
         //default URL
         final String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
         final String REVIEW_EVENT_PAGE_LABEL = context.getInitParameter("REVIEW_EVENT_PAGE_LABEL");
+        final String ADD_CHOSEN_LECTURER_SERVLET = context.getInitParameter("ADD_CHOSEN_LECTURER_SERVLET");
+        final String REMOVE_CHOSEN_LECTURER_SERVLET = context.getInitParameter("REMOVE_CHOSEN_LECTURER_SERVLET");
+        String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
         String REVIEW_EVENT_PAGE_PATH = roadmap.get(REVIEW_EVENT_PAGE_LABEL);
-        String url = INVALID_PAGE_LABEL;
+        String ADD_CHOSEN_LECTURER_SERVLET_PATH = roadmap.get(ADD_CHOSEN_LECTURER_SERVLET);
+        String REMOVE_CHOSEN_LECTURER_SERVLET_PATH = roadmap.get(REMOVE_CHOSEN_LECTURER_SERVLET);
+        String url = INVALID_PAGE_PATH;
 
         try {
             session = request.getSession(false);
@@ -99,13 +108,13 @@ public class ReviewEventServlet extends HttpServlet {
             chosenDate = (String) session.getAttribute("ChosenDate");
             chosenTimeRange = (String) session.getAttribute("ChosenTimeRange");
             chosenLocationList = (List<LocationDTO>) session.getAttribute("ChosenLocationList");
-
+            detail = (EventDetailDTO) session.getAttribute("EVENT_DETAIL_REVIEW");
+            
 
             for (i = 0; i < chosenLocationList.size() - 1; i++) {
                 location += chosenLocationList.get(i).getName() + ", ";
             }
             location += chosenLocationList.get(i).getName();
-
             boolean isMutiPart = ServletFileUpload.isMultipartContent(request);
             if (!isMutiPart) {
                 LOGGER.info("No File Found");
@@ -127,39 +136,62 @@ public class ReviewEventServlet extends HttpServlet {
                     if (item.isFormField()) {
                         params.put(item.getFieldName(), item.getString());
                         inputName = (String) item.getFieldName();
+                        if (inputName.equalsIgnoreCase("removeLec")) {
+                            lecturerRemoveId = Integer.parseInt((String) item.getString());
+                        }
+                        if (inputName.equalsIgnoreCase("addLec")) {
+                            lecturerAddId = Integer.parseInt((String) item.getString());
+                        }
+                        if (inputName.equalsIgnoreCase("action")) {
+                            action = (String) item.getString();
+                        }
                         if (inputName.equalsIgnoreCase("eventName")) {
                             eventName = (String) item.getString();
-                            eventName = new String (eventName.getBytes ("iso-8859-1"), "UTF-8");
+                            eventName = new String(eventName.getBytes("iso-8859-1"), "UTF-8");
                         }
                         if (inputName.equalsIgnoreCase("description")) {
                             description = (String) item.getString();
-                            description = new String (description.getBytes ("iso-8859-1"), "UTF-8");
+                            description = new String(description.getBytes("iso-8859-1"), "UTF-8");
                         }
                     } else {
                         try {
-                            posterStream = (FileInputStream) item.getInputStream();       
-                            poster = Base64.getEncoder().encodeToString(item.get());
+                            if (!"".equals((String) item.getString())) {
+                                posterStream = (FileInputStream) item.getInputStream();
+                                poster = Base64.getEncoder().encodeToString(item.get());
+                            }else{
+                                poster = detail.getPoster();
+                                posterStream = (FileInputStream) session.getAttribute("EVENT_POSTER_STREAM");
+                            }
                         } catch (Exception ex) {
                             LOGGER.error(ex);
                         }
                     }
                 }
                 EventDetailDTO review = new EventDetailDTO(0, eventName, poster, location, chosenDate,
-                        chosenTimeRange, organizerName, 0, 0, description, organizerDescription, organizerAvatar,1);
+                        chosenTimeRange, organizerName, 0, 0, description, organizerDescription, organizerAvatar, 1);
                 LOGGER.info("Session attribute: EVENT_DETAIL_REVIEW: " + review);
                 session.setAttribute("EVENT_DETAIL_REVIEW", review);
                 LOGGER.info("Session attribute: EVENT_POSTER_STREAM: " + review);
                 session.setAttribute("EVENT_POSTER_STREAM", posterStream);
-                url = REVIEW_EVENT_PAGE_PATH;
+                if ("Review".equals(action)) {
+                    url = REVIEW_EVENT_PAGE_PATH;
+                }
+                if (lecturerRemoveId != 0) {
+                    request.setAttribute("lecturerId", lecturerRemoveId);
+                    url = REMOVE_CHOSEN_LECTURER_SERVLET_PATH;
+                }
+                if (lecturerAddId != 0) {
+                    request.setAttribute("lecturerId", lecturerAddId);
+                    url = ADD_CHOSEN_LECTURER_SERVLET_PATH;
+                }
             }
         } catch (Exception ex) {
             LOGGER.error(ex);
         } finally {
-            LOGGER.info("Forward from ReviewEventServlet to" + url);
+            LOGGER.info("Forward from HandleMultipartServlet to" + url);
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

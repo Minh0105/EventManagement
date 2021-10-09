@@ -60,7 +60,7 @@ public class RemoveChosenLecturerServlet extends HttpServlet {
         String url = INVALID_PAGE_LABEL;
 
         // parameter
-        int lecturerId = Integer.parseInt(request.getParameter("lecturerId"));
+        int lecturerId = (int) request.getAttribute("lecturerId");
         try {
             session = request.getSession(false);
             chosenLecturerList = (List<LecturerBriefInfoDTO>) session.getAttribute("ChosenLecturerList");

@@ -53,6 +53,7 @@ public class AppendEventDetailServlet extends HttpServlet {
         Calendar caledar = Calendar.getInstance();
         UserDAO userDao = new UserDAO();
         List<LecturerBriefInfoDTO> lecturerList;
+        List<LecturerBriefInfoDTO> chosenLecturerList;
 
         // get roadmap
         ServletContext context = request.getServletContext();
@@ -67,17 +68,17 @@ public class AppendEventDetailServlet extends HttpServlet {
         String[] chosenSlot = request.getParameterValues("chosenSlot");
         String[] chosenLocationId = request.getParameterValues("chosenLocationId");
         String startDayAndMonth = request.getParameter("startDate");
-        
+
         // fake Data of Parameter 
 //        String[] chosenSlot = new String[]{"1-2", "2-2", "3-2"};
 //        String[] chosenLocationId = new String[]{"1-Hội Trường A", "2-Hội Trường B", "3-Hội Trường C"};
 //        String startDayAndMonth = "2021-09-20";
-        
-
         try {
             session = request.getSession(false);
 
             if (session != null) {
+                chosenLecturerList = (List<LecturerBriefInfoDTO>) session.getAttribute("ChosenLecturerList");
+
                 // ChosenLocationList  [ {id:int, name:string},  {id:int, name:string}, ... ]
                 for (String locationParam : Arrays.asList(chosenLocationId)) {
                     int index = locationParam.indexOf("-");
@@ -116,13 +117,18 @@ public class AppendEventDetailServlet extends HttpServlet {
 
                 LOGGER.info("Session Attribute - ChosenDate : " + chosenDate);
                 session.setAttribute("ChosenDate", chosenDate);
-                
+
                 // LecturerList Attribute
                 lecturerList = userDao.getAllLecturer();
-                
+                if (chosenLecturerList != null) {
+                    for (LecturerBriefInfoDTO lecturer : chosenLecturerList) {
+                        lecturerList.remove(lecturer);
+                    }
+                }
+
                 LOGGER.info("Session Attribute - LecturerList : " + lecturerList);
                 session.setAttribute("LecturerList", lecturerList);
-                
+
                 // URL for go to appendEventDetail
                 url = APPEND_EVENT_DETAIL_PAGE;
             }
