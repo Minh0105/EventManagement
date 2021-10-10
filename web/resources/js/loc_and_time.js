@@ -739,7 +739,6 @@ function sendGetRequestWithoutChosenSlot (action) {
 
     submitContent += "</form>";
     document.getElementById("submit_form").innerHTML = submitContent;
-    console.log(document.getElementById("submit_form"));
     document.getElementById("submiter").submit();//
 }
 

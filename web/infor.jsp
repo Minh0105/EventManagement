@@ -14,9 +14,10 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-md navbar-light navbar-color sticky-top">
-            <div class="container-fluid ">
-                <a class="navbar-branch" href="#">
-                    <img src="resources/image/FPTlogo.png" height="50">
+            <div id="nav_content" class="container-fluid">
+                <a id="navbar_branch" href="#">
+                    <img id="app_icon" src="resources/icon/app_icon.svg">
+                    <h5 class="d-none d-md-block">FPT Event Management</h5>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" 
                         data-target="#navbarResponsive">
@@ -25,23 +26,26 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto nav-margin">
                         <li class="nav-item">
-                            <a class="nav-link active rounded-circle" href="ViewInfoPage"> <img class="nav-avatar rounded-circle" src="${sessionScope.USER.avatar}"> ${sessionScope.USER.name}</img></a>
+                            <a id="icon_name_container" class="nav-link" href="ViewInfoPage"> 
+                                <!-- <img class="nav-avatar rounded-circle" src="${sessionScope.USER.avatar}"> ${sessionScope.USER.name}</img></a> -->
+                                <img id="avatar_icon" class="rounded-circle" src="resources/image/mock_avatar.jpeg" />
+                                <span id="avatar_name" class="text-white">Tăng Tấn Tài</span>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-bell-fill" viewBox="0 0 22 22">
-                                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-                                </svg></a>
+                            <a class="nav-link" href="#">
+                                <img id="btn_bell" src="resources/icon/bell_icon.svg" alt="Bell_icon" />
+                            </a>
                         </li>
                         <li class="nav-item dropdown">
 
-                            <a class="nav-link  toggle" href="#" id="navbarDropdown " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-list" viewBox="0 0 22 22">
-                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                                </svg>
-                            </a>   
+                            <a class="nav-link" href="#" id="navbarDropdown " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img id="btn_menu" src="resources/icon/hamburger_button_icon.svg" alt="hamburger_button" />
+                            </a>     
 
                             <form action="logout" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <button class="btn btn-outline-light profile-button logout " type="submit"><img src="resources/icon/log_out_logo.png">Log Out</button> 
+                                <button class="btn btn-outline-light profile-button logout " type="submit">
+                                    <img src="resources/icon/log_out_icon.svg">Log Out</button> 
                             </form>   
 
                         </li>				
@@ -53,8 +57,9 @@
             <div class="row">      
                 <div class="col-md-3 border-right">
                     <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                        <span class="text-black-50">${sessionScope.USER.roleName}</span><span> </span>
-                        <img class="round" src="${sessionScope.USER.avatar}">
+                        <!-- <span class="text-black-50">${sessionScope.USER.roleName}</span><span> </span> -->
+                        <span class="text-black-50">Student</span>
+                        <img id="big_avatar" src="resources/image/mock_avatar.jpeg">
                     </div>
                 </div>
                 <div class="col-md-5 border-right">
@@ -65,10 +70,17 @@
                         <div class="row mt-2"> </div>             
                         <div class="row mt-3">       
 
-                            <div class="col-md-12"><h3>${sessionScope.USER.name}</h3></div>
+                            <!-- <div class="col-md-12"><h3>${sessionScope.USER.name}</h3></div>
                             <div class="col-md-12"><h5> Email:</h5>${sessionScope.USER.email}</div>    
                             <div class="col-md-12"> <h5>Phone Number:</h5> ${sessionScope.USER.phoneNum}</div>
                             <div class="col-md-12"><h5>Address:</h5>${sessionScope.USER.address}</div>
+                             -->
+
+                             <div class="col-md-12"><h3>Tăng Tấn Tài</h3></div>
+                            <div class="col-md-12"><h5>taittse150194@fpt.edu.vn</div>    
+                            <div class="col-md-12"> <h5>Phone Number:</h5> 0795 895 430</div>
+                            <div class="col-md-12"><h5>Address:</h5>Số 89, đường Làng Tăng Phú, quận 9, thành phố Thủ Đức</div>
+
                             <form class="col-md-12" action="UpdateProfilePage">
                                 <button class="btn btn-primary profile-button" type="submit"><img src="resources/image/LogoUpdate.png"> Update</button>
                             </form>
