@@ -16,16 +16,18 @@ public class ReplyDTO implements Comparable<ReplyDTO>{
     private String contents;
     private String userAvatar;
     private String userName;
+    private String userRoleName;
     private Date replyDatetime;
 
     public ReplyDTO() {
     }
 
-    public ReplyDTO(int id, String contents, String userAvatar, String userName, Date replyDatetime) {
+    public ReplyDTO(int id, String contents, String userAvatar, String userName, String userRoleName, Date replyDatetime) {
         this.id = id;
         this.contents = contents;
         this.userAvatar = userAvatar;
         this.userName = userName;
+        this.userRoleName = userRoleName;
         this.replyDatetime = replyDatetime;
     }
 
@@ -67,6 +69,14 @@ public class ReplyDTO implements Comparable<ReplyDTO>{
 
     public void setReplyDatetime(Date replyDatetime) {
         this.replyDatetime = replyDatetime;
+    }
+
+    public String getUserRoleName() {
+        return userRoleName;
+    }
+
+    public void setUserRoleName(String userRoleName) {
+        this.userRoleName = userRoleName;
     }
 
     @Override

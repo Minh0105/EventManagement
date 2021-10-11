@@ -24,3 +24,6 @@ createEvent=CreateEventServlet
 followEvent=FollowEventServlet
 joinEvent=JoinEventServlet
 handleMultipart=HandleMultipartServlet
+comment=CommentServlet
+reply=ReplyServlet
+askQuestion=AskQuestionServlet

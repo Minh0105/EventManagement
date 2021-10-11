@@ -437,6 +437,7 @@ public class EventDAO {
         String contents = "";
         String userAvatar = "";
         String userName = "";
+        String userRoleName = "";
         Date commentDatetime;
         List<ReplyDTO> replyList = new ArrayList<>();
 
@@ -445,9 +446,10 @@ public class EventDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 String sql = "SELECT u.commentId commentId, u.contents contents, v.avatar userAvatar,"
-                        + " v.name userName, u.isQuestion isQuestion, u.commentDatetime commentDatetime"
+                        + " v.name userName, t.roleName roleName, u.isQuestion isQuestion, u.commentDatetime commentDatetime"
                         + " FROM tblComments u"
                         + " LEFT JOIN tblUsers v ON u.userId = v.id"
+                        + " LEFT JOIN tblRoles t ON t.id = v.roleId"
                         + " WHERE u.eventId = ? AND u.replyId IS NULL AND u.isQuestion = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, eventId);
@@ -459,10 +461,13 @@ public class EventDAO {
                     userAvatar = rs.getString("userAvatar");
                     userName = rs.getString("userName");
                     isQuestion = rs.getBoolean("isQuestion");
+                    userRoleName = rs.getString("roleName");
                     commentDatetime = rs.getTimestamp("commentDatetime");
-                    String sql2 = "SELECT u.commentId commentId, u.contents contents, v.avatar userAvatar, v.name userName, u.commentDatetime replyDatetime"
+                    String sql2 = "SELECT u.commentId commentId, u.contents contents, v.avatar userAvatar,"
+                            + " v.name userName, t.roleName roleName, u.commentDatetime replyDatetime"
                             + " FROM tblComments u"
                             + " LEFT JOIN tblUsers v ON u.userId = v.id"
+                            + " LEFT JOIN tblRoles t ON t.id = v.roleId"
                             + " WHERE eventId = ? AND replyId = ? AND isQuestion = 0";
                     stm2 = conn.prepareStatement(sql2);
                     stm2.setInt(1, eventId);
@@ -473,13 +478,14 @@ public class EventDAO {
                         String replyContents = rs2.getString("contents");
                         String replyUserAvatar = rs2.getString("userAvatar");
                         String replyUserName = rs2.getString("userName");
+                        String replyUserRoleName = rs2.getString("roleName");
                         Date replyCommentDatetime = rs2.getTimestamp("replyDatetime");
-                        replyList.add(new ReplyDTO(replyCommentId, replyContents, replyUserAvatar, replyUserName, replyCommentDatetime));
+                        replyList.add(new ReplyDTO(replyCommentId, replyContents, replyUserAvatar, replyUserName, replyUserRoleName, replyCommentDatetime));
                     }
                     if (replyList.size() > 0) {
                         Collections.sort(replyList);
                     }
-                    CommentDTO tmp = new CommentDTO(commentId, contents, eventId, userAvatar, userName, isQuestion, commentDatetime, replyList);
+                    CommentDTO tmp = new CommentDTO(commentId, contents, eventId, userAvatar, userName, isQuestion, commentDatetime, userRoleName, replyList);
                     list.add(tmp);
                     System.out.println();
                     replyList = new ArrayList<>();
@@ -823,7 +829,7 @@ public class EventDAO {
         }
     }
 
-    public boolean insertComment(int eventId, int userId, String contents) throws SQLException {
+    public boolean insertComment(int eventId, int userId, String content, boolean isQuestion) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
@@ -832,11 +838,42 @@ public class EventDAO {
             if (conn != null) {
 
                 String sql = "INSERT INTO tblComments(contents, replyId, eventId, userId, isQuestion, commentDatetime)"
-                        + " VALUES(?, NULL, ?, ?, 0, CURRENT_TIMESTAMP)";
+                        + " VALUES(?, NULL, ?, ?, ?, CURRENT_TIMESTAMP)";
                 stm = conn.prepareStatement(sql);
-                stm.setString(1,contents);
+                stm.setString(1,content);
                 stm.setInt(2, eventId);
                 stm.setInt(3, userId);
+                stm.setBoolean(4, isQuestion);
+                check = stm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+    
+    public boolean insertReply(int eventId, int userId, int commentId, String content) throws SQLException{
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+
+                String sql = "INSERT INTO tblComments(contents, replyId, eventId, userId, isQuestion, commentDatetime)"
+                        + " VALUES(?, ?, ?, ?, 0, CURRENT_TIMESTAMP)";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1,content);
+                stm.setInt(2, commentId);
+                stm.setInt(3, eventId);
+                stm.setInt(4, userId);
                 check = stm.executeUpdate() > 0;
             }
         } catch (Exception e) {

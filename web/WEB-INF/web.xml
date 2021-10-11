@@ -144,6 +144,18 @@
         <servlet-name>HandleMultipartServlet</servlet-name>
         <servlet-class>fptu.swp.controller.HandleMultipartServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CommentServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.CommentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReplyServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.ReplyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AskQuestionServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.AskQuestionServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -183,6 +195,18 @@
     <servlet-mapping>
         <servlet-name>HandleMultipartServlet</servlet-name>
         <url-pattern>/HandleMultipartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CommentServlet</servlet-name>
+        <url-pattern>/CommentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReplyServlet</servlet-name>
+        <url-pattern>/ReplyServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AskQuestionServlet</servlet-name>
+        <url-pattern>/AskQuestionServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -237,9 +237,8 @@
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="comment">
                         <form action ="comment">
-                            <input type="text" placeholder="Vui lòng nhập bình luận của bạn" name="contents"/>
-                            <input type="hidden" name="eventId" value="<%= detail.getId() %>"/>
-                            <input type="hidden" name="userId" value="<%= detail.getId() %>"/>
+                            <input type="text" placeholder="Vui lòng nhập bình luận của bạn" name="content"/>
+                            <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
                             <input type="submit" value="Comment"/>
                         </form>
                         <%
@@ -252,8 +251,16 @@
                             </div>
 
                             <div class="avatarComment2">
-                                <h5><%= comment.getUserName()%></h5>
+                                <h5><%= comment.getUserName()%> - <%= comment.getUserRoleName()%></h5>
                                 <p><%= comment.getContents()%></p>
+
+                                <form action ="reply" >
+                                    <input type="text" name="content" placeholder="Trả lời..."/>
+                                    <input type="hidden" name="commentId" value = "<%= comment.getCommentId()%>"/>
+                                    <input type="hidden" name="eventId" value = "<%= detail.getId()%>"/>
+                                    <input type="submit" value="Gửi"/>
+                                </form>
+
                             </div>
                         </div>
                         <%
@@ -265,7 +272,7 @@
                                 <img src="<%= reply.getUserAvatar()%>" class="rounded-circle" class="rounded-circle" alt="">
                             </div>
                             <div class="repComment2b">
-                                <h5><%= reply.getUserName()%></h5>
+                                <h5><%= reply.getUserName()%> - <%= reply.getUserRoleName()%></h5>
                                 <p><%= reply.getContents()%></p>
                             </div>
                         </div>
@@ -279,11 +286,19 @@
                 <!-- Hỏi Đáp -->
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                     <div class="ask">
-                        <textarea placeholder="Vui lòng nhập câu hỏi của bạn....."></textarea>
-                        <div style="width: 100%; display:flex; justify-content:flex-end">
-                            <button class="sendButton">Gửi</button>
-                        </div>
                         <%
+                            if ("STUDENT".equals(loginUser.getRoleName())) {
+                        %>
+                        <form action ="askQuestion">
+                            <textarea type="text" placeholder="Vui lòng nhập câu hỏi của bạn....." name="content"></textarea>
+                            <div style="width: 100%; display:flex; justify-content:flex-end">
+                                <button type="submit" class="sendButton">Gửi</button>
+                            </div>
+                            <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+
+                        </form>
+                        <%
+                            }
                             List<CommentDTO> listQuestion = (List<CommentDTO>) request.getAttribute("LIST_QUESTION");
                             for (CommentDTO question : listQuestion) {
                         %>
@@ -293,8 +308,21 @@
                             </div>
 
                             <div class="avatarComment2">
-                                <h5><%= question.getUserName()%></h5>
+                                <h5><%= question.getUserName()%> - <%= question.getUserRoleName()%></h5>
                                 <p><%= question.getContents()%></p>
+
+                                <%
+                                    if (!"STUDENT".equals(loginUser.getRoleName())) {
+                                %>
+                                <form action ="reply" >
+                                    <input type="text" name="content" placeholder="Trả lời..."/>
+                                    <input type="hidden" name="commentId" value = "<%= question.getCommentId()%>"/>
+                                    <input type="hidden" name="eventId" value = "<%= detail.getId()%>"/>
+                                    <input type="submit" value="Gửi"/>
+                                </form>
+                                <%
+                                    }
+                                %>
                             </div>
                         </div>
                         <%
@@ -307,7 +335,7 @@
                             </div>
 
                             <div class="repComment2b">
-                                <h5><%= reply.getUserName()%></h5>
+                                <h5><%= reply.getUserName()%> - <%= reply.getUserRoleName()%></h5>
                                 <p><%= reply.getContents()%></p>
                             </div>
                         </div>
