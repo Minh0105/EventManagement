@@ -3,30 +3,31 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/resources/css/margin.css</file>
-            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/login.html</file>
-            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/updateProfile.jsp</file>
             <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/resources/css/loc_and_time_style.css</file>
+            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/src/java/fptu/swp/entity/user/UserDAO.java</file>
+            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/reviewEvent.jsp</file>
+            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/WEB-INF/auth.txt</file>
+            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/WEB-INF/web.xml</file>
+            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/resources/html/bootstrap/bootstrap.min.css</file>
+            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/nbproject/build-impl.xml</file>
+            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/newfeed.jsp</file>
+            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/appendEventDetail.jsp</file>
+            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/src/java/fptu/swp/controller/SearchLocationServlet.java</file>
+            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/resources/css/loc_and_time_style.css.orig</file>
+            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/src/java/fptu/swp/entity/user/LecturerBriefInfoDTO.java</file>
+            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/resources/css/margin.css</file>
             <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/resources/css/general.css</file>
-            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/resources/css/style.css</file>
             <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/resources/js/test.js</file>
             <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/resources/css/padding.css</file>
-            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/WEB-INF/auth.txt</file>
             <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/src/java/fptu/swp/entity/datetimelocation/DateTimeLocationDAO.java</file>
-            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/infor.jsp</file>
-            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/WEB-INF/web.xml</file>
             <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/resources/icon/app_icon.svg</file>
             <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/resources/css/login.css</file>
             <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/src/java/fptu/swp/controller/UpdateProfileServlet.java</file>
-            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/nbproject/build-impl.xml</file>
-            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/resources/html/bootstrap/bootstrap.min.css</file>
             <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/resources/html/bootstrap/bootstrap.min.js</file>
             <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/META-INF/context.xml</file>
-            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/src/java/fptu/swp/controller/SearchLocationServlet.java</file>
+            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/src/java/fptu/swp/controller/AppendEventDetailServlet.java</file>
             <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/resources/css/color.css</file>
             <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/WEB-INF/roadmap.txt</file>
-            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/resources/css/loc_and_time_style.css.orig</file>
-            <file>file:/Users/tangtantai/Documents/SWP_Project/EventManagement/web/resources/css/eventDetail.css</file>
         </group>
     </open-files>
 </project-private>

@@ -191,7 +191,7 @@
     </session-config>
     <welcome-file-list>
         <welcome-file>
-            infor.jsp
+            newfeed.jsp
         </welcome-file>
     </welcome-file-list>
     <resource-ref>
