@@ -60,7 +60,6 @@ public class CommentServlet extends HttpServlet {
             if(eventDao.insertComment(eventId, userId, content, false)){
                 url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
             }
-
         } catch (Exception e) {
             LOGGER.error(e);
         } finally {
