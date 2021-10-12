@@ -1,0 +1,12 @@
+@import url(general.css);
+@import url(nav_bar.css);
+
+/* BODY CONTENT */
+
+#big_avatar {
+    object-fit: cover;
+    width: 200px;
+    height: 200px;
+    border: 6px solid #F2F2F2;
+    border-radius: 9px;
+}
