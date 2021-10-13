@@ -1,9 +1,10 @@
-* { 
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    
+
+@import url(nav_bar.css);
+
+body {
+    min-height: 100vh;
 }
+
 /* Header */
 
 .title{
@@ -192,157 +193,193 @@
 }
 
 /* Button */
-.button{
-    box-shadow: -7px 7px #c4c4c4;
+#filter_bar {
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
     background-color: #fff;
     border-radius: 5px;
-    padding: 7px 15px;
-    height: 60px;
-    margin: 2rem;
-    border: 2px solid #C4C4C4;
+    padding: 8px;
+    margin: 1rem;
+    margin-top: 1.1rem;
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
+    align-items: center;
 }
-/* button Word */
-.buttonWord{
-    padding: 0.5rem;
+/* Discovering event world TEXT */
+#decorating_text {
     color: #1472E1;
-    font-size: 17px;
-    font-weight: 900;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-left: 10px;
 }
 /* button Action */
-.buttonAction{
+#filter_button_container {
     display: flex;
     justify-content: center;
 }
+
 /* Button Action 1 Button */
-.buttonAction1 button{
+
+.filter_button {
+    margin: 0px 0.25rem;
+}
+
+.filter_button button {
     background-color:#1472E1;
-    font-weight: 600;
     border-radius: 5px;
-    width: 70px;
-    height: 40px;
     border: 1px solid;
+    padding: 0.4rem 1.6rem;
     color: #fff;
 }
-.buttonAction1 button:hover{
-    background-color: #25be2f; 
-}
-/* Button Action 2 Button */
 
-.buttonAction2 button{
-    background-color: #1472E1;
-    color: #FFF;
-    border: 1px solid;
-    font-weight: 600;
-    border-radius: 5px;
-    width: 105px;
-    height: 40px;
-}
-.buttonAction2 button:hover{
+.filter_button button:hover{
     background-color: #25be2f; 
 }
 
 /*CONTAINER*/
 
-.container{
-    padding: 0.5rem;
-}
-/* Row */
-.row {
-    margin: auto 0;
+#card_container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
 }
 
-.row>* {
-    padding: 0.5rem;
+#card_container_row {
+    padding: 0px !important;
 }
+
 /* item */
-.item{
+.item {
 /*    box-shadow: 0 0 2px 2px #c4c4c4*/
-    border-radius: 15px;
-    border: 3px solid #fb43004d;
+    border-radius: 6px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.33);
+    padding: 6px;
 }
-.item:hover{
-    box-shadow: 0 0 2px 2px #C4C4C4;
-}
+
+
 /* Item 1 Img */
 .item1 img{
     height: 225px;
     width: 100%;
-    padding: 0.5rem;
-    border-radius: 18px;
+    border-radius: 4px;
     object-fit: cover;
 }
-.btnSubmit {
-  background-color: coral;
-  border: none;
+.btnViewDetail {
+  background-color: #1472E1;
+  border-radius: 6px;
   color: white;
-  padding: 10px 20px;
+  padding: 7px 14px;
   text-decoration: none;
-  font-size: 120%;
+  border: none;
+  font-size: 1rem;
   margin: 4px 2px;
   cursor: pointer;
 }
-/* Item 1 Word */
-.item1Word{
+/* CARD */
+
+/* Image and Event Infor */
+
+p {
+    font-size: 1.3rem;
+}
+
+.image_and_infor_container {
     white-space: nowrap;
     overflow: hidden;
     text-overflow:ellipsis;
-    padding: 1rem 2rem;
 }
-.item1Word h4{
+
+.event_image {
+    height: 15rem;
+    width: 100%;    
+    object-fit: cover;
+    border-radius: 3px;
+}
+
+.infor_container {
+    padding: 0.6rem;
+    padding-top: 0.65rem;
+}
+
+.event_name {
     white-space: nowrap;
     overflow: hidden;
     text-overflow:ellipsis;
-    font-weight:900;
-   color: #f15827;
+    font-weight: 650;
+    font-size: 1.2rem;
+    color: #FA5810;
+    margin-bottom: 0.16rem;
 }
-.item1Word h4:hover{
+
+.image_and_infor_container .event_name:hover{
     overflow: visible;
-    
 }
-.item1Word p{
+
+.image_and_infor_container .event_date_and_loc {
     word-wrap:break-word;
-   white-space: nowrap;
+    white-space: nowrap;
     overflow: hidden;
-    text-overflow:ellipsis;
-}   
-.item1Word p:hover{
+    text-overflow: ellipsis;
+    margin-bottom: 0.16rem;
+}
+
+.image_and_infor_container .event_organizer_name {
+    color: #3559db;
+    margin-bottom: 0px;
+}
+
+.image_and_infor_container p:hover{
     overflow:visible;
 }
 
-/* item2 */
-.item2{ 
+/* Follow and Join Information */
+
+.care_infor_container {
+    padding: 0px;
+}
+
+/* Care infor */
+
+.care_infor {
+    display: flex;
+    align-items: center;
+}
+
+.join_part {
+    margin-top: 0.25rem;
+}
+
+.care_infor p {
     white-space: nowrap;
     overflow: hidden;
     text-overflow:ellipsis;
-    padding: 0 2rem;
-    display: flex;
-    justify-content:space-between
+    font-size: 1.2rem;
+    margin-left: 8px;
+    margin-bottom: 0px;
 }
-/* Item 2 Img 1 */
-.item2Img1{
-    display: flex;
-}
-.item2Img1 p{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow:ellipsis;
-    font-size: 15px;
-    font-weight: 300;
-    margin: 0.5rem;
-}
-.item2Img1 img{
+
+.care_infor img {
     height: 20px;
     width: 20px;
-    margin: 0.5rem 0rem;
 }
-/* Item2 Button */
-.item2Button{
-    
+/* other_infor_container */
+
+.other_infor_container { 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    padding: 0.6rem;
+    margin-top: 2rem;
+    display: flex;
+    justify-content:space-between;
+    align-items: flex-end;
+}
+
+.other_infor_container Button{
     margin: 1rem;
 }
-.item2Button button{
+
+.other_infor_container Button button{
     border: none;
     font-weight: 500;
     width: 90px;

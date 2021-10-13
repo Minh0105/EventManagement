@@ -1,0 +1,87 @@
+
+#app_icon {
+    height: 35px;
+}
+
+.navbar {
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.20);
+    padding-top:4px !important;
+    padding-bottom:4px !important;
+    padding-left: 12px !important;
+    padding-right: 8px !important;
+}
+
+.navbar-color{  
+    background-color: #FA5810 !important;
+}
+
+#avatar_container{
+    width: 35px;
+    height: 35px;
+    overflow: hidden;
+    display: inline-block;
+    border-radius: 100px;
+}
+
+#avatar_icon {
+    width: 35px !important;
+    height: 35px;
+    object-fit: cover;
+    border: 2px white solid;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.28);
+}
+
+#avatar_name {
+    margin-left: 0.6rem;
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.28);
+}
+
+.logout{
+    color: black !important;
+}
+
+/* NAVIGATION BAR */
+
+#nav_content {
+    padding: 0px;
+}
+
+#navbar_branch {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#navbar_branch > h5 {
+    display: inline-block;
+    color: #FFFFFF;
+    margin: 0px 0px 0px 16px;
+    font-size: 1rem;
+}
+
+#icon_name_container {
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+#navbarResponsive {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+#btn_menu, #btn_bell {
+    height: 35px;
+    width: auto;
+}
+
+#btn_menu {
+    padding: 6px 0px;
+}
+
+#btn_bell {
+    padding: 4px 0px;
+}

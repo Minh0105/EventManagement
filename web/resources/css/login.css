@@ -38,12 +38,12 @@ header {
     justify-content: center;
     align-items: flex-start;
     padding: 0 0 0 0;
-    color: #E5E5E5;
+    color: #FFFFFF;
     
 }
 .headerTitleRightContainer{
     padding: 0 0 0 0;
-    color: #E5E5E5;
+    color: #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -52,7 +52,7 @@ header {
 
 .headerTitleRight{
     padding: 0 0 0 0;
-    color: #E5E5E5;
+    color: #FFFFFF;
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -63,8 +63,8 @@ header {
     width: 100%;
 }
 .headerTitleRight3 button{
-    color: #E5E5E5;
-    background: #DB4B4B;
+    color: #FFFFFF;
+    background: #f04343;
     border-radius: 5px;
     width: 100%;
     border: none;
@@ -75,7 +75,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem;
+    padding: 0.7rem;
 }
 
 .headerTitleRight3Detail p {
@@ -86,18 +86,9 @@ header {
     background-color: pink;
     width: 100%;
 }
-.containerIcon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #fff;
-}
 
-.containerIcon img{
-    height: auto;
-    width: 20px;
-    left: 20px;
+.google_icon{
+    height: 1.5rem;
+    width: 1.5rem;
+    margin: 0px auto;
 }

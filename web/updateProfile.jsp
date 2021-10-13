@@ -19,7 +19,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-color sticky-top">
             <div class="container-fluid ">
                 <a class="navbar-branch" href="#">
-                    <img src="resources/image/FPTlogo.png" height="50">
+                    <img src="resources/icon/app_icon.svg" height="50">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" 
                         data-target="#navbarResponsive">
@@ -31,16 +31,14 @@
                             <a class="nav-link active rounded-circle" href="ViewInfoPage"> <img class="nav-avatar rounded-circle" src="${sessionScope.USER.avatar}"> ${sessionScope.USER.name}</img></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-bell-fill" viewBox="0 0 22 22">
-                                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-                                </svg></a>
+                            <a class="nav-link" href="#">
+                                <img id="btn_bell" src="resources/icon/bell_icon.svg" alt="Bell_icon">
+                            </a>
                         </li>
                         <li class="nav-item dropdown">
 
                             <a class="nav-link" href="#" id="navbarDropdown " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-list" viewBox="0 0 22 22">
-                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                                </svg>
+                                <a src="resources/icon/hamburger_button_icon.png">
                             </a>   
 
                             <form action="logout" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
