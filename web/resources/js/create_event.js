@@ -46,7 +46,7 @@ function onChooseLecturer(button) {
     //         <img class="rounded-circle lec-avatar " src="${lec.avatar}"> 
     //         <span>${lec.name}</span>
     //         <button onclick="onRemoveChosenLecturerClick(this)" name="removeLec">X</button>
-    //         <input class="chosen_lecturer" type="hidden" value="${lec.id}"/>
+    //         <input class="chosen_lecturer" type="hidden" name="chosen_lecturer" value="${lec.id}"/>
     // </p>
 
     // Create Chosen Lecturer ELement
@@ -66,7 +66,9 @@ function onChooseLecturer(button) {
     var inputLecId = document.createElement("input");
     inputLecId.className = "chosen_lecturer";
     inputLecId.type = "hidden";
+    inputLecId.name = "chosenLecturer";
     inputLecId.value = lecId;
+
 
     pContainer.appendChild(imgAvatar);
     pContainer.appendChild(spanName);

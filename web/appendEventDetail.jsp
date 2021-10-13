@@ -71,7 +71,14 @@
     <h5>Choosed: </h5><br>
 
     <div id="chosen_lecturer_container">
-        
+        <c:forEach var="chosenLec" items="${sessionScope.ChosenLecturerList}">
+            <p>
+                 <img class="rounded-circle lec-avatar " src="${chosenLec.avatar}"> 
+                 <span>${chosenLec.name}</span>
+                 <button onclick="onRemoveChosenLecturerClick(this)" name="removeLec">X</button>
+                 <input class="chosen_lecturer" type="hidden" name="chosen_lecturer" value="${chosenLec.id}"/>
+            </p>
+        </c:forEach>
     </div>
     
     <input style="width: 700px;" type="text" id="myInput" onkeyup="myFunction()"
@@ -79,14 +86,29 @@
 
     <ul id="myUL">
         <c:forEach var="lec" items="${sessionScope.LecturerList}">
-            <li>
-                <button onclick="onChooseLecturer(this)" class="lecturer_infor" value="${lec.id}" style="width: 700px;"
-                        class="d-flex justify-content-start">
-                    
-                    <img class="rounded-circle lec-avatar" src="${lec.avatar}"> 
-                    <span class="lec_name">${lec.name}</span>
-                </button>
-            </li>
+            <c:if test="${not sessionScope.ChosenLecturerList.contains(lec)}" >
+                <li>
+                    <button onclick="onChooseLecturer(this)" class="lecturer_infor" value="${lec.id}" style="width: 700px;"
+                            class="d-flex justify-content-start">
+
+                        <img class="rounded-circle lec-avatar" src="${lec.avatar}"> 
+                        <span class="lec_name">${lec.name}</span>
+                    </button>
+                </li>
+            </c:if>
+                
+            <!--HIDING CHOSEN LECTURER, watch li display will be "none"-->
+            <c:if test="${sessionScope.ChosenLecturerList.contains(lec)}" >
+                <li style="display: none">
+                    <button onclick="onChooseLecturer(this)" class="lecturer_infor" value="${lec.id}" style="width: 700px;"
+                            class="d-flex justify-content-start">
+
+                        <img class="rounded-circle lec-avatar" src="${lec.avatar}"> 
+                        <span class="lec_name">${lec.name}</span>
+                    </button>
+                </li>
+            </c:if>
+            
         </c:forEach>
     </ul>
 
