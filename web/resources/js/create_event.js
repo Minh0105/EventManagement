@@ -11,7 +11,7 @@ uploadButton.onchange = () => {
     };
     fileName.textContent = uploadButton.files[0].name;
 };
-
+ˇT
 //Search
 function myFunction() {
     var input, filter, ul, li, a, i, txtValue;

@@ -20,33 +20,65 @@
 </head>
 
 <body>
+ 
+<div id="body" class="container-fluid">
+
+        <!-- <c:forEach var="locationDTO" items="${sessionScope.ChosenLocationList}" >     
+
+            <div class="date_pill col-6 col-md-4">           
+                <span class="date_content">${locationDTO.name}</span>
+            </div>           
+
+        </c:forEach>       -->
+
     <div class="row"> 
-        <c:forEach var="locationDTO" items="${sessionScope.ChosenLocationList}" >          
-            
-            <div class="card" style="width: 12rem;">           
-            <div class="card-body">${locationDTO.name}</div>
+
+        <div id="chosen_date_container" class="col-12 col-md-7 col-lg-6 container-fluid">
+            <div class="row gx-1 gy-3">
+                <div class="date_pill col-6 col-md-4">           
+                    <span class="date_content">Hội trường A</span>
+                </div>
+    
+                <div class="date_pill col-6 col-md-4">           
+                    <span class="date_content">Hội trường B</span>
+                </div>
+    
+                <div class="date_pill col-6 col-md-4">           
+                    <span class="date_content">Hội trường C</span>
+                </div>
             </div>
+        </div>
 
-        </c:forEach>      
-
-        <div class="col-2" >         
+        <!-- <div class="col-2" >         
             <p> ${sessionScope.ChosenDate}</p>
             <p> ${sessionScope.ChosenTimeRange}</p>
+        </div> -->
+
+        <div id="chosen_date_time_container" class="col-7 col-md-3 col-lg-5">
+            <p id="chosen_date"> 20/09/2001 </p>
+            <p id="chosen_time"> 1 - 3 (7:00 AM - 12:00 AM)</p>
+        </div>
+
+        <div class="col-5 col-md-2 col-lg-1">
+            <button id="btn_back" class="button btn-primary" onclick="goBackToDateAndTimeScreen()">
+                Quay trở lại
+            </button>
         </div>
 
     </div>
 
     <!-- DELETED: <form action="handleMultipart" method="POST" enctype="multipart/form-data"> -->
-    <h2>Thông Tin Sự Kiện</h2>
     <c:set var="eventDetail" value="${sessionScope.EVENT_DETAIL_REVIEW}" />
 
     <h5>Tên Sự Kiện</h5>
-    <input id="input_event_name" type="text" name="eventName" value="${eventDetail.name}"
-           style="width: 700px;">
+    <!-- value="${eventDetail.name}" -->
+    <input id="input_event_name" type="text" 
+           name="eventName" style="width: 700px;">
    
     <h5>Nội Dung Sự Kiện</h5>
-    <textarea id="input_event_description" rows="5" type="text" name="description"
-              style="width: 700px;">${eventDetail.description}
+    <textarea id="input_event_description" rows="5" type="text"
+              name="description" style="width: 700px;">
+              <!-- ${eventDetail.description} -->
     </textarea>
     
     <h5>Ảnh sự kiện</h5>
@@ -125,6 +157,8 @@
 
     <script src="resources/js/create_event.js"></script>
     <span class="btn-primary p-3" onclick="sendDataToServer()">Review</span>
+
+</div>
 
 </body>
 

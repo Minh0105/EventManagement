@@ -8,15 +8,7 @@ background: #F15827;
 border-radius: 29px;
 }
 
-/* Row */
-.row {
-    margin: auto;
-       padding: 0.5rem;
-}
 
-.row>* {
-    padding: 0.5rem;
-}
 .lec-avatar{
       width: 49px;
 height: 49px;
@@ -24,6 +16,7 @@ left: 1103px;
 top: 22px;
 border: 1.5px solid #FFFFFF;
 }
+
 #myInput {
   background-image: url('/css/searchicon.png'); /* Add a search icon to input */
   background-position: 10px 12px; /* Position the search icon */
@@ -51,4 +44,10 @@ border: 1.5px solid #FFFFFF;
   font-size: 18px; /* Increase the font-size */
   color: black; /* Add a black text color */
   display: block; /* Make it into a block element to fill the whole list */
+}
+
+
+
+#body {
+  padding: 1rem;
 }
