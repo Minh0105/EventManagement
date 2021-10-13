@@ -20,12 +20,13 @@ public class CommentDTO implements Comparable<CommentDTO>{
     private String userName;
     private boolean isQuestion;
     private Date commentDatetime;
+    private String userRoleName;
     private List<ReplyDTO> replyList;
 
     public CommentDTO() {
     }
 
-    public CommentDTO(int commentId, String contents, int eventId, String userAvatar, String userName, boolean isQuestion, Date commentDatetime, List<ReplyDTO> replyList) {
+    public CommentDTO(int commentId, String contents, int eventId, String userAvatar, String userName, boolean isQuestion, Date commentDatetime, String userRoleName, List<ReplyDTO> replyList) {
         this.commentId = commentId;
         this.contents = contents;
         this.eventId = eventId;
@@ -33,6 +34,7 @@ public class CommentDTO implements Comparable<CommentDTO>{
         this.userName = userName;
         this.isQuestion = isQuestion;
         this.commentDatetime = commentDatetime;
+        this.userRoleName = userRoleName;
         this.replyList = replyList;
     }
 
@@ -100,9 +102,17 @@ public class CommentDTO implements Comparable<CommentDTO>{
         this.replyList = replyList;
     }
 
+    public String getUserRoleName() {
+        return userRoleName;
+    }
+
+    public void setUserRoleName(String userRoleName) {
+        this.userRoleName = userRoleName;
+    }
+
     @Override
     public int compareTo(CommentDTO t) {
-            return this.getCommentDatetime().compareTo(t.getCommentDatetime());
+            return - this.getCommentDatetime().compareTo(t.getCommentDatetime());
     }
 
     @Override

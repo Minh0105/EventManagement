@@ -8,11 +8,13 @@ package fptu.swp.controller;
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
 import fptu.swp.entity.location.LocationDTO;
+import fptu.swp.entity.user.LecturerBriefInfoDTO;
 import fptu.swp.entity.user.UserDAO;
 import fptu.swp.entity.user.UserDTO;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -65,6 +67,7 @@ public class HandleMultipartServlet extends HttpServlet {
         String chosenTimeRange = "";
 
         List<LocationDTO> chosenLocationList = null;
+        List<LecturerBriefInfoDTO> chosenLecturerList = new ArrayList<>();
         UserDTO loginUser = null;
         String poster = "";
         String location = "";
@@ -76,9 +79,6 @@ public class HandleMultipartServlet extends HttpServlet {
         String eventName = "";
         String description = "";
         FileInputStream posterStream = null;
-
-        int lecturerRemoveId = 0;
-        int lecturerAddId = 0;
 
         String action = "";
         EventDetailDTO detail;
@@ -136,11 +136,11 @@ public class HandleMultipartServlet extends HttpServlet {
                     if (item.isFormField()) {
                         params.put(item.getFieldName(), item.getString());
                         inputName = (String) item.getFieldName();
-                        if (inputName.equalsIgnoreCase("removeLec")) {
-                            lecturerRemoveId = Integer.parseInt((String) item.getString());
-                        }
-                        if (inputName.equalsIgnoreCase("addLec")) {
-                            lecturerAddId = Integer.parseInt((String) item.getString());
+                        if (inputName.equalsIgnoreCase("chosen_lecturer")) {
+                            LecturerBriefInfoDTO lec = userDao.getLecturerById(Integer.parseInt(item.getString()));
+                            if(lec!= null){
+                                chosenLecturerList.add(lec);
+                            }
                         }
                         if (inputName.equalsIgnoreCase("action")) {
                             action = (String) item.getString();
@@ -173,16 +173,10 @@ public class HandleMultipartServlet extends HttpServlet {
                 session.setAttribute("EVENT_DETAIL_REVIEW", review);
                 LOGGER.info("Session attribute: EVENT_POSTER_STREAM: " + review);
                 session.setAttribute("EVENT_POSTER_STREAM", posterStream);
+                LOGGER.info("Session attribute: ChosenLecturerList: " + chosenLecturerList);
+                session.setAttribute("ChosenLecturerList", chosenLecturerList);
                 if ("Review".equals(action)) {
                     url = REVIEW_EVENT_PAGE_PATH;
-                }
-                if (lecturerRemoveId != 0) {
-                    request.setAttribute("lecturerId", lecturerRemoveId);
-                    url = REMOVE_CHOSEN_LECTURER_SERVLET_PATH;
-                }
-                if (lecturerAddId != 0) {
-                    request.setAttribute("lecturerId", lecturerAddId);
-                    url = ADD_CHOSEN_LECTURER_SERVLET_PATH;
                 }
             }
         } catch (Exception ex) {

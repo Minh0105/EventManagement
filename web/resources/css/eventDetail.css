@@ -7,12 +7,6 @@
 }
 /* Header */
 
-    .avatarComment1 img{
-        width: 50px;
-        height: 50px;
-        left: 1103px;
-        top: 22px;
-    }
 .title{
     border: radius 10px;
     color: #fff;
@@ -204,10 +198,12 @@
 
 /* Second 1*/
 .second1 img{
-    position:relative;
-    width: 100%;
-    height: 100%;
-}
+        object-fit: cover;
+        position:relative;
+        width: 100%;
+        height: 500px;
+    }
+
 
 /* Second 2 */
 .second2{
@@ -220,6 +216,18 @@
 .second2Img img{
     padding: 0 1rem;
     height: 110px;
+}
+.second2Img .numberDay{
+    text-align: center;
+    margin: -5rem -0.5rem;
+}
+.numberDay h3{
+    font-size: 35px;
+    font-weight: 900;
+}
+.numberDay p{
+    color: #FF4306;
+    margin-top: -13px;
 }
 
 /* Second2Line */
@@ -276,43 +284,52 @@
 }
 
 .carouselButton1{
-
     padding: 0 1rem;
-    display: flex;
     justify-content:center;
     align-items: center;
 }
+
 .carouselButton1 img{
     width: 20px;
     height: 20px;
     margin-right: 8px;
 }
 .carouselButton1 p{
+    font-weight: 700;
     margin: 0
 }
+
+
 .carouselButton1 button{
     border: none;
     margin-left: 0 1rem;
     font-weight: 400;
-    color: #FFF;
-    background: #1472E1;
     width: 150px;
     height: 50px;
     border-radius: 10px;
 }
 .carouselButton1 .hight{
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
+
+
+
+
+/* Hight2 */
+/* click đổi màu */
+
 /* Fast Word */
 .fastWord{
-
     padding: 0 2rem;
 
 }
-.fastWord h1{
+.fastWord marquee{
     font-size: 50px;
+    word-break:keep-all;
 }
 .fastWord p{
     font-weight: 700;
@@ -327,6 +344,7 @@
     padding: 2rem;
 }
 .navWord h3{
+    padding: 0 5rem;
     font-weight: 700;
 }
 .navWord p{
@@ -336,17 +354,30 @@
 }
 /* Single */
 .single{
-    padding: 2rem 8rem;
+    padding: 2rem 7rem;
     font-weight: 800;
 }
 
 
 /* Container */
+
+.hoverDiv{
+    margin: 1rem 0;
+}
 .item{
     border-radius: 7px;
     box-shadow: -1px 1px #c4c4c4, 1px -1px #c4c4c4;
     text-align: center;
-    border: 1px solid #c4c4c4;
+    border: 4px solid #c4c4c4;
+}
+.item:hover{
+    border:4px solid #18dee9;
+}
+.item img{
+    object-fit: cover;
+    height: 255px;
+    padding: 0.5rem 0;
+    width: 230px;
 }
 .item p{
     white-space: nowrap;
@@ -372,7 +403,7 @@
 
 /* Next */
 .next{
-    padding: 1rem 8rem;
+    padding: 1rem 7rem;
 }
 .next2{
     display: flex;
@@ -517,7 +548,7 @@
     .carousel{
         flex-direction: column;
     }
-    .fastWord h1 {
+    .fastWord marquee{
         font-size: 26px;
     }
     .carouselWrite h3 {
@@ -529,6 +560,7 @@
         text-align: center;
         display: flex;
         justify-content: center; */
+
         margin: 10px 5px;
     }
 
@@ -539,6 +571,13 @@
     .next {
         padding: 1rem;
     }
+    .next1 h4 {
+        padding: 0 3rem;
+        /* font-weight: 700; */
+    }
+    .navWord h3{
+        padding: 0 2rem;
+    }
     .rep {
         padding: 1rem;
     }
@@ -546,7 +585,40 @@
         margin: 0 30px;
     }
     .avatarComment1{
-        margin-top: -28px; 
+        margin-top: -28px;
     }
 
+    .red {
+        background: black;
+    }
+    .blue {
+        background: #1472E1;
+    }
+    .single h3{
+        padding: 0;
+    }
+
+}
+/* --------------mới thêm--------------- */
+.hight {
+    color: #FFF;
+    background: #1472E1;
+    width: 100px;
+    height: 50px;
+    border: 1px #000 solid;
+}
+
+.hight:hover{
+    border: 3px solid #c4c4c4;
+    font-weight: 900;
+    background-color: black;
+    color: #1e81b0
+        ;
+}
+.red {
+    background: black;
+    color: #18dee9;
+}
+.blue {
+    background: #1472E1;
 }

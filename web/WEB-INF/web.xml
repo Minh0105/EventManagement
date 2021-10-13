@@ -76,14 +76,6 @@
         <param-name>VIEW_EVENTDETAIL_SERVLET</param-name>
         <param-value>viewEventDetail</param-value>
     </context-param>
-    <context-param>
-        <param-name>REMOVE_CHOSEN_LECTURER_SERVLET</param-name>
-        <param-value>removeChosenLecturer</param-value>
-    </context-param>
-    <context-param>
-        <param-name>ADD_CHOSEN_LECTURER_SERVLET</param-name>
-        <param-value>chooseLecturer</param-value>
-    </context-param>
     <filter>
         <filter-name>FilterAuth</filter-name>
         <filter-class>fptu.swp.filter.FilterAuth</filter-class>
@@ -121,14 +113,6 @@
         <servlet-class>fptu.swp.controller.ViewEventDetailServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ChooseLecturerServlet</servlet-name>
-        <servlet-class>fptu.swp.controller.ChooseLecturerServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>RemoveChosenLecturerServlet</servlet-name>
-        <servlet-class>fptu.swp.controller.RemoveChosenLecturerServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>CreateEventServlet</servlet-name>
         <servlet-class>fptu.swp.controller.CreateEventServlet</servlet-class>
     </servlet>
@@ -143,6 +127,18 @@
     <servlet>
         <servlet-name>HandleMultipartServlet</servlet-name>
         <servlet-class>fptu.swp.controller.HandleMultipartServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CommentServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.CommentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReplyServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.ReplyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AskQuestionServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.AskQuestionServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -161,14 +157,6 @@
         <url-pattern>/ViewEventDetailServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ChooseLecturerServlet</servlet-name>
-        <url-pattern>/ChooseLecturerServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>RemoveChosenLecturerServlet</servlet-name>
-        <url-pattern>/RemoveChosenLecturerServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>CreateEventServlet</servlet-name>
         <url-pattern>/CreateEventServlet</url-pattern>
     </servlet-mapping>
@@ -183,6 +171,18 @@
     <servlet-mapping>
         <servlet-name>HandleMultipartServlet</servlet-name>
         <url-pattern>/HandleMultipartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CommentServlet</servlet-name>
+        <url-pattern>/CommentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReplyServlet</servlet-name>
+        <url-pattern>/ReplyServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AskQuestionServlet</servlet-name>
+        <url-pattern>/AskQuestionServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

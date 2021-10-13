@@ -66,9 +66,8 @@ function onChooseLecturer(button) {
     var inputLecId = document.createElement("input");
     inputLecId.className = "chosen_lecturer";
     inputLecId.type = "hidden";
-    inputLecId.name = "chosenLecturer";
     inputLecId.value = lecId;
-
+    inputLecId.name = "chosen_lecturer";
 
     pContainer.appendChild(imgAvatar);
     pContainer.appendChild(spanName);
@@ -145,6 +144,3 @@ function createEventDetailParameter() {
 function createActionParameter () {
     return '<input type="hidden" name="action" value="Review" />\n';
 }
-
-
-

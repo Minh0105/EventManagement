@@ -5,14 +5,11 @@
  */
 package fptu.swp.controller;
 
-import fptu.swp.entity.user.LecturerBriefInfoDTO;
-import fptu.swp.entity.user.UserDAO;
+import fptu.swp.entity.event.EventDAO;
+import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,8 +21,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author triet
  */
-public class ChooseLecturerServlet extends HttpServlet {
-   static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(ChooseLecturerServlet.class);
+public class CommentServlet extends HttpServlet {
+    static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(CommentServlet.class);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,60 +35,36 @@ public class ChooseLecturerServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        LOGGER.info("Begin ChooseLecturerServlet");
-
-        // declare var
-        UserDAO userDao = new UserDAO();
-        List<LecturerBriefInfoDTO> lecturerList = null;
-        List<LecturerBriefInfoDTO> chosenLecturerList  = null;
+        LOGGER.info("Begin CommentServlet");
+                // declare var
         HttpSession session;
-        LecturerBriefInfoDTO lecturer;
-        boolean check = false;
+        UserDTO loginUser;
+        EventDAO eventDao = new EventDAO();
+
         // get roadmap
         ServletContext context = request.getServletContext();
         HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
 
         //default URL
         final String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
-        final String APPEND_EVENT_DETAIL_PAGE_LABEL = context.getInitParameter("APPEND_EVENT_DETAIL_PAGE");
-        String APPEND_EVENT_DETAIL_PAGE_PATH = roadmap.get(APPEND_EVENT_DETAIL_PAGE_LABEL);
+        final String VIEW_EVENTDETAIL_SERVLET = context.getInitParameter("VIEW_EVENTDETAIL_SERVLET");
         String url = INVALID_PAGE_LABEL;
 
-        // parameter
-        int lecturerId = (int) request.getAttribute("lecturerId");
-        try{
-            session = request.getSession(false);
-            chosenLecturerList = (List<LecturerBriefInfoDTO>) session.getAttribute("ChosenLecturerList");
-            if(lecturerList == null) {
-                lecturerList = new ArrayList<>();
+        try {
+            //parameter
+            session = request.getSession();
+            loginUser = (UserDTO) session.getAttribute("USER");
+            int userId = loginUser.getId();
+            int eventId = Integer.parseInt(request.getParameter("eventId"));
+            String content = request.getParameter("content");
+            if(eventDao.insertComment(eventId, userId, content, false)){
+                url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
             }
-            if(chosenLecturerList == null) {
-                chosenLecturerList = new ArrayList<>();
-            }
-            lecturerList = (List<LecturerBriefInfoDTO>) session.getAttribute("LecturerList");
-            lecturer = userDao.getLecturerById(lecturerId);
-            if(lecturerList.remove(lecturer)){
-                check = chosenLecturerList.add(lecturer);
-                if (check){
-                    LOGGER.info("Session Attribute - ChosenLecturerList : " + chosenLecturerList);
-                    session.setAttribute("ChosenLecturerList", chosenLecturerList);
-                    LOGGER.info("Session Attribute - LecturerList : " + lecturerList);
-                    session.setAttribute("LecturerList", lecturerList);
-                    url = APPEND_EVENT_DETAIL_PAGE_LABEL;
-                }
-            }
-            
-        }catch(Exception e){
+        } catch (Exception e) {
             LOGGER.error(e);
         } finally {
-            LOGGER.info("Redirect from ChooseLecturerServlet to" + url);
             response.sendRedirect(url);
-//            RequestDispatcher rd = request.getRequestDispatcher(url);
-//            rd.forward(request, response);
         }
-         
-    
-            
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

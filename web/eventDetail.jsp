@@ -4,6 +4,9 @@
     Author     : triet
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page import="fptu.swp.entity.user.UserDTO"%>
 <%@page import="fptu.swp.entity.event.ReplyDTO"%>
 <%@page import="fptu.swp.entity.event.CommentDTO"%>
@@ -29,7 +32,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="resources/sweetalert2.all.min.js"></script> 
+        <script src="resources/sweetalert2.all.min.js"></script>  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
         <link rel="stylesheet" type="text/css" href="resources/css/eventDetail.css"/>
         <link rel='stylesheet' type='text/css' media='screen' href='resources/css/style.css'>
@@ -86,7 +90,15 @@
 
             <div class="second2">
                 <div class="second2Img">
-                    <img src="../image/eventDetail 1.png" alt="">
+                    <img src="resources/image/eventDetail1.png" alt="">
+
+  <!------------------Thêm ngày  và thứ ------------------------------------------------------->
+                     <div class="numberDay">
+                    <h3 id="dateRender"> <%= detail.getDate()%></h3>
+                    <p id="dayRender"></p>
+                </div>
+  
+ <!---------------------------------------------------------------------------------------------->
                 </div>
 
                 <div class="second2Line">
@@ -119,7 +131,7 @@
                     <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
                     <input type="hidden" name="isJoining" value="<%= checkJoining%>"/>
                     <div class="carouselButton1">
-                        <button class="hight" type="submit">
+                        <button class="hight" type="submit" id="a">
                             <%if (checkJoining) {
                             %>
                             <img src="resources/image/eventDetail 2.png" alt="">
@@ -139,7 +151,7 @@
                     <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
                     <input type="hidden" name="isFollowed" value="<%= checkFollowed%>"/>
                     <div class="carouselButton1" type="submit">
-                        <button class="hight">
+                        <button class="hight" id="b">
                             <%if (checkFollowed) {
                             %>
                             <img src="resources/image/eventDetail 3.png" alt="">
@@ -161,7 +173,9 @@
 
         <section class="fast">
             <div class="fastWord">
-                <h1><%= detail.getName()%></h1>
+                <marquee direction="up" behavior="slide" loop = "2" scrollamount="5" style="font-size: 50px; word-break: keep-all;">
+                    <%= detail.getName()%>
+                </marquee>
                 <p><%= detail.getOrganizerName()%></p>
             </div>
         </section>
@@ -232,14 +246,12 @@
                         </div>
                     </section> 
                 </div>
-
                 <!-- Comment -->
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="comment">
-                        <form action ="comment">
-                            <input type="text" placeholder="Vui lòng nhập bình luận của bạn" name="contents"/>
-                            <input type="hidden" name="eventId" value="<%= detail.getId() %>"/>
-                            <input type="hidden" name="userId" value="<%= detail.getId() %>"/>
+                        <form action ="comment" name="loginBox" target="#here">
+                            <input type="text" placeholder="Vui lòng nhập bình luận của bạn" name="content" required/>
+                            <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
                             <input type="submit" value="Comment"/>
                         </form>
                         <%
@@ -252,8 +264,16 @@
                             </div>
 
                             <div class="avatarComment2">
-                                <h5><%= comment.getUserName()%></h5>
+                                <h5><%= comment.getUserName()%> - <%= comment.getUserRoleName()%></h5>
                                 <p><%= comment.getContents()%></p>
+
+                                <form action ="reply" >
+                                    <input type="text" name="content" placeholder="Trả lời..." required/>
+                                    <input type="hidden" name="commentId" value = "<%= comment.getCommentId()%>"/>
+                                    <input type="hidden" name="eventId" value = "<%= detail.getId()%>"/>
+                                    <input type="submit" value="Gửi"/>
+                                </form>
+
                             </div>
                         </div>
                         <%
@@ -265,7 +285,7 @@
                                 <img src="<%= reply.getUserAvatar()%>" class="rounded-circle" class="rounded-circle" alt="">
                             </div>
                             <div class="repComment2b">
-                                <h5><%= reply.getUserName()%></h5>
+                                <h5><%= reply.getUserName()%> - <%= reply.getUserRoleName()%></h5>
                                 <p><%= reply.getContents()%></p>
                             </div>
                         </div>
@@ -279,11 +299,19 @@
                 <!-- Hỏi Đáp -->
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                     <div class="ask">
-                        <textarea placeholder="Vui lòng nhập câu hỏi của bạn....."></textarea>
-                        <div style="width: 100%; display:flex; justify-content:flex-end">
-                            <button class="sendButton">Gửi</button>
-                        </div>
                         <%
+                            if ("STUDENT".equals(loginUser.getRoleName())) {
+                        %>
+                        <form action ="askQuestion">
+                            <textarea type="text" placeholder="Vui lòng nhập câu hỏi của bạn....." name="content" required></textarea>
+                            <div style="width: 100%; display:flex; justify-content:flex-end">
+                                <button type="submit" class="sendButton">Gửi</button>
+                            </div>
+                            <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+
+                        </form>
+                        <%
+                            }
                             List<CommentDTO> listQuestion = (List<CommentDTO>) request.getAttribute("LIST_QUESTION");
                             for (CommentDTO question : listQuestion) {
                         %>
@@ -293,8 +321,21 @@
                             </div>
 
                             <div class="avatarComment2">
-                                <h5><%= question.getUserName()%></h5>
+                                <h5><%= question.getUserName()%> - <%= question.getUserRoleName()%></h5>
                                 <p><%= question.getContents()%></p>
+
+                                <%
+                                    if (!"STUDENT".equals(loginUser.getRoleName())) {
+                                %>
+                                <form action ="reply" >
+                                    <input type="text" name="content" placeholder="Trả lời..." required/>
+                                    <input type="hidden" name="commentId" value = "<%= question.getCommentId()%>"/>
+                                    <input type="hidden" name="eventId" value = "<%= detail.getId()%>"/>
+                                    <input type="submit" value="Gửi"/>
+                                </form>
+                                <%
+                                    }
+                                %>
                             </div>
                         </div>
                         <%
@@ -307,7 +348,7 @@
                             </div>
 
                             <div class="repComment2b">
-                                <h5><%= reply.getUserName()%></h5>
+                                <h5><%= reply.getUserName()%> - <%= reply.getUserRoleName()%></h5>
                                 <p><%= reply.getContents()%></p>
                             </div>
                         </div>
@@ -318,19 +359,86 @@
                     </div>
                 </div>
 
+
             </div>
         </div>
     </section>
+
+
     <!--END-->
     <section class="end">
         <h4>Developed By Aladudu Group</h4>
-        <p>COVID-19, 20/9/2021</p>
+        <p id = "date"></p>
     </section>
+
+    <!-- -------------------------gắn link------------------------------- -->
+
+    <script>
+        let dateDOM = document.getElementById('dateRender'); // 1,2,3,4,.. 31
+        let dayDOM = document.getElementById('dayRender'); // Mon, Tue,..
+        if (dateDOM && dayDOM) {
+        let d1 = "<%= detail.getDate()%>"; 
+        let subStringDate = d1.substring(d1.length - 8, d1.length - 10);
+        let subStringDay = d1.substring(0, d1.indexOf(","));
+            dateDOM.innerHTML = subStringDate;
+            dayDOM.innerHTML = subStringDay;
+        }
+        var d = new Date();
+        var thang = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+        document.getElementById("date").innerHTML = "COVID-19, "
+            + d.getDate() + "/" + thang[d.getMonth()] + "/" +
+            + d.getFullYear();
+    </script>
+
+    <!-- click chuột đổi màu button  -->
+    <script type="text/javascript" id="a">
+        $('#a').click(function () {
+            if (!$(this).hasClass('red')) {
+                $(this).removeClass('blue').addClass('red');
+            } else {
+                $(this).removeClass('red').addClass('blue');;
+            }
+
+        }); $('#b').click(function () {
+            if (!$(this).hasClass('red')) {
+                $(this).removeClass('blue').addClass('red');
+            } else {
+                $(this).removeClass('red').addClass('blue');;
+            }
+
+        });
+
+    </script>
+
+
+<!--     comment ko dùng nút gửi  
+    <script type="text/javascript">
+        // Using jQuery.
+
+        $(function () {
+            $('form').each(function () {
+                $(this).find('input').keypress(function (e) {
+                    // Enter pressed?
+                    if (e.which == 10 || e.which == 13) {
+                        this.form.submit();
+                    }
+                });
+
+                $(this).find('input[type=submit]').hide();
+            });
+        });
+    </script>-->
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-            integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN"
-    crossorigin="anonymous"></script>
+        integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
-            integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
-    crossorigin="anonymous"></script>
+        integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
+        crossorigin="anonymous"></script>
+
+
 </body>
+
 </html>

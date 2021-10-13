@@ -53,7 +53,6 @@ public class AppendEventDetailServlet extends HttpServlet {
         Calendar caledar = Calendar.getInstance();
         UserDAO userDao = new UserDAO();
         List<LecturerBriefInfoDTO> lecturerList;
-        List<LecturerBriefInfoDTO> chosenLecturerList;
 
         // get roadmap
         ServletContext context = request.getServletContext();
@@ -77,7 +76,6 @@ public class AppendEventDetailServlet extends HttpServlet {
             session = request.getSession(false);
 
             if (session != null) {
-                chosenLecturerList = (List<LecturerBriefInfoDTO>) session.getAttribute("ChosenLecturerList");
 
                 // ChosenLocationList  [ {id:int, name:string},  {id:int, name:string}, ... ]
                 for (String locationParam : Arrays.asList(chosenLocationId)) {
@@ -120,11 +118,6 @@ public class AppendEventDetailServlet extends HttpServlet {
 
                 // LecturerList Attribute
                 lecturerList = userDao.getAllLecturer();
-                if (chosenLecturerList != null) {
-                    for (LecturerBriefInfoDTO lecturer : chosenLecturerList) {
-                        lecturerList.remove(lecturer);
-                    }
-                }
 
                 LOGGER.info("Session Attribute - LecturerList : " + lecturerList);
                 session.setAttribute("LecturerList", lecturerList);
