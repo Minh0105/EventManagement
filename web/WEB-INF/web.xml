@@ -189,11 +189,13 @@
             30
         </session-timeout>
     </session-config>
+    
     <welcome-file-list>
         <welcome-file>
-            newfeed.jsp
+            appendEventDetail.jsp
         </welcome-file>
     </welcome-file-list>
+    
     <resource-ref>
         <res-ref-name>DBSlink</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
