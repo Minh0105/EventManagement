@@ -20,11 +20,10 @@
         <%
             EventDetailDTO detail = (EventDetailDTO) session.getAttribute("EVENT_DETAIL_REVIEW");
             List<LecturerBriefInfoDTO> listLecturer = (List<LecturerBriefInfoDTO>) session.getAttribute("ChosenLecturerList");
-            
         %>
+
         <img id="ItemPreview" src="data:image/jpg;base64,<%= detail.getPoster() %>">
 <!--        <script>document.getElementById("ItemPreview").src = "<c:url value='data:image/png;base64,<%= detail.getPoster() %>'/>" ;</script>-->
-        
         
         <br><%= detail.getDate()%> - <%= detail.getLocation()%>
         <br><%= detail.getName()%>
