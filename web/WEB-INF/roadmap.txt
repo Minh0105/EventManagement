@@ -25,3 +25,5 @@ handleMultipart=HandleMultipartServlet
 comment=CommentServlet
 reply=ReplyServlet
 askQuestion=AskQuestionServlet
+test=FilterEvent
+FilterEventStudentPage=filter_event_student.jsp

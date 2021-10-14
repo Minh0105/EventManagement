@@ -144,7 +144,9 @@ function createEventDetailParameter() {
 
     var eventName = document.getElementById("input_event_name").value;
     var eventNameInput = '<input type="hidden" name="eventName" value="' + eventName + '" /> \n';
-
+    
+    
+// Triet moi ghi:    
 //                    var data = CKEDITOR.instances.editor1.getData();
 //                document.getElementById('input_event_description').innerHTML = data;
 //                console.log("data instance.editor1: "+ data);
@@ -152,11 +154,13 @@ function createEventDetailParameter() {
 //                    console.log( CKEDITOR.instances[instanceName] );
 //                }
 
-//    var eventDescription = document.getElementById("input_event_description").value;
-        var eventDescription = CKEDITOR.instances.input_event_description.getData();
-        console.log(eventDescription);
-    var eventDescriptionInput = '<input type="hidden" name="description" value="' + eventDescription + '" /> \n';
-
+ //   
+        var eventDescriptionTest = CKEDITOR.instances.input_event_description.getData();
+ //       document.getElementById("input_event_description").innerHTML = eventDescriptionTest;
+ //       var eventDescription = document.getElementById("input_event_description").value;
+ //   var eventDescriptionInput = '<input type="hidden" name="description" value="' + eventDescription + '" /> \n';
+    var eventDescriptionInput = '<textarea style="display:none;" name="description">'+ eventDescriptionTest + '</textarea>';
+    console.log(eventDescriptionInput);
     htmlContent += eventNameInput;
     htmlContent += eventDescriptionInput;
 

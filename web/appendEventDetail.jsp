@@ -73,7 +73,7 @@
 
             <!-- EVENT DESCRIPTION        -->
             <h5 class="title col-12">Nội Dung Sự Kiện</h5>
-            <textarea class="col-12 col-lg-7" id="input_event_description" rows="7" 
+            <textarea class="col-12 col-lg-7" id="input_event_description" rows="7" cols="12"
                       type="text"name="description">${eventDetail.description}</textarea>
 
             <!-- EVENT IMAGE  -->
@@ -155,22 +155,15 @@
 
         </footer>
         <script>
-//            var myinstances = [];
-//            for(var i in CKEDITOR.instances) {
-//            /* this retrieve the data of each instances and store it into an associative array with
-//              the names of the textareas as keys... */
-//            myinstances[CKEDITOR.instances[i].name] = CKEDITOR.instances[i].getData(); 
-//            }
-//                var data = CKEDITOR.instances.editor1.getData();
-//                document.getElementById('input_event_description').innerHTML += data;
-//                console.log("data instance.editor1: "+ data);
-//                
-//                for(var instanceName in CKEDITOR.instances) {
-//                    console.log( CKEDITOR.instances[instanceName] );
+                if (screen.width >= 1200) {
+                    CKEDITOR.replace('input_event_description', {
+                        width: '58.3333%'
+                    });
+                } else {
+                    CKEDITOR.replace('input_event_description', {
+                        width: '100%'
+                    });
                 }
-            </script>
-        <script>
-                CKEDITOR.replace('input_event_description');
         </script>
     </body>
 
