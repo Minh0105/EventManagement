@@ -48,7 +48,7 @@
                     <ul class="navbar-nav ml-auto nav-margin">
                         <li class="nav-item">
                             <a id="icon_name_container" class="nav-link" href="ViewInfoPage"> 
-                                <!-- <img class="nav-avatar rounded-circle" src="${sessionScope.USER.avatar}"> ${sessionScope.USER.name}</img></a> -->
+                                <!-- <img class="nav-avatar rounded-circle" src=""> ${sessionScope.USER.name}</img></a> -->
                                 <img id="avatar_icon" class="rounded-circle" src="resources/image/mock_avatar.jpeg" />
                                 <span id="avatar_name" class="text-white">Tăng Tấn Tài</span>
                             </a>
@@ -65,7 +65,7 @@
                             </a>     
 
                             <form action="logout" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <button class="btn btn-outline-light profile-button logout " type="submit">
+                                <button class="btn btn-outline-light profile-button logout" type="submit">
                                 <img src="resources/icon/log_out_icon.svg">Log Out</button> 
                             </form>   
 
@@ -97,159 +97,43 @@
 
         <div id="card_container" class="container-fluid">
             <div id="card_container_row" class="row gx-1 gy-4">
-                <!-- <%
+                <%
                     List<EventCardDTO> listCard = (List<EventCardDTO>) request.getAttribute("LIST_CARD");
                     if (listCard != null) {
                         for (EventCardDTO card : listCard) {
                 %>
-                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                    <div class="item">
-                        <div class="item1">
-                            <img src="data:image/jpg;base64,<%= card.getPoster()%>" alt="">
-                            <div class="item1Word">
-                                <p><%= card.getDate()%> - <%= card.getLocation()%> </p>
-                                <h4><%= card.getName()%></h4>
-                                <p><%= card.getOrganizerName()%></p>
-                            </div>
-                        </div>
-                        <div class="item2">
-                            <div class="item2Img">
-                                <div class="item2Img1">
-                                    <img src="resources/image/student4.png" alt="">
-                                    <p><%= card.getFollowing()%> lượt quan tâm</p>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="item">
+                                    <div class="image_and_infor_container">
+                                        <img class="event_image" src="data:image/jpg;base64,<%= card.getPoster() %>" alt="">
+                                        <div class="infor_container">
+                                            <p class="event_date_and_loc"><%= card.getDate()%> - <%= card.getLocation()%></p>
+                                            <p class="event_name"><%= card.getName()%></p>
+                                            <p class="event_organizer_name"><%= card.getOrganizerName()%></p>
+                                        </div>
+                                    </div>
+                                    <div class="other_infor_container">
+                                        <div class="care_infor_container">
+                                            <div class="care_infor care_part">
+                                                <img src="resources/icon/icon_care_blue.svg" alt="">
+                                                <p><%= card.getFollowing()%> lượt quan tâm</p>
+                                            </div>
+                                            <div class="care_infor join_part">
+                                                <img src="resources/icon/icon_join_orange.svg" alt="">
+                                                <p><%= card.getJoining()%> bạn sẽ tham gia</p>
+                                            </div>
+                                        </div>
+                                        <form action="viewEventDetail">
+                                            <input class ="btnViewDetail" type="submit" value="Chi tiết">
+                                            <input type="hidden" name="eventId" value="<%= card.getId()%>">
+                                        </form>
+                                    </div>
                                 </div>
-                                <div class="item2Img1">
-                                    <img src="resources/image/student5.png" alt="">
-                                    <p><%= card.getJoining()%> bạn sẽ tham gia</p>
-                                </div>
                             </div>
-                            <form action="viewEventDetail">
-                                <input class ="btnSubmit" type="submit" value="Chi tiết">
-                                <input type="hidden" name="eventId" value="<%= card.getId()%>">
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-                <% }
+                <%      
+                        }
                     }
                 %>
-             -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="item">
-                        <div class="image_and_infor_container">
-                            <img class="event_image" src="resources/image/student3.png" alt="">
-                            <div class="infor_container">
-                                <p class="event_date_and_loc">20/09/21 - Hội trường A Đại học FPT</p>
-                                <p class="event_name">Sự kiện Sức khỏe Coder - Ngày hội tập tạ</p>
-                                <p class="event_organizer_name">Câu lạc bộ FCode</p>
-                            </div>
-                        </div>
-                        <div class="other_infor_container">
-                            <div class="care_infor_container">
-                                <div class="care_infor care_part">
-                                    <img src="resources/icon/icon_care_blue.svg" alt="">
-                                    <p>100 lượt quan tâm</p>
-                                </div>
-                                <div class="care_infor join_part">
-                                    <img src="resources/icon/icon_join_orange.svg" alt="">
-                                    <p>30 bạn sẽ tham gia</p>
-                                </div>
-                            </div>
-                            <form action="viewEventDetail">
-                                <input class ="btnViewDetail" type="submit" value="Chi tiết">
-                                <input type="hidden" name="eventId" value="1">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="item">
-                        <div class="image_and_infor_container">
-                            <img class="event_image" src="resources/image/student3.png" alt="">
-                            <div class="infor_container">
-                                <p class="event_date_and_loc">20/09/21 - Hội trường A Đại học FPT</p>
-                                <p class="event_name">Sự kiện Sức khỏe Coder - Ngày hội tập tạ</p>
-                                <p class="event_organizer_name">Câu lạc bộ FCode</p>
-                            </div>
-                        </div>
-                        <div class="other_infor_container">
-                            <div class="care_infor_container">
-                                <div class="care_infor care_part">
-                                    <img src="resources/icon/icon_care_blue.svg" alt="">
-                                    <p>100 lượt quan tâm</p>
-                                </div>
-                                <div class="care_infor join_part">
-                                    <img src="resources/icon/icon_join_orange.svg" alt="">
-                                    <p>30 bạn sẽ tham gia</p>
-                                </div>
-                            </div>
-                            <form action="viewEventDetail">
-                                <input class ="btnViewDetail" type="submit" value="Chi tiết">
-                                <input type="hidden" name="eventId" value="1">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="item">
-                        <div class="image_and_infor_container">
-                            <img class="event_image" src="resources/image/student3.png" alt="">
-                            <div class="infor_container">
-                                <p class="event_date_and_loc">20/09/21 - Hội trường A Đại học FPT</p>
-                                <p class="event_name">Sự kiện Sức khỏe Coder - Ngày hội tập tạ</p>
-                                <p class="event_organizer_name">Câu lạc bộ FCode</p>
-                            </div>
-                        </div>
-                        <div class="other_infor_container">
-                            <div class="care_infor_container">
-                                <div class="care_infor care_part">
-                                    <img src="resources/icon/icon_care_blue.svg" alt="">
-                                    <p>100 lượt quan tâm</p>
-                                </div>
-                                <div class="care_infor join_part">
-                                    <img src="resources/icon/icon_join_orange.svg" alt="">
-                                    <p>30 bạn sẽ tham gia</p>
-                                </div>
-                            </div>
-                            <form action="viewEventDetail">
-                                <input class ="btnViewDetail" type="submit" value="Chi tiết">
-                                <input type="hidden" name="eventId" value="1">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="item">
-                        <div class="image_and_infor_container">
-                            <img class="event_image" src="resources/image/student3.png" alt="">
-                            <div class="infor_container">
-                                <p class="event_date_and_loc">20/09/21 - Hội trường A Đại học FPT</p>
-                                <p class="event_name">Sự kiện Sức khỏe Coder - Ngày hội tập tạ</p>
-                                <p class="event_organizer_name">Câu lạc bộ FCode</p>
-                            </div>
-                        </div>
-                        <div class="other_infor_container">
-                            <div class="care_infor_container">
-                                <div class="care_infor care_part">
-                                    <img src="resources/icon/icon_care_blue.svg" alt="">
-                                    <p>100 lượt quan tâm</p>
-                                </div>
-                                <div class="care_infor join_part">
-                                    <img src="resources/icon/icon_join_orange.svg" alt="">
-                                    <p>30 bạn sẽ tham gia</p>
-                                </div>
-                            </div>
-                            <form action="viewEventDetail">
-                                <input class ="btnViewDetail" type="submit" value="Chi tiết">
-                                <input type="hidden" name="eventId" value="1">
-                            </form>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 

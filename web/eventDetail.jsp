@@ -39,11 +39,11 @@
         <link rel='stylesheet' type='text/css' media='screen' href='resources/css/style.css'>
     </head>
     <body>
-
         <nav class="navbar navbar-expand-md navbar-light navbar-color sticky-top">
-            <div class="container-fluid " >
-                <a class="navbar-branch" href="#">
-                    <img src="resources/image/FPTlogo.png" height="50">
+            <div id="nav_content" class="container-fluid">
+                <a id="navbar_branch" href="#">
+                    <img id="app_icon" src="resources/icon/app_icon.svg">
+                    <h5 class="d-none d-md-block">FPT Event Management</h5>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" 
                         data-target="#navbarResponsive">
@@ -52,32 +52,34 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto nav-margin">
                         <li class="nav-item">
-                            <a class="nav-link active rounded-circle" href="ViewInfoPage"> <img class="nav-avatar rounded-circle" src="${sessionScope.USER.avatar}"> ${sessionScope.USER.name}</img></a>
+                            <a id="icon_name_container" class="nav-link" href="ViewInfoPage"> 
+                                <!-- <img class="nav-avatar rounded-circle" src="${sessionScope.USER.avatar}"> ${sessionScope.USER.name}</img></a> -->
+                                <img id="avatar_icon" class="rounded-circle" src="resources/image/mock_avatar.jpeg" />
+                                <span id="avatar_name" class="text-white">Tăng Tấn Tài</span>
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-bell-fill" viewBox="0 0 22 22">
-                                <path class="titleRight2Bell" d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-
-                                </svg>
+                                <img id="btn_bell" src="resources/icon/bell_icon.svg" alt="Bell_icon" />
                             </a>
                         </li>
                         <li class="nav-item dropdown">
 
-                            <a class="nav-link  toggle" href="#" id="navbarDropdown " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-list" viewBox="0 0 22 22">
-                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                                </svg>
-                            </a>   
+                            <a class="nav-link" href="#" id="navbarDropdown " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img id="btn_menu" src="resources/icon/hamburger_button_icon.svg" alt="hamburger_button" />
+                            </a>     
 
                             <form action="logout" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <button class="btn btn-outline-light profile-button logout " type="submit"><img src="resources/icon/log_out_logo.png">Log Out</button> 
+                                <button class="btn btn-outline-light profile-button logout " type="submit">
+                                    <img src="resources/icon/log_out_icon.svg">Log Out</button> 
                             </form>   
+
                         </li>				
                     </ul>
                 </div>
             </div>
         </nav>
+        
         <%
             UserDTO loginUser = (UserDTO) session.getAttribute("USER");
             EventDetailDTO detail = (EventDetailDTO) request.getAttribute("EVENT_DETAIL");
@@ -90,7 +92,7 @@
 
             <div class="second2">
                 <div class="second2Img">
-                    <img src="resources/image/eventDetail1.png" alt="">
+                    <img src="resources/image/image_calendar_background.svg" alt="">
 
   <!------------------Thêm ngày  và thứ ------------------------------------------------------->
                      <div class="numberDay">
@@ -103,11 +105,10 @@
 
                 <div class="second2Line">
                     <div class="second2Line1">
-                        <div class="dot"></div>
                         <p class="people"> <%= detail.getFollowing()%> người đã quan tâm</p> 
                     </div>
+                    <div class="dot"></div>
                     <div class="second2Line1">
-                        <div class="dot"></div>
                         <p class="people"><%= detail.getJoining()%> người sẽ tham gia</p>
                     </div>
                 </div>
@@ -134,12 +135,12 @@
                         <button class="hight" type="submit" id="a">
                             <%if (checkJoining) {
                             %>
-                            <img src="resources/image/eventDetail 2.png" alt="">
+                            <img src="resources/icon/icon_cancel_white.svg" alt="">
                             <p>Hủy Tham Gia</p>
                             <%
                             } else {
                             %>
-                            <img src="resources/image/eventDetail 2.png" alt="">
+                            <img src="resources/icon/icon_join_white.svg" alt="">
                             <p>Sẽ Tham Gia</p>
                             <%
                                 }
@@ -154,11 +155,11 @@
                         <button class="hight" id="b">
                             <%if (checkFollowed) {
                             %>
-                            <img src="resources/image/eventDetail 3.png" alt="">
+                            <img src="resources/icon/icon_cancel_white.svg" alt="">
                             <p>Hủy Quan Tâm</p>
                             <%
                             } else { %>
-                            <img src="resources/image/eventDetail 3.png" alt="">
+                            <img src="resources/icon/icon_care_white.svg" alt="">
                             <p>Quan Tâm</p>
                             <%
                                     }
@@ -173,56 +174,61 @@
 
         <section class="fast">
             <div class="fastWord">
-                <marquee direction="up" behavior="slide" loop = "2" scrollamount="5" style="font-size: 50px; word-break: keep-all;">
+                <marquee direction="up" behavior="slide" loop = "2" scrollamount="5" word-break: keep-all;">
                     <%= detail.getName()%>
                 </marquee>
                 <p><%= detail.getOrganizerName()%></p>
             </div>
         </section>
+
+        <div id="grey_line"></div>
+
         <!-- nav -->
-        <section class="text">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
-                            role="tab" aria-controls="home" aria-selected="true">Giới Thiệu </button>
+        <section id="content">
+            <ul class="nav" id="tab_container">
+                <li class="nav-item" id="home_tab_button">
+                  <a class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                  role="tab" aria-controls="home" aria-selected="true">Giới thiệu</a>
                 </li>
 
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                            role="tab" aria-controls="profile" aria-selected="false">Thảo Luận</button>
+                <li class="nav-item" id="comment_tab_button">
+                  <a class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                  role="tab" aria-controls="profile" aria-selected="false">Thảo luận</a>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button"
-                            role="tab" aria-controls="contact" aria-selected="false">Hỏi Đáp</button>
+
+                <li class="nav-item" id="discuss_tab_button">
+                  <a class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button"
+                  role="tab" aria-controls="contact" aria-selected="false">Hỏi đáp</a>
                 </li>
-            </ul>
+              </ul>
+
             <div class="tab-content" id="myTabContent">
                 <!-- Giới Thiệu -->
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <section class="navWord">
-                        <h3>Nội Dung Sự Kiện</h3>
+                        <h2 class="content_title">Nội Dung Sự Kiện</h3>
                         <p><%= detail.getDescription()%></p>
                     </section>   
                     <!-- Giảng Viên -->
                     <section class="single">
-                        <h3>
+                        <h2 class="content_title">
                             Giảng Viên
                         </h3>
                     </section>
                     <!-- Thẻ -->
-                    <section>
-                        <div class="container">
-                            <div class="row">
+                    <section id="lecturer_section">
+                        <div id="lecturer_container" class="container">
+                            <div id="lecturer_row" class="row">
                                 <%
                                     for (LecturerBriefInfoDTO lecturer : listLecturer) {
                                 %>
                                 <div class="col-lg-4 col-md-6 col-sm-12 col-xs-6">
-                                    <div class="item">
-                                        <div>
+                                    <div class="lecturer_card">
+                                        <div class="lec_ava_container">
                                             <img src="<%= lecturer.getAvatar()%>" class="rounded-circle" alt="">
                                         </div>
-                                        <h5><%= lecturer.getName()%></h5>
-                                        <p><%= lecturer.getDescription()%></p>
+                                        <h4><%= lecturer.getName()%></h4>
+                                        <h5><%= lecturer.getDescription()%></h5>
                                     </div>
                                 </div>
                                 <%
@@ -232,50 +238,47 @@
                         </div>
                     </section>
                     <!-- người tổ chức -->
-                    <section class="next">
-                        <div class="next1">
-                            <h4>Người Tổ Chức</h4>
+                    <h2 class="content_title">Người Tổ Chức</h3>
+                    <div class="organizer_container">
+                        <img src="<%= detail.getOrganizerAvatar()%>" class="rounded-circle" alt="">
+                        <div class="organizer_infor">
+                            <h5><%= detail.getOrganizerName()%></h5>
+                            <p><%= detail.getOrganizerDescription()%></p>
                         </div>
+                    </div>
 
-                        <div class="next2">
-                            <img src="<%= detail.getOrganizerAvatar()%>" class="rounded-circle" alt="">
-                            <div class="next2Document">
-                                <h5><%= detail.getOrganizerName()%></h5>
-                                <p><%= detail.getOrganizerDescription()%></p>
-                            </div>
-                        </div>
-                    </section> 
                 </div>
                 <!-- Comment -->
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <div class="comment">
-                        <form action ="comment" name="loginBox" target="#here">
-                            <input type="text" placeholder="Vui lòng nhập bình luận của bạn" name="content" required/>
+                    <div id="comment">
+                        <form id="comment_box" action="comment" name="loginBox" target="#here">
+                            <input id="input_comment" type="text" placeholder="Vui lòng nhập bình luận của bạn" name="content" required/>
                             <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
-                            <input type="submit" value="Comment"/>
+                            <input id="btn_enter_comment" type="submit" value="Bình luận"/>
                         </form>
                         <%
                             List<CommentDTO> listComment = (List<CommentDTO>) request.getAttribute("LIST_COMMENT");
                             for (CommentDTO comment : listComment) {
                         %>
-                        <div class="avatarComment">
-                            <div class="avatarComment1">
-                                <img src="<%= comment.getUserAvatar()%>" class="rounded-circle " alt="">
-                            </div>
+                                <div class="comment_item">
+                                    <div class="avatar_container">
+                                        <img class="rounded-circle lec_avatar" src="<%= comment.getUserAvatar()%>" alt="">
+                                    </div>
 
-                            <div class="avatarComment2">
-                                <h5><%= comment.getUserName()%> - <%= comment.getUserRoleName()%></h5>
-                                <p><%= comment.getContents()%></p>
+                                    <div class="comment_infor">
+                                        <p class="comment_username"><%= comment.getUserName()%> - <%= comment.getUserRoleName()%></p>
+                                        <p class="comment_content"><%= comment.getContents()%></p>
+                                        <p class="btn_show_reply" onclick="showReply(this)">Trả lời</p>
 
-                                <form action ="reply" >
-                                    <input type="text" name="content" placeholder="Trả lời..." required/>
-                                    <input type="hidden" name="commentId" value = "<%= comment.getCommentId()%>"/>
-                                    <input type="hidden" name="eventId" value = "<%= detail.getId()%>"/>
-                                    <input type="submit" value="Gửi"/>
-                                </form>
+                                        <form class="reply_box" action ="reply" >
+                                            <input class="input_reply" type="text" name="content" placeholder="Trả lời..." required/>
+                                            <input type="hidden" name="commentId" value = "<%= comment.getCommentId()%>"/>
+                                            <input type="hidden" name="eventId" value = "<%= detail.getId()%>"/>
+                                            <input class="btn_reply" type="submit" value="Gửi"/>
+                                        </form>
 
-                            </div>
-                        </div>
+                                    </div>
+                                </div>
                         <%
                             List<ReplyDTO> listReply = comment.getReplyList();
                             for (ReplyDTO reply : listReply) {
@@ -285,8 +288,8 @@
                                 <img src="<%= reply.getUserAvatar()%>" class="rounded-circle" class="rounded-circle" alt="">
                             </div>
                             <div class="repComment2b">
-                                <h5><%= reply.getUserName()%> - <%= reply.getUserRoleName()%></h5>
-                                <p><%= reply.getContents()%></p>
+                                <p class="comment_username"><%= reply.getUserName()%> - <%= reply.getUserRoleName()%></p>
+                                <p class="comment_content"><%= reply.getContents()%></p>
                             </div>
                         </div>
                         <%
@@ -303,10 +306,12 @@
                             if ("STUDENT".equals(loginUser.getRoleName())) {
                         %>
                         <form action ="askQuestion">
-                            <textarea type="text" placeholder="Vui lòng nhập câu hỏi của bạn....." name="content" required></textarea>
+                            <textarea id="input_question" type="text" placeholder="Vui lòng nhập câu hỏi của bạn....." name="content" required></textarea>
+                            
                             <div style="width: 100%; display:flex; justify-content:flex-end">
-                                <button type="submit" class="sendButton">Gửi</button>
+                                <button id="btn_enter_question" type="submit" class="sendButton">Gửi</button>
                             </div>
+                            
                             <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
 
                         </form>
@@ -315,24 +320,24 @@
                             List<CommentDTO> listQuestion = (List<CommentDTO>) request.getAttribute("LIST_QUESTION");
                             for (CommentDTO question : listQuestion) {
                         %>
-                        <div class="avatarComment">
-                            <div class="avatarComment1">
-                                <img src="<%= question.getUserAvatar()%>" class="rounded-circle" alt="">
+                        <div class="comment_item">
+                            <div class="avatar_container">
+                                <img class="rounded-circle lec_avatar" src="<%= question.getUserAvatar()%>" class="rounded-circle" alt="">
                             </div>
 
-                            <div class="avatarComment2">
-                                <h5><%= question.getUserName()%> - <%= question.getUserRoleName()%></h5>
-                                <p><%= question.getContents()%></p>
+                            <div class="comment_infor">
+                                <p class="comment_username"><%= question.getUserName()%> - <%= question.getUserRoleName()%></p>
+                                <p class="comment_content"><%= question.getContents()%></p>
 
                                 <%
                                     if (!"STUDENT".equals(loginUser.getRoleName())) {
                                 %>
-                                <form action ="reply" >
-                                    <input type="text" name="content" placeholder="Trả lời..." required/>
-                                    <input type="hidden" name="commentId" value = "<%= question.getCommentId()%>"/>
-                                    <input type="hidden" name="eventId" value = "<%= detail.getId()%>"/>
-                                    <input type="submit" value="Gửi"/>
-                                </form>
+                                        <form class="reply_box" action ="reply" >
+                                            <input class="input_reply" type="text" name="content" placeholder="Nhập nội dung" required/>
+                                            <input type="hidden" name="commentId" value = "<%= question.getCommentId()%>"/>
+                                            <input type="hidden" name="eventId" value = "<%= detail.getId()%>"/>
+                                            <input class="btn_reply" type="submit" value="Gửi"/>
+                                        </form>
                                 <%
                                     }
                                 %>
@@ -342,16 +347,15 @@
                             List<ReplyDTO> listReply = question.getReplyList();
                             for (ReplyDTO reply : listReply) {
                         %>
-                        <div class="repComment2">
-                            <div class="repComment2a">
-                                <img src="<%= reply.getUserAvatar()%>" class="rounded-circle" alt="">
-                            </div>
-
-                            <div class="repComment2b">
-                                <h5><%= reply.getUserName()%> - <%= reply.getUserRoleName()%></h5>
-                                <p><%= reply.getContents()%></p>
-                            </div>
-                        </div>
+                                <div class="repComment2">
+                                    <div class="repComment2a">
+                                        <img src="<%= reply.getUserAvatar()%>" class="rounded-circle" class="rounded-circle" alt="">
+                                    </div>
+                                    <div class="repComment2b">
+                                        <p class="comment_username"><%= reply.getUserName()%> - <%= reply.getUserRoleName()%></p>
+                                        <p class="comment_content"><%= reply.getContents()%></p>
+                                    </div>
+                                </div>
                         <%
                                 }
                             }
@@ -411,7 +415,8 @@
     </script>
 
 
-<!--     comment ko dùng nút gửi  
+<!--     comment ko dùng nút 
+      
     <script type="text/javascript">
         // Using jQuery.
 
@@ -438,6 +443,9 @@
         integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
         crossorigin="anonymous"></script>
 
+    <script src="resources/js/eventDetail.js">
+        
+    </script>
 
 </body>
 

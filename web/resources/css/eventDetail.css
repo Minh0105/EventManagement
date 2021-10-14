@@ -1,19 +1,20 @@
+@import url(nav_bar.css);
+
 * { 
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
-
 }
 /* Header */
-
-.title{
+/* 
+.title {
     border: radius 10px;
     color: #fff;
     background-color:#f15827;
     display: flex;
     justify-content: space-between;
-}
+} */
+
 /* title Left */
 .titleLeft{
     display: flex;
@@ -193,15 +194,12 @@
 }
 
 
-
-
-
 /* Second 1*/
 .second1 img{
         object-fit: cover;
         position:relative;
         width: 100%;
-        height: 500px;
+        height: 430px;
     }
 
 
@@ -222,8 +220,8 @@
     margin: -5rem -0.5rem;
 }
 .numberDay h3{
-    font-size: 35px;
-    font-weight: 900;
+    font-size: 2rem;
+    font-weight: 700;
 }
 .numberDay p{
     color: #FF4306;
@@ -231,60 +229,60 @@
 }
 
 /* Second2Line */
-.second2Line{ 
-    /* background-color: rgba(57,15,17,255); */
+.second2Line { 
+    background-color: rgba(0, 0, 0, 0.7);
     margin-top: 3rem;
     height: 50px;
-    border-radius: 20px;
-    border: 2px solid #311412;
+    border-radius: 6px;
     display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 .second2Line:hover{
     background-color: black;
 }
 
-.dot{
+.dot {
     padding: auto;
     margin: 10px 5px;
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: blue;
+    background-color: white;
 }
 
-.second2Line1{
+.second2Line1 {
     color: #FFF;
     text-align: center;
     display: flex;
     justify-content: center;
     margin: 10px 30px;
 }
-.second2Line1:hover{
-    color: blue;
-}
 
+.people {
+    margin-bottom: 0px !important;
+    font-weight: 600 !important;
+}
 
 /*  Carousel */
 .carousel{
     display: flex;
     justify-content:space-between;
     padding: 2rem;
+    padding-bottom: 0.2rem;
 }
 .carouselWrite h3{
-    font-weight: 700;
     color: red;
 }
 
 /* Carousel Button */
 .carouselButton{
-
     display: flex;
     justify-content:center;
-    align-items: center;
 }
 
 .carouselButton1{
-    padding: 0 1rem;
+    padding: 0 0.5rem;
     justify-content:center;
     align-items: center;
 }
@@ -294,11 +292,11 @@
     height: 20px;
     margin-right: 8px;
 }
+
 .carouselButton1 p{
-    font-weight: 700;
+    font-weight: 500;
     margin: 0
 }
-
 
 .carouselButton1 button{
     border: none;
@@ -306,7 +304,7 @@
     font-weight: 400;
     width: 150px;
     height: 50px;
-    border-radius: 10px;
+    border-radius: 6px;
 }
 .carouselButton1 .hight{
     margin-bottom: 10px;
@@ -328,34 +326,32 @@
 
 }
 .fastWord marquee{
-    font-size: 50px;
+    font-size: 2.5rem;
+    font-weight: 650;
     word-break:keep-all;
 }
 .fastWord p{
-    font-weight: 700;
     font-size: 25px;
-    color: #c8c8c8;
+    font-weight: 500;
+    color: #4b4b4b;
 }
-
 
 
 /* NAV */
-.navWord{
-    padding: 2rem;
+
+#content {
+    margin-left: 2rem;
+    margin-right: 2rem;
 }
-.navWord h3{
-    padding: 0 5rem;
-    font-weight: 700;
+
+.navWord {
+
 }
+
 .navWord p{
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 1.4rem;
     color: black;
-}
-/* Single */
-.single{
-    padding: 2rem 7rem;
-    font-weight: 800;
+    margin-top: 0.9rem;
 }
 
 
@@ -364,40 +360,9 @@
 .hoverDiv{
     margin: 1rem 0;
 }
-.item{
-    border-radius: 7px;
-    box-shadow: -1px 1px #c4c4c4, 1px -1px #c4c4c4;
-    text-align: center;
-    border: 4px solid #c4c4c4;
-}
-.item:hover{
-    border:4px solid #18dee9;
-}
-.item img{
-    object-fit: cover;
-    height: 255px;
-    padding: 0.5rem 0;
-    width: 230px;
-}
-.item p{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.item p:hover{
-    overflow:visible;
-}
+
 .row{
     padding: 1rem;
-}
-.item h5{
-    font-weight: 800;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.item h5:hover{
-    overflow: visible;
 }
 
 
@@ -405,50 +370,36 @@
 .next{
     padding: 1rem 7rem;
 }
-.next2{
+
+.organizer_container {
     display: flex;
-
+    margin-top: 1.3rem;
 }
-.next2 img{
 
+.organizer_container img{
     height: 50px;
     width: 50px;
 }
-.next2Document{
+
+.organizer_infor {
     margin: 0 1rem;
 }
 
 .next1 h4{
     font-weight: 700;
 }
-.next2Document h5{
+
+.organizer_infor h5{
     font-weight: 700;
+    margin-bottom: 3px !important;
 }
 /* Comment */
 
-.comment{
-    padding: 2rem;
-}
-.comment input{
-    font-style: italic;
-    padding-left: 2rem;
-    width: 100%;
-    height: 60px;
-    border: 1px solid #c4c4c4;
-    border-radius: 30px;
-    font-weight: 300;
-}
-/* Avatar Comment */
-.avatarComment{
-    display: flex;
-    align-items: center;
-    padding: 2rem;
-
+#comment {
+    padding-top: 1.9rem;
 }
 
-.avatarComment2{
-    margin:0 1rem;
-}
+
 
 /* ASK */
 .ask{
@@ -464,24 +415,17 @@
     border: 1px solid #c4c4c4;  
 }
 /* Ask Buuton */
-.sendButton{
-    margin-top: 20px;
-    width: 60px;
-    height: 40px;
-    justify-content: center;
-    display: flex;
-    align-content: flex-start;
-}
+/* 
 .sendButton:hover{
     color: #fff;
     background-color: #1472E1;
-}
+} */
 
 /* REP */
 .rep{
     padding: 2rem 5rem;
 }
-.repComment{
+.repComment {
     display: flex;
 }
 .rep1 img{
@@ -500,18 +444,21 @@
 }
 /* Rep Comment2 */
 .repComment2{
-    margin: 0 100px;
+    margin: 0px 65px;
     display: flex;
+    margin-bottom: 16px;
 }
+
 .repComment2a img{
-    margin-top: 12px;
     width: 50px;
     height: 50px;
 }
+
 .repComment2b {
     font-weight: 700;
-    margin: 1rem;
+    margin-left: 12px;
 }
+
 .repComment2b p{
     word-wrap: break-word;
 }
@@ -550,9 +497,11 @@
     }
     .fastWord marquee{
         font-size: 26px;
+        font-weight: 500;
     }
     .carouselWrite h3 {
-        font-size: 20px;
+        font-size: 1.4rem;
+        font-weight: 500;
     }
 
     .second2Line1 {
@@ -564,10 +513,6 @@
         margin: 10px 5px;
     }
 
-    .item {
-        margin: 0.5rem 0;
-        padding: 0.5rem 0;
-    }
     .next {
         padding: 1rem;
     }
@@ -575,31 +520,39 @@
         padding: 0 3rem;
         /* font-weight: 700; */
     }
+
+    /* BODY CONTENT */
+
+
     .navWord h3{
-        padding: 0 2rem;
+    
     }
+
     .rep {
         padding: 1rem;
     }
+
     .repComment2 {
         margin: 0 30px;
     }
-    .avatarComment1{
-        margin-top: -28px;
-    }
 
     .red {
-        background: black;
+        /* background: black; */
     }
+
     .blue {
         background: #1472E1;
     }
+
     .single h3{
         padding: 0;
+        margin-top: 1rem;
     }
 
 }
+
 /* --------------mới thêm--------------- */
+
 .hight {
     color: #FFF;
     background: #1472E1;
@@ -608,17 +561,207 @@
     border: 1px #000 solid;
 }
 
-.hight:hover{
+/* .hight:hover{
     border: 3px solid #c4c4c4;
     font-weight: 900;
     background-color: black;
     color: #1e81b0
         ;
-}
+} */
 .red {
-    background: black;
+    /* background: black; */
     color: #18dee9;
 }
 .blue {
     background: #1472E1;
+}
+
+
+/* TÀI STUFF */
+
+#grey_line {
+    background-color: rgb(205, 205, 205);
+    height: 1px;
+    width: 100%;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* GENERAL */
+
+.content_title {
+    margin-top: 1.9rem;
+    font-weight: 700;
+}
+
+/* TAB VIEW  */
+
+.nav-item a {
+    font-size: 1.2rem;
+}
+
+#tab_container {
+
+}
+
+#home_tab_button > a {
+    padding-left: 0px !important;
+}
+
+#myTabContent {
+    padding-right: 1.3rem;
+    padding-left: 1.3rem;
+}
+
+
+/* LECTURER */
+
+#lecturer_container {
+    padding: 0px;
+    margin: 0px;
+}
+
+#lecturer_row {
+    padding: 0px;
+}
+
+#lecturer_section {
+    margin-top: 1.5rem;
+}
+
+.lecturer_card {
+    padding: 1rem 2rem 2.5rem 2rem;
+    border-radius: 7px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.35);
+    border-radius: 6px;
+    text-align: center;
+    background-color: #FDFDFD;
+}
+
+.lecturer_card img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    padding: 20%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.lec_ava_container {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+}
+
+.lecturer_card h4 {
+
+}
+
+.lecturer_card p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lecturer_card p:hover{
+    overflow:visible;
+}
+
+
+/* COMMENT */
+
+#input_comment, #input_question {
+    padding: 1rem;    
+    width: 100%;
+    border: 1px solid #c4c4c4;
+    border-radius: 5px;
+    font-size: 1.2rem;
+}
+
+#comment_box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#btn_enter_comment, #btn_enter_question {
+    display: inline-block;
+    padding: 10px 14px;
+    background-color: #1472E1;
+    border: none;
+    color: white;
+    margin-top: 8px;
+    border-radius: 6px;
+}
+
+#btn_enter_question {
+    padding: 10px 25px;
+}
+
+.lec_avatar {
+    width: 50px;
+    height: 50px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+
+/* Comment container */
+
+.comment_item {
+    display: flex;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.comment_infor {
+    width: 100%;
+    margin-left: 12px;
+}
+
+.comment_username {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 0px !important;
+}
+
+.comment_content {
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 3px !important;
+}
+
+.comment_infor .btn_show_reply {
+    margin-bottom: 2px;
+    font-weight: 500;
+    color: #1472E1;
+    font-size: 1rem;
+}
+
+/* REPLY COMMENT */
+
+.input_reply {
+    padding: 9px;
+    font-size: 1rem;
+    border: 1px #B9B9B9 solid;
+    border-radius: 6px;
+    width: 60%;
+    min-width: 150px;
+}
+
+.btn_reply {
+    padding: 10px 25px;
+    background-color: #1472E1;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 1rem;
+    margin-left: 6px;
+}
+
+.reply_box {
+    display: none;
 }

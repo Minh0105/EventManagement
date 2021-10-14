@@ -1,0 +1,23 @@
+.round{
+width: 200px;
+height: 200px;
+left: 212px;
+top: 286px;
+border: 6px solid #F2F2F2;
+border-radius: 9px;
+}
+.navbar-color{
+background-color: coral !important;
+}
+
+.nav-avatar{
+    width: 49px;
+height: 49px;
+left: 1103px;
+top: 22px;
+border: 1.5px solid #FFFFFF;
+}
+.logout{
+    color: black !important;
+}
+

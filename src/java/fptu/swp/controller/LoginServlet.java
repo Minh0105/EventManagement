@@ -50,9 +50,9 @@ public class LoginServlet extends HttpServlet {
         
         //default url
         final String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
-        final String INFO_PAGE_LABEL = context.getInitParameter("INFO_PAGE_LABEL");
+        final String VIEW_NEWFEED_SERVLET = context.getInitParameter("VIEW_NEWFEED_SERVLET");
         final String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
-        final String INFO_PAGE_PATH = roadmap.get(INFO_PAGE_LABEL);
+        final String VIEW_NEW_FEED_SERVLET = roadmap.get(VIEW_NEWFEED_SERVLET);
         String url = INVALID_PAGE_PATH;
         
         //parameter
@@ -82,9 +82,8 @@ public class LoginServlet extends HttpServlet {
                     HttpSession session = request.getSession();
                     LOGGER.info("USER: "+ user);
                     session.setAttribute("USER", user);
-                    url = INFO_PAGE_PATH;
+                    url = VIEW_NEW_FEED_SERVLET;
                 }
-                
             }
         }finally {
             RequestDispatcher dis = request.getRequestDispatcher(url);
