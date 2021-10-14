@@ -33,7 +33,6 @@
     </head>
 
     <body>
-
         <nav class="navbar navbar-expand-md navbar-light navbar-color sticky-top">
             <div id="nav_content" class="container-fluid">
                 <a id="navbar_branch" href="#">
@@ -48,8 +47,8 @@
                     <ul class="navbar-nav ml-auto nav-margin">
                         <li class="nav-item">
                             <a id="icon_name_container" class="nav-link" href="ViewInfoPage"> 
-                                <!-- <img class="nav-avatar rounded-circle" src=""> ${sessionScope.USER.name}</img></a> -->
-                                <img id="avatar_icon" class="rounded-circle" src="resources/image/mock_avatar.jpeg" />
+                                <!-- <img class="nav-avatar rounded-circle" src="${sessionScope.USER.avatar}"> ${sessionScope.USER.name}</img></a> -->
+                                <img id="avatar_icon" class="rounded-circle" src="${sessionScope.USER.avatar}" />
                                 <span id="avatar_name" class="text-white">${sessionScope.USER.name}</span>
                             </a>
                         </li>
@@ -65,8 +64,8 @@
                             </a>     
 
                             <form action="logout" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <button class="btn btn-outline-light profile-button logout" type="submit">
-                                <img src="resources/icon/log_out_icon.svg">Log Out</button> 
+                                <button class="btn btn-outline-light profile-button logout " type="submit">
+                                    <img src="resources/icon/log_out_icon.svg">Log Out</button> 
                             </form>   
 
                         </li>				
@@ -74,7 +73,6 @@
                 </div>
             </div>
         </nav>
-
         <section id="filter_bar">
             <div id="decorating_text">
                 Discover the event world

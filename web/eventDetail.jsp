@@ -54,8 +54,8 @@
                         <li class="nav-item">
                             <a id="icon_name_container" class="nav-link" href="ViewInfoPage"> 
                                 <!-- <img class="nav-avatar rounded-circle" src="${sessionScope.USER.avatar}"> ${sessionScope.USER.name}</img></a> -->
-                                <img id="avatar_icon" class="rounded-circle" src="resources/image/mock_avatar.jpeg" />
-                                <span id="avatar_name" class="text-white">Tăng Tấn Tài</span>
+                                <img id="avatar_icon" class="rounded-circle" src="${sessionScope.USER.avatar}" />
+                                <span id="avatar_name" class="text-white">${sessionScope.USER.name}</span>
                             </a>
                         </li>
                         <li class="nav-item">

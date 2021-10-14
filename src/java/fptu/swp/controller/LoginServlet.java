@@ -56,16 +56,13 @@ public class LoginServlet extends HttpServlet {
         String url = INVALID_PAGE_PATH;
         
         //parameter
-        String code = request.getParameter("code");
-        
-        
+        String code = request.getParameter("code");    
         try {
             if (code == null || code.isEmpty()) {
                 LOGGER.error("Account not found!!!");
                 RequestDispatcher dis = request.getRequestDispatcher("login.html");
                 dis.forward(request, response);
             } else {
-                
                 String accessToken = GoogleUtils.getToken(code);
                 GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);
                 if (googlePojo != null) {
@@ -75,7 +72,6 @@ public class LoginServlet extends HttpServlet {
                 System.out.println("access Token: " + accessToken);
                 request.setAttribute("id", googlePojo.getId());
                 String email =  googlePojo.getEmail();
-                
                 UserDAO dao = new UserDAO();
                 UserDTO user = dao.login(googlePojo);
                 if(user != null) {

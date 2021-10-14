@@ -88,7 +88,7 @@
         <filter-name>FilterAuth</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-        <filter-mapping>
+    <filter-mapping>
         <filter-name>FilterDispatcher</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
@@ -140,6 +140,10 @@
         <servlet-name>AskQuestionServlet</servlet-name>
         <servlet-class>fptu.swp.controller.AskQuestionServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FilterEvent</servlet-name>
+        <servlet-class>fptu.swp.controller.FilterEvent</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -184,18 +188,20 @@
         <servlet-name>AskQuestionServlet</servlet-name>
         <url-pattern>/AskQuestionServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FilterEvent</servlet-name>
+        <url-pattern>/FilterEvent</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    
-<!--    <welcome-file-list>
+    <!--    <welcome-file-list>
         <welcome-file>
             appendEventDetail.jsp
         </welcome-file>
     </welcome-file-list>-->
-    
     <resource-ref>
         <res-ref-name>DBSlink</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>

@@ -152,6 +152,7 @@ public class HandleMultipartServlet extends HttpServlet {
                         if (inputName.equalsIgnoreCase("description")) {
                             description = (String) item.getString();
                             description = new String(description.getBytes("iso-8859-1"), "UTF-8");
+                            LOGGER.info("Event description: "+ description);
                         }
                     } else {
                         try {

@@ -63,6 +63,8 @@ public class UserDAO {
                         roleName = "CLUB'S LEADER";
                     } else if (roleId == 4) {
                         roleName = "DEPARTMENT'S MANAGER";
+                    } else if (roleId == 5) {
+                        roleName = "ADMIN";
                     }
                     if(!avatarGoogle.equals(avatar)){
                         String sql2 = "UPDATE tblUsers"
