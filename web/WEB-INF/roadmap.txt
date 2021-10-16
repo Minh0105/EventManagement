@@ -1,5 +1,5 @@
 =resources/html/login.html
-LoginPage=resources/html/login.html
+LoginPage=firebase.html
 login=LoginServlet
 InvalidPage=resources/html/invalid.html
 searchLocation=SearchLocationServlet
@@ -17,3 +17,4 @@ viewSlotAndTimeFree=ViewLocationAndTimeServlet
 appendEventDetailPage=appendEventDetail.jsp
 appendEventDetail=AppendEventDetailServlet
 uploadFile=UploadFileServlet
+addNotification=FirebaseServlet
