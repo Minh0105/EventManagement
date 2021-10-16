@@ -16,25 +16,15 @@
     </head>
     <body>
         <h1>JSON</h1>
-        <form action="addNotification">
+        <form onSubmit="return false;">
             ID <input type="text" name="notificationID" id="notificationId" value="" />
-            EventID <input type="text" name="eventId" id="eventId" value="" />
-            StudentID <input type="text" name="studentId" id="studentId" value="" />
-            Title <input type="text" name="title" id="title" value="" />
-            <input type="submit" value="save" name="Action" />
             <input type="submit" value="update" name="Action" />
         </form>
         
-        <h2>${requestScope.res}</h2>
-        
         <div id="messages">
-	
+            
         </div>
-        <script>
-            
-            
-        </script>
+        <script src="<c:url value="resources/js/function.js" />"></script>
 
     </body>
-    <script src="<c:url value='resources/js/function.js' />"></script>
 </html>
