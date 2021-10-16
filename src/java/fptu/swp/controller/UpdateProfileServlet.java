@@ -58,7 +58,8 @@ public class UpdateProfileServlet extends HttpServlet {
             String name = request.getParameter("name");
             String address = request.getParameter("address");
             String phoneNum = request.getParameter("phoneNum");
-            UserError userError = new UserError("", "", "");
+            String description = request.getParameter("description");
+            UserError userError = new UserError("", "", "","");
 
             boolean check = true;
             if (name.length() > 50 || name.length() < 10) {
@@ -77,12 +78,19 @@ public class UpdateProfileServlet extends HttpServlet {
                     check = false;
                 }
             }
+            if (description.length() > 100 || description.length() < 10) {
+                if(!"".equals(description) && description != null){
+                    userError.setDescriptionError("Mô tả của bạn phải từ 10 đến 100 kí tự hoặc để trống!");
+                    check = false;
+                }
+            }
             if (check) {
                 UserDAO dao = new UserDAO();
                 UserDTO user = loginUser;
                 user.setAddress(address);
                 user.setPhoneNum(phoneNum);
                 user.setName(name);
+                user.setDescription(description);
                 boolean checkUpdate = dao.updateUser(user);
                 if (checkUpdate) {
                     url = LOGOUT_PATH;

@@ -28,8 +28,8 @@
                         <li class="nav-item">
                             <a id="icon_name_container" class="nav-link" href="ViewInfoPage"> 
                                 <!-- <img class="nav-avatar rounded-circle" src="${sessionScope.USER.avatar}"> ${sessionScope.USER.name}</img></a> -->
-                                <img id="avatar_icon" class="rounded-circle" src="resources/image/mock_avatar.jpeg" />
-                                <span id="avatar_name" class="text-white">Tăng Tấn Tài</span>
+                                <img id="avatar_icon" class="rounded-circle" src="${sessionScope.USER.avatar}" />
+                                <span id="avatar_name" class="text-white">${sessionScope.USER.name}</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -57,9 +57,8 @@
             <div class="row">      
                 <div class="col-md-3 border-right">
                     <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                        <!-- <span class="text-black-50">${sessionScope.USER.roleName}</span><span> </span> -->
-                        <span class="text-black-50">Student</span>
-                        <img id="big_avatar" src="resources/image/mock_avatar.jpeg">
+                        <span class="text-black-50">${sessionScope.USER.roleName}</span>
+                        <img id="big_avatar" src="${sessionScope.USER.avatar}">
                     </div>
                 </div>
                 <div class="col-md-5 border-right">
@@ -70,17 +69,13 @@
                         <div class="row mt-2"> </div>             
                         <div class="row mt-3">       
 
-                            <!-- <div class="col-md-12"><h3>${sessionScope.USER.name}</h3></div>
+                            <div class="col-md-12"><h3>${sessionScope.USER.name}</h3></div>
                             <div class="col-md-12"><h5> Email:</h5>${sessionScope.USER.email}</div>    
                             <div class="col-md-12"> <h5>Phone Number:</h5> ${sessionScope.USER.phoneNum}</div>
                             <div class="col-md-12"><h5>Address:</h5>${sessionScope.USER.address}</div>
-                             -->
-
-                             <div class="col-md-12"><h3>Tăng Tấn Tài</h3></div>
-                            <div class="col-md-12"><h5>taittse150194@fpt.edu.vn</div>    
-                            <div class="col-md-12"> <h5>Phone Number:</h5> 0795 895 430</div>
-                            <div class="col-md-12"><h5>Address:</h5>Số 89, đường Làng Tăng Phú, quận 9, thành phố Thủ Đức</div>
-
+                            <c:if test = "${sessionScope.USER.roleName ne 'STUDENT'}">
+                                <div class="col-md-12"><h5>Description:</h5>${sessionScope.USER.description}</div>
+                            </c:if>
                             <form class="col-md-12" action="UpdateProfilePage">
                                 <button class="btn btn-primary profile-button" type="submit"><img src="resources/image/LogoUpdate.png"> Update</button>
                             </form>

@@ -19,6 +19,9 @@ public class UserDTO implements Serializable {
     private String address;
     private String phoneNum;
     private String roleName;
+    private String status;
+    private String description;
+    private int numOfEvent;
 
     public UserDTO(int id, String email, String name, String avatar, String address, String phoneNum, String roleName) {
         this.id = id;
@@ -29,8 +32,42 @@ public class UserDTO implements Serializable {
         this.phoneNum = phoneNum;
         this.roleName = roleName;
     }
-    
-    
+
+    public UserDTO(int id, String email, String name, String avatar, String address, String phoneNum, String roleName, String status) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.avatar = avatar;
+        this.address = address;
+        this.phoneNum = phoneNum;
+        this.roleName = roleName;
+        this.status = status;
+    }
+
+    public UserDTO(int id, String email, String name, String avatar, String address, String phoneNum, String roleName, String status, String description) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.avatar = avatar;
+        this.address = address;
+        this.phoneNum = phoneNum;
+        this.roleName = roleName;
+        this.status = status;
+        this.description = description;
+    }
+
+    public UserDTO(int id, String email, String name, String avatar, String address, String phoneNum, String roleName, String status, String description, int numOfEvent) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.avatar = avatar;
+        this.address = address;
+        this.phoneNum = phoneNum;
+        this.roleName = roleName;
+        this.status = status;
+        this.description = description;
+        this.numOfEvent = numOfEvent;
+    }
 
     public int getId() {
         return id;
@@ -86,6 +123,30 @@ public class UserDTO implements Serializable {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getNumOfEvent() {
+        return numOfEvent;
+    }
+
+    public void setNumOfEvent(int numOfEvent) {
+        this.numOfEvent = numOfEvent;
     }
 
     @Override

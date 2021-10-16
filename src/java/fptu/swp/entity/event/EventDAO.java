@@ -252,7 +252,7 @@ public class EventDAO {
                             + " LEFT JOIN tblUsers m ON s.userId = m.id"
                             + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
                             + "                  LEFT JOIN tblLocations u ON locationId = u.id) t ON s.id = t.eventId"
-                            + " WHERE s.statusId = 1 AND s.id IN (SELECT eventId FROM tblLecturersInEvents WHERE lecturerId = ? AND statusId = 1)";
+                            + " WHERE s.statusId = 1 AND s.id IN (SELECT eventId FROM tblLecturersInEvents WHERE lecturerId = ?)";
                     stm = conn.prepareStatement(sql);
                     stm.setInt(1, loginUser.getId());
                 }
@@ -434,6 +434,7 @@ public class EventDAO {
         PreparedStatement stm2 = null;
         ResultSet rs2 = null;
         int commentId = 0;
+        int userId = 0;
         String contents = "";
         String userAvatar = "";
         String userName = "";
@@ -445,12 +446,12 @@ public class EventDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT u.commentId commentId, u.contents contents, v.avatar userAvatar,"
+                String sql = "SELECT u.commentId commentId, u.contents contents, v.avatar userAvatar, v.id userId,"
                         + " v.name userName, t.roleName roleName, u.isQuestion isQuestion, u.commentDatetime commentDatetime"
                         + " FROM tblComments u"
                         + " LEFT JOIN tblUsers v ON u.userId = v.id"
                         + " LEFT JOIN tblRoles t ON t.id = v.roleId"
-                        + " WHERE u.eventId = ? AND u.replyId IS NULL AND u.isQuestion = ?";
+                        + " WHERE u.eventId = ? AND u.replyId IS NULL AND u.isQuestion = ? AND u.statusId = 'AC'";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, eventId);
                 stm.setBoolean(2, isQuestion);
@@ -459,16 +460,17 @@ public class EventDAO {
                     commentId = rs.getInt("commentId");
                     contents = rs.getString("contents");
                     userAvatar = rs.getString("userAvatar");
+                    userId = rs.getInt("userId");
                     userName = rs.getString("userName");
                     isQuestion = rs.getBoolean("isQuestion");
                     userRoleName = rs.getString("roleName");
                     commentDatetime = rs.getTimestamp("commentDatetime");
-                    String sql2 = "SELECT u.commentId commentId, u.contents contents, v.avatar userAvatar,"
+                    String sql2 = "SELECT u.commentId commentId, u.contents contents, v.avatar userAvatar, v.id userId,"
                             + " v.name userName, t.roleName roleName, u.commentDatetime replyDatetime"
                             + " FROM tblComments u"
                             + " LEFT JOIN tblUsers v ON u.userId = v.id"
                             + " LEFT JOIN tblRoles t ON t.id = v.roleId"
-                            + " WHERE eventId = ? AND replyId = ? AND isQuestion = 0";
+                            + " WHERE eventId = ? AND replyId = ? AND isQuestion = 0 AND u.statusId = 'AC'";
                     stm2 = conn.prepareStatement(sql2);
                     stm2.setInt(1, eventId);
                     stm2.setInt(2, commentId);
@@ -477,15 +479,16 @@ public class EventDAO {
                         int replyCommentId = rs2.getInt("commentId");
                         String replyContents = rs2.getString("contents");
                         String replyUserAvatar = rs2.getString("userAvatar");
+                        int userReplyId = rs2.getInt("userId");
                         String replyUserName = rs2.getString("userName");
                         String replyUserRoleName = rs2.getString("roleName");
                         Date replyCommentDatetime = rs2.getTimestamp("replyDatetime");
-                        replyList.add(new ReplyDTO(replyCommentId, replyContents, replyUserAvatar, replyUserName, replyUserRoleName, replyCommentDatetime));
+                        replyList.add(new ReplyDTO(replyCommentId, replyContents, userReplyId, replyUserAvatar, replyUserName, replyUserRoleName, replyCommentDatetime));
                     }
                     if (replyList.size() > 0) {
                         Collections.sort(replyList);
                     }
-                    CommentDTO tmp = new CommentDTO(commentId, contents, eventId, userAvatar, userName, isQuestion, commentDatetime, userRoleName, replyList);
+                    CommentDTO tmp = new CommentDTO(commentId, contents, eventId, userId, userAvatar, userName, isQuestion, commentDatetime, userRoleName, replyList);
                     list.add(tmp);
                     System.out.println();
                     replyList = new ArrayList<>();
@@ -604,8 +607,8 @@ public class EventDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 for (LecturerBriefInfoDTO lecturer : chosenLecturerList) {
-                    String sql = "INSERT INTO tblLecturersInEvents(eventId, lecturerId, statusId) "
-                            + " VALUES(?,?,3)";
+                    String sql = "INSERT INTO tblLecturersInEvents(eventId, lecturerId) "
+                            + " VALUES(?,?)";
                     stm = conn.prepareStatement(sql);
                     stm.setInt(1, eventId);
                     stm.setInt(2, lecturer.getId());
@@ -837,8 +840,8 @@ public class EventDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
 
-                String sql = "INSERT INTO tblComments(contents, replyId, eventId, userId, isQuestion, commentDatetime)"
-                        + " VALUES(?, NULL, ?, ?, ?, CURRENT_TIMESTAMP)";
+                String sql = "INSERT INTO tblComments(contents, replyId, eventId, userId, isQuestion, commentDatetime, statusId)"
+                        + " VALUES(?, NULL, ?, ?, ?, CURRENT_TIMESTAMP,'AC')";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1,content);
                 stm.setInt(2, eventId);
@@ -867,8 +870,8 @@ public class EventDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
 
-                String sql = "INSERT INTO tblComments(contents, replyId, eventId, userId, isQuestion, commentDatetime)"
-                        + " VALUES(?, ?, ?, ?, 0, CURRENT_TIMESTAMP)";
+                String sql = "INSERT INTO tblComments(contents, replyId, eventId, userId, isQuestion, commentDatetime, statusId)"
+                        + " VALUES(?, ?, ?, ?, 0, CURRENT_TIMESTAMP,'AC')";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1,content);
                 stm.setInt(2, commentId);

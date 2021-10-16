@@ -76,6 +76,14 @@
         <param-name>VIEW_EVENTDETAIL_SERVLET</param-name>
         <param-value>viewEventDetail</param-value>
     </context-param>
+    <context-param>
+        <param-name>ADMIN_PAGE</param-name>
+        <param-value>AdminPage</param-value>
+    </context-param>
+    <context-param>
+        <param-name>MANAGE_BY_ADMIN_SERVLET</param-name>
+        <param-value>manageByAdmin</param-value>
+    </context-param>
     <filter>
         <filter-name>FilterAuth</filter-name>
         <filter-class>fptu.swp.filter.FilterAuth</filter-class>
@@ -144,6 +152,10 @@
         <servlet-name>FilterEvent</servlet-name>
         <servlet-class>fptu.swp.controller.FilterEvent</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManageByAdminServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.ManageByAdminServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -191,6 +203,10 @@
     <servlet-mapping>
         <servlet-name>FilterEvent</servlet-name>
         <url-pattern>/FilterEvent</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageByAdminServlet</servlet-name>
+        <url-pattern>/ManageByAdminServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

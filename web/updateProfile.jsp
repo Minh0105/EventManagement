@@ -39,11 +39,11 @@
 
                             <a class="nav-link" href="#" id="navbarDropdown " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <a src="resources/icon/hamburger_button_icon.png">
-                            </a>   
+                                </a>   
 
-                            <form action="logout" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <button class="btn btn-outline-light profile-button logout " type="submit"><img src="resources/icon/log_out_logo.png">Log Out</button> 
-                            </form>   
+                                <form action="logout" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <button class="btn btn-outline-light profile-button logout " type="submit"><img src="resources/icon/log_out_logo.png">Log Out</button> 
+                                </form>   
 
                         </li>				
                     </ul>
@@ -83,9 +83,16 @@
                                     <font color="red">
                                     ${requestScope.USER_ERROR.addressError}
                                     </font>
-                                </div>    
-                                <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" placeholder="${sessionScope.USER.email}" value="" readonly=""></div>
-
+                                </div>
+                                <c:if test = "${sessionScope.USER.roleName ne 'STUDENT'}">
+                                    <div class="col-md-12"><label class="labels">Description</label><input type="text" class="form-control" placeholder="enter description" name="description" value="${sessionScope.USER.description}" ></div>
+                                    <div class="col-md-12">
+                                        <font color="red">
+                                        ${requestScope.USER_ERROR.descriptionError}
+                                        </font>
+                                    </div>
+                                </c:if>
+                                <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" placeholder="${sessionScope.USER.email}" value="" readonly=""></div>                                
                             </div>
 
                             <div class="mt-5 text-right"><button class="btn btn-primary profile-button" type="submit"><img src="resources/image/LogoUpdate.png"> Update</button></div>

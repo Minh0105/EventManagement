@@ -11,7 +11,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.naming.NamingException;
 
@@ -20,8 +24,9 @@ import javax.naming.NamingException;
  * @author admin
  */
 public class UserDAO {
+
     //ham login 
-    public UserDTO login(GooglePojo googlePojo) throws SQLException { 
+    public UserDTO login(GooglePojo googlePojo) throws SQLException {
         UserDTO user = null;
         Connection conn = null;
         PreparedStatement stm = null;
@@ -33,13 +38,14 @@ public class UserDAO {
         String name = "";
         String avatar = "";
         String address = "";
-        String phoneNum ="";
+        String phoneNum = "";
         String statusId = "";
         String roleName = "";
+        String description = "";
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT id, name, avatar, address, phoneNum, roleId, statusId"
+                String sql = "SELECT id, name, avatar, address, phoneNum, roleId, statusId, description"
                         + " FROM tblUsers"
                         + " WHERE email=?";
                 stm = conn.prepareStatement(sql);
@@ -53,7 +59,10 @@ public class UserDAO {
                     phoneNum = rs.getString("phoneNum");
                     int roleId = rs.getInt("roleId");
                     statusId = rs.getString("statusId");
-
+                    description = rs.getString("description");
+                    if ("DE".equals(statusId)) {
+                        return null;
+                    }
                     //Set cung roleName bang roleId
                     if (roleId == 1) {
                         roleName = "STUDENT";
@@ -66,17 +75,17 @@ public class UserDAO {
                     } else if (roleId == 5) {
                         roleName = "ADMIN";
                     }
-                    if(!avatarGoogle.equals(avatar)){
+                    if (!avatarGoogle.equals(avatar)) {
                         String sql2 = "UPDATE tblUsers"
-                        + " SET avatar=?"
-                        + " WHERE email=?";
+                                + " SET avatar=?"
+                                + " WHERE email=?";
                         stm2 = conn.prepareStatement(sql2);
                         stm2.setString(1, avatarGoogle);
                         stm2.setString(2, email);
                         boolean checkSetAvatar = stm2.executeUpdate() > 0;
                     }
-                    user = new UserDTO(userId, email, name, avatarGoogle, address, phoneNum, roleName);
-                }else if(email.endsWith("@fpt.edu.vn")){ //chua co thong tin trong DB va dang nhap bang mail fpt
+                    user = new UserDTO(userId, email, name, avatarGoogle, address, phoneNum, roleName, "Activated", description);
+                } else if (email.endsWith("@fpt.edu.vn")) { //chua co thong tin trong DB va dang nhap bang mail fpt
                     name = googlePojo.getName();
                     avatar = googlePojo.getPicture();
                     roleName = "STUDENT";
@@ -84,19 +93,19 @@ public class UserDAO {
                     boolean checkInsert = insertNewUser(user);
                     if (!checkInsert) {
                         user = null;
-                    }else{
+                    } else {
                         sql = "SELECT id"
-                        + " FROM tblUsers"
-                        + " WHERE email=?";
+                                + " FROM tblUsers"
+                                + " WHERE email=?";
                         stm = conn.prepareStatement(sql);
                         stm.setString(1, email);
                         rs = stm.executeQuery();
-                        if(rs.next()) {
+                        if (rs.next()) {
                             userId = rs.getInt("id");
                             user.setId(userId);
                         }
                     }
-                }else if(email.endsWith("@fe.edu.vn")){ //chua co thong tin trong DB va dang nhap bang mail fpt
+                } else if (email.endsWith("@fe.edu.vn")) { //chua co thong tin trong DB va dang nhap bang mail fe
                     name = googlePojo.getName();
                     avatar = googlePojo.getPicture();
                     roleName = "LECTURER";
@@ -104,19 +113,19 @@ public class UserDAO {
                     boolean checkInsert = insertNewUser(user);
                     if (!checkInsert) {
                         user = null;
-                    }else{
+                    } else {
                         sql = "SELECT id"
-                        + " FROM tblUsers"
-                        + " WHERE email=?";
+                                + " FROM tblUsers"
+                                + " WHERE email=?";
                         stm = conn.prepareStatement(sql);
                         stm.setString(1, email);
                         rs = stm.executeQuery();
-                        if(rs.next()) {
+                        if (rs.next()) {
                             userId = rs.getInt("id");
                             user.setId(userId);
                         }
                     }
-                }else{ //dang nhap thanh cong nhung khong co trong DB va ko la mail FPT
+                } else { //dang nhap thanh cong nhung khong co trong DB va ko la mail FPT
                     user = null;
                 }
             }
@@ -136,7 +145,6 @@ public class UserDAO {
                 conn.close();
             }
         }
-        System.out.println(user.toString());
         return user;
     }
 
@@ -148,7 +156,7 @@ public class UserDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "INSERT INTO tblUsers(email, name, avatar, address, phoneNum, roleID , statusId)"
+                String sql = "INSERT INTO tblUsers(email, name, avatar, address, phoneNum, roleId , statusId)"
                         + " VALUES(?,?,?,?,?,?,'AC')";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, user.getEmail());
@@ -156,7 +164,7 @@ public class UserDAO {
                 stm.setString(3, user.getAvatar());
                 stm.setString(4, user.getAddress());
                 stm.setString(5, user.getPhoneNum());
-                stm.setInt(6, "STUDENT".equals(user.getRoleName())? 1 : 2);
+                stm.setInt(6, "STUDENT".equals(user.getRoleName()) ? 1 : 2);
                 check = stm.executeUpdate() > 0;
             }
         } finally {
@@ -170,7 +178,7 @@ public class UserDAO {
         return check;
 
     }
-    
+
     //Ham update thong tin user vao DB
     public boolean updateUser(UserDTO user) throws SQLException {
         boolean check = false;
@@ -180,13 +188,14 @@ public class UserDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 String sql = "UPDATE tblUsers "
-                        + " SET name=?, address=?, phoneNum=?"
+                        + " SET name=?, address=?, phoneNum=?, description=?"
                         + " WHERE email=?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, user.getName());
                 stm.setString(2, user.getAddress());
                 stm.setString(3, user.getPhoneNum());
-                stm.setString(4, user.getEmail());
+                stm.setString(4, user.getDescription());
+                stm.setString(5, user.getEmail());
                 check = stm.executeUpdate() > 0;
             }
         } catch (Exception e) {
@@ -203,7 +212,7 @@ public class UserDAO {
     }
 
     //ham lay list lecture boi event ID
-    public List<LecturerBriefInfoDTO> getListLecturerBriefInfo(int eventId) throws SQLException{
+    public List<LecturerBriefInfoDTO> getListLecturerBriefInfo(int eventId) throws SQLException {
         List<LecturerBriefInfoDTO> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
@@ -215,9 +224,9 @@ public class UserDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT v.id id, v.name name, v.avatar avatar, v.description description" +
-                                " FROM tblLecturersInEvents u INNER JOIN tblUsers v ON u.lecturerId = v.id" +
-                                " WHERE u.eventId = ? AND u.statusId = 1";
+                String sql = "SELECT v.id id, v.name name, v.avatar avatar, v.description description"
+                        + " FROM tblLecturersInEvents u INNER JOIN tblUsers v ON u.lecturerId = v.id"
+                        + " WHERE u.eventId = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, eventId);
                 rs = stm.executeQuery();
@@ -241,22 +250,22 @@ public class UserDAO {
             if (conn != null) {
                 conn.close();
             }
-        }     
+        }
         return list;
     }
-    
-    public List<LecturerBriefInfoDTO> getAllLecturer() throws SQLException, NamingException {       
+
+    public List<LecturerBriefInfoDTO> getAllLecturer() throws SQLException, NamingException {
         List<LecturerBriefInfoDTO> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-              
+
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT id, name, avatar, description " 
-                            +"FROM tblUsers "
-                            +"WHERE roleId = 2 ";
+                String sql = "SELECT id, name, avatar, description "
+                        + "FROM tblUsers "
+                        + "WHERE roleId = 2 ";
                 stm = conn.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -277,23 +286,22 @@ public class UserDAO {
             if (conn != null) {
                 conn.close();
             }
-        }     
+        }
         return list;
     }
-    
-    
-      public String getDescription(int userId) throws SQLException, NamingException {       
+
+    public String getDescription(int userId) throws SQLException, NamingException {
         String description = "";
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-              
+
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT description " 
-                            +"FROM tblUsers "
-                            +"WHERE id = ? ";
+                String sql = "SELECT description "
+                        + "FROM tblUsers "
+                        + "WHERE id = ? ";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, userId);
                 rs = stm.executeQuery();
@@ -311,61 +319,24 @@ public class UserDAO {
             if (conn != null) {
                 conn.close();
             }
-        }     
+        }
         return description;
-    }  
-      
-    public List<LecturerBriefInfoDTO> getListLecturerBySearchName(String txtSearch) throws SQLException, NamingException {       
-        List<LecturerBriefInfoDTO> list = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-              
-        try {
-            conn = DBHelper.makeConnection();
-            if (conn != null) {
-                String sql = "SELECT id, name, avatar, description " 
-                            +"FROM tblUsers "
-                            +"WHERE roleId = 2 AND name LIKE ? ";
-                stm = conn.prepareStatement(sql);
-                stm.setString(1,"%" + txtSearch + "%");
-                rs = stm.executeQuery();
-                while (rs.next()) {
-                    int id = rs.getInt("id");
-                    String avatar = rs.getString("avatar");
-                    String name = rs.getString("name");
-                    String description = rs.getString("description");
-                    list.add(new LecturerBriefInfoDTO(id, avatar, name, description));
-                }
-            }
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }     
-        return list;
     }
-    
-    public LecturerBriefInfoDTO getLecturerById(int id) throws SQLException, NamingException {       
+
+    public LecturerBriefInfoDTO getLecturerById(int id) throws SQLException, NamingException {
         LecturerBriefInfoDTO lecturerInfo = null;
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-              
+
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT name, avatar, description " 
-                            +"FROM tblUsers "
-                            +"WHERE roleId = 2 AND id = ? ";
+                String sql = "SELECT name, avatar, description "
+                        + "FROM tblUsers "
+                        + "WHERE roleId = 2 AND id = ? ";
                 stm = conn.prepareStatement(sql);
-                stm.setInt(1,id);
+                stm.setInt(1, id);
                 rs = stm.executeQuery();
                 if (rs.next()) {
                     String avatar = rs.getString("avatar");
@@ -384,7 +355,232 @@ public class UserDAO {
             if (conn != null) {
                 conn.close();
             }
-        }     
+        }
         return lecturerInfo;
+    }
+
+    public List<UserDTO> getAllOrganizerAndNumberOfEventByQuarter(Date date) throws SQLException, NamingException {
+        List<UserDTO> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        Timestamp startDateOfQuarter = getFirstDayOfQuarter(date);
+        Timestamp endDateOfQuarter = getLastDayOfQuarter(date);
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT u.id as id, u.email as email, u.name as name, u.avatar as avatar, u.phoneNum as phoneNum, u.roleId as roleId, u.statusId statusId, u.description description, v.demEvent as numOfEvent"
+                        + " FROM tblUsers u LEFT JOIN (SELECT userId, COUNT(id) as demEvent FROM tblEvents WHERE createDate >= ? AND createDate <= ? GROUP BY userId) v ON u.id = v.userId"
+                        + " WHERE roleId = 3 OR roleId = 4 ORDER BY numOfEvent DESC";
+                stm = conn.prepareStatement(sql);
+                stm.setTimestamp(1, startDateOfQuarter);
+                stm.setTimestamp(2, endDateOfQuarter);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String email = rs.getString("email");
+                    String name = rs.getString("name");
+                    String avatar = rs.getString("avatar");
+                    String phoneNum = rs.getString("phoneNum");
+                    String roleName = (rs.getInt("roleId") == 3) ? "CLUB'S LEADER" : "DEPARTMENT'S MANAGER";
+                    String status = (rs.getString("statusId").equals("AC")) ? "Activated" : "Deactivated";
+                    String description = rs.getString("description");
+                    int numOfEvent = rs.getInt("numOfEvent");
+                    list.add(new UserDTO(id, email, name, avatar, null, phoneNum, roleName, status, description, numOfEvent));
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
+    }
+    
+    //Ham de admin them user vao DB truoc cho Organizer (CL + DM) va Lecturer
+    public boolean insertOrganizerOrLecturer(UserDTO user, int roleId) throws SQLException, NamingException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "INSERT INTO tblUsers(email, name, avatar, address, phoneNum, roleId , statusId, description)"
+                        + " VALUES(?,?,?,?,?,?,'AC',?)";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, user.getEmail());
+                stm.setNString(2, user.getName());
+                stm.setString(3, user.getAvatar());
+                stm.setString(4, user.getAddress());
+                stm.setString(5, user.getPhoneNum());
+                stm.setInt(6, roleId);
+                stm.setString(7, user.getDescription());
+                check = stm.executeUpdate() > 0;
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+
+    }
+
+    public boolean deactivateUser(int userId) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "UPDATE tblUsers "
+                        + " SET statusId = 'DE'"
+                        + " WHERE userId = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, userId);
+                check = stm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
+    public boolean reactivateUser(int userId) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "UPDATE tblUsers "
+                        + " SET statusId = 'AC'"
+                        + " WHERE userId = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, userId);
+                check = stm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
+    public List<UserDTO> getAllLecturerAndNumberOfReletedEvent() throws SQLException, NamingException {
+        List<UserDTO> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT id, email, name, avatar, phoneNum, roleId, statusId, description"
+                        + " FROM tblUsers "
+                        + " WHERE roleId = 2";
+                stm = conn.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String email = rs.getString("email");
+                    String name = rs.getString("name");
+                    String avatar = rs.getString("avatar");
+                    String phoneNum = rs.getString("phoneNum");
+                    String roleName = "LECTURER";
+                    String status = (rs.getString("statusId").equals("AC")) ? "Activated" : "Deactivated";
+                    String description = rs.getString("description");
+                    list.add(new UserDTO(id, email, name, avatar, null, phoneNum, roleName, status, description));
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
+    }
+    
+    public List<UserDTO> getAllStudent() throws SQLException, NamingException {
+        List<UserDTO> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT id, email, name, avatar, address, phoneNum,roleId,statusId" +
+                                " FROM tblUsers" +
+                                " WHERE roleId = 1";
+                stm = conn.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String email = rs.getString("email");
+                    String name = rs.getString("name");
+                    String avatar = rs.getString("avatar");
+                    String address = rs.getString("address");
+                    String phoneNum = rs.getString("phoneNum");
+                    String roleName = "STUDENT";
+                    String status = (rs.getString("statusId").equals("AC")) ? "Activated" : "Deactivated";
+                    list.add(new UserDTO(id, email, name, avatar, address, phoneNum, roleName, status));
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
+    }
+
+    private static Timestamp getFirstDayOfQuarter(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        cal.set(Calendar.MONTH, cal.get(Calendar.MONTH) / 3 * 3);
+        return new Timestamp(cal.getTime().getTime());
+    }
+
+    private static Timestamp getLastDayOfQuarter(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        cal.set(Calendar.MONTH, cal.get(Calendar.MONTH) / 3 * 3 + 2);
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return new Timestamp(cal.getTime().getTime());
     }
 }

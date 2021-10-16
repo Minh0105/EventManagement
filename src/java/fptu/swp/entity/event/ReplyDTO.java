@@ -14,23 +14,37 @@ import java.util.Date;
 public class ReplyDTO implements Comparable<ReplyDTO>{
     private int id;
     private String contents;
+    private int userId;
     private String userAvatar;
     private String userName;
     private String userRoleName;
     private Date replyDatetime;
+    private String statusId;
 
     public ReplyDTO() {
     }
 
-    public ReplyDTO(int id, String contents, String userAvatar, String userName, String userRoleName, Date replyDatetime) {
+    public ReplyDTO(int id, String contents, int userId, String userAvatar, String userName, String userRoleName, Date replyDatetime) {
         this.id = id;
         this.contents = contents;
+        this.userId = userId;
         this.userAvatar = userAvatar;
         this.userName = userName;
         this.userRoleName = userRoleName;
         this.replyDatetime = replyDatetime;
     }
 
+    public ReplyDTO(int id, String contents, int userId, String userAvatar, String userName, String userRoleName, Date replyDatetime, String statusId) {
+        this.id = id;
+        this.contents = contents;
+        this.userId = userId;
+        this.userAvatar = userAvatar;
+        this.userName = userName;
+        this.userRoleName = userRoleName;
+        this.replyDatetime = replyDatetime;
+        this.statusId = statusId;
+    }
+    
     public int getId() {
         return id;
     }
