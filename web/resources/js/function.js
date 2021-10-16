@@ -1,10 +1,10 @@
 function sendMsg(frm) {
   //get message
-  var msg = frm.txt.value;
+  var msg = frm.value;
   //add new data to firebase location
   ref.push({ time: new Date().toUTCString(), msg: msg });
   //clear input text
-  frm.txt.value = "";
+  frm.value = "";
 }
 function sendReply(cmtID) {
     
@@ -31,18 +31,18 @@ function sendReply(cmtID) {
             });
 }
 
-function sendCmt() { // return the id of comment in firebase, need for reply
-    var commentID;
-    var contents;
-    var eventId;
-    var userID;
-    var userAvatar;
-    var userName;
-    var isQuestion;
-    var commentDatetime;
-    var userRoleName;
-    var replyList;
-    var statusId;
+function sendCmt(frm) { // return the id of comment in firebase, need for reply
+    var commentID = frm.commentID.value;
+    var contents = frm.contents.value;
+    var eventId = frm.eventId.value;
+    var userID = frm.userID.value;
+    var userAvatar = frm.userAvatar.value;
+    var userName = frm.userName.value;
+    var isQuestion = frm.isQuestion.value;
+    var commentDatetime = frm.commentDatetime.value;
+    var userRoleName = frm.userRoleName.value;
+    // var replyList = frm.replyList;
+    var statusId = frm.statusId.value;
     ref = new Firebase(
         "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/comments"
       );
@@ -56,7 +56,7 @@ function sendCmt() { // return the id of comment in firebase, need for reply
         isQuestion:isQuestion,
         commentDatetime:commentDatetime,
         userRoleName:userRoleName,
-        replyList:replyList,
+        replyList:{"repId":1,"repId":2},
         statusId:statusId
     });
 
@@ -72,8 +72,8 @@ ref.on("child_added", function (snapshot) {
   var message = snapshot.val();
   $("#messages").append(
     $("<div/>")
-      .css({ border: "1px solid yellow" })
-      .html(JSON.stringify(message['userID'] +" : " + message['contents']))
+      .css({ border: "1px solid red" })
+      .html(JSON.stringify(message['userName'] + " : " + message['contents']))
   );
 });
 

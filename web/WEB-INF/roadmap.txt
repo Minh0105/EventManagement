@@ -1,5 +1,5 @@
 =resources/html/login.html
-LoginPage=firebase.html
+LoginPage=firebase.jsp
 login=LoginServlet
 InvalidPage=resources/html/invalid.html
 searchLocation=SearchLocationServlet
