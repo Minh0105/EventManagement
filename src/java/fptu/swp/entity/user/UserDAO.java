@@ -489,7 +489,7 @@ public class UserDAO {
         return check;
     }
 
-    public List<UserDTO> getAllLecturerAndNumberOfReletedEvent() throws SQLException, NamingException {
+    public List<UserDTO> getAllLecturerForAdmin() throws SQLException, NamingException {
         List<UserDTO> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
@@ -509,6 +509,44 @@ public class UserDAO {
                     String avatar = rs.getString("avatar");
                     String phoneNum = rs.getString("phoneNum");
                     String roleName = "LECTURER";
+                    String status = (rs.getString("statusId").equals("AC")) ? "Activated" : "Deactivated";
+                    String description = rs.getString("description");
+                    list.add(new UserDTO(id, email, name, avatar, null, phoneNum, roleName, status, description));
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
+    }
+    public List<UserDTO> getAllOrganizerForAdmin() throws SQLException, NamingException {
+        List<UserDTO> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT id, email, name, avatar, phoneNum, roleId, statusId, description"
+                        + " FROM tblUsers "
+                        + " WHERE roleId = 3 OR roleId = 4";
+                stm = conn.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String email = rs.getString("email");
+                    String name = rs.getString("name");
+                    String avatar = rs.getString("avatar");
+                    String phoneNum = rs.getString("phoneNum");
+                    String roleName = (rs.getInt("roleId") == 3) ? "CL" : "DM";
                     String status = (rs.getString("statusId").equals("AC")) ? "Activated" : "Deactivated";
                     String description = rs.getString("description");
                     list.add(new UserDTO(id, email, name, avatar, null, phoneNum, roleName, status, description));
@@ -566,6 +604,8 @@ public class UserDAO {
         }
         return list;
     }
+    
+    
 
     private static Timestamp getFirstDayOfQuarter(Date date) {
         Calendar cal = Calendar.getInstance();

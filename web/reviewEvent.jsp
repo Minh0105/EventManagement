@@ -26,6 +26,7 @@
 <!--        <script>document.getElementById("ItemPreview").src = "<c:url value='data:image/png;base64,<%= detail.getPoster() %>'/>" ;</script>-->
         
         <br><%= detail.getDate()%> - <%= detail.getLocation()%>
+        <br><%= detail.getTime() %>
         <br><%= detail.getName()%>
         <br><%= detail.getOrganizerName()%>
         <br><%= detail.getDescription()%>

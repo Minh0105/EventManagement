@@ -102,9 +102,13 @@ public class AppendEventDetailServlet extends HttpServlet {
 
                     dayId = Integer.parseInt(str.substring(2));
                 }
-
-                String chosenTimeRange = startSlot.getId() + " - " + endSlot.getId()
+                String chosenTimeRange = "";
+                if(startSlot.getId() == endSlot.getId()){
+                    chosenTimeRange = startSlot.getId() + " (" + rangeDao.getDetailSlotById(startSlot.getId()) +")";
+                }else{
+                    chosenTimeRange = startSlot.getId() + " - " + endSlot.getId()
                         + " (" + rangeDao.getDetailSlotById(startSlot.getId()).substring(0, 5) + " - " + rangeDao.getDetailSlotById(endSlot.getId()).substring(7) + ")";
+                }
                 session.setAttribute("ChosenTimeRange", chosenTimeRange);
                 LOGGER.info("Session Attribute - ChosenTimeRange : " + chosenTimeRange);
 

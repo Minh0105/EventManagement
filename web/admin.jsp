@@ -15,7 +15,7 @@
               crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-<!--        <link rel="stylesheet" type="text/css" href="resources/css/admin.css"/>-->
+        <!--        <link rel="stylesheet" type="text/css" href="resources/css/admin.css"/>-->
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -45,143 +45,288 @@
             </div>
         </nav>
         <c:if test="${requestScope.LIST_ORGANIZER ne null}">
-        <div>
+            <div>
 
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Email</th>
-                        <th>Name</th>
-                        <th>Avatar</th>
-                        <th>Phone Number</th>
-                        <th>Role Name</th>
-                        <th>Status</th>
-                        <th>Description</th>
-                        <th>NumOfEvent</th>
-                        <th>Deactivate</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER}" varStatus="status">
+                <table border="1">
+                    <thead>
                         <tr>
-                            <td>${status.count}</td>
-                            <td>${organizer.email}</td>
-                            <td>${organizer.name}</td>
-                            <td>...</td>
-                            <td>${organizer.phoneNum}</td>
-                            <td>${organizer.roleName}</td>
-                            <td>${organizer.status}</td>
-                            <td>${organizer.description}</td>
-                            <td>${organizer.numOfEvent}</td>
-                            <td>
-                                <c:if test="${organizer.status eq 'Activated'}">
-                                   <a href="#">Deactivate</a>
-                                 </c:if>
-                                <c:if test="${organizer.status eq 'Deactivated'}">
-                                   <a href="#">Reactivate</a>
-                                 </c:if>
-                            </td>
+                            <th>No</th>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Avatar</th>
+                            <th>Phone Number</th>
+                            <th>Role Name</th>
+                            <th>Status</th>
+                            <th>Description</th>
+                            <th>NumOfEvent</th>
+                            <th>Deactivate</th>
                         </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER}" varStatus="status">
+                            <tr>
+                                <td>${status.count}</td>
+                                <td>${organizer.email}</td>
+                                <td>${organizer.name}</td>
+                                <td>...</td>
+                                <td>${organizer.phoneNum}</td>
+                                <td>${organizer.roleName}</td>
+                                <td>${organizer.status}</td>
+                                <td>${organizer.description}</td>
+                                <td>${organizer.numOfEvent}</td>
+                                <td>
+                                    <c:if test="${organizer.status eq 'Activated'}">
+                                        <a href="#">Deactivate</a>
+                                    </c:if>
+                                    <c:if test="${organizer.status eq 'Deactivated'}">
+                                        <a href="#">Reactivate</a>
+                                    </c:if>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
 
-        </div>
+            </div>
         </c:if>
         <c:if test="${requestScope.LIST_STUDENT ne null}">
-        <div>
+            <div>
 
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Email</th>
-                        <th>Name</th>
-                        <th>Avatar</th>
-                        <th>Address</th>
-                        <th>Phone Number</th>
-                        <th>Role Name</th>
-                        <th>Status</th>
-                        <th>Deactivate</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="student" items="${requestScope.LIST_STUDENT}" varStatus="status">
+                <table border="1">
+                    <thead>
                         <tr>
-                            <td>${status.count}</td>
-                            <td>${student.email}</td>
-                            <td>${student.name}</td>
-                            <td>...</td>
-                            <td>${student.address}
-                            <td>${student.phoneNum}</td>
-                            <td>${student.roleName}</td>
-                            <td>${student.status}</td>
-                            <td>
-                                <c:if test="${student.status eq 'Activated'}">
-                                   <a href="#">Deactivate</a>
-                                 </c:if>
-                                <c:if test="${student.status eq 'Deactivated'}">
-                                   <a href="#">Reactivate</a>
-                                 </c:if>
-                            </td>
+                            <th>No</th>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Avatar</th>
+                            <th>Address</th>
+                            <th>Phone Number</th>
+                            <th>Role Name</th>
+                            <th>Status</th>
+                            <th>Deactivate</th>
                         </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="student" items="${requestScope.LIST_STUDENT}" varStatus="status">
+                            <tr>
+                                <td>${status.count}</td>
+                                <td>${student.email}</td>
+                                <td>${student.name}</td>
+                                <td>...</td>
+                                <td>${student.address}
+                                <td>${student.phoneNum}</td>
+                                <td>${student.roleName}</td>
+                                <td>${student.status}</td>
+                                <td>
+                                    <c:if test="${student.status eq 'Activated'}">
+                                        <a href="#">Deactivate</a>
+                                    </c:if>
+                                    <c:if test="${student.status eq 'Deactivated'}">
+                                        <a href="#">Reactivate</a>
+                                    </c:if>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
 
-        </div>
+            </div>
         </c:if>
         <c:if test="${requestScope.LIST_LECTURER ne null}">
-        <div>
+            <div>
 
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Email</th>
-                        <th>Name</th>
-                        <th>Avatar</th>
-                        <th>Address</th>
-                        <th>Phone Number</th>
-                        <th>Role Name</th>
-                        <th>Status</th>
-                        <th>Description</th>
-                        <th>Deactivate</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="lecturer" items="${requestScope.LIST_LECTURER}" varStatus="status">
+                <table border="1">
+                    <thead>
                         <tr>
-                            <td>${status.count}</td>
-                            <td>${lecturer.email}</td>
-                            <td>${lecturer.name}</td>
-                            <td>...</td>
-                            <td>${lecturer.address}
-                            <td>${lecturer.phoneNum}</td>
-                            <td>${lecturer.roleName}</td>
-                            <td>${lecturer.status}</td>
-                            <td>${lecturer.description}</td>
-                            <td>
-                                <c:if test="${lecturer.status eq 'Activated'}">
-                                   <a href="#">Deactivate</a>
-                                 </c:if>
-                                <c:if test="${lecturer.status eq 'Deactivated'}">
-                                   <a href="#">Reactivate</a>
-                                 </c:if>
-                            </td>
+                            <th>No</th>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Avatar</th>
+                            <th>Address</th>
+                            <th>Phone Number</th>
+                            <th>Role Name</th>
+                            <th>Status</th>
+                            <th>Description</th>
+                            <th>Deactivate</th>
                         </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="lecturer" items="${requestScope.LIST_LECTURER}" varStatus="status">
+                            <tr>
+                                <td>${status.count}</td>
+                                <td>${lecturer.email}</td>
+                                <td>${lecturer.name}</td>
+                                <td>...</td>
+                                <td>${lecturer.address}</td>
+                                <td>${lecturer.phoneNum}</td>
+                                <td>${lecturer.roleName}</td>
+                                <td>${lecturer.status}</td>
+                                <td>${lecturer.description}</td>
+                                <td>
+                                    <c:if test="${lecturer.status eq 'Activated'}">
+                                        <a href="#">Deactivate</a>
+                                    </c:if>
+                                    <c:if test="${lecturer.status eq 'Deactivated'}">
+                                        <a href="#">Reactivate</a>
+                                    </c:if>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
 
-        </div>
+            </div>
         </c:if>
+        <c:if test="${requestScope.LIST_ORGANIZER_EVENT ne null}">
+            <div>
+                Tìm event theo: <br>
+
+                <!--           ĐÃ LOAD LIST ALL ORGANIZER, Select o day là khi nguoi dùng ho chon option nào thì mình show LIST ORGANIZER-->
+                Kiểu nhà tổ chức: <select id="organizerType" onchange="organizerTypeHandler(this)" >
+                    <option value="allOrganizer" selected='selected'>Tất cả</option> <!-- (ĐÂY LÀ MAC ĐINH KHI BAM VÀO "Event Management"-->
+                    <option value="CL">Club's leader</option>
+                    <option value="DM">Department's manager</option>
+                </select>
+                <form action ="manageEventByAdmin">
+                    <div id="filter_organizer">
+
+                        Tên nhà tổ chức: <div id="organizer_name">
+
+                        </div>
+                        <div>
+                            Tình trạng sự kiện: <select name="eventStatus">
+                                <option value="0">Tất cả</option>
+                                <option value="1">Sắp diễn ra</option>
+                                <option value="2">Đóng đăng kí</option>
+                                <option value="3">Đã kết thúc</option>
+                                <option value="4">Đã hủy</option>
+                            </select>
+                        </div>
+                        <input type="submit" value="filter"/>
+                    </div>
+                </form>
+                <div id="allOrganizer">
+                    <!--           Neu chon "Tất cả" ở cái select trên  (ĐÂY LÀ MAC ĐINH KHI BAM VÀO "Event Management"-->
+                    <select name="idOrganizer">
+                        <option value="0">Tất cả</option>
+                        <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
+                            <c:if test="${param.idOrganizer eq organizer.id}">
+                                <option value="${organizer.id}" selected>${organizer.name}</option>
+                            </c:if>
+                            <c:if test="${param.idOrganizer ne organizer.id}">
+                                <option value="${organizer.id}">${organizer.name}</option>
+                            </c:if>
+                        </c:forEach>  
+                    </select>
+                </div>
+                <!--           Nếu chọn "Club's leader" ở cái select trên-->
+                <div id="CL">
+                    <select name="idOrganizer">
+                        <option value="-1">Tất cả</option>
+                        <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
+                            <c:if test="${organizer.roleName eq 'CL'}">
+                                <c:if test="${param.idOrganizer eq organizer.id}">
+                                    <option value="${organizer.id}" selected>${organizer.name}</option>
+                                </c:if>
+                                <c:if test="${param.idOrganizer ne organizer.id}">
+                                    <option value="${organizer.id}">${organizer.name}</option>
+                                </c:if>
+                            </c:if>
+                        </c:forEach>  
+                    </select>
+                </div>
+
+                <!--           Nếu chọn "Department's manager" ở cái select trên-->
+                <div id="DM">
+                    <select name="idOrganizer">
+                        <option value="-2">Tất cả</option>
+                        <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
+                            <c:if test="${organizer.roleName eq 'DM'}">
+                                <c:if test="${param.idOrganizer eq organizer.id}">
+                                    <option value="${organizer.id}" selected>${organizer.name}</option>
+                                </c:if>
+                                <c:if test="${param.idOrganizer ne organizer.id}">
+                                    <option value="${organizer.id}">${organizer.name}</option>
+                                </c:if>
+                            </c:if>
+                        </c:forEach>  
+                    </select>
+                </div>
+                <div>
+                    <c:if test="${requestScope.LIST_EVENT ne null}">
+                        <div>
+                            <table border="1">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Name</th>
+                                        <th>Location</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Organizer Name</th>
+                                        <th>Following</th>
+                                        <th>Joining</th>
+                                        <th>Status</th>
+                                        <th>View detail</th>
+                                        <th>Cancel</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="event" items="${requestScope.LIST_EVENT}" varStatus="status">
+                                        <tr>
+                                            <td>${status.count}</td>
+                                            <td>${event.name}</td>
+                                            <td>${event.location}</td>
+                                            <td>${event.date}</td>
+                                            <td>${event.time}</td>
+                                            <td>${event.organizerName}</td>
+                                            <td>${event.following}</td>
+                                            <td>${event.joining}</td>
+                                            <td>${event.statusId}</td>
+                                            <td><a href="viewEventDetail?eventId=${event.id}">Chi tiết</a></td>
+                                            <td>
+                                                <c:if test="${event.statusId == 1}">
+                                                    <a href="#">Cancel</a>
+                                                </c:if>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </c:if>
+                </div>
+            </div>
+            <script>
+                var organizerTypeSelect = document.getElementById("organizerType");
+                document.getElementById("allOrganizer").style.display = "none";
+                document.getElementById("CL").style.display = "none";
+                document.getElementById("DM").style.display = "none";
+                function organizerTypeHandler(organizerTypeSelect) {
+                    var organizerType = organizerTypeSelect.value;
+                    var allOrganizer = document.getElementById("allOrganizer").innerHTML;
+                    var CL = document.getElementById("CL").innerHTML;
+                    var DM = document.getElementById("DM").innerHTML;
+
+                    if (organizerType == 'allOrganizer') {
+                        document.getElementById("organizer_name").innerHTML = allOrganizer;
+                    } else if (organizerType == 'CL') {
+                        document.getElementById("organizer_name").innerHTML = CL;
+                    } else if (organizerType == 'DM') {
+                        document.getElementById("organizer_name").innerHTML = DM;
+                    }
+                }
+
+            </script>
+        </c:if>
+
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
                 integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN"
         crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
                 integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
         crossorigin="anonymous"></script>
+
     </body>
 </html>

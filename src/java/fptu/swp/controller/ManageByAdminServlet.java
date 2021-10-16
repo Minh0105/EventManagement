@@ -6,6 +6,7 @@
 package fptu.swp.controller;
 
 import fptu.swp.entity.event.EventDAO;
+import fptu.swp.entity.event.EventDetailDTO;
 import fptu.swp.entity.user.UserDAO;
 import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
@@ -69,9 +70,17 @@ public class ManageByAdminServlet extends HttpServlet {
                 LOGGER.info("Request Attribute LIST_STUDENT: " + listStudent);
                 url = ADMIN_PAGE_PATH;
             }else if("lecturer".equals(type)){
-                List<UserDTO> listLecturer = userDao.getAllLecturerAndNumberOfReletedEvent();
+                List<UserDTO> listLecturer = userDao.getAllLecturerForAdmin();
                 request.setAttribute("LIST_LECTURER", listLecturer);
                 LOGGER.info("Request Attribute LIST_LECTURER: " + listLecturer);
+                url = ADMIN_PAGE_PATH;
+            }else if("event".equals(type)){
+                List<UserDTO> listOrganizer = userDao.getAllOrganizerForAdmin();
+                request.setAttribute("LIST_ORGANIZER_EVENT", listOrganizer);
+                List<EventDetailDTO> listEvent = (List<EventDetailDTO>) request.getAttribute("LIST_EVENT");
+                request.setAttribute("LIST_EVENT", listEvent);
+                LOGGER.info("Request Attribute LIST_EVENT: " + listEvent);
+                LOGGER.info("Request Attribute LIST_ORGANIZER_EVENT: " + listOrganizer);
                 url = ADMIN_PAGE_PATH;
             }   
         }catch(Exception ex){

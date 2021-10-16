@@ -58,7 +58,6 @@ public class ViewEventDetailServlet extends HttpServlet {
 
         try {
             int eventId = Integer.parseInt(request.getParameter("eventId"));
-            String type = request.getParameter("type");
             HttpSession session = request.getSession();
             UserDTO loginUser = (UserDTO) session.getAttribute("USER");
             EventDAO eventDao = new EventDAO();

@@ -41,9 +41,17 @@ public class EventDetailDTO {
         this.organizerAvatar = organizerAvatar;
         this.statusId = statusId;
     }
-    
-    public EventDetailDTO(String organizerAvatar) {
-        this.organizerAvatar = organizerAvatar;
+
+    public EventDetailDTO(int id, String name, String location, String date, String time, String organizerName, int following, int joining, int statusId) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.date = date;
+        this.time = time;
+        this.organizerName = organizerName;
+        this.following = following;
+        this.joining = joining;
+        this.statusId = statusId;
     }
 
     public int getId() {
