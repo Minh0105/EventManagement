@@ -18,24 +18,20 @@
     <body>
         <h1>JSON</h1>
         <form onSubmit="return false;">
-                        <input type="text" name="commentID" id="" value="" />
-                        <input type="text" name="contents" id="" value="" />
-                        <input type="text" name="eventId" id="" value="" />
-                        <input type="text" name="userID" id="" value="" />
-                        <input type="text" name="userAvatar" id="" value="" />
-                        <input type="text" name="userName" id="" value="" />
-                        <input type="text" name="isQuestion" id="" value="" />
-                        <input type="text" name="commentDatetime" id="" value="" />
-                        <input type="text" name="userRoleName" id="" value="" />
-                        <input type="text" name="replyList" id="" value="" />
-                        <input type="text" name="statusId" id="" value="" />
+            CommentID <input type="text" name="commentID" id="" value="" /><br>
+                        Content <input type="text" name="contents" id="" value="" /><br>
+                        Username <input type="text" name="userName" id="" value="" /><br>
             <!--<input type="text" name="txt" value="" />-->
             <input  type="submit" onclick="sendCmt(this.form)" />
         </form>
-
+        <input style="border: 1px green solid;" id="cmtID" >
         <div id="messages">
 
         </div>
+        
+        
+        <script src="<c:url value="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js" />"></script>
+        <script src="<c:url value="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js" />"></script>
         <script src="<c:url value="resources/js/function.js" />"></script>
         
     </body>

@@ -1,79 +1,86 @@
-function sendMsg(frm) {
-  //get message
-  var msg = frm.value;
-  //add new data to firebase location
-  ref.push({ time: new Date().toUTCString(), msg: msg });
-  //clear input text
-  frm.value = "";
-}
-function sendReply(cmtID) {
+// function sendMsg(frm) {
+//   //get message
+//   var msg = frm.value;
+//   //add new data to firebase location
+//   ref.push({ time: new Date().toUTCString(), msg: msg });
+//   //clear input text
+//   frm.value = "";
+// }
+ function sendReply(cmtID) {
     
-    // reply object 
-    var id;
-    var contents;
-    var userId;
-    var userAvatar;
-    var userName;
-    var userRoleName;
-    var replyDatetime;
-    var statusId;
-    ref = new Firebase(
-        "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/comments/" + cmtID + "/replyList"
-      );
-    ref.push({  id:id, 
-                contents: contents, 
-                userId:userId, 
-                userAvatar:userAvatar, 
-                userName:userName, 
-                userRoleName:userRoleName,
-                replyDatetime:  replyDatetime,
-                statusId : statusId 
-            });
-}
+     // reply object 
+     var id;
+     var contents;
+     var userId;
+     var userAvatar;
+     var userName;
+     var userRoleName;
+     var replyDatetime;
+     var statusId;
+    
+     cmtRef.child(cmtID+'/replyList').push({  id:id, 
+                 contents: contents, 
+                 userId:userId, 
+                 userAvatar:userAvatar, 
+                 userName:userName, 
+                 userRoleName:userRoleName,
+                 replyDatetime:  replyDatetime,
+                 statusId : statusId 
+             });
+ }
 
-function sendCmt(frm) { // return the id of comment in firebase, need for reply
-    var commentID = frm.commentID.value;
-    var contents = frm.contents.value;
-    var eventId = frm.eventId.value;
-    var userID = frm.userID.value;
-    var userAvatar = frm.userAvatar.value;
-    var userName = frm.userName.value;
-    var isQuestion = frm.isQuestion.value;
-    var commentDatetime = frm.commentDatetime.value;
-    var userRoleName = frm.userRoleName.value;
-    // var replyList = frm.replyList;
-    var statusId = frm.statusId.value;
-    ref = new Firebase(
-        "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/comments"
-      );
-    ref.push({
-        commentID:commentID,
-        contents:contents,
-        eventId:eventId,
-        userID:userID,
-        userAvatar:userAvatar,
-        userName:userName,
-        isQuestion:isQuestion,
-        commentDatetime:commentDatetime,
-        userRoleName:userRoleName,
-        replyList:{"repId":1,"repId":2},
-        statusId:statusId
-    });
+ function sendCmt(frm) { // return the id of comment in firebase, need for reply
+     var commentID = frm.commentID.value;
+     var contents = frm.contents.value;
+     var username = frm.userName.value;
+     
+     var newCmt = cmtRef.push({
+         commentID:commentID,
+         contents:contents,
+         username:username
+     });
 
-    return ref.name();
-}
+     frm.commentID.value = "";
+     frm.contents.value = "";
+     frm.userName.value = "";
+
+     document.getElementById('cmtID').value = newCmt.key;
+ }
 
 
-var ref = new Firebase(
-  "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/comments"
-);
-ref.on("child_added", function (snapshot) {
-  //We'll fill this in later.
-  var message = snapshot.val();
-  $("#messages").append(
-    $("<div/>")
-      .css({ border: "1px solid red" })
-      .html(JSON.stringify(message['userName'] + " : " + message['contents']))
-  );
-});
+// var ref = new Firebase(
+//   "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/comments"
+// );
 
+
+
+
+  // Import the functions you need from the SDKs you need
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyCx4WEvFkJXvXVe0ojOiQmjw7-xFkTgYlQ",
+    authDomain: "react-getting-started-30bc6.firebaseapp.com",
+    databaseURL: "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/",
+    projectId: "react-getting-started-30bc6",
+    storageBucket: "react-getting-started-30bc6.appspot.com",
+    messagingSenderId: "91900710322",
+    appId: "1:91900710322:web:6330f47698f45959b068ab"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  var database = firebase.database();
+  var cmtRef = database.ref('comments');
+
+  cmtRef.orderByChild('username').equalTo('Duong').on("child_added", function (snapshot) {
+    //We'll fill this in later.
+    var message = snapshot.val();
+    $("#messages").append(
+      $("<div/>")
+        .css({ border: "1px solid red" })
+        .html(JSON.stringify(message['username'] + " : " + message['contents']))
+    );
+  });
