@@ -10,12 +10,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Event Management</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
-              integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
-              crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-        <!--        <link rel="stylesheet" type="text/css" href="resources/css/admin.css"/>-->
+        <!--                <link rel="stylesheet" type="text/css" href="resources/css/admin.css"/>-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -45,6 +44,24 @@
             </div>
         </nav>
         <c:if test="${requestScope.LIST_ORGANIZER ne null}">
+            _________________________Thêm Club's Leader_____________________________
+            <form action="manageUserByAdmin" method="POST">
+                <input type="hidden" name="roleId" value="3"/>
+                <input type="hidden" name="action" value="Create"/>
+                <p>Email: <input type="email" name="email" required/> <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
+                    <br></p> 
+                <p>Name: <input type="text" name="name"required/><br></p>
+                <button type="submit" class="btn btn-primary">Thêm CL</button>
+            </form>
+            _________________________Thêm Department's Manager_____________________________
+            <form action="manageUserByAdmin" method="POST">
+                <input type="hidden" name="roleId" value="4"/>
+                <input type="hidden" name="action" value="Create"/>
+                <p>Email: <input type="email" name="email" required/> <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
+                    <br></p> 
+                <p>Name: <input type="text" name="name"required/><br></p>
+                <button type="submit" class="btn btn-primary">Thêm DM</button>
+            </form>
             <div>
 
                 <table border="1">
@@ -75,12 +92,15 @@
                                 <td>${organizer.description}</td>
                                 <td>${organizer.numOfEvent}</td>
                                 <td>
-                                    <c:if test="${organizer.status eq 'Activated'}">
-                                        <a href="#">Deactivate</a>
-                                    </c:if>
-                                    <c:if test="${organizer.status eq 'Deactivated'}">
-                                        <a href="#">Reactivate</a>
-                                    </c:if>
+                                    <form action="manageUserByAdmin" method="POST">
+                                        <input type="hidden" name="userId" value="${organizer.id}"/>
+                                        <c:if test="${organizer.status eq 'Activated'}">
+                                            <input type="submit" name="action" value="Deactivate"/>
+                                        </c:if>
+                                        <c:if test="${organizer.status eq 'Deactivated'}">
+                                            <input type="submit" name="action" value="Reactivate"/>
+                                        </c:if>
+                                    </form>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -118,12 +138,15 @@
                                 <td>${student.roleName}</td>
                                 <td>${student.status}</td>
                                 <td>
-                                    <c:if test="${student.status eq 'Activated'}">
-                                        <a href="#">Deactivate</a>
-                                    </c:if>
-                                    <c:if test="${student.status eq 'Deactivated'}">
-                                        <a href="#">Reactivate</a>
-                                    </c:if>
+                                    <form action="manageUserByAdmin" method="POST">
+                                        <input type="hidden" name="userId" value="${student.id}"/>
+                                        <c:if test="${student.status eq 'Activated'}">
+                                            <input type="submit" name="action" value="Deactivate"/>
+                                        </c:if>
+                                        <c:if test="${student.status eq 'Deactivated'}">
+                                            <input type="submit" name="action" value="Reactivate"/>
+                                        </c:if>
+                                    </form>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -133,8 +156,48 @@
             </div>
         </c:if>
         <c:if test="${requestScope.LIST_LECTURER ne null}">
-            <div>
+            <form action="manageUserByAdmin" method="POST">
+                <input type="hidden" name="roleId" value="2"/>
+                <input type="hidden" name="action" value="Create"/>
+                <p>Email: <input type="email" name="email" required/> <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
+                    <br></p> 
+                <p>Name: <input type="text" name="name" required/><br></p>
+                <button type="submit" class="btn btn-primary">Thêm</button>
+            </form>
+            <!--                <div>
+                                 button trigger modal
+                                <button class="btn btn-primary hight" type="button" id="a" data-toggle="modal" data-target="#createNewLecturer">
+                                    <p>Thêm tài khoản giảng viên</p>
+                                </button>
+            
+                                 Modal
+                                <div class="modal fade" id="createNewLecturer" tabindex="-1" aria-labelledby="createNewLecturerLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="createNewLecturerLabel">Thêm tài khoản giảng viên</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <input type="hidden" name="roleId" value="2"/>
+                                                <input type="hidden" name="action" value="Create"/>
+                                                <p>Email: <input type="text" name="email"/><br></p> 
+                                                <p>Name: <input type="text" name="name"/><br></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Thêm</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>-->
 
+
+            <div>
                 <table border="1">
                     <thead>
                         <tr>
@@ -163,12 +226,15 @@
                                 <td>${lecturer.status}</td>
                                 <td>${lecturer.description}</td>
                                 <td>
-                                    <c:if test="${lecturer.status eq 'Activated'}">
-                                        <a href="#">Deactivate</a>
-                                    </c:if>
-                                    <c:if test="${lecturer.status eq 'Deactivated'}">
-                                        <a href="#">Reactivate</a>
-                                    </c:if>
+                                    <form action="manageUserByAdmin" method="POST">
+                                        <input type="hidden" name="userId" value="${lecturer.id}"/>
+                                        <c:if test="${lecturer.status eq 'Activated'}">
+                                            <input type="submit" name="action" value="Deactivate"/>
+                                        </c:if>
+                                        <c:if test="${lecturer.status eq 'Deactivated'}">
+                                            <input type="submit" name="action" value="Reactivate"/>
+                                        </c:if>
+                                    </form>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -187,7 +253,7 @@
                     <option value="CL">Club's leader</option>
                     <option value="DM">Department's manager</option>
                 </select>
-                <form action ="manageEventByAdmin">
+                <form action ="filterEventByAdmin">
                     <div id="filter_organizer">
 
                         Tên nhà tổ chức: <div id="organizer_name">
@@ -320,13 +386,8 @@
 
             </script>
         </c:if>
-
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-                integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN"
-        crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
                 integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
         crossorigin="anonymous"></script>
-
     </body>
 </html>

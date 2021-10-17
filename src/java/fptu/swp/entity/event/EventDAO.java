@@ -531,7 +531,7 @@ public class EventDAO {
         int startSlot = Integer.parseInt(String.valueOf(chosenTimeRange.charAt(0)));
         char endSlotChar = chosenTimeRange.charAt(4);
         int endSlot = startSlot;
-        if(Character.isDigit(endSlotChar)){
+        if(chosenTimeRange.substring(0, 4).contains("-")){
             endSlot = Integer.parseInt(String.valueOf(endSlotChar));
         }
 

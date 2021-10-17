@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author admin
  */
-public class UserDTO implements Serializable {
+public class UserDTO implements Serializable, Comparable<UserDTO> {
     private int id;
     private String email;
     private String name;
@@ -22,6 +22,9 @@ public class UserDTO implements Serializable {
     private String status;
     private String description;
     private int numOfEvent;
+
+    public UserDTO() {
+    }
 
     public UserDTO(int id, String email, String name, String avatar, String address, String phoneNum, String roleName) {
         this.id = id;
@@ -154,7 +157,8 @@ public class UserDTO implements Serializable {
         return "UserDTO{" + "id=" + id + ", email=" + email + ", name=" + name + ", avatar=" + avatar + ", address=" + address + ", phoneNum=" + phoneNum + ", roleName=" + roleName + '}';
     }
 
-    
-
-    
+    @Override
+    public int compareTo(UserDTO t) {
+       return t.getNumOfEvent() - this.getNumOfEvent();
+    }    
 }

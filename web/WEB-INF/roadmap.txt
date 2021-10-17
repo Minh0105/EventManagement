@@ -27,4 +27,5 @@ reply=ReplyServlet
 askQuestion=AskQuestionServlet
 AdminPage=admin.jsp
 manageByAdmin=ManageByAdminServlet
-manageEventByAdmin=ManageEventByAdminServlet
+filterEventByAdmin=FilterEventByAdminServlet
+manageUserByAdmin=ManageUserByAdminServlet

@@ -175,7 +175,7 @@
             <div class="carouselButton">
                 <% if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {
                 %>
-                <form action="setEventStatus" method="POST">
+                <form action="setEventStatus">
                     <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
                     <div class="carouselButton1">
 
@@ -205,7 +205,7 @@
                                         <label for="isExporting">Xuất file Excel thành viên tham dự</label><br>
                                     </div>
                                     <div class="modal-footer">
-                                        <form action=""
+                                        
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-primary">Lưu</button>
                                     </div>

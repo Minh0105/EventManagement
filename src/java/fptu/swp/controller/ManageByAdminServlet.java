@@ -11,6 +11,7 @@ import fptu.swp.entity.user.UserDAO;
 import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -61,6 +62,7 @@ public class ManageByAdminServlet extends HttpServlet {
         try{
             if("organizer".equals(type)){
                 List<UserDTO> listOrganizer = userDao.getAllOrganizerAndNumberOfEventByQuarter(new Date());
+                Collections.sort(listOrganizer);
                 request.setAttribute("LIST_ORGANIZER", listOrganizer);
                 LOGGER.info("Request Attribute LIST_ORGANIZER: " + listOrganizer);
                 url = ADMIN_PAGE_PATH;
