@@ -23,8 +23,13 @@
                         Username <input type="text" name="userName" id="" value="" /><br>
             <!--<input type="text" name="txt" value="" />-->
             <input  type="submit" onclick="sendCmt(this.form)" />
+            
         </form>
-        <input style="border: 1px green solid;" id="cmtID" >
+        <form onsubmit="return false;">
+            CMT ID <input type="text" style="border: 1px green solid;" name="CmtID" value=""> 
+            <input  type="submit" onclick="sendReply(this.form)" value="Reply"/>
+        </form>
+        
         <div id="messages">
 
         </div>
@@ -32,7 +37,7 @@
         
         <script src="<c:url value="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js" />"></script>
         <script src="<c:url value="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js" />"></script>
-        <script src="<c:url value="resources/js/function.js" />"></script>
+        <script src="resources/js/function.js"></script>
         
     </body>
 </html>

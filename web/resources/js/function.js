@@ -6,27 +6,28 @@
 //   //clear input text
 //   frm.value = "";
 // }
- function sendReply(cmtID) {
-    
+ function sendReply(frm) {
+    var cmtID = frm.CmtID.value;
      // reply object 
-     var id;
-     var contents;
-     var userId;
-     var userAvatar;
-     var userName;
-     var userRoleName;
-     var replyDatetime;
-     var statusId;
-    
-     cmtRef.child(cmtID+'/replyList').push({  id:id, 
-                 contents: contents, 
-                 userId:userId, 
-                 userAvatar:userAvatar, 
-                 userName:userName, 
-                 userRoleName:userRoleName,
-                 replyDatetime:  replyDatetime,
-                 statusId : statusId 
-             });
+     var id = "test1";
+     var contents = "test1";
+     var userId = "test1";
+     var userAvatar = "test1";
+     var userName = "test1";
+     var userRoleName = "test1";
+     var replyDatetime = "test1";
+     var statusId = "test1";
+      var replyInfor = {  id:id, 
+        contents: contents, 
+        userId:userId, 
+        userAvatar:userAvatar, 
+        userName:userName, 
+        userRoleName:userRoleName,
+        replyDatetime:  replyDatetime,
+        statusId : statusId 
+    };
+
+     database.ref('comments/'+ cmtID +'/replyList').push(replyInfor);
  }
 
  function sendCmt(frm) { // return the id of comment in firebase, need for reply
@@ -37,14 +38,14 @@
      var newCmt = cmtRef.push({
          commentID:commentID,
          contents:contents,
-         username:username
+         username:username,
+         replyList:'first'
      });
 
      frm.commentID.value = "";
      frm.contents.value = "";
      frm.userName.value = "";
 
-     document.getElementById('cmtID').value = newCmt.key;
  }
 
 
@@ -81,6 +82,7 @@
     $("#messages").append(
       $("<div/>")
         .css({ border: "1px solid red" })
-        .html(JSON.stringify(message['username'] + " : " + message['contents']))
+        .html(message['username'] + " : " + message['contents'] + " : " + snapshot.key)
+      
     );
   });
