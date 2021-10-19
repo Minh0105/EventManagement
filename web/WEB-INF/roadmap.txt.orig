@@ -16,6 +16,7 @@ modifyLocation=ModifyLocationServlet
 viewSlotAndTimeFree=ViewLocationAndTimeServlet
 appendEventDetailPage=appendEventDetail.jsp
 appendEventDetail=AppendEventDetailServlet
+<<<<<<< HEAD
 reviewEventPage=reviewEvent.jsp
 reviewEvent=ReviewEventServlet
 createEvent=CreateEventServlet
@@ -29,5 +30,7 @@ AdminPage=admin.jsp
 manageByAdmin=ManageByAdminServlet
 filterEventByAdmin=FilterEventByAdminServlet
 manageUserByAdmin=ManageUserByAdminServlet
+=======
+uploadFile=UploadFileServlet
 addNotification=FirebaseServlet
-
+>>>>>>> firebase-DuongMh
