@@ -38,7 +38,7 @@ public class DateTimeLocationDAO implements Serializable{
             con = DBHelper.makeConnection();
             String sql = "select DATEPART(dw,[date]) as day , rangeId "
                         +"from tblDateTimeLocation "
-                        +"where locationId = ? AND [date] between ? AND DATEADD(DAY,6, ?) ";
+                        +"where locationId = ? AND [date] between ? AND DATEADD(DAY,6, ?) AND statusId = 1";
             ps = con.prepareStatement(sql);
             ps.setInt(1, locationId);
             ps.setString(2, firstDateOfWeek.toString());

@@ -5,7 +5,6 @@
 --%>
 
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="fptu.swp.entity.user.UserDTO"%>
 <%@page import="fptu.swp.entity.event.ReplyDTO"%>

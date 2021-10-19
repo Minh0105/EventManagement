@@ -80,7 +80,7 @@
 
             <div id="image_container" class="col-12 col-lg-7">
                 <figure id="figure_image" >
-                    <img id="chosen-image">
+                    <img id="chosen-image" src="data:image/jpg;base64,${eventDetail.poster}">
                 </figure>
 
                 <input class="d-none" type="file" id="upload-button" 
