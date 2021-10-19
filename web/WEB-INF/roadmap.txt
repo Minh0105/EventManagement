@@ -30,4 +30,3 @@ manageByAdmin=ManageByAdminServlet
 filterEventByAdmin=FilterEventByAdminServlet
 manageUserByAdmin=ManageUserByAdminServlet
 addNotification=FirebaseServlet
-
