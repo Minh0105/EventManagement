@@ -7,6 +7,7 @@
 <%@page import="fptu.swp.entity.event.EventCardDTO"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -28,70 +29,40 @@
         <script src="resources/sweetalert2.all.min.js"></script> 
 
         <link rel="stylesheet" type="text/css" href="resources/css/newfeed.css"/>
-        <link rel='stylesheet' type='text/css' media='screen' href='resources/css/style.css'>
 
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-md navbar-light navbar-color sticky-top">
-            <div id="nav_content" class="container-fluid">
-                <a id="navbar_branch" href="#">
-                    <img id="app_icon" src="resources/icon/app_icon.svg">
-                    <h5 class="d-none d-md-block">FPT Event Management</h5>
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" 
-                        data-target="#navbarResponsive">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto nav-margin">
-                        <li class="nav-item">
-                            <a id="icon_name_container" class="nav-link" href="ViewInfoPage"> 
-                                <!-- <img class="nav-avatar rounded-circle" src="${sessionScope.USER.avatar}"> ${sessionScope.USER.name}</img></a> -->
-                                <img id="avatar_icon" class="rounded-circle" src="${sessionScope.USER.avatar}" />
-                                <span id="avatar_name" class="text-white">${sessionScope.USER.name}</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <img id="btn_bell" src="resources/icon/bell_icon.svg" alt="Bell_icon" />
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
 
-                            <a class="nav-link" href="#" id="navbarDropdown " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img id="btn_menu" src="resources/icon/hamburger_button_icon.svg" alt="hamburger_button" />
-                            </a>     
-
-                            <form action="logout" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <button class="btn btn-outline-light profile-button logout " type="submit">
-                                    <img src="resources/icon/log_out_icon.svg">Log Out</button> 
-                            </form>   
-
-                        </li>				
-                    </ul>
+        <%@include file="nav_bar.jsp" %>
+        <div class="d-flex">
+            <section id="filter_bar">
+                <div id="decorating_text">
+                    Discover the event world
                 </div>
-            </div>
-        </nav>
-        <section id="filter_bar">
-            <div id="decorating_text">
-                Discover the event world
-            </div>
-
-            <div id="filter_button_container">
-                <div class="filter_button">
-                    <button>Top</button>
+    
+                <div id="filter_button_container">
+                    <div class="filter_button">
+                        <button>Top</button>
+                    </div>
+    
+                    <div class="filter_button">
+                        <button>This week</button>
+                    </div>
+    
+                    <div class="filter_button">
+                        <button>Followed</button>
+                    </div>
                 </div>
+            </section>
 
-                <div class="filter_button">
-                    <button>This week</button>
+            <c:if test="${session.USER.roleName ne 'STUDENT'}">
+                <div id="btn_create_event">
+                    <img src="resources/icon/icon_create_new_event.svg" />
+                    <button >Tạo sự kiện mới</button>
                 </div>
-
-                <div class="filter_button">
-                    <button>Followed</button>
-                </div>
-            </div>
-        </section>
+            </c:if>
+        </div>
 
         <div id="card_container" class="container-fluid">
             <div id="card_container_row" class="row gx-1 gy-4">

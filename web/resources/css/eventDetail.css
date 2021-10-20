@@ -1,25 +1,107 @@
-@import url(nav_bar.css);
-
 * { 
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-/* Header */
-/* 
-.title {
-    border: radius 10px;
-    color: #fff;
-    background-color:#f15827;
+
+
+
+/* POSTER PART  */
+
+#poster_section {
+    width: 100%;
+    position: relative;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.35);
+}
+
+
+#poster_image img {
+    max-height: 430px;
+    width: 100%;
+    object-fit: cover;
+}
+
+
+
+/* CALENDAR */
+
+#calendar_section {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0x 2px 2px rgba(0, 0, 0, 0.85);
     display: flex;
-    justify-content: space-between;
-} */
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    min-width: 130px;
+}
+
+#calendar_section #orange_decoration {
+    border-radius: 15px;
+    background-color: #f15827;
+    height: 30px;
+    width: 100%;
+}
+
+#calendar_part {
+    position: absolute;
+    left: 30px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+#date_part > * {
+    text-align: center;
+}
+
+#date_part > #date_render {
+    color: black;
+    margin-top: 1rem !important;
+    font-weight: 600;
+}
+
+#date_part > #day_render {
+    color: #f2450b;
+    margin-top: 0.3rem !important;
+    font-weight: 500;
+}
+
+/* CARE PART */
+
+#care_infor_part {
+    margin-left: 1rem;
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 0.5rem;
+    padding: 0.8rem 1.3rem;
+}
+
+#care_infor_part > * {
+    display: inline-block;
+}
+
+#care_infor_part .care_infor_text {
+    color: white;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+#care_infor_part > #dot {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 0.5rem;
+    background-color: white;
+    margin-left: 0.66rem;
+    margin-right: 0.66rem;
+}
 
 /* title Left */
 .titleLeft{
     display: flex;
     justify-content: center;
 }
+
 .titleLeft img{
     margin: 1rem;
     width: 52px;
@@ -47,6 +129,7 @@
 .titleRight1 p {
     margin: 0;
 }
+
 /* Responsive */
 @media only screen and (max-width: 600px) {
 
@@ -64,11 +147,13 @@
         display: none;
     }
 }
+
 /* Title Right 2 */
 .titleRight2 {
     display: flex;
     margin: 1rem 0;
 }
+
 .titleRight2Bell{
     height: 40px;
     width: 50px;
@@ -77,6 +162,7 @@
     background-color:  #f15827;
 
 }
+
 .titleRight2Bell i {
     color: yellow;
 }
@@ -189,80 +275,11 @@
     margin-left: 10px;
     background-color: #f15827;
 }
+
 .titleRight2Bar:hover{
     color: #1472E1;
 }
 
-
-/* Second 1*/
-.second1 img{
-        object-fit: cover;
-        position:relative;
-        width: 100%;
-        height: 430px;
-    }
-
-
-/* Second 2 */
-.second2{
-    font-weight: 800;
-    margin: -10rem 2rem;
-    position: absolute;
-    display: flex;
-    justify-content: start;
-}
-.second2Img img{
-    padding: 0 1rem;
-    height: 110px;
-}
-.second2Img .numberDay{
-    text-align: center;
-    margin: -5rem -0.5rem;
-}
-.numberDay h3{
-    font-size: 2rem;
-    font-weight: 700;
-}
-.numberDay p{
-    color: #FF4306;
-    margin-top: -13px;
-}
-
-/* Second2Line */
-.second2Line { 
-    background-color: rgba(0, 0, 0, 0.7);
-    margin-top: 3rem;
-    height: 50px;
-    border-radius: 6px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-.second2Line:hover{
-    background-color: black;
-}
-
-.dot {
-    padding: auto;
-    margin: 10px 5px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: white;
-}
-
-.second2Line1 {
-    color: #FFF;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    margin: 10px 30px;
-}
-
-.people {
-    margin-bottom: 0px !important;
-    font-weight: 600 !important;
-}
 
 /*  Carousel */
 .carousel{
@@ -394,19 +411,18 @@
     margin-bottom: 3px !important;
 }
 /* Comment */
-
+/* 
 #comment {
     padding-top: 1.9rem;
-}
+} */
 
 
 
 /* ASK */
 .ask{
-    display:grid;
-    padding: 2rem;
-
+    padding-top: 2rem;
 }
+
 .ask textarea{
     padding: 15px;
     height: 150px;
@@ -480,18 +496,11 @@
 }
 
 @media only screen and (max-width: 576px) {
-    .second1 img {
+    .poster_image img {
         height: 250px;
         object-fit: cover;
     }
-    .second2 {
-        margin: -8rem 0;
-    }
-    .second2Line {
-        height: 120px;
-        flex-direction: column;
-        margin-top: 0;
-    }
+   
     .carousel{
         flex-direction: column;
     }
@@ -504,14 +513,6 @@
         font-weight: 500;
     }
 
-    .second2Line1 {
-        /* color: #FFF;
-        text-align: center;
-        display: flex;
-        justify-content: center; */
-
-        margin: 10px 5px;
-    }
 
     .next {
         padding: 1rem;
@@ -595,6 +596,23 @@
 }
 
 /* TAB VIEW  */
+
+.nav-item .nav-link {
+    border: none !important;
+}
+
+.nav-tabs {
+    border: none !important;
+}
+
+.nav-tabs .nav-link.active {
+    color: #0240fb !important;
+    font-weight: 500;
+}
+
+.nav-tabs .nav-link {
+    color: #98979D;
+}
 
 .nav-item a {
     font-size: 1.2rem;
@@ -685,6 +703,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    margin-top: 1.9rem;
 }
 
 #btn_enter_comment, #btn_enter_question {
@@ -702,18 +721,27 @@
 }
 
 .lec_avatar {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+    object-fit: cover;
+    border: calc(1.5px) black solid;
 }
+
 
 
 /* Comment container */
 
 .comment_item {
-    display: flex;
-    margin-bottom: 1rem;
     width: 100%;
+    margin-top: 2.2rem;
+}
+
+.comment_infor_section {
+    display: flex;
+    margin-bottom: 0.2rem;
+    width: 100%;
+    flex-direction: row;
 }
 
 .comment_infor {
@@ -728,7 +756,7 @@
 }
 
 .comment_content {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 500;
     margin-bottom: 3px !important;
 }
@@ -749,19 +777,32 @@
     border-radius: 6px;
     width: 60%;
     min-width: 150px;
+    margin-botom: 1rem;
 }
 
-.btn_reply {
+.btn_reply, .btn_hide_reply {
     padding: 10px 25px;
-    background-color: #1472E1;
     color: white;
     border: none;
     border-radius: 6px;
     font-weight: 500;
     font-size: 1rem;
     margin-left: 6px;
+    min-width: 100px;
+    max-width: 120px;
+    text-align: center;
+}
+
+.btn_reply {
+    background-color: #1472E1;
+}
+
+.btn_hide_reply {
+    background-color: #686868;
 }
 
 .reply_box {
     display: none;
+    margin-left: 62px;
+    margin-bottom: 1rem;
 }

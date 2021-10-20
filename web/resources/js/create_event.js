@@ -123,7 +123,7 @@ function sendDataToServer () {
     document.getElementById("submiter").innerHTML = form;
     document.getElementById("submit_form").appendChild(eventImageBackgroundInput);
     console.log(document.getElementById("submit_form").innerHTML);
-                
+
     // Trigger send Request
     document.getElementById("submit_form").submit();
 }
@@ -144,23 +144,10 @@ function createEventDetailParameter() {
 
     var eventName = document.getElementById("input_event_name").value;
     var eventNameInput = '<input type="hidden" name="eventName" value="' + eventName + '" /> \n';
-    
-    
-// Triet moi ghi:    
-//                    var data = CKEDITOR.instances.editor1.getData();
-//                document.getElementById('input_event_description').innerHTML = data;
-//                console.log("data instance.editor1: "+ data);
-//                for(var instanceName in CKEDITOR.instances) {
-//                    console.log( CKEDITOR.instances[instanceName] );
-//                }
 
- //   
-        var eventDescriptionTest = CKEDITOR.instances.input_event_description.getData();
- //       document.getElementById("input_event_description").innerHTML = eventDescriptionTest;
- //       var eventDescription = document.getElementById("input_event_description").value;
- //   var eventDescriptionInput = '<input type="hidden" name="description" value="' + eventDescription + '" /> \n';
-    var eventDescriptionInput = '<textarea style="display:none;" name="description">'+ eventDescriptionTest + '</textarea>';
-    console.log(eventDescriptionInput);
+    var eventDescription = document.getElementById("input_event_description").value;
+    var eventDescriptionInput = '<input type="hidden" name="description" value="' + eventDescription + '" /> \n';
+
     htmlContent += eventNameInput;
     htmlContent += eventDescriptionInput;
 

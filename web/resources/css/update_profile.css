@@ -1,0 +1,40 @@
+
+#big_title {
+    color: #055ADA;
+}
+
+.label {
+    margin-top: 1rem;
+}
+
+.first_label {
+    margin-top: 0rem !important;
+}
+
+#field_container {
+    padding: 0px;
+    margin-bottom: 0 !important;
+    margin-top: 2rem;
+    margin-left: 2.2rem;
+}
+
+#btn_update {
+    background-color: #055ADA;
+    border-radius: 0.35rem;
+    padding: 0.65rem 1.4rem;
+    display: block;
+    border: none;
+    margin-top: 2rem;
+    float: right;
+}
+
+#btn_update #icon_crayon {
+    transform: rotate(-150deg);
+}
+
+#btn_update span {
+    font-size: 1rem;
+    color: white;
+    margin-left: 6px;
+    display: inline-block;
+}
