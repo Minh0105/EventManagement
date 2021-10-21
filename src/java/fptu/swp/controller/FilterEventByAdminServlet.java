@@ -23,8 +23,8 @@ import org.apache.log4j.Logger;
  *
  * @author triet
  */
-public class ManageEventByAdminServlet extends HttpServlet {
-static final Logger LOGGER = Logger.getLogger(ManageEventByAdminServlet.class);
+public class FilterEventByAdminServlet extends HttpServlet {
+static final Logger LOGGER = Logger.getLogger(FilterEventByAdminServlet.class);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,7 +37,7 @@ static final Logger LOGGER = Logger.getLogger(ManageEventByAdminServlet.class);
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        LOGGER.info("Begin ManageEventByAdminServlet");
+        LOGGER.info("Begin FilterEventByAdminServlet");
         //declare var
         EventDAO eventDao = new EventDAO();
         

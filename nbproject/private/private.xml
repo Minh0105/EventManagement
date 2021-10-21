@@ -3,16 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/ViewEventDetailServlet.java</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/CreateEventServlet.java</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/reviewEvent.jsp</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/entity/event/EventDAO.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/ManageUserByAdminServlet.java</file>
             <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/WEB-INF/auth.txt</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/admin.jsp</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/HandleMultipartServlet.java</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/AppendEventDetailServlet.java</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/utils/DBHelper.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/WEB-INF/roadmap.txt</file>
         </group>
     </open-files>
 </project-private>

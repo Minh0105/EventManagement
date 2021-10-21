@@ -402,7 +402,7 @@ public class UserDAO {
         }
         return list;
     }
-    
+
     //Ham de admin them user vao DB truoc cho Organizer (CL + DM) va Lecturer
     public boolean insertOrganizerOrLecturer(UserDTO user, int roleId) throws SQLException, NamingException {
         boolean check = false;
@@ -444,7 +444,7 @@ public class UserDAO {
             if (conn != null) {
                 String sql = "UPDATE tblUsers "
                         + " SET statusId = 'DE'"
-                        + " WHERE userId = ?";
+                        + " WHERE id = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, userId);
                 check = stm.executeUpdate() > 0;
@@ -471,7 +471,7 @@ public class UserDAO {
             if (conn != null) {
                 String sql = "UPDATE tblUsers "
                         + " SET statusId = 'AC'"
-                        + " WHERE userId = ?";
+                        + " WHERE id = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, userId);
                 check = stm.executeUpdate() > 0;
@@ -497,7 +497,7 @@ public class UserDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT id, email, name, avatar, phoneNum, roleId, statusId, description"
+                String sql = "SELECT id, email, name, avatar, address, phoneNum, roleId, statusId, description"
                         + " FROM tblUsers "
                         + " WHERE roleId = 2";
                 stm = conn.prepareStatement(sql);
@@ -507,11 +507,12 @@ public class UserDAO {
                     String email = rs.getString("email");
                     String name = rs.getString("name");
                     String avatar = rs.getString("avatar");
+                    String address = rs.getString("address");
                     String phoneNum = rs.getString("phoneNum");
                     String roleName = "LECTURER";
                     String status = (rs.getString("statusId").equals("AC")) ? "Activated" : "Deactivated";
                     String description = rs.getString("description");
-                    list.add(new UserDTO(id, email, name, avatar, null, phoneNum, roleName, status, description));
+                    list.add(new UserDTO(id, email, name, avatar, address, phoneNum, roleName, status, description));
                 }
             }
         } finally {
@@ -527,6 +528,7 @@ public class UserDAO {
         }
         return list;
     }
+
     public List<UserDTO> getAllOrganizerForAdmin() throws SQLException, NamingException {
         List<UserDTO> list = new ArrayList<>();
         Connection conn = null;
@@ -565,7 +567,7 @@ public class UserDAO {
         }
         return list;
     }
-    
+
     public List<UserDTO> getAllStudent() throws SQLException, NamingException {
         List<UserDTO> list = new ArrayList<>();
         Connection conn = null;
@@ -574,9 +576,9 @@ public class UserDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT id, email, name, avatar, address, phoneNum,roleId,statusId" +
-                                " FROM tblUsers" +
-                                " WHERE roleId = 1";
+                String sql = "SELECT id, email, name, avatar, address, phoneNum,roleId,statusId"
+                        + " FROM tblUsers"
+                        + " WHERE roleId = 1";
                 stm = conn.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -604,8 +606,78 @@ public class UserDAO {
         }
         return list;
     }
+
+    public int getUserRoleId(int userId) throws SQLException, NamingException {
+        int roleId = 0;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT roleId"
+                        + " FROM tblUsers"
+                        + " WHERE id = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, userId);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    roleId = rs.getInt("roleId");
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return roleId;
+    }
     
-    
+    public UserDTO getUserByEmail(String email) throws SQLException, NamingException {
+       UserDTO user = null;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT id, email, name, avatar, address, phoneNum,roleId,statusId, description"
+                        + " FROM tblUsers"
+                        + " WHERE email = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    int id = rs.getInt("id");
+                    String name = rs.getString("name");
+                    String avatar = rs.getString("avatar");
+                    String address = rs.getString("address");
+                    String phoneNum = rs.getString("phoneNum");
+                    String roleName = "STUDENT";
+                    String status = (rs.getString("statusId").equals("AC")) ? "Activated" : "Deactivated";
+                    String description = rs.getString("description");
+                    user = new UserDTO(id, email, name, avatar, address, phoneNum, roleName, status, description);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return user;
+    }
 
     private static Timestamp getFirstDayOfQuarter(Date date) {
         Calendar cal = Calendar.getInstance();

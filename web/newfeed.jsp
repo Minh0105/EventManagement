@@ -4,6 +4,7 @@
     Author     : triet
 --%>
 
+<%@page import="fptu.swp.entity.user.UserDTO"%>
 <%@page import="fptu.swp.entity.event.EventCardDTO"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -55,13 +56,20 @@
                     </div>
                 </div>
             </section>
-
-            <c:if test="${session.USER.roleName ne 'STUDENT'}">
-                <div id="btn_create_event">
-                    <img src="resources/icon/icon_create_new_event.svg" />
-                    <button >Tạo sự kiện mới</button>
-                </div>
-            </c:if>
+            
+            <% 
+                UserDTO logedInUser = (UserDTO) session.getAttribute("USER");
+                String userRoleName = logedInUser.getRoleName();
+                if (userRoleName.equals("CLUB'S LEADER") || userRoleName.equals("DEPARTMENT'S MANAGER")) {
+            %>
+                    <a id="btn_create_event" href="searchLocation?txtSearch=">
+                        <img src="resources/icon/icon_create_new_event.svg" />
+                        <button >Tạo sự kiện mới</button>
+                    </a>
+            <%
+                }
+            %>
+                
         </div>
 
         <div id="card_container" class="container-fluid">

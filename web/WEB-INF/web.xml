@@ -157,8 +157,12 @@
         <servlet-class>fptu.swp.controller.ManageByAdminServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ManageEventByAdminServlet</servlet-name>
-        <servlet-class>fptu.swp.controller.ManageEventByAdminServlet</servlet-class>
+        <servlet-name>FilterEventByAdminServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.FilterEventByAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageUserByAdminServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.ManageUserByAdminServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -213,8 +217,12 @@
         <url-pattern>/ManageByAdminServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ManageEventByAdminServlet</servlet-name>
-        <url-pattern>/ManageEventByAdminServlet</url-pattern>
+        <servlet-name>FilterEventByAdminServlet</servlet-name>
+        <url-pattern>/FilterEventByAdminServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageUserByAdminServlet</servlet-name>
+        <url-pattern>/ManageUserByAdminServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

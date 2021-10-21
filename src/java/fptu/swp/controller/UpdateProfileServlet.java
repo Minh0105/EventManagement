@@ -60,6 +60,9 @@ public class UpdateProfileServlet extends HttpServlet {
             String phoneNum = request.getParameter("phoneNum");
             String description = request.getParameter("description");
             UserError userError = new UserError("", "", "","");
+            if (description == null){
+                description = "";
+            }
 
             boolean check = true;
             if (name.length() > 50 || name.length() < 10) {
