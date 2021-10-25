@@ -5,16 +5,16 @@
  */
 package fptu.swp.controller;
 
-import fptu.swp.entity.event.EventCardDTO;
 import fptu.swp.entity.event.EventDAO;
+import fptu.swp.entity.event.EventDetailDTO;
 import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,11 +25,8 @@ import org.apache.log4j.Logger;
  *
  * @author triet
  */
-@WebServlet(name = "NewfeedServlet", urlPatterns = {"/NewfeedServlet"})
-public class NewfeedServlet extends HttpServlet {
-
-    static final Logger LOGGER = Logger.getLogger(NewfeedServlet.class);
-
+public class FilterEventServlet extends HttpServlet {
+static final Logger LOGGER = Logger.getLogger(FilterEventServlet.class);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,47 +39,45 @@ public class NewfeedServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        LOGGER.info("Begin NewfeedServlet");
+        LOGGER.info("Begin FilterEventServlet");
         //declare var
-        List<EventCardDTO> listCard = null;
-        List<EventCardDTO> listFollowing = null;
-        List<EventCardDTO> listJoining = null;
+        EventDAO eventDao = new EventDAO();
         
         //get roadmap
         ServletContext context = request.getServletContext();
         HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
-        
+
         //default url
-        String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
-        String NEWFEED_PAGE_LABEL = context.getInitParameter("NEWFEED_PAGE_LABEL");
-        String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
-        String NEWFEED_PAGE_PATH = roadmap.get(NEWFEED_PAGE_LABEL);
+        final String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
+        final String MANAGE_BY_ADMIN_SERVLET = context.getInitParameter("MANAGE_BY_ADMIN_SERVLET");
+        final String STUDENT_VIEW_EVENT_LIST_SERVLET = context.getInitParameter("STUDENT_VIEW_EVENT_LIST_SERVLET");
+        final String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
+        final String MANAGE_BY_ADMIN_SERVLET_PATH = roadmap.get(MANAGE_BY_ADMIN_SERVLET);
+        final String STUDENT_VIEW_EVENT_LIST_SERVLET_PATH = roadmap.get(STUDENT_VIEW_EVENT_LIST_SERVLET);
         String url = INVALID_PAGE_PATH;
-        
-        try {
+        String idOrganizer = request.getParameter("idOrganizer");
+        String eventStatus = request.getParameter("eventStatus");
+        String organizerType = request.getParameter("organizerType");
+        try{
             HttpSession session = request.getSession();
             UserDTO loginUser = (UserDTO) session.getAttribute("USER");
-            EventDAO eventDao = new EventDAO();
-            
-            listCard = eventDao.getNewFeedEventList(loginUser);
-            LOGGER.info("LIST EVENT CARD:" + listCard);
-            request.setAttribute("LIST_CARD", listCard);
-            
-            //chi lay event co statusId  = 1
-            listFollowing = eventDao.getFollowedEventList(loginUser.getId());
-            LOGGER.info("LIST FOLLOWING EVENT CARD:" + listFollowing);
-            request.setAttribute("LIST_FOLLOWING_CARD", listFollowing);
-            
-            listJoining = eventDao.getJoiningEventList(loginUser.getId());
-            LOGGER.info("LIST JOINING EVENT CARD:" + listJoining);
-            request.setAttribute("LIST_JOINING_CARD", listJoining);
-            url = NEWFEED_PAGE_PATH;
-        } catch (Exception e) {
-            LOGGER.error(e);
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            int organizerId = (idOrganizer == null)? 0:Integer.parseInt(idOrganizer);
+            int statusId = (eventStatus == null)? 0:Integer.parseInt(eventStatus);
+            List<EventDetailDTO> listEvent = eventDao.filterEvent(organizerId, statusId);
+            request.setAttribute("LIST_EVENT", listEvent);
+            LOGGER.info("Request Attribute LIST_EVENT: " + listEvent);
+            if("ADMIN".equals(loginUser.getRoleName())){
+                url = MANAGE_BY_ADMIN_SERVLET_PATH + "?management=event";
+            }
+            if("STUDENT".equals(loginUser.getRoleName())){
+                url = STUDENT_VIEW_EVENT_LIST_SERVLET_PATH + "?list=filterAll";
+            }
+        }catch(Exception ex){
+            LOGGER.error(ex);
+        }finally {
+            RequestDispatcher dis = request.getRequestDispatcher(url);
+            dis.forward(request, response);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

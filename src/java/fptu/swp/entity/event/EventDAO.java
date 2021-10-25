@@ -62,7 +62,7 @@ public class EventDAO {
                         + " LEFT JOIN tblUsers m ON s.userId = m.id"
                         + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
                         + "                  LEFT JOIN tblLocations u ON locationId = u.id) t ON s.id = t.eventId"
-                        + " WHERE s.id IN (SELECT eventId FROM tblStudentsInEvents WHERE studentId = ? AND isFollowing = 1)";
+                        + " WHERE s.id IN (SELECT eventId FROM tblStudentsInEvents WHERE studentId = ? AND isFollowing = 1) AND s.statusId = 1";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, studentId);
                 rs = stm.executeQuery();
@@ -148,7 +148,7 @@ public class EventDAO {
                         + " LEFT JOIN tblUsers m ON s.userId = m.id"
                         + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
                         + "                  LEFT JOIN tblLocations u ON locationId = u.id) t ON s.id = t.eventId"
-                        + " WHERE s.id IN (SELECT eventId FROM tblStudentsInEvents WHERE studentId = ? AND isJoining = 1)";
+                        + " WHERE s.id IN (SELECT eventId FROM tblStudentsInEvents WHERE studentId = ? AND isJoining = 1) AND s.statusId = 1";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, studentId);
                 rs = stm.executeQuery();
@@ -1042,4 +1042,40 @@ public class EventDAO {
         }
         return time;
     }
+    
+    public boolean cancelEvent(int eventId) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        String sql = "";
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                sql =" UPDATE tblDateTimeLocation"
+                        + " SET statusId = 2"
+                        + " WHERE eventId=?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, eventId);
+                if(stm.executeUpdate() > 0){
+                    sql =" UPDATE tblEvents"
+                        + " SET statusId = 4"
+                        + " WHERE id=?";
+                    stm = conn.prepareStatement(sql);
+                    stm.setInt(1, eventId);
+                    check = stm.executeUpdate() > 0;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+    
 }

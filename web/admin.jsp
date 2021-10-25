@@ -246,27 +246,58 @@
         <c:if test="${requestScope.LIST_ORGANIZER_EVENT ne null}">
             <div>
                 Tìm event theo: <br>
-
+                ${param.organizerType}
+                ${param.eventStatus}
                 <!--           ĐÃ LOAD LIST ALL ORGANIZER, Select o day là khi nguoi dùng ho chon option nào thì mình show LIST ORGANIZER-->
-                Kiểu nhà tổ chức: <select id="organizerType" onchange="organizerTypeHandler(this)" >
-                    <option value="allOrganizer" selected='selected'>Tất cả</option> <!-- (ĐÂY LÀ MAC ĐINH KHI BAM VÀO "Event Management"-->
-                    <option value="CL">Club's leader</option>
-                    <option value="DM">Department's manager</option>
-                </select>
-                <form action ="filterEventByAdmin">
-                    <div id="filter_organizer">
+                Kiểu nhà tổ chức: 
+                <form action ="filterEvent">
+                    <select name="organizerType" id="organizerType" onchange="organizerTypeHandler(this)" >
+                        <option value="allOrganizer">Tất cả</option> <!-- (ĐÂY LÀ MAC ĐINH KHI BAM VÀO "Event Management"-->
+                        <option value="CL">Club's leader</option>
+                        <option value="DM">Department's manager</option>
+                    </select>
+                    <script>
+                        var items = document.getElementById("organizerType").options;
+                        for (var i = 0; i < items.length; i++) {
+                                    if (items[i].value == "${param.organizerType}") {
+                                        items[i].selected = true;
+                                    }
+                                }
+                    </script>
 
-                        Tên nhà tổ chức: <div id="organizer_name">
+                    <div id="filter_organizer">
+                        Tên nhà tổ chức:
+                        <div id="organizer_name">
+                            <!--           Neu chon "Tất cả" ở cái select trên  (ĐÂY LÀ MAC ĐINH KHI BAM VÀO "Event Management"-->
+                            <select name="idOrganizer">
+                                <option value="0">Tất cả</option>
+                                <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
+                                    <c:if test="${param.idOrganizer eq organizer.id}">
+                                        <option value="${organizer.id}" selected>${organizer.name}</option>
+                                    </c:if>
+                                    <c:if test="${param.idOrganizer ne organizer.id}">
+                                        <option value="${organizer.id}">${organizer.name}</option>
+                                    </c:if>
+                                </c:forEach>  
+                            </select>
 
                         </div>
                         <div>
-                            Tình trạng sự kiện: <select name="eventStatus">
+                            Tình trạng sự kiện: <select name="eventStatus" id="eventStatus">
                                 <option value="0">Tất cả</option>
                                 <option value="1">Sắp diễn ra</option>
                                 <option value="2">Đóng đăng kí</option>
                                 <option value="3">Đã kết thúc</option>
                                 <option value="4">Đã hủy</option>
                             </select>
+                            <script>
+                                var items = document.getElementById("eventStatus").options;
+                                for (var i = 0; i < items.length; i++) {
+                                    if (items[i].value == "${param.eventStatus}") {
+                                        items[i].selected = true;
+                                    }
+                                }
+                            </script>
                         </div>
                         <input type="submit" value="filter"/>
                     </div>
@@ -351,8 +382,14 @@
                                             <td>${event.statusId}</td>
                                             <td><a href="viewEventDetail?eventId=${event.id}">Chi tiết</a></td>
                                             <td>
-                                                <c:if test="${event.statusId == 1}">
-                                                    <a href="#">Cancel</a>
+                                                <c:if test="${event.statusId == 1 || event.statusId == 2}">
+                                                    <form action="cancelEvent" method="POST">
+                                                        <input type="hidden" name="eventId" value="${event.id}"/>
+                                                        <input type="hidden" name="organizerType" value="$${param.organizerType}"/>
+                                                        <input type="hidden" name="eventStatus" value="${param.eventStatus}"/>
+                                                        <input type="hidden" name="idOrganizer" value="${param.idOrganizer}"/>
+                                                        <input type="submit" name="action" value="Cancel"/>
+                                                    </form>
                                                 </c:if>
                                             </td>
                                         </tr>
@@ -366,15 +403,17 @@
             </div>
             <script>
                 var organizerTypeSelect = document.getElementById("organizerType");
+                var eventStatusSelect = document.getElementById("eventStatus");
+
                 document.getElementById("allOrganizer").style.display = "none";
                 document.getElementById("CL").style.display = "none";
                 document.getElementById("DM").style.display = "none";
                 function organizerTypeHandler(organizerTypeSelect) {
+                    document.getElementById("organizer_name").innerHTML = "";
                     var organizerType = organizerTypeSelect.value;
                     var allOrganizer = document.getElementById("allOrganizer").innerHTML;
                     var CL = document.getElementById("CL").innerHTML;
                     var DM = document.getElementById("DM").innerHTML;
-
                     if (organizerType == 'allOrganizer') {
                         document.getElementById("organizer_name").innerHTML = allOrganizer;
                     } else if (organizerType == 'CL') {
@@ -383,6 +422,8 @@
                         document.getElementById("organizer_name").innerHTML = DM;
                     }
                 }
+
+
 
             </script>
         </c:if>

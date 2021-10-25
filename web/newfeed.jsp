@@ -63,10 +63,15 @@
                                 <img id="btn_menu" src="resources/icon/hamburger_button_icon.svg" alt="hamburger_button" />
                             </a>     
 
-                            <form action="logout" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+<!--                            <form action="logout" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <button class="btn btn-outline-light profile-button logout " type="submit">
                                     <img src="resources/icon/log_out_icon.svg">Log Out</button> 
-                            </form>   
+                            </form>   -->
+                            <form action="viewEventListByStudent" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <button class="btn btn-outline-light profile-button logout " type="submit">
+                                    <img src="resources/icon/log_out_icon.svg">View All Event</button> 
+                                <input type ="hidden" name="list" value="filterAll"/>
+                            </form>  
 
                         </li>				
                     </ul>

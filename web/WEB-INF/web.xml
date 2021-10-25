@@ -84,6 +84,18 @@
         <param-name>MANAGE_BY_ADMIN_SERVLET</param-name>
         <param-value>manageByAdmin</param-value>
     </context-param>
+    <context-param>
+        <param-name>STUDENT_VIEW_EVENT_LIST_SERVLET</param-name>
+        <param-value>viewEventListByStudent</param-value>
+    </context-param>
+    <context-param>
+        <param-name>ALL_EVENT_PAGE_LABEL</param-name>
+        <param-value>AllEventPage</param-value>
+    </context-param>
+    <context-param>
+        <param-name>FILTER_EVENT_SERVLET</param-name>
+        <param-value>filterEvent</param-value>
+    </context-param>
     <filter>
         <filter-name>FilterAuth</filter-name>
         <filter-class>fptu.swp.filter.FilterAuth</filter-class>
@@ -149,20 +161,20 @@
         <servlet-class>fptu.swp.controller.AskQuestionServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>FilterEvent</servlet-name>
-        <servlet-class>fptu.swp.controller.FilterEvent</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ManageByAdminServlet</servlet-name>
         <servlet-class>fptu.swp.controller.ManageByAdminServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>FilterEventByAdminServlet</servlet-name>
-        <servlet-class>fptu.swp.controller.FilterEventByAdminServlet</servlet-class>
+        <servlet-name>FilterEventServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.FilterEventServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ManageUserByAdminServlet</servlet-name>
         <servlet-class>fptu.swp.controller.ManageUserByAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelEventServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.CancelEventServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -209,20 +221,20 @@
         <url-pattern>/AskQuestionServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>FilterEvent</servlet-name>
-        <url-pattern>/FilterEvent</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ManageByAdminServlet</servlet-name>
         <url-pattern>/ManageByAdminServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>FilterEventByAdminServlet</servlet-name>
-        <url-pattern>/FilterEventByAdminServlet</url-pattern>
+        <servlet-name>FilterEventServlet</servlet-name>
+        <url-pattern>/FilterEventServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ManageUserByAdminServlet</servlet-name>
         <url-pattern>/ManageUserByAdminServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelEventServlet</servlet-name>
+        <url-pattern>/CancelEventServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

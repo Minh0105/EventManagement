@@ -529,7 +529,7 @@ public class UserDAO {
         return list;
     }
 
-    public List<UserDTO> getAllOrganizerForAdmin() throws SQLException, NamingException {
+    public List<UserDTO> getListAllOrganizer() throws SQLException, NamingException {
         List<UserDTO> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;

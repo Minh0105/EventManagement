@@ -77,7 +77,7 @@ public class ManageByAdminServlet extends HttpServlet {
                 LOGGER.info("Request Attribute LIST_LECTURER: " + listLecturer);
                 url = ADMIN_PAGE_PATH;
             }else if("event".equals(type)){
-                List<UserDTO> listOrganizer = userDao.getAllOrganizerForAdmin();
+                List<UserDTO> listOrganizer = userDao.getListAllOrganizer();
                 request.setAttribute("LIST_ORGANIZER_EVENT", listOrganizer);
                 List<EventDetailDTO> listEvent = (List<EventDetailDTO>) request.getAttribute("LIST_EVENT");
                 request.setAttribute("LIST_EVENT", listEvent);

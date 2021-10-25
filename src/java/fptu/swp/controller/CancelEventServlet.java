@@ -7,24 +7,26 @@ package fptu.swp.controller;
 
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
+import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.log4j.Logger;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author triet
  */
-public class FilterEventByAdminServlet extends HttpServlet {
-static final Logger LOGGER = Logger.getLogger(FilterEventByAdminServlet.class);
+public class CancelEventServlet extends HttpServlet {
+
+    static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(CancelEventServlet.class);
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,35 +39,43 @@ static final Logger LOGGER = Logger.getLogger(FilterEventByAdminServlet.class);
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        LOGGER.info("Begin FilterEventByAdminServlet");
-        //declare var
+        LOGGER.info("Begin CancelEventServlet");
+
+        // declare var
         EventDAO eventDao = new EventDAO();
-        
-        //get roadmap
+
+        // get roadmap
         ServletContext context = request.getServletContext();
         HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
 
         //default url
         final String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
-        final String MANAGE_BY_ADMIN_SERVLET = context.getInitParameter("MANAGE_BY_ADMIN_SERVLET");
+        final String FILTER_EVENT_SERVLET = context.getInitParameter("FILTER_EVENT_SERVLET");
         final String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
-        final String MANAGE_BY_ADMIN_SERVLET_PATH = roadmap.get(MANAGE_BY_ADMIN_SERVLET);
+        final String FILTER_EVENT_SERVLET_PATH = roadmap.get(FILTER_EVENT_SERVLET);
         String url = INVALID_PAGE_PATH;
-        String idOrganizer = request.getParameter("idOrganizer");
-        String eventStatus = request.getParameter("eventStatus");
-        try{
-            int organizerId = (idOrganizer == null)? 0:Integer.parseInt(idOrganizer);
-            int statusId = (eventStatus == null)? 0:Integer.parseInt(eventStatus);
-            List<EventDetailDTO> listEvent = eventDao.filterEvent(organizerId, statusId);
-            request.setAttribute("LIST_EVENT", listEvent);
-            LOGGER.info("Request Attribute LIST_EVENT: " + listEvent);
-            url = MANAGE_BY_ADMIN_SERVLET_PATH + "?management=event";
-        }catch(Exception ex){
+        int eventId = Integer.parseInt(request.getParameter("eventId"));
+        try {
+            HttpSession session = request.getSession();
+            UserDTO loginUser = (UserDTO) session.getAttribute("USER");
+            EventDetailDTO detail = eventDao.getEventDetail(eventId);
+            if (detail != null) {
+                if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {
+                    if (eventDao.cancelEvent(eventId)) {
+                        if ("ADMIN".equals(loginUser.getRoleName())) {
+                            url = FILTER_EVENT_SERVLET_PATH;
+                        }
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
             LOGGER.error(ex);
-        }finally {
+        } finally {
             RequestDispatcher dis = request.getRequestDispatcher(url);
             dis.forward(request, response);
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

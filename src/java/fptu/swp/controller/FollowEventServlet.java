@@ -6,6 +6,7 @@
 package fptu.swp.controller;
 
 import fptu.swp.entity.event.EventDAO;
+import fptu.swp.entity.event.EventDetailDTO;
 import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -60,19 +61,22 @@ public class FollowEventServlet extends HttpServlet {
             int studentId = loginUser.getId();
             int eventId = Integer.parseInt(request.getParameter("eventId"));
             boolean isFollowed = Boolean.parseBoolean(request.getParameter("isFollowed"));
-
-            if (isFollowed) {     //Followed (have info in DB) => Unfollow
-                if (eventDao.setFollowingStatus(eventId, studentId, false)) {
-                    url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
-                }
-            } else {
-                if (eventDao.checkExistenceAndOrInsertStudentInEvent(eventId, studentId)) {
-                    if (eventDao.setFollowingStatus(eventId, studentId, true)) {
-                        url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
+            EventDetailDTO detail = eventDao.getEventDetail(eventId);
+            if (detail != null) {
+                if (detail.getStatusId() == 1) {
+                    if (isFollowed) {     //Followed (have info in DB) => Unfollow
+                        if (eventDao.setFollowingStatus(eventId, studentId, false)) {
+                            url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
+                        }
+                    } else {
+                        if (eventDao.checkExistenceAndOrInsertStudentInEvent(eventId, studentId)) {
+                            if (eventDao.setFollowingStatus(eventId, studentId, true)) {
+                                url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
+                            }
+                        }
                     }
                 }
             }
-
         } catch (Exception e) {
             LOGGER.error(e);
         } finally {

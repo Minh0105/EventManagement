@@ -5,18 +5,31 @@
  */
 package fptu.swp.controller;
 
+import fptu.swp.entity.event.EventDAO;
+import fptu.swp.entity.event.EventDetailDTO;
+import fptu.swp.entity.user.UserDAO;
+import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author triet
  */
-public class FilterEvent extends HttpServlet {
+@WebServlet(name = "ViewEventListByStudentServlet", urlPatterns = {"/ViewEventListByStudentServlet"})
+public class ViewEventListByStudentServlet extends HttpServlet {
+
+    static final Logger LOGGER = Logger.getLogger(ViewEventListByStudentServlet.class);
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,7 +43,40 @@ public class FilterEvent extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        LOGGER.info("Begin ViewEventListByStudentServlet");
+        //declare var
+        UserDAO userDao = new UserDAO();
+        EventDAO eventDao = new EventDAO();
 
+        //get roadmap
+        ServletContext context = request.getServletContext();
+        HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
+
+        //default url
+        final String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
+        final String ALL_EVENT_PAGE_LABEL = context.getInitParameter("ALL_EVENT_PAGE_LABEL");
+        final String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
+        final String ALL_EVENT_PAGE_PATH = roadmap.get(ALL_EVENT_PAGE_LABEL);
+        String url = INVALID_PAGE_PATH;
+
+        //parameter
+        String type = request.getParameter("list");
+        try {
+            if ("filterAll".equals(type)) {
+                List<UserDTO> listOrganizer = userDao.getListAllOrganizer();
+                request.setAttribute("LIST_ORGANIZER_EVENT", listOrganizer);
+                List<EventDetailDTO> listEvent = (List<EventDetailDTO>) request.getAttribute("LIST_EVENT");
+                request.setAttribute("LIST_EVENT", listEvent);
+                LOGGER.info("Request Attribute LIST_EVENT: " + listEvent);
+                LOGGER.info("Request Attribute LIST_ORGANIZER_EVENT: " + listOrganizer);
+                url = ALL_EVENT_PAGE_PATH;
+            }
+        } catch (Exception ex) {
+            LOGGER.error(ex);
+        } finally {
+            RequestDispatcher dis = request.getRequestDispatcher(url);
+            dis.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
