@@ -43,15 +43,14 @@ function sendReply(commentID, btnReply) {
   var userAvatar = app_userAvatar;
   var userName = app_userName;
   var userRoleName = app_userRoleName;
-  // var replyDatetime = "test2";
-  // var statusId = "test2";
 
   var replyInfor = {  
     contents: contents, 
     userId:userId, 
     userAvatar:userAvatar, 
     userName:userName, 
-    userRoleName:userRoleName
+    userRoleName:userRoleName,
+    statusId:"AC"
   };
 
   database.ref('comments/'+ cmtID +'/replyList').push(replyInfor);
@@ -71,21 +70,20 @@ function sendCmt() { // return the id of comment in firebase, need for reply
 
   var commentDatetime = '' + new Date(); 
   var eventId = app_eventId; 
-  // var isQuestion = "iQ: mock"; 
-  // var statusId = "s: mock"; 
   var userAvatar = app_userAvatar; 
   var userID = app_userId; 
   var userName = app_userName; 
   var userRoleName = app_userRoleName;
 
-  var id = cmtRef.push({
+  cmtRef.push({
     commentDatetime:commentDatetime,
     contents:contents,
     eventId:eventId,
     userAvatar:userAvatar,
     userID:userID,
     userName:userName,
-    userRoleName:userRoleName
+    userRoleName:userRoleName,
+    statusId:"AC"
   });
 
   commentInput.value = "";
