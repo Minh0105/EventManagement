@@ -251,15 +251,25 @@ body {
 }
 
 .filter_button button {
-    background-color:#1472E1;
+    background-color:#F4F6F7;
     border-radius: 5px;
-    border: 1px solid;
+    border: none;
     padding: 0.4rem 1.6rem;
-    color: #fff;
+    color: #A3A5A5;
+}
+
+.chosen_button {
+    background-color:#1472E1 !important;
+    border-radius: 5px !important;
+    border: none;
+    color: white !important;
 }
 
 .filter_button button:hover{
-    background-color: #25be2f; 
+    background-color:#1472E1 !important;
+    border-radius: 5px !important;
+    border: none;
+    color: white !important; 
 }
 
 /*CONTAINER*/
@@ -281,6 +291,11 @@ body {
     border-radius: 6px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.33);
     padding: 6px;
+}
+
+
+.event_infor {
+    display: none;
 }
 
 

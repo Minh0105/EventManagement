@@ -36,30 +36,61 @@
     <body>
 
         <%@include file="nav_bar.jsp" %>
+        
+        <%  
+            UserDTO logedInUser = (UserDTO) session.getAttribute("USER");
+            String userRoleName = logedInUser.getRoleName();
+        %>
+        
         <div class="d-flex">
             <section id="filter_bar">
                 <div id="decorating_text">
                     Discover the event world
                 </div>
-    
+               
                 <div id="filter_button_container">
+
                     <div class="filter_button">
-                        <button>Top</button>
+                        <button class="chosen_button" onclick="showAllEvents(this)">Tất cả</button>
                     </div>
-    
-                    <div class="filter_button">
-                        <button>This week</button>
-                    </div>
-    
-                    <div class="filter_button">
-                        <button>Followed</button>
-                    </div>
+
+                <% 
+                    if (userRoleName.equals("STUDENT")) {
+                %>
+                        <div class="filter_button">
+                           <button onclick="showTopEvents(this)">Nổi bật</button>
+                        </div>
+
+                        <div class="filter_button">
+                           <button onclick="showThisWeekEvents(this)">Tuần này</button>
+                        </div>
+
+                        <div class="filter_button">
+                           <button onclick="showThisMonthEvents(this)">Tháng này</button>
+                        </div>
+
+                        <div class="filter_button">
+                           <button onclick="showStudentCaredEvents(this)">Đã quan tâm</button>
+                        </div>
+                <%
+                    } else if (userRoleName.equals("CLUB'S LEADER") || userRoleName.equals("DEPARTMENT'S MANAGER")) {
+                %>
+                        <div class="filter_button">
+                           <button onclick="showOrganizerCreatedEvents(this)">Sự kiện của bạn</button>
+                        </div>
+                <%
+                    } else if (userRoleName.equals("LECTURER")) {
+                %>
+                        <div class="filter_button">
+                            <button onclick="showLecturerJoinedEvents(this)">Sự kiện có tham gia</button>
+                        </div>
+                <%
+                    }
+                %>
                 </div>
             </section>
             
             <% 
-                UserDTO logedInUser = (UserDTO) session.getAttribute("USER");
-                String userRoleName = logedInUser.getRoleName();
                 if (userRoleName.equals("CLUB'S LEADER") || userRoleName.equals("DEPARTMENT'S MANAGER")) {
             %>
                     <a id="btn_create_event" href="searchLocation?txtSearch=">
@@ -79,7 +110,11 @@
                     if (listCard != null) {
                         for (EventCardDTO card : listCard) {
                 %>
-                            <div class="col-12 col-md-6 col-lg-4">
+                            <div class="col-12 col-md-6 col-lg-4 event_card">
+                                <p class="event_infor event_date"><%= card.getDate() %></p>
+                                <p class="event_infor event_follow"><%= card.getFollowing() %></p>
+                                <p class="event_infor event_join"><%= card.getJoining() %></p>
+                                <p class="event_infor special_tag"></p>
                                 <div class="item">
                                     <div class="image_and_infor_container">
                                         <img class="event_image" src="data:image/jpg;base64,<%= card.getPoster() %>" alt="">
@@ -114,6 +149,14 @@
             </div>
         </div>
 
+        <script language="javascript">var js_version="1.0"</script>
+        <script language="javascript1.1">var js_version="1.1"</script>
+        <script language="javascript1.2">var js_version="1.2"</script>
+        <script language="javascript1.3">var js_version="1.3"</script>
+        <script language="javascript1.4">var js_version="1.4"</script>
+        <script language="javascript1.5">var js_version="1.5"</script>
+        <script language="javascript1.6">var js_version="1.6"</script>
+
         <footer class="end">
             <h4>Developed By Aladudu Group</h4>
             <p>COVID-19, 20/9/2021</p>
@@ -121,9 +164,13 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
                 integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN"
         crossorigin="anonymous"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
                 integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
         crossorigin="anonymous"></script>
+
+        <script type="text/javascript" src="resources/js/newfeed_function.js" >
+        </script>
     </body>
 
 </html>

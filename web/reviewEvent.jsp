@@ -158,6 +158,8 @@
                             <p><%= detail.getOrganizerDescription()%></p>
                         </div>
                     </div>
+
+                    <a id="btn_create_event" href="createEvent">Create event</a>
                 </div>
             </div>
         </div>
@@ -208,7 +210,6 @@
         });
 
     </script>
-
 
     <script type="text/javascript" src="js/jquery.min.js"></script>
 
