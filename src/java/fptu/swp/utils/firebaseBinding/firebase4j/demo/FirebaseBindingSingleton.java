@@ -4,6 +4,7 @@ import com.google.gson.JsonParseException;
 import java.io.UnsupportedEncodingException;
 import com.fasterxml.jackson.databind.ObjectMapper; 
 import com.fasterxml.jackson.databind.ObjectWriter; 
+import fptu.swp.entity.event.CommentDTO;
 import fptu.swp.utils.firebaseBinding.firebase4j.model.EventNotification;
 
 
@@ -12,7 +13,9 @@ import fptu.swp.utils.firebaseBinding.firebase4j.service.Firebase;
 import java.io.IOException;
 import fptu.swp.utils.firebaseBinding.firebase4j.error.FirebaseException;
 import fptu.swp.utils.firebaseBinding.firebase4j.error.JacksonUtilityException;
+import fptu.swp.utils.firebaseBinding.firebase4j.model.CommentFirebaseDTO;
 import fptu.swp.utils.firebaseBinding.firebase4j.model.FirebaseResponse;
+import java.util.Map;
 import org.codehaus.jackson.map.JsonMappingException;
 
 public class FirebaseBindingSingleton {
@@ -20,6 +23,7 @@ public class FirebaseBindingSingleton {
     private static FirebaseBindingSingleton INSTANCE;
     private static String FIREBASE_DATABASE_URL;
     private static String FIREBASE_DATABASE_LINK_EVENT_NOTIFICATION = FIREBASE_DATABASE_URL + "notifications/event";
+    private static String FIREBASE_DATABASE_LINK_EVENT_COMMENT = FIREBASE_DATABASE_URL + "comments";
     private static String FIREBASE_DATABASE_LINK_USER_BAN = FIREBASE_DATABASE_URL + "notifications/userban";
     private static String FIREBASE_DATABASE_LINK_USER_WARNING = FIREBASE_DATABASE_URL + "notifications/userwarning";
     
@@ -36,12 +40,21 @@ public class FirebaseBindingSingleton {
         FIREBASE_DATABASE_LINK_EVENT_NOTIFICATION = FIREBASE_DATABASE_URL + "notifications/event";
         FIREBASE_DATABASE_LINK_USER_BAN = FIREBASE_DATABASE_URL + "notifications/userban";
         FIREBASE_DATABASE_LINK_USER_WARNING = FIREBASE_DATABASE_URL + "notifications/userwarning";
+        FIREBASE_DATABASE_LINK_EVENT_COMMENT = FIREBASE_DATABASE_URL + "comments";
         return INSTANCE;
     }
     
     private FirebaseBindingSingleton() {
     }
     
+    public Map<String, Object> getAllCommentAndReplyInFirebase() throws FirebaseException, UnsupportedEncodingException {
+        
+        Firebase firebase = new Firebase(FIREBASE_DATABASE_LINK_EVENT_COMMENT);
+        FirebaseResponse response = firebase.get();
+        return response.getBody();
+    }
+    
+    // content is the content of message, and userID is the one who can recieved the message in notification card
     public boolean sendNotificationToUserID(String content, int userID) throws FirebaseException, JacksonUtilityException, UnsupportedEncodingException, IOException {
         
         String strUserID = Integer.toString(userID);

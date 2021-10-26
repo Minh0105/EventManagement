@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fptu.swp.utils.firebaseBinding;
-
+package fptu.swp.controller;
 
 import fptu.swp.utils.firebaseBinding.firebase4j.demo.FirebaseBindingSingleton;
 import java.io.IOException;
@@ -17,7 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import fptu.swp.utils.firebaseBinding.firebase4j.error.FirebaseException;
 import fptu.swp.utils.firebaseBinding.firebase4j.error.JacksonUtilityException;
-
+import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 /**
  *
@@ -33,19 +33,21 @@ public class FirebaseServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String linkToFirebase = "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/";
-        
+
         try {
-            
-            FirebaseBindingSingleton firebaseBinding = FirebaseBindingSingleton.getInstance(linkToFirebase);
-            boolean res  = firebaseBinding.sendNotificationToUserID("test for notifi", 4);
-            
-            
-            request.setAttribute("isSuccess", res);
-            
+
+            // firebase get the value of comment in firebase
+            FirebaseBindingSingleton firebase = FirebaseBindingSingleton.getInstance(linkToFirebase);
+            Map<String, Object> mapData = firebase.getAllCommentAndReplyInFirebase();
+            for (String key : mapData.keySet()) {
+                System.out.println("Key : " + key);
+                System.out.println("        Data: " + mapData.get(key));
+            }
+            request.setAttribute("mapData", mapData);
         } catch (FirebaseException ex) {
-            LOGGER.info(ex.getMessage());
-        } catch (JacksonUtilityException ex) {
-            LOGGER.info(ex.getMessage());
+            LOGGER.error(ex);
+        } catch (UnsupportedEncodingException ex) {
+            LOGGER.error(ex);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher("firebase.jsp");
             rd.forward(request, response);
@@ -90,7 +92,14 @@ public class FirebaseServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
+
+    private void sendNotificationSource() throws FirebaseException, JacksonUtilityException, IOException {
+        String linkToFirebase = "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/";
+            // Send Notification for one certain User
+        FirebaseBindingSingleton firebaseBinding = FirebaseBindingSingleton.getInstance(linkToFirebase);
+        boolean res = firebaseBinding.sendNotificationToUserID("test for notifi", 4);
+    }
+
     // for add All the list of notificationDTO
 //    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 //            throws ServletException, IOException {
@@ -124,8 +133,7 @@ public class FirebaseServlet extends HttpServlet {
 //            rd.forward(request, response);
 //        }
 //    }
-
-        // Add All list for firebase of notifications 
+    // Add All list for firebase of notifications 
 //    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 //            throws ServletException, IOException {
 //        response.setContentType("text/html;charset=UTF-8");
@@ -160,5 +168,4 @@ public class FirebaseServlet extends HttpServlet {
 //            rd.forward(request, response);
 //        }
 //    }
-    
 }
