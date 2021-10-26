@@ -1,4 +1,4 @@
-=LoginPage,InvalidPage,login
+=LoginPage,InvalidPage,login,addNotification
 STUDENT=updateProfile,UpdateProfilePage,logout,ViewInfoPage,viewNewfeed,NewfeedPage,viewEventDetail,EventDetailPage,followEvent,joinEvent,comment,reply,askQuestion,FilterEventStudentPage,test
 LECTURER=updateProfile,UpdateProfilePage,logout,ViewInfoPage,viewNewfeed,NewfeedPage,viewEventDetail,EventDetailPage,comment,reply
 CLUB'S LEADER=updateProfile,UpdateProfilePage,logout,ViewInfoPage,viewNewfeed,NewfeedPage,viewEventDetail,EventDetailPage,searchLocation,locAndTimePage,viewSlotAndTimeFree,modifyLocation,appendEventDetail,appendEventDetailPage,uploadFile,reviewEventPage,reviewEvent,createEvent,handleMultipart,comment,reply

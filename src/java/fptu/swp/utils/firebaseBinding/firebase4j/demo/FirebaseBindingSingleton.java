@@ -4,14 +4,15 @@ import com.google.gson.JsonParseException;
 import java.io.UnsupportedEncodingException;
 import com.fasterxml.jackson.databind.ObjectMapper; 
 import com.fasterxml.jackson.databind.ObjectWriter; 
-
-
-import fptu.swp.utils.firebaseBinding.firebase4j.error.FirebaseException;
-import fptu.swp.utils.firebaseBinding.firebase4j.error.JacksonUtilityException;
 import fptu.swp.utils.firebaseBinding.firebase4j.model.EventNotification;
-import fptu.swp.utils.firebaseBinding.firebase4j.model.FirebaseResponse;
+
+
+
 import fptu.swp.utils.firebaseBinding.firebase4j.service.Firebase;
 import java.io.IOException;
+import fptu.swp.utils.firebaseBinding.firebase4j.error.FirebaseException;
+import fptu.swp.utils.firebaseBinding.firebase4j.error.JacksonUtilityException;
+import fptu.swp.utils.firebaseBinding.firebase4j.model.FirebaseResponse;
 import org.codehaus.jackson.map.JsonMappingException;
 
 public class FirebaseBindingSingleton {
@@ -60,23 +61,23 @@ public class FirebaseBindingSingleton {
     
     // TEST FUNCTION FOR FIREBASE BINDING 
     // DON'T REMOVE
-    public FirebaseResponse getFirebaseDataJson(String filebaseLink) throws FirebaseException, JsonParseException, JsonMappingException, IOException, JacksonUtilityException {
-
-        Firebase firebase = new Firebase(FIREBASE_DATABASE_URL);
-
-        FirebaseResponse response = firebase.get();
-        System.out.println(response);
-
-        // alternatively, you can get a few details about the response
-        response.getSuccess(); 	// true/false if method finished successfully
-        response.getCode(); 	// http-code of method-request
-        response.getBody();	// a map of the data returned
-        response.getRawBody();	// the data returned in it's raw-form (ie: JSON)
-
-        // another alternative, you can PUT/POST your own JSON if you want
-//	response = firebase.put( "PUT2", "{ 'key': 'Some value' }" );
-        return response;
-    }
+//    public FirebaseResponse getFirebaseDataJson(String filebaseLink) throws FirebaseException, JsonParseException, JsonMappingException, IOException, JacksonUtilityException {
+//
+//        Firebase firebase = new Firebase(FIREBASE_DATABASE_URL);
+//
+//        FirebaseResponse response = firebase.get();
+//        System.out.println(response);
+//
+//        // alternatively, you can get a few details about the response
+//        response.getSuccess(); 	// true/false if method finished successfully
+//        response.getCode(); 	// http-code of method-request
+//        response.getBody();	// a map of the data returned
+//        response.getRawBody();	// the data returned in it's raw-form (ie: JSON)
+//
+//        // another alternative, you can PUT/POST your own JSON if you want
+////	response = firebase.put( "PUT2", "{ 'key': 'Some value' }" );
+//        return response;
+//    }
 
 //    public boolean addAllNotification(Map<String, Object> dataMap) throws FirebaseException, JacksonUtilityException, UnsupportedEncodingException {
 //
