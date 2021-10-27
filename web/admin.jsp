@@ -12,113 +12,174 @@
         <title>Event Management</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-        <!--                <link rel="stylesheet" type="text/css" href="resources/css/admin.css"/>-->
+                <link rel="stylesheet" type="text/css" href="resources/css/admin.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Vertical Navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto flex-column vertical-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="manageByAdmin?management=organizer">Organizer Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="manageByAdmin?management=student">Student Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="manageByAdmin?management=lecturer">Lecturer Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="manageByAdmin?management=event">Event Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="manageByAdmin?management=comment">Comment Management</a>
-                    </li>
-                </ul>
+        <div class="header1" id="b">
+
+
+
+            <div class="header3">
+
+                <div  class="link">                   
+                    <h2> FRESH REPORT </h2>          
+                    <ul>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="manageByAdmin?management=organizer">Organizer
+                                Management
+                                <i class="mega-octicon octicon-organization"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="manageByAdmin?management=student">Student
+                                Management</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="manageByAdmin?management=lecturer">Lecturer
+                                Management</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="manageByAdmin?management=event">Event Management</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="manageByAdmin?management=comment">Comment
+                                Management</a>
+                        </li>
+                        <li class="nav-item col-md-6">
+                            <form action="logout" class="">
+                                <button class="btn btn-light profile-button logout " type="submit">
+                                    <img src="resources/icon/log_out_icon.svg">Log Out</button> 
+                            </form>   
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="wrapper">
+
+                    <div class="navbar-toggle" id="a">
+                    </div>
+                </div>
+
             </div>
-        </nav>
-        <c:if test="${requestScope.LIST_ORGANIZER ne null}">
-            _________________________Thêm Club's Leader_____________________________
-            <form action="manageUserByAdmin" method="POST">
-                <input type="hidden" name="roleId" value="3"/>
-                <input type="hidden" name="action" value="Create"/>
-                <p>Email: <input type="email" name="email" required/> <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
-                    <br></p> 
-                <p>Name: <input type="text" name="name"required/><br></p>
-                <button type="submit" class="btn btn-primary">Thêm CL</button>
-            </form>
-            _________________________Thêm Department's Manager_____________________________
-            <form action="manageUserByAdmin" method="POST">
-                <input type="hidden" name="roleId" value="4"/>
-                <input type="hidden" name="action" value="Create"/>
-                <p>Email: <input type="email" name="email" required/> <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
-                    <br></p> 
-                <p>Name: <input type="text" name="name"required/><br></p>
-                <button type="submit" class="btn btn-primary">Thêm DM</button>
-            </form>
-            <div>
+        </div>
 
+        <script>
+            var a = document.getElementById("a");
+            var b = document.getElementById("b");
+            var headerHeight1 = b.clientHeight;
+
+            a.onclick = function () {
+                a.classList.toggle('open');
+                b.classList.toggle('toggleHeight');
+
+                // var  isClose = b.clientHeight === headerHeight1;
+                // if(isClose){
+                //     b.style.height = "300px";
+                // }else{
+                //     b.style.height = headerHeight1;
+                // }
+            }
+
+        </script>
+    </div>
+    <div class="header4">
+
+        <c:if test="${requestScope.LIST_ORGANIZER ne null}">
+            <div class="col-md-6 "><h1>Organizer Management</h1></div>
+            <div class="row g-2">
+                <div class="col-md-6 ">
+                    _________________________Thêm Club's Leader_____________________________
+                    <form action="manageUserByAdmin" method="POST">
+                        <input type="hidden" name="roleId" value="3"/>
+                        <input type="hidden" name="action" value="Create"/>
+                        <div class="col-md-6"><label class="labels">Email</label><input class="form-control" type="email" name="email" required/> <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
+                        </div>
+                        <div class="col-md-6"><label class="labels">Name</label><input class="form-control" type="text" name="name"required/><br></div>
+                        <div class="col-md-6"> <button type="submit" class="btn btn-primary">Add Club's Leader</button> </div>
+                    </form></div>
+                <div class="col-md-6">
+                    _________________________Thêm Department's Manager_____________________________
+                    <form action="manageUserByAdmin" method="POST">
+                        <input type="hidden" name="roleId" value="4"/>
+                        <input type="hidden" name="action" value="Create"/>
+                        <div class="col-md-6"><label class="labels">Email</label><input class="form-control" type="email" name="email" required/> <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
+                        </div>
+                        <div class="col-md-6"><label class="labels">Name</label><input class="form-control" type="text" name="name"required/><br></div>
+                        <div class="col-md-6"><button type="submit" class="btn btn-primary">Add Department's Manager </button></div>
+                    </form>
+                </div></div>
+            <br>
+
+            <div  class="service">
                 <table border="1">
                     <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Email</th>
-                            <th>Name</th>
-                            <th>Avatar</th>
-                            <th>Phone Number</th>
-                            <th>Role Name</th>
-                            <th>Status</th>
-                            <th>Description</th>
-                            <th>NumOfEvent</th>
-                            <th>Deactivate</th>
+                        <tr class="service1" >
+                            <th colspan="1" >No</th>
+                            <th colspan="2" >Email</th>
+                            <th colspan="2">Name</th>                       
+                            <th colspan="3">Phone Number</th>
+                            <th colspan="2">Role Name</th>
+                            <th colspan="2">Status</th>
+                            <th colspan="2">Description</th>
+                            <th colspan="2">NumOfEvent</th>
+                            <th colspan="4">Deactivate</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER}" varStatus="status">
-                            <tr>
-                                <td>${status.count}</td>
-                                <td>${organizer.email}</td>
-                                <td>${organizer.name}</td>
-                                <td>...</td>
-                                <td>${organizer.phoneNum}</td>
-                                <td>${organizer.roleName}</td>
-                                <td>${organizer.status}</td>
-                                <td>${organizer.description}</td>
-                                <td>${organizer.numOfEvent}</td>
-                                <td>
+                            <tr class="service2">
+                                <td colspan="1" >${status.count}</td>
+                                <td colspan="2">${organizer.email}</td>
+                                <td colspan="2">${organizer.name}</td>           
+                                <td colspan="3">${organizer.phoneNum}</td>
+                                <td colspan="2">${organizer.roleName}</td>
+                                <td colspan="2">${organizer.status}</td>
+                                <td colspan="2">${organizer.description}</td>
+                                <td colspan="2">${organizer.numOfEvent}</td>
+                                <td colspan="4">
                                     <form action="manageUserByAdmin" method="POST">
                                         <input type="hidden" name="userId" value="${organizer.id}"/>
                                         <c:if test="${organizer.status eq 'Activated'}">
-                                            <input type="submit" name="action" value="Deactivate"/>
+                                            <input  type="submit" name="action" value="Deactivate"/>
                                         </c:if>
                                         <c:if test="${organizer.status eq 'Deactivated'}">
                                             <input type="submit" name="action" value="Reactivate"/>
                                         </c:if>
+
                                     </form>
                                 </td>
+
                             </tr>
+
                         </c:forEach>
-                    </tbody>
+                    </tbody> 
                 </table>
 
             </div>
         </c:if>
         <c:if test="${requestScope.LIST_STUDENT ne null}">
-            <div>
+            <div class="col-md-6 "><h1>Student Management</h1></div>
+            <div class="service" >
 
                 <table border="1">
                     <thead>
-                        <tr>
+                        <tr class="service1">
                             <th>No</th>
                             <th>Email</th>
                             <th>Name</th>
-                            <th>Avatar</th>
                             <th>Address</th>
                             <th>Phone Number</th>
                             <th>Role Name</th>
@@ -128,11 +189,10 @@
                     </thead>
                     <tbody>
                         <c:forEach var="student" items="${requestScope.LIST_STUDENT}" varStatus="status">
-                            <tr>
+                            <tr class="service2">
                                 <td>${status.count}</td>
                                 <td>${student.email}</td>
                                 <td>${student.name}</td>
-                                <td>...</td>
                                 <td>${student.address}
                                 <td>${student.phoneNum}</td>
                                 <td>${student.roleName}</td>
@@ -140,8 +200,8 @@
                                 <td>
                                     <form action="manageUserByAdmin" method="POST">
                                         <input type="hidden" name="userId" value="${student.id}"/>
-                                        <c:if test="${student.status eq 'Activated'}">
-                                            <input type="submit" name="action" value="Deactivate"/>
+                                        <c:if test="${student.status eq 'Activated'}">                             
+                                            <input type="submit" name="action" value="Deactivate"/></button>
                                         </c:if>
                                         <c:if test="${student.status eq 'Deactivated'}">
                                             <input type="submit" name="action" value="Reactivate"/>
@@ -152,26 +212,61 @@
                         </c:forEach>
                     </tbody>
                 </table>
-
             </div>
         </c:if>
         <c:if test="${requestScope.LIST_LECTURER ne null}">
+
+            <div class="col-md-6 "><h1>Lecturer Management</h1></div><br>
+            _________________________Thêm Lecturer_____________________________
             <form action="manageUserByAdmin" method="POST">
                 <input type="hidden" name="roleId" value="2"/>
                 <input type="hidden" name="action" value="Create"/>
-                <p>Email: <input type="email" name="email" required/> <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
-                    <br></p> 
-                <p>Name: <input type="text" name="name" required/><br></p>
-                <button type="submit" class="btn btn-primary">Thêm</button>
-            </form>
-            <div>
+                <div class="col-md-6"><label class="labels">Email</label><input class="form-control" type="email" name="email" required/> <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
+                </div>
+                <div class="col-md-6"><label class="labels">Name</label><input class="form-control" type="text" name="name"required/><br></div>
+                <div class="col-md-6"><button type="submit" class="btn btn-primary">Add Lecturer</button></div>
+            </form> <br>  
+
+            <!--                <div>
+                                 button trigger modal
+                                <button class="btn btn-primary hight" type="button" id="a" data-toggle="modal" data-target="#createNewLecturer">
+                                    <p>Thêm tài khoản giảng viên</p>
+                                </button>
+            
+                                 Modal
+                                <div class="modal fade" id="createNewLecturer" tabindex="-1" aria-labelledby="createNewLecturerLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="createNewLecturerLabel">Thêm tài khoản giảng viên</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <input type="hidden" name="roleId" value="2"/>
+                                                <input type="hidden" name="action" value="Create"/>
+                                                <p>Email: <input type="text" name="email"/><br></p> 
+                                                <p>Name: <input type="text" name="name"/><br></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Thêm</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>-->
+
+
+            <div class="service">
                 <table border="1">
                     <thead>
-                        <tr>
+                        <tr class="service1">
                             <th>No</th>
                             <th>Email</th>
                             <th>Name</th>
-                            <th>Avatar</th>
                             <th>Address</th>
                             <th>Phone Number</th>
                             <th>Role Name</th>
@@ -182,11 +277,10 @@
                     </thead>
                     <tbody>
                         <c:forEach var="lecturer" items="${requestScope.LIST_LECTURER}" varStatus="status">
-                            <tr>
+                            <tr class="service2">
                                 <td>${status.count}</td>
                                 <td>${lecturer.email}</td>
                                 <td>${lecturer.name}</td>
-                                <td>...</td>
                                 <td>${lecturer.address}</td>
                                 <td>${lecturer.phoneNum}</td>
                                 <td>${lecturer.roleName}</td>
@@ -211,52 +305,52 @@
             </div>
         </c:if>
         <c:if test="${requestScope.LIST_ORGANIZER_EVENT ne null}">
+            <div class="col-md-6 "><h1>Event Management</h1></div>
             <div>
-                Tìm event theo: <br>
-                ${param.organizerType}
-                ${param.eventStatus}
+                <div class="col-md-6 "><h3>Tìm event theo: </h3></div><br>
                 <!--           ĐÃ LOAD LIST ALL ORGANIZER, Select o day là khi nguoi dùng ho chon option nào thì mình show LIST ORGANIZER-->
-                Kiểu nhà tổ chức: 
-                <form action ="filterEvent">
-                    <select name="organizerType" id="organizerType" onchange="organizerTypeHandler(this)" >
-                        <option value="allOrganizer">Tất cả</option> <!-- (ĐÂY LÀ MAC ĐINH KHI BAM VÀO "Event Management"-->
-                        <option value="CL">Club's leader</option>
-                        <option value="DM">Department's manager</option>
-                    </select>
+
+                <form  action ="filterEvent">
+                    <div class="col-md-6"><label class="labels">Kiểu nhà tổ chức:</label>
+                        <select class="form-control"  name="organizerType" id="organizerType" onchange="organizerTypeHandler(this)" >
+                            <option value="allOrganizer">Tất cả</option> <!-- (ĐÂY LÀ MAC ĐINH KHI BAM VÀO "Event Management"-->
+                            <option value="CL">Club's leader</option>
+                            <option value="DM">Department's manager</option>
+                        </select></div><br>
                     <script>
                         var items = document.getElementById("organizerType").options;
                         for (var i = 0; i < items.length; i++) {
-                                    if (items[i].value == "${param.organizerType}") {
-                                        items[i].selected = true;
-                                    }
-                                }
+                            if (items[i].value == "${param.organizerType}") {
+                                items[i].selected = true;
+                            }
+                        }
                     </script>
 
                     <div id="filter_organizer">
-                        Tên nhà tổ chức:
+
                         <div id="organizer_name">
                             <!--           Neu chon "Tất cả" ở cái select trên  (ĐÂY LÀ MAC ĐINH KHI BAM VÀO "Event Management"-->
-                            <select name="idOrganizer">
-                                <option value="0">Tất cả</option>
-                                <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
-                                    <c:if test="${param.idOrganizer eq organizer.id}">
-                                        <option value="${organizer.id}" selected>${organizer.name}</option>
-                                    </c:if>
-                                    <c:if test="${param.idOrganizer ne organizer.id}">
-                                        <option value="${organizer.id}">${organizer.name}</option>
-                                    </c:if>
-                                </c:forEach>  
-                            </select>
+                            <div class="col-md-6"> <label class="labels">Tên nhà tổ chức:</label><select class="form-control"  name="idOrganizer">
+                                    <option value="0">Tất cả</option>
+                                    <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
+                                        <c:if test="${param.idOrganizer eq organizer.id}">
+                                            <option value="${organizer.id}" selected>${organizer.name}</option>
+                                        </c:if>
+                                        <c:if test="${param.idOrganizer ne organizer.id}">
+                                            <option value="${organizer.id}">${organizer.name}</option>
+                                        </c:if>
+                                    </c:forEach>  
+                                </select>
 
-                        </div>
+                            </div></div><br>
                         <div>
-                            Tình trạng sự kiện: <select name="eventStatus" id="eventStatus">
-                                <option value="0">Tất cả</option>
-                                <option value="1">Sắp diễn ra</option>
-                                <option value="2">Đóng đăng kí</option>
-                                <option value="3">Đã kết thúc</option>
-                                <option value="4">Đã hủy</option>
-                            </select>
+                            <div class="col-md-6"> <label class="labels">Tình trạng sự kiện:</label> <select class="form-control" name="eventStatus" id="eventStatus">
+                                    <option value="0">Tất cả</option>
+                                    <option value="1">Sắp diễn ra</option>
+                                    <option value="2">Đóng đăng kí</option>
+                                    <option value="3">Đã kết thúc</option>
+                                    <option value="4">Đã hủy</option>
+                                </select></div>
                             <script>
                                 var items = document.getElementById("eventStatus").options;
                                 for (var i = 0; i < items.length; i++) {
@@ -265,63 +359,63 @@
                                     }
                                 }
                             </script>
-                        </div>
-                        <input type="submit" value="filter"/>
-                    </div>
-                </form>
+                        </div><br>
+                        <div class="col-md-6"> <input type="submit" value="Search" class="btn btn-primary" /></div>
+                    </div> 
+                </form><br>
                 <div id="allOrganizer">
                     <!--           Neu chon "Tất cả" ở cái select trên  (ĐÂY LÀ MAC ĐINH KHI BAM VÀO "Event Management"-->
-                    <select name="idOrganizer">
-                        <option value="0">Tất cả</option>
-                        <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
-                            <c:if test="${param.idOrganizer eq organizer.id}">
-                                <option value="${organizer.id}" selected>${organizer.name}</option>
-                            </c:if>
-                            <c:if test="${param.idOrganizer ne organizer.id}">
-                                <option value="${organizer.id}">${organizer.name}</option>
-                            </c:if>
-                        </c:forEach>  
-                    </select>
-                </div>
-                <!--           Nếu chọn "Club's leader" ở cái select trên-->
-                <div id="CL">
-                    <select name="idOrganizer">
-                        <option value="-1">Tất cả</option>
-                        <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
-                            <c:if test="${organizer.roleName eq 'CL'}">
+                    <div class="col-md-6"> <label class="labels">Tên nhà tổ chức:</label><select class="form-control"  name="idOrganizer">
+                            <option value="0">Tất cả</option>
+                            <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
                                 <c:if test="${param.idOrganizer eq organizer.id}">
                                     <option value="${organizer.id}" selected>${organizer.name}</option>
                                 </c:if>
                                 <c:if test="${param.idOrganizer ne organizer.id}">
                                     <option value="${organizer.id}">${organizer.name}</option>
                                 </c:if>
-                            </c:if>
-                        </c:forEach>  
-                    </select>
+                            </c:forEach>  
+                        </select></div>
+                </div>
+                <!--           Nếu chọn "Club's leader" ở cái select trên-->
+                <div id="CL">
+                    <div class="col-md-6"> <label class="labels">Tên nhà tổ chức:</label><select class="form-control"  name="idOrganizer">
+                            <option value="-1">Tất cả</option>
+                            <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
+                                <c:if test="${organizer.roleName eq 'CL'}">
+                                    <c:if test="${param.idOrganizer eq organizer.id}">
+                                        <option value="${organizer.id}" selected>${organizer.name}</option>
+                                    </c:if>
+                                    <c:if test="${param.idOrganizer ne organizer.id}">
+                                        <option value="${organizer.id}">${organizer.name}</option>
+                                    </c:if>
+                                </c:if>
+                            </c:forEach>  
+                        </select></div>
                 </div>
 
                 <!--           Nếu chọn "Department's manager" ở cái select trên-->
                 <div id="DM">
-                    <select name="idOrganizer">
-                        <option value="-2">Tất cả</option>
-                        <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
-                            <c:if test="${organizer.roleName eq 'DM'}">
-                                <c:if test="${param.idOrganizer eq organizer.id}">
-                                    <option value="${organizer.id}" selected>${organizer.name}</option>
+                    <div class="col-md-6"> <label class="labels">Tên nhà tổ chức:</label><select class="form-control"  name="idOrganizer">
+                            <option value="-2">Tất cả</option>
+                            <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
+                                <c:if test="${organizer.roleName eq 'DM'}">
+                                    <c:if test="${param.idOrganizer eq organizer.id}">
+                                        <option value="${organizer.id}" selected>${organizer.name}</option>
+                                    </c:if>
+                                    <c:if test="${param.idOrganizer ne organizer.id}">
+                                        <option value="${organizer.id}">${organizer.name}</option>
+                                    </c:if>
                                 </c:if>
-                                <c:if test="${param.idOrganizer ne organizer.id}">
-                                    <option value="${organizer.id}">${organizer.name}</option>
-                                </c:if>
-                            </c:if>
-                        </c:forEach>  
-                    </select>
+                            </c:forEach>  
+                        </select></div>
                 </div>
                 <div>
                     <c:if test="${requestScope.LIST_EVENT ne null}">
-                        <div>
+                        <div class="service">
                             <table border="1">
                                 <thead>
-                                    <tr>
+                                    <tr class="service1">
                                         <th>No</th>
                                         <th>Name</th>
                                         <th>Location</th>
@@ -337,7 +431,7 @@
                                 </thead>
                                 <tbody>
                                     <c:forEach var="event" items="${requestScope.LIST_EVENT}" varStatus="status">
-                                        <tr>
+                                        <tr class="service2">
                                             <td>${status.count}</td>
                                             <td>${event.name}</td>
                                             <td>${event.location}</td>
@@ -368,83 +462,84 @@
                     </c:if>
                 </div>
             </div>
-            <script>
-                var organizerTypeSelect = document.getElementById("organizerType");
-                var eventStatusSelect = document.getElementById("eventStatus");
+        </div>
+        <script>
+            var organizerTypeSelect = document.getElementById("organizerType");
+            var eventStatusSelect = document.getElementById("eventStatus");
 
-                document.getElementById("allOrganizer").style.display = "none";
-                document.getElementById("CL").style.display = "none";
-                document.getElementById("DM").style.display = "none";
-                function organizerTypeHandler(organizerTypeSelect) {
-                    document.getElementById("organizer_name").innerHTML = "";
-                    var organizerType = organizerTypeSelect.value;
-                    var allOrganizer = document.getElementById("allOrganizer").innerHTML;
-                    var CL = document.getElementById("CL").innerHTML;
-                    var DM = document.getElementById("DM").innerHTML;
-                    if (organizerType == 'allOrganizer') {
-                        document.getElementById("organizer_name").innerHTML = allOrganizer;
-                    } else if (organizerType == 'CL') {
-                        document.getElementById("organizer_name").innerHTML = CL;
-                    } else if (organizerType == 'DM') {
-                        document.getElementById("organizer_name").innerHTML = DM;
-                    }
+            document.getElementById("allOrganizer").style.display = "none";
+            document.getElementById("CL").style.display = "none";
+            document.getElementById("DM").style.display = "none";
+            function organizerTypeHandler(organizerTypeSelect) {
+                document.getElementById("organizer_name").innerHTML = "";
+                var organizerType = organizerTypeSelect.value;
+                var allOrganizer = document.getElementById("allOrganizer").innerHTML;
+                var CL = document.getElementById("CL").innerHTML;
+                var DM = document.getElementById("DM").innerHTML;
+                if (organizerType == 'allOrganizer') {
+                    document.getElementById("organizer_name").innerHTML = allOrganizer;
+                } else if (organizerType == 'CL') {
+                    document.getElementById("organizer_name").innerHTML = CL;
+                } else if (organizerType == 'DM') {
+                    document.getElementById("organizer_name").innerHTML = DM;
                 }
-            </script>
-        </c:if>
-        <c:if test="${requestScope.mapComment ne null}">
-            <div>
-                <table border="1">
-                    <thead>
+            }
+        </script>
+    </c:if>
+    <c:if test="${requestScope.mapComment ne null}">
+        <div>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Content</th>
+                        <th>Event ID</th>
+                        <th>userAvatar</th>
+                        <th>userName</th>
+                        <th>userRoleName</th>
+                        <th>StatusID</th>
+                        <th>Ban comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="comment" items="${requestScope.mapComment}" varStatus="status">
                         <tr>
-                            <th>No</th>
-                            <th>Content</th>
-                            <th>Event ID</th>
-                            <th>userAvatar</th>
-                            <th>userName</th>
-                            <th>userRoleName</th>
-                            <th>StatusID</th>
-                            <th>Ban comment</th>
+                            <td>${status.count}</td>
+                            <td>${comment.value.content}</td>
+                            <td>${comment.value.eventId}</td>
+                            <td><img src="${comment.value.userAvatar}"></td>
+                            <td>${comment.value.userName}</td>
+                            <td>${comment.value.userRoleName}</td>
+                            <td>${comment.value.statusId}</td>
+                            <td><button onclick="banComment('${comment.key}')" >Ban</button></td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="comment" items="${requestScope.mapComment}" varStatus="status">
-                            <tr>
-                                <td>${status.count}</td>
-                                <td>${comment.value.content}</td>
-                                <td>${comment.value.eventId}</td>
-                                <td><img src="${comment.value.userAvatar}"></td>
-                                <td>${comment.value.userName}</td>
-                                <td>${comment.value.userRoleName}</td>
-                                <td>${comment.value.statusId}</td>
-                                <td><button onclick="banComment('${comment.key}')" >Ban</button></td>
-                            </tr>
-                            <c:if test="${comment.value.replyList ne null}" >
-                                <c:forEach var="reply" items="${comment.value.replyList}" varStatus="stt">
+                        <c:if test="${comment.value.replyList ne null}" >
+                            <c:forEach var="reply" items="${comment.value.replyList}" varStatus="stt">
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <tr>
-                                        <td>${stt.count}</td>
-                                        <td>${reply.value.content}</td>
-                                        <td>${reply.value.eventId}</td>
-                                        <td><img src="${reply.value.userAvatar}"></td>
-                                        <td>${reply.value.userName}</td>
-                                        <td>${reply.value.userRoleName}</td>
-                                        <td>${reply.value.statusId}</td>
-                                        <td><button onclick="banReply('${comment.key}' , '${reply.key}')" >Ban</button></td>
-                                    </tr>
-                                </c:forEach>
-                            </c:if>
-                        </c:forEach>
-                    </tbody>
-                </table>
+                                <tr>
+                                    <td>${stt.count}</td>
+                                    <td>${reply.value.content}</td>
+                                    <td>${reply.value.eventId}</td>
+                                    <td><img src="${reply.value.userAvatar}"></td>
+                                    <td>${reply.value.userName}</td>
+                                    <td>${reply.value.userRoleName}</td>
+                                    <td>${reply.value.statusId}</td>
+                                    <td><button onclick="banReply('${comment.key}', '${reply.key}')" >Ban</button></td>
+                                </tr>
+                            </c:forEach>
+                        </c:if>
+                    </c:forEach>
+                </tbody>
+            </table>
 
-            </div>
-            
-        </c:if>
-        <script src="<c:url value="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js" />"></script>
-        <script src="<c:url value="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js" />"></script>
-        <script src="resources/js/comment.js" ></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
-                integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
-        crossorigin="anonymous"></script>
-    </body>
+        </div>
+
+    </c:if>
+    <script src="<c:url value="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js" />"></script>
+    <script src="<c:url value="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js" />"></script>
+    <script src="resources/js/comment.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
+            integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
+    crossorigin="anonymous"></script>
+</body>
 </html>
