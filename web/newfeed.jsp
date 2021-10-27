@@ -36,12 +36,13 @@
     <body>
 
         <%@include file="nav_bar.jsp" %>
-        
+
         <%  
             UserDTO logedInUser = (UserDTO) session.getAttribute("USER");
             String userRoleName = logedInUser.getRoleName();
         %>
         
+        <!-- COPY PART -->
         <div class="d-flex">
             <section id="filter_bar">
                 <div id="decorating_text">
@@ -102,6 +103,8 @@
             %>
                 
         </div>
+        <!-- COPY PART -->
+
 
         <div id="card_container" class="container-fluid">
             <div id="card_container_row" class="row gx-1 gy-4">
@@ -169,8 +172,11 @@
                 integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
         crossorigin="anonymous"></script>
 
+        // COPY PART
         <script type="text/javascript" src="resources/js/newfeed_function.js" >
         </script>
+        // COPY PART
+
     </body>
 
 </html>

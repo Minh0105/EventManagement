@@ -114,12 +114,14 @@ function showStudentCaredEvents(button) {
 
 // LECTURER
 function showLecturerJoinedEvents (button) { 
+
     processFilterClick(button);
 }
 
 
 // ORGANIZER
 function showOrganizerCreatedEvents (button) {
+    
     processFilterClick(button);
 }
 

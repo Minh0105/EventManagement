@@ -66,7 +66,7 @@
             </div>
         </section>
 
-
+        <!-- COPY PART -->
         <!-- EVENT ORGANIZER BUTTONS  -->
     <%
         if (("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName())) && (detail.getStatusId() == 1 || detail.getStatusId() == 2)) {
@@ -135,6 +135,8 @@
     <%
         }
     %>
+
+        <!-- COPY PART -->
                 
         <section class="carousel">
             <div class="carouselWrite">
@@ -502,7 +504,8 @@
     <script src="resources/js/eventDetail.js"></script>
 
 
-    <!-- Firebase -->
+    <!-- COPY PART -->
+
     <link rel="profile" href="<c:url value='http://gmpg.org/xfn/11' />" />
     <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js""></script>
     <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js""></script>
@@ -518,6 +521,8 @@
         startOnAddCommentListener();
         startOnAddReplyListener();
     </script>
+
+    <!-- COPY PART -->
 
 </body>
 

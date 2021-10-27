@@ -32,9 +32,9 @@ function setUserName (userName) {
 function sendReply(commentID, btnReply) {
   var replyForm = btnReply.parentNode;
   var replyInput = replyForm.getElementsByClassName("input_reply")[0];
-  var contents = replyInput.value;
+  var content = replyInput.value;
 
-  if (contents === "") {
+  if (content === "") {
     return;
   }
 
@@ -45,7 +45,7 @@ function sendReply(commentID, btnReply) {
   var userRoleName = app_userRoleName;
 
   var replyInfor = {  
-    contents: contents, 
+    content: content, 
     userId:userId, 
     userAvatar:userAvatar, 
     userName:userName, 
@@ -59,28 +59,26 @@ function sendReply(commentID, btnReply) {
 }
 
 
-function sendCmt() { // return the id of comment in firebase, need for reply
+function sendCmt() { // return the id of comment in firebase, need for replyObject
 
   var commentInput = document.getElementById("input_comment");
-  var contents = commentInput.value; 
+  var content = commentInput.value; 
 
-  if (contents === "") {
+  if (content === "") {
     return;
   }
 
-  var commentDatetime = '' + new Date(); 
   var eventId = app_eventId; 
   var userAvatar = app_userAvatar; 
-  var userID = app_userId; 
+  var userId = app_userId; 
   var userName = app_userName; 
   var userRoleName = app_userRoleName;
 
   cmtRef.push({
-    commentDatetime:commentDatetime,
-    contents:contents,
+    content:content,
     eventId:eventId,
     userAvatar:userAvatar,
-    userID:userID,
+    userId:userId,
     userName:userName,
     userRoleName:userRoleName,
     statusId:"AC"
@@ -95,19 +93,21 @@ function startOnAddCommentListener () {
     // ADD COMMENT INTO PAGE
     cmtRef.orderByChild('eventId').equalTo(app_eventId).on("child_added", function (snapshot) {
 
-      var message = snapshot.val();
+      var commentContent = snapshot.val();
 
       var commentID = snapshot.key; 
-      var contents = message['contents']; 
-      var eventId = message['eventId']; 
-      // var commentDatetime = message['commentDatetime']; 
-      // var isQuestion = message['isQuestion']; 
-      // var statusId = message['statusId']; 
-      // var userID = message['userID']; 
-      var replyList = message['replyList'];    
-      var userAvatar = message['userAvatar']; 
-      var userName = message['userName']; 
-      var userRoleName = message['userRoleName']; 
+      var content = commentContent['content']; 
+      var eventId = commentContent['eventId']; 
+
+      var isNotValidComment = commentContent['statusId'] == "DA";
+      if (isNotValidComment) {
+        return;
+      }
+
+      var replyList = commentContent['replyList'];    
+      var userAvatar = commentContent['userAvatar']; 
+      var userName = commentContent['userName']; 
+      var userRoleName = commentContent['userRoleName']; 
 
       var comment_container = document.getElementById("comment");
       var comment_item_html = '';
@@ -121,12 +121,12 @@ function startOnAddCommentListener () {
       comment_item_html +=''
       comment_item_html +='         <div class="comment_infor">'
       comment_item_html +='             <p class="comment_username">' + userName + ' - ' + userRoleName + '</p>'
-      comment_item_html +='             <p class="comment_content">'+contents+'</p>'
+      comment_item_html +='             <p class="comment_content">'+content+'</p>'
       comment_item_html +='             <p class="btn_show_reply" onclick="showReplyBox(this)">Trả lời</p>'
       comment_item_html +='         </div>'
       comment_item_html +='     </div>'
       comment_item_html +=''
-      comment_item_html +='     <div class="reply_box" action ="reply">'
+      comment_item_html +='     <div class="reply_box" action ="replyObject">'
       comment_item_html +='         <input class="input_reply" type="text" name="content" placeholder="Trả lời..." required/>'
       comment_item_html +='         <input type="hidden" name="commentId" value = "'+commentID+'"/>'
       comment_item_html +='         <input type="hidden" name="eventId" value = "'+eventId+'"/>'
@@ -151,28 +151,27 @@ function startOnAddCommentListener () {
       } else {
         // Convert JSON Object Array into Javascript Object Array
           objectReplyList = Object.keys(replyList).map(cmtID => {
-          var comment = replyList[cmtID];
-          comment.commentID = cmtID;    
-          return comment;
-        });
+                                                        var comment = replyList[cmtID];
+                                                        comment.commentID = cmtID;    
+                                                        return comment;
+                                                      });
       }
       
-
 
       // Create Reply Container
       var replyContainerHtmlCode = '';
       replyContainerHtmlCode += '<div class="reply_container"> \n'
 
-      for (var reply of objectReplyList) {
+      for (var replyObject of objectReplyList) {
 
-        // var id = reply['id'];
-        // var userId = reply['userId'];
-        var contents = reply['contents'];
-        var userAvatar = reply['userAvatar'];
-        var userName = reply['userName'];
-        var userRoleName = reply['userRoleName'];
-        // var replyDateTime = reply['replyDateTime'];
-        // var statusId = reply['statusId'];
+        var content = replyObject['content'];
+        var userAvatar = replyObject['userAvatar'];
+        var userName = replyObject['userName'];
+        var userRoleName = replyObject['userRoleName'];
+        var isNotValidComment = replyObject['statusId'] == "DA";
+        if (isNotValidComment) {
+          continue;
+        }
 
         //#region Reply Html Code
         replyContainerHtmlCode += '    <div class="repComment2"> \n'
@@ -181,7 +180,7 @@ function startOnAddCommentListener () {
         replyContainerHtmlCode += '        </div> \n'
         replyContainerHtmlCode += '        <div class="repComment2b"> \n'
         replyContainerHtmlCode += '            <p class="comment_username">' + userName + ' - ' + userRoleName + '</p> \n'
-        replyContainerHtmlCode += '            <p class="comment_content">'+ contents +'</p> \n'
+        replyContainerHtmlCode += '            <p class="comment_content">'+ content +'</p> \n'
         replyContainerHtmlCode += '        </div> \n'
         replyContainerHtmlCode += '    </div> \n'
         //#endregion
@@ -199,26 +198,38 @@ function startOnAddReplyListener () {
   cmtRef.orderByChild('eventId').equalTo(app_eventId).on("child_changed", function (snapshot) {
     var commentContent = snapshot.val();
     var commentID = snapshot.key;
+    var isNotValidComment = commentContent['statusId'] == "DA";
+    if (isNotValidComment) {
+      return;
+    }
+
     var commentItem = document.getElementById(commentID);
     var replyList = commentContent['replyList'];
   
     if (replyList != null && replyList != undefined) {
+
       var replyObjectList = Object.keys(replyList).map(replyId => replyList[replyId])
   
       var replyContainer = commentItem.getElementsByClassName("reply_container")[0];
       replyContainer.innerHTML = '';
       for (var replyObject of replyObjectList) {
+        var isNotValidComment = replyObject['statusId'] == "DA";
+        if (isNotValidComment) {
+          continue;
+        }
+
         var userName = replyObject['userName'];
         var userRoleName = replyObject['userRoleName'];
         var userAvatar = replyObject['userAvatar'];
-        var contents = replyObject['contents'];
-        replyContainer.innerHTML += createComment(userName, userRoleName, userAvatar, contents);
+        var content = replyObject['content'];
+        replyContainer.innerHTML += createComment(userName, userRoleName, userAvatar, content);
       }
+
     }
   });
   
   
-  function createComment (userName, userRoleName, userAvatar, contents) {
+  function createComment (userName, userRoleName, userAvatar, content) {
     var commentHtml = '';
   
     commentHtml += '    <div class="repComment2"> \n'
@@ -227,7 +238,7 @@ function startOnAddReplyListener () {
     commentHtml += '        </div> \n'
     commentHtml += '        <div class="repComment2b"> \n'
     commentHtml += '            <p class="comment_username">' + userName + ' - ' + userRoleName + '</p> \n'
-    commentHtml += '            <p class="comment_content">'+ contents +'</p> \n'
+    commentHtml += '            <p class="comment_content">'+ content +'</p> \n'
     commentHtml += '        </div> \n'
     commentHtml += '    </div> \n'
   

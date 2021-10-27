@@ -47,6 +47,10 @@
     padding: 0px;
 }
 
+#nav_infor_part {
+    position: relative;
+}
+
 #navbar_branch {
     display: flex;
     flex-direction: row;
@@ -85,4 +89,22 @@
 
 #btn_bell {
     padding: 4px 0px;
+}
+
+#nav_expanded_panel {
+    position: absolute;
+    right: 0;
+    top: 20px;
+}
+
+.mybutton {
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 300;
+    border: none;
+}
+
+#btn_log_out {
+    
 }

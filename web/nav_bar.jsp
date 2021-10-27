@@ -30,7 +30,7 @@
     <body>
         <nav class="navbar navbar-expand-md navbar-light navbar-color sticky-top">
             <div id="nav_content" class="container-fluid">
-                <a id="navbar_branch" href="viewNewfeed">
+                <a id="navbar_branch" href="#">
                     <img id="app_icon" src="resources/icon/app_icon.svg">
                     <h5 class="d-none d-md-block">FPT Event Management</h5>
                 </a>
@@ -39,7 +39,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto nav-margin">
+                    <ul id="nav_infor_part" class="navbar-nav ml-auto nav-margin">
                         <li class="nav-item">
                             <a id="icon_name_container" class="nav-link" href="ViewInfoPage"> 
                                 <img id="avatar_icon" class="rounded-circle" src="${sessionScope.USER.avatar}" />
@@ -52,17 +52,20 @@
                             </a>
                         </li>
                         <li class="nav-item dropdown">
-
-                            <a class="nav-link" href="#" id="navbarDropdown " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a href="#" class="nav-link">
                                 <img id="btn_menu" src="resources/icon/hamburger_button_icon.svg" alt="hamburger_button" />
-                            </a>     
+                            </a>
+                        </li>	
+                        
+                        <div id="nav_expanded_panel">
 
-                            <form action="logout" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <button class="btn btn-outline-light profile-button logout " type="submit">
-                                    <img src="resources/icon/log_out_icon.svg">Log Out</button> 
-                            </form>   
+                            <div class="logout_">
+                                 
+                            </div>
+                            <img src="resources/icon/log_out_icon.svg" />
+                            <a id="btn_log_out" href="logout">Log out</a> 
 
-                        </li>				
+                        </div>   	
                     </ul>
                 </div>
             </div>

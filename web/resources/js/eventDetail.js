@@ -21,7 +21,7 @@ function hideOtherReplyBox (focusedReplyBox) {
 
 
 function hideReplyBox (hideReplyButton) {
-    var replyBox = hideReplyButton.parentNode.parentNode.parentNode.getElementsByClassName("reply_box")[0];
+    var replyBox = hideReplyButton.parentNode;
     var replyButton = hideReplyButton.parentNode.parentNode.getElementsByClassName("btn_show_reply")[0];
     replyButton.style.display = "block";
     replyBox.style.display = "none";
