@@ -1,3 +1,6 @@
+@import url(organizer_event_operation_menu.css);
+
+
 * { 
     margin: 0;
     padding: 0;
@@ -622,7 +625,7 @@
 
 }
 
-#home_tab_button > a {
+#first_tab_button > a {
     padding-left: 0px !important;
 }
 
@@ -803,4 +806,29 @@
     display: none;
     margin-left: 62px;
     margin-bottom: 1rem;
+}
+
+
+#post_image {
+    width: 100%;
+    object-fit: contain;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 0.7rem;
+    margin-top: 1.9rem;
+}
+
+
+#btn_event_operation_menu {
+    width: 60px;
+    object-fit: contain;
+    height: fit-content;
+}
+
+ 
+ /* UPDATE EVENT STATUS MODAL */
+.status_dot {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 0.5rem;
+    background-color: #29ba48;
 }

@@ -35,10 +35,6 @@
     </head>
     <body>
 
-        <div id="#messages">
-
-        </div>
-
         <%@include file="nav_bar.jsp" %>
         
         <%
@@ -72,12 +68,141 @@
             </div>
         </section>
 
+
+        <!-- EVENT ORGANIZER BUTTONS  -->
+    <%
+        if (("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName())) && (detail.getStatusId() == 1 || detail.getStatusId() == 2)) {
+    %>
+            <div id="menu_container">   
+                <div id="menu_panel">   
+        
+                    <div id="btn_edit_event_details" class="menu_button">
+                        <p>Chỉnh sửa thông tin sự kiện</p>
+                    </div>
+
+                        <div id="btn_edit_event_content" class="menu_sub_button">
+                            <p>Nội dung sự kiện</p>
+                        </div>
+
+                        <div id="btn_edit_event_poster" class="menu_sub_button">
+                            <p>Ảnh bìa</p>
+                        </div>
+
+                        <div id="btn_edit_event_time_and_lock" class="menu_sub_button">
+                            <p>Thời gian và địa điểm</p>
+                        </div>
+
+                    
+
+                    <div type="button" data-toggle="modal" 
+                        data-target="#setEvtStatus" id="btn_update_event_status" 
+                        class="menu_button">
+                        <p>Cập nhật trạng thái sự kiện</p>
+                    </div>
+
+
+                    <div id="btn_add_summary" class="menu_button">
+                        <p>Thêm nội dung tổng kết</p>
+                    </div>
+                    
+
+                    <div id="btn_view_member" class="menu_button">
+                        <p>Xem danh sách thành viên</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Modal-->
+            <div class="modal fade" id="setEvtStatus" tabindex="-1" aria-labelledby="setEventModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 id="setEventModalLabel">Cập nhật trạng thái sự kiện</h5>
+                            <p id="modal_event_name"><%= detail.getName()%></p>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <img src="resources/icon/icon_exit">
+                            </button>
+                        </div>
+
+                        <div>
+                            <span class="status_dot green_dot"></span>
+                            <span class="status_text">Đã đóng đăng kí</span>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <%
+        }
+    %>
+                
         <section class="carousel">
             <div class="carouselWrite">
                 <h3><%= detail.getDate()%> - <%= detail.getLocation()%> <br>
                     <%= detail.getTime()%>
                 </h3>
             </div>
+                
+            <%
+                if ("STUDENT".equals(loginUser.getRoleName()) && detail.getStatusId() == 1) {
+                    boolean checkFollowed = (boolean) request.getAttribute("IS_FOLLOWED");
+                    boolean checkJoining = (boolean) request.getAttribute("IS_JOINING");
+            %>
+                    <div class="carouselButton">
+                        <form action="joinEvent">
+                            <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                            <input type="hidden" name="isJoining" value="<%= checkJoining%>"/>
+                            <div class="carouselButton1">
+                                <button class="hight" type="submit" id="a">
+                                    <%if (checkJoining) {
+                                    %>
+                                    <img src="resources/icon/icon_cancel_white.svg" alt="">
+                                    <p>Hủy Tham Gia</p>
+                                    <%
+                                    } else {
+                                    %>
+                                    <img src="resources/icon/icon_join_white.svg" alt="">
+                                    <p>Sẽ Tham Gia</p>
+                                    <%
+                                        }
+                                    %>
+                                </button>
+                            </div>
+                        </form>
+                        <form action="followEvent">
+                            <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                            <input type="hidden" name="isFollowed" value="<%= checkFollowed%>"/>
+                            <div class="carouselButton1" type="submit">
+                                <button class="hight" id="b">
+                                    <%
+                                        if (checkFollowed) {
+                                    %>
+                                        <img src="resources/icon/icon_cancel_white.svg" alt="">
+                                        <p>Hủy Quan Tâm</p>
+                                    <%
+                                        } else { 
+                                    %>
+                                            <img src="resources/icon/icon_care_white.svg" alt="">
+                                            <p>Quan Tâm</p>
+                                    <%
+                                        }
+                                    %>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+            <%
+                } else if (("CLUB'S LEADER".equals(loginUser.getRoleName())) || ("DEPARTMENT'S MANAGER".equals(loginUser.getRoleName()))) {
+            %> 
+                    <img onclick="onMenuIconClick()" id="btn_event_operation_menu" src="resources/icon/icon_orange_hamburger_button.svg">
+            <%
+                }
+            %>
         </section>
 
         <section class="fast">
@@ -94,7 +219,13 @@
         <!-- nav -->
         <section id="content">
             <ul class="nav nav-tabs" id="tab_container">
-                <li class="nav-item" id="home_tab_button">
+
+                <li class="nav-item" id="first_tab_button">
+                    <a class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#end"
+                    role="tab" aria-controls="home" aria-selected="true">Tổng kết</a>
+                </li>
+
+                <li class="nav-item">
                   <a class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
                   role="tab" aria-controls="home" aria-selected="true">Giới thiệu</a>
                 </li>
@@ -111,6 +242,17 @@
               </ul>
 
             <div class="tab-content" id="myTabContent">
+                <!-- Tổng kết -->
+                <div class="tab-pane fade show" id="end" role="tabpanel" aria-labelledby="end-tab">
+                    <img id="post_image" src="resources/image/eventDetail 9.png"/>
+                    <section class="navWord">
+                        <h2 class="content_title w-full-parent text-center">Tổng kết sự kiện</h3>
+                        <!-- <p><%= detail.getDescription()%></p> -->
+                        <p>Nội dung tổng kết sự kiện ở đây. Tôi là Tăng Tấn Tài, xin chào mọi người, hy vọng sau sự kiện mọi người đã có được những giây phút thư giãn giải trí, hy vọng mọi người donate cho team chúng tôi thật nhiều để sau này còn có nhiều show hơn</p>
+                    </section>   
+
+                </div>
+
                 <!-- Giới Thiệu -->
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <section class="navWord">
@@ -156,6 +298,7 @@
                     </div>
 
                 </div>
+
                 <!-- Comment -->
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     
@@ -167,7 +310,7 @@
 
                     <div id="comment">
                         <!-- COMMENT WILL BE CREATED BY FIREBASE and JAVASCRIPT -->
-                        <!-- <%
+                        <%
                             List<CommentDTO> listComment = (List<CommentDTO>) request.getAttribute("LIST_COMMENT");
                             for (CommentDTO comment : listComment) {
                         %>

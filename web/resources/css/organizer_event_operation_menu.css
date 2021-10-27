@@ -1,0 +1,49 @@
+
+#menu_container {
+    position: relative;
+    height: 0px;
+    z-index: 10;
+}
+
+#menu_panel {
+    box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.35);
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1.7rem 1rem;
+    width: fit-content;
+    position: absolute;
+    right: 60px;
+    top: 50px;
+}
+
+.menu_button {
+    margin: 0.4rem 0;
+    background-color: #2671e1;
+    border-radius: 3px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+    padding: 0.1rem 2rem !important;
+}
+
+.menu_sub_button {
+    margin: 0.4rem 0;
+    background-color: rgb(255, 224, 184);
+    color: rgba(0, 0, 0, 0.85);
+    border-radius: 3px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+    padding: 0.1rem 2rem !important;
+    display: none;
+}
+
+.menu_button > p {
+    color: white;
+    text-align: center;
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.menu_sub_button > p {
+    color: rgba(0, 0, 0, 0.75);
+    text-align: center;
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+}
