@@ -176,6 +176,10 @@
         <servlet-name>CancelEventServlet</servlet-name>
         <servlet-class>fptu.swp.controller.CancelEventServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateEventServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.UpdateEventServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -235,6 +239,10 @@
     <servlet-mapping>
         <servlet-name>CancelEventServlet</servlet-name>
         <url-pattern>/CancelEventServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateEventServlet</servlet-name>
+        <url-pattern>/UpdateEventServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

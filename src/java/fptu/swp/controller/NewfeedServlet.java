@@ -47,35 +47,38 @@ public class NewfeedServlet extends HttpServlet {
         List<EventCardDTO> listCard = null;
         List<EventCardDTO> listFollowing = null;
         List<EventCardDTO> listJoining = null;
-        
+
         //get roadmap
         ServletContext context = request.getServletContext();
         HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
-        
+
         //default url
         String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
         String NEWFEED_PAGE_LABEL = context.getInitParameter("NEWFEED_PAGE_LABEL");
         String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
         String NEWFEED_PAGE_PATH = roadmap.get(NEWFEED_PAGE_LABEL);
         String url = INVALID_PAGE_PATH;
-        
+
         try {
             HttpSession session = request.getSession();
             UserDTO loginUser = (UserDTO) session.getAttribute("USER");
             EventDAO eventDao = new EventDAO();
-            
+
             listCard = eventDao.getNewFeedEventList(loginUser);
             LOGGER.info("LIST EVENT CARD:" + listCard);
             request.setAttribute("LIST_CARD", listCard);
-            
+
             //chi lay event co statusId  = 1
-            listFollowing = eventDao.getFollowedEventList(loginUser.getId());
-            LOGGER.info("LIST FOLLOWING EVENT CARD:" + listFollowing);
-            request.setAttribute("LIST_FOLLOWING_CARD", listFollowing);
-            
-            listJoining = eventDao.getJoiningEventList(loginUser.getId());
-            LOGGER.info("LIST JOINING EVENT CARD:" + listJoining);
-            request.setAttribute("LIST_JOINING_CARD", listJoining);
+            if ("STUDENT".equals(loginUser.getRoleName())) {
+                listFollowing = eventDao.getFollowedEventList(loginUser.getId());
+                LOGGER.info("LIST FOLLOWING EVENT CARD:" + listFollowing);
+                request.setAttribute("LIST_FOLLOWING_CARD", listFollowing);
+
+                listJoining = eventDao.getJoiningEventList(loginUser.getId());
+                LOGGER.info("LIST JOINING EVENT CARD:" + listJoining);
+                request.setAttribute("LIST_JOINING_CARD", listJoining);
+            }
+
             url = NEWFEED_PAGE_PATH;
         } catch (Exception e) {
             LOGGER.error(e);

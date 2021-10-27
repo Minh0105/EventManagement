@@ -164,39 +164,6 @@
                 <p>Name: <input type="text" name="name" required/><br></p>
                 <button type="submit" class="btn btn-primary">Thêm</button>
             </form>
-            <!--                <div>
-                                 button trigger modal
-                                <button class="btn btn-primary hight" type="button" id="a" data-toggle="modal" data-target="#createNewLecturer">
-                                    <p>Thêm tài khoản giảng viên</p>
-                                </button>
-            
-                                 Modal
-                                <div class="modal fade" id="createNewLecturer" tabindex="-1" aria-labelledby="createNewLecturerLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="createNewLecturerLabel">Thêm tài khoản giảng viên</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <input type="hidden" name="roleId" value="2"/>
-                                                <input type="hidden" name="action" value="Create"/>
-                                                <p>Email: <input type="text" name="email"/><br></p> 
-                                                <p>Name: <input type="text" name="name"/><br></p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary">Thêm</button>
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>-->
-
-
             <div>
                 <table border="1">
                     <thead>
@@ -422,9 +389,6 @@
                         document.getElementById("organizer_name").innerHTML = DM;
                     }
                 }
-
-
-
             </script>
         </c:if>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"

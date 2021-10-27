@@ -531,7 +531,7 @@ public class EventDAO {
         int startSlot = Integer.parseInt(String.valueOf(chosenTimeRange.charAt(0)));
         char endSlotChar = chosenTimeRange.charAt(4);
         int endSlot = startSlot;
-        if(chosenTimeRange.substring(0, 4).contains("-")){
+        if (chosenTimeRange.substring(0, 4).contains("-")) {
             endSlot = Integer.parseInt(String.valueOf(endSlotChar));
         }
 
@@ -871,7 +871,7 @@ public class EventDAO {
         ResultSet rs = null;
         List<String> listLocation = new ArrayList<>();
 
-        String locationName = "";
+        String locationName = "";  
         String sql = "";
         int eventId = 0;
         int currentEventId = 0;
@@ -894,37 +894,30 @@ public class EventDAO {
                         + " LEFT JOIN tblLocations u ON locationId = u.id) t ON s.id = t.eventId\n";
                 if (organizerId == 0 && eventStatus == 0) {
                     stm = conn.prepareStatement(sql);
-                }else
-                if (organizerId == 0 && eventStatus != 0) {
+                } else if (organizerId == 0 && eventStatus != 0) {
                     sql += " WHERE s.statusId = ?";
                     stm = conn.prepareStatement(sql);
                     stm.setInt(1, eventStatus);
-                }else
-                if (organizerId == -1 && eventStatus == 0) {
+                } else if (organizerId == -1 && eventStatus == 0) {
                     sql += " WHERE m.roleId=3";
                     stm = conn.prepareStatement(sql);
-                }else
-                if (organizerId == -1 && eventStatus != 0) {
+                } else if (organizerId == -1 && eventStatus != 0) {
                     sql += " WHERE m.roleId=3 AND s.statusId = ?";
                     stm = conn.prepareStatement(sql);
                     stm.setInt(1, eventStatus);
-                }else
-                if (organizerId == -2 && eventStatus == 0) {
+                } else if (organizerId == -2 && eventStatus == 0) {
                     sql += " WHERE m.roleId=4";
                     stm = conn.prepareStatement(sql);
-                }else
-                if (organizerId == -2 && eventStatus != 0) {
+                } else if (organizerId == -2 && eventStatus != 0) {
                     sql += " WHERE m.roleId=4 AND s.statusId = ?";
                     stm = conn.prepareStatement(sql);
                     stm.setInt(1, eventStatus);
-                }else
-                if (organizerId != 0 && organizerId != -1 && organizerId != -2 && eventStatus != 0) {
+                } else if (organizerId != 0 && organizerId != -1 && organizerId != -2 && eventStatus != 0) {
                     sql += " WHERE s.userId = ? AND s.statusId = ?";
                     stm = conn.prepareStatement(sql);
                     stm.setInt(1, organizerId);
                     stm.setInt(2, eventStatus);
-                }else
-                if (organizerId != 0 && organizerId != -1 && organizerId != -2 && eventStatus == 0) {
+                } else if (organizerId != 0 && organizerId != -1 && organizerId != -2 && eventStatus == 0) {
                     sql += " WHERE s.userId = ?";
                     stm = conn.prepareStatement(sql);
                     stm.setInt(1, organizerId);
@@ -969,6 +962,7 @@ public class EventDAO {
                 location += listLocation.get(i);
                 String time = getTimeOfEventDetail(conn, currentEventId);
                 list.add(new EventDetailDTO(currentEventId, eventName, location, date, time, organizerName, following, joining, statusId));
+                Collections.reverse(list); //Added Date: 26-10-2021
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1042,7 +1036,7 @@ public class EventDAO {
         }
         return time;
     }
-    
+
     public boolean cancelEvent(int eventId) throws SQLException {
         boolean check = false;
         Connection conn = null;
@@ -1051,20 +1045,99 @@ public class EventDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                sql =" UPDATE tblDateTimeLocation"
+                conn.setAutoCommit(false);
+                sql = " UPDATE tblDateTimeLocation"
                         + " SET statusId = 2"
                         + " WHERE eventId=?";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, eventId);
-                if(stm.executeUpdate() > 0){
-                    sql =" UPDATE tblEvents"
-                        + " SET statusId = 4"
-                        + " WHERE id=?";
+                if (stm.executeUpdate() > 0) {
+                    sql = " UPDATE tblEvents"
+                            + " SET statusId = 4"
+                            + " WHERE id=?";
                     stm = conn.prepareStatement(sql);
                     stm.setInt(1, eventId);
                     check = stm.executeUpdate() > 0;
+                    if (check) {
+                        conn.commit();
+                    }
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                conn.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
+    public boolean updateFollowersListAfterCreateEvent(List<UserDTO> listFollowers, int eventId) throws SQLException {
+        if(listFollowers == null || listFollowers.size() == 0) return true;
+        
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        String sql = "";
+        
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                sql = "INSERT INTO tblStudentsInEvents(eventId, studentId, isFollowing, isJoining) "
+                            + " VALUES(?,?,1,0)";
+                stm = conn.prepareStatement(sql);
+                for(UserDTO student : listFollowers){
+                    stm.setInt(1, eventId);
+                    stm.setInt(2, student.getId());
+                    check = stm.executeUpdate() > 0;
+                }
+                if (check) {
+                    conn.commit();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                conn.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+    
+    public boolean updateEventStatus(int eventId, int statusId) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "UPDATE tblEvents"
+                        + " SET statusId = ?"
+                        + " WHERE id = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, statusId);
+                stm.setInt(2, eventId);
+                check = stm.executeUpdate() > 0;
+                }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -1076,6 +1149,96 @@ public class EventDAO {
             }
         }
         return check;
+    }
+    
+    public boolean updateEventInfo(EventDetailDTO detail) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "UPDATE tblEvents"
+                        + " SET name = ?, description = ?"
+                        + " WHERE id = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, detail.getName());
+                stm.setString(2, detail.getDescription());
+                stm.setInt(3, detail.getId());
+                check = stm.executeUpdate() > 0;
+                }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+    
+    public boolean updateEventPoster(int eventId, FileInputStream savedPic) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "UPDATE tblEvents"
+                        + " SET poster = ?"
+                        + " WHERE id = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setBinaryStream(1, savedPic);
+                stm.setInt(2, eventId);
+                check = stm.executeUpdate() > 0;
+                }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+    
+    public List<Integer> getListEventIdByStatusId(int statusId) throws NamingException, SQLException{
+        List<Integer> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+         try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT id\n" +
+                                " FROM tblEvents\n" +
+                                " WHERE statusId = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, statusId);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    Integer eventId = rs.getInt("id");
+                    list.add(eventId);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
     }
     
 }

@@ -659,7 +659,19 @@ public class UserDAO {
                     String avatar = rs.getString("avatar");
                     String address = rs.getString("address");
                     String phoneNum = rs.getString("phoneNum");
-                    String roleName = "STUDENT";
+                    int roleId = rs.getInt("roleId");
+                    String roleName = "";
+                    if (roleId == 1) {
+                        roleName = "STUDENT";
+                    } else if (roleId == 2) {
+                        roleName = "LECTURER";
+                    } else if (roleId == 3) {
+                        roleName = "CLUB'S LEADER";
+                    } else if (roleId == 4) {
+                        roleName = "DEPARTMENT'S MANAGER";
+                    } else if (roleId == 5) {
+                        roleName = "ADMIN";
+                    }
                     String status = (rs.getString("statusId").equals("AC")) ? "Activated" : "Deactivated";
                     String description = rs.getString("description");
                     user = new UserDTO(id, email, name, avatar, address, phoneNum, roleName, status, description);
@@ -694,5 +706,117 @@ public class UserDAO {
         cal.set(Calendar.MONTH, cal.get(Calendar.MONTH) / 3 * 3 + 2);
         cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
         return new Timestamp(cal.getTime().getTime());
+    }
+    public List<UserDTO> getFollowersByEventId(int eventId) throws SQLException, NamingException {
+        List<UserDTO> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT id, email, name, avatar, address, phoneNum, roleId, statusId" +
+                                " FROM tblUsers u" +
+                                " JOIN tblStudentsInEvents v ON u.id = v.studentId AND v.isFollowing = 1 AND v.eventId = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, eventId);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String name = rs.getString("name");
+                    String email = rs.getString("email");
+                    String avatar = rs.getString("avatar");
+                    String address = rs.getString("address");
+                    String phoneNum = rs.getString("phoneNum");
+                    String roleName = "STUDENT";
+                    String status = (rs.getString("statusId").equals("AC")) ? "Activated" : "Deactivated";
+                    String description = rs.getString("description");
+                    list.add(new UserDTO(id, email, name, avatar, address, phoneNum, roleName, status));
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
+    }
+    public List<UserDTO> getParticipantsByEventId(int eventId) throws SQLException, NamingException {
+        List<UserDTO> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT id, email, name, avatar, address, phoneNum, roleId, statusId" +
+                                " FROM tblUsers u" +
+                                " JOIN tblStudentsInEvents v ON u.id = v.studentId AND v.isJoining = 1 AND v.eventId = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, eventId);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String name = rs.getString("name");
+                    String email = rs.getString("email");
+                    String avatar = rs.getString("avatar");
+                    String address = rs.getString("address");
+                    String phoneNum = rs.getString("phoneNum");
+                    String roleName = "STUDENT";
+                    String status = (rs.getString("statusId").equals("AC")) ? "Activated" : "Deactivated";
+                    String description = rs.getString("description");
+                    list.add(new UserDTO(id, email, name, avatar, address, phoneNum, roleName, status));
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
+    }
+    public List<Integer> getFollowersIdByEventId(int eventId) throws SQLException, NamingException {
+        List<Integer> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT id" +
+                                " FROM tblUsers u" +
+                                " JOIN tblStudentsInEvents v ON u.id = v.studentId AND v.isFollowing = 1 AND v.eventId = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, eventId);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    list.add(id);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
     }
 }

@@ -5,6 +5,7 @@
  */
 package fptu.swp.listener;
 
+import fptu.swp.entity.schedule.Schedule;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -33,8 +34,12 @@ public class LoadFileServletListener implements ServletContextListener {
         configLog4J(sce);
         loadFileAuth(sce);
         loadFileRoadMap(sce);
+        initializeSchedule(sce);
     }
     
+    private void initializeSchedule(ServletContextEvent sce){
+        Schedule.initializeScheduler();
+    }
 
     private void configLog4J(ServletContextEvent sce) {
         ServletContext context= sce.getServletContext();

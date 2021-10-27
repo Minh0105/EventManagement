@@ -36,6 +36,7 @@
 
         <link rel="stylesheet" type="text/css" href="resources/css/eventDetail.css"/>
         <link rel='stylesheet' type='text/css' media='screen' href='resources/css/style.css'>
+        <script src="resources/ckeditor/ckeditor.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-expand-md navbar-light navbar-color sticky-top">
@@ -204,7 +205,7 @@
                                         <label for="isExporting">Xuất file Excel thành viên tham dự</label><br>
                                     </div>
                                     <div class="modal-footer">
-                                        
+
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-primary">Lưu</button>
                                     </div>
@@ -437,7 +438,80 @@
     <p id = "date"></p>
 </section>
 
-<!-- -------------------------gắn link------------------------------- -->
+<div id ="update_name_desciption">
+
+    <input type='hidden' name="action" value="name and description"/>
+    <!-- EVENT NAME -->
+    <h5 class="title col-12">Tên Sự Kiện</h5>
+    <input class="col-12 col-lg-7" id="input_event_name" type="text"  
+           name="eventName" value="<%= detail.getName()%>">
+
+    <!-- EVENT DESCRIPTION        -->
+    <h5 class="title col-12">Nội Dung Sự Kiện</h5>
+    <textarea class="col-12 col-lg-7" id="input_event_description" rows="7" cols="12"
+              type="text"><%= detail.getDescription()%></textarea>
+    <div id="update-desciption">
+    </div>
+    <button onclick="updateNameAndDescription()">Update</button>
+    <form action="updateEvent" id="update-name-description-form">
+    </form>
+    <script>
+        if (screen.width >= 1200) {
+            CKEDITOR.replace('input_event_description', {
+                width: '58.3333%'
+            });
+        } else {
+            CKEDITOR.replace('input_event_description', {
+                width: '100%'
+            });
+        }
+        function updateNameAndDescription() {
+            var eventDescriptionTest = CKEDITOR.instances.input_event_description.getData();
+            var eventName = document.getElementById("input_event_name").value;
+
+            var form = document.createElement("form");
+            document.body.appendChild(form);
+            //form.method = "POST";
+            form.action = "updateEvent";
+            var inputEventId = document.createElement("INPUT");
+            inputEventId.name = "eventId";
+            inputEventId.value = '<%= detail.getId()%>';
+            inputEventId.type = 'hidden'
+            form.appendChild(inputEventId);
+
+            var inputEventName = document.createElement("INPUT");
+            inputEventName.name = "eventName";
+            inputEventName.value = eventName;
+            inputEventName.type = 'text';
+            form.appendChild(inputEventName);
+
+            var inputDescription = document.createElement("INPUT");
+            inputDescription.name = "description";
+            inputDescription.value = eventDescriptionTest;
+            inputDescription.type = 'text';
+            form.appendChild(inputDescription);
+
+            form.submit();
+        }
+
+    </script>
+</div>
+
+            <div id = "update-poster">
+                <div id="image_container" class="col-12 col-lg-7">
+                <figure id="figure_image" >
+                    <img id="chosen-image" src="data:image/jpg;base64,${detail.poster}">
+                </figure>
+
+                <input class="d-none" type="file" id="upload-button" 
+                       accept="image/*" name="fileUp" value="" style="visibility:hidden;">
+
+                <label id="btn_upload_image" for="upload-button">
+                    Chọn hình ảnh
+                </label>
+            </div>
+
+    <!-- -------------------------gắn link------------------------------- -->
 
 <script>
     let dateDOM = document.getElementById('dateRender'); // 1,2,3,4,.. 31
@@ -454,63 +528,61 @@
     document.getElementById("date").innerHTML = "COVID-19, "
             + d.getDate() + "/" + thang[d.getMonth()] + "/" +
             +d.getFullYear();
-</script>
+    </script>
 
-<!-- click chuột đổi màu button  -->
-<script type="text/javascript" id="a">
-    $('#a').click(function () {
-        if (!$(this).hasClass('red')) {
-            $(this).removeClass('blue').addClass('red');
-        } else {
-            $(this).removeClass('red').addClass('blue');
-            ;
-        }
+    <!-- click chuột đổi màu button  -->
+    <script type="text/javascript" id="a">
+        $('#a').click(function () {
+            if (!$(this).hasClass('red')) {
+                $(this).removeClass('blue').addClass('red');
+            } else {
+                $(this).removeClass('red').addClass('blue');
+                ;
+            }
 
-    });
-    $('#b').click(function () {
-        if (!$(this).hasClass('red')) {
-            $(this).removeClass('blue').addClass('red');
-        } else {
-            $(this).removeClass('red').addClass('blue');
-            ;
-        }
-
-    });
-
-</script>
-
-
-<!--     comment ko dùng nút 
-      
-    <script type="text/javascript">
-        // Using jQuery.
-
-        $(function () {
-            $('form').each(function () {
-                $(this).find('input').keypress(function (e) {
-                    // Enter pressed?
-                    if (e.which == 10 || e.which == 13) {
-                        this.form.submit();
-                    }
-                });
-
-                $(this).find('input[type=submit]').hide();
-            });
         });
-    </script>-->
+        $('#b').click(function () {
+            if (!$(this).hasClass('red')) {
+                $(this).removeClass('blue').addClass('red');
+            } else {
+                $(this).removeClass('red').addClass('blue');
+                ;
+            }
 
-<script type="text/javascript" src="js/jquery.min.js"></script>
+        });
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-        integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN"
-crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
-        integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
-crossorigin="anonymous"></script>
+    </script>
 
-<script src="resources/js/eventDetail.js">
 
-</script>
+    <!--     comment ko dùng nút 
+          
+        <script type="text/javascript">
+            // Using jQuery.
+    
+            $(function () {
+                $('form').each(function () {
+                    $(this).find('input').keypress(function (e) {
+                        // Enter pressed?
+                        if (e.which == 10 || e.which == 13) {
+                            this.form.submit();
+                        }
+                    });
+    
+                    $(this).find('input[type=submit]').hide();
+                });
+            });
+        </script>-->
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+            integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN"
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
+            integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
+    crossorigin="anonymous"></script>
+
+    <script src="resources/js/eventDetail.js"></script>
 
 </body>
 

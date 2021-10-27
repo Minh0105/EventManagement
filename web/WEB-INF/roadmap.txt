@@ -33,3 +33,4 @@ addNotification=FirebaseServlet
 viewEventListByStudent=ViewEventListByStudentServlet
 AllEventPage=allEvent.jsp
 cancelEvent=CancelEventServlet
+updateEvent=UpdateEventServlet
