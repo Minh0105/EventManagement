@@ -34,6 +34,59 @@
     </head>
 
     <body>
+<<<<<<< HEAD
+        <nav class="navbar navbar-expand-md navbar-light navbar-color sticky-top">
+            <div id="nav_content" class="container-fluid">
+                <a id="navbar_branch" href="#">
+                    <img id="app_icon" src="resources/icon/app_icon.svg">
+                    <h5 class="d-none d-md-block">FPT Event Management</h5>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" 
+                        data-target="#navbarResponsive">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto nav-margin">
+                        <li class="nav-item">
+                            <a id="icon_name_container" class="nav-link" href="ViewInfoPage"> 
+                                <!-- <img class="nav-avatar rounded-circle" src="${sessionScope.USER.avatar}"> ${sessionScope.USER.name}</img></a> -->
+                                <img id="avatar_icon" class="rounded-circle" src="${sessionScope.USER.avatar}" />
+                                <span id="avatar_name" class="text-white">${sessionScope.USER.name}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <img id="btn_bell" src="resources/icon/bell_icon.svg" alt="Bell_icon" />
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+
+                            <a class="nav-link" href="#" id="navbarDropdown " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img id="btn_menu" src="resources/icon/hamburger_button_icon.svg" alt="hamburger_button" />
+                            </a>     
+
+<!--                            <form action="logout" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <button class="btn btn-outline-light profile-button logout " type="submit">
+                                    <img src="resources/icon/log_out_icon.svg">Log Out</button> 
+                            </form>   -->
+
+                            <form action="AllEventPage" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <button class="btn btn-outline-light profile-button logout " type="submit">
+                                    <img src="resources/icon/log_out_icon.svg">View All Event</button> 
+                            </form>
+
+
+                        </li>				
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <section id="filter_bar">
+            <div id="decorating_text">
+                Discover the event world
+            </div>
+=======
+>>>>>>> tai_real_time_backup
 
         <%@include file="nav_bar.jsp" %>
 

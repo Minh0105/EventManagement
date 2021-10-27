@@ -3,11 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/CreateEventServlet.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/ViewEventDetailServlet.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/META-INF/context.xml</file>
             <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/entity/schedule/Schedule.java</file>
             <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/entity/event/EventDAO.java</file>
             <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/NewfeedServlet.java</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/newfeed.jsp</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/UpdateEventServlet.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/eventDetail.jsp</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/entity/event/EventDetailDTO.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/entity/user/UserDAO.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/HandleMultipartServlet.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/appendEventDetail.jsp</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/resources/js/create_event.js</file>
         </group>
     </open-files>
 </project-private>

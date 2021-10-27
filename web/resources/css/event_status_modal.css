@@ -1,0 +1,58 @@
+.status_dot {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 0.35rem;
+    display: inline-block;
+    background-color: #40D460;
+    margin-right: 0.65rem;
+}
+
+.green_dot {
+    background-color: #40D460;
+}
+
+.my_modal_title {
+    font-size: 1.1rem !important;
+}
+
+.modal-content {
+    border-radius: 15px !important;
+}
+
+.modal-body {
+    padding-bottom: 5rem !important;
+    border-bottom: none !important;
+}
+
+.modal-footer {
+    border-top: none !important;
+}
+
+
+ /* BUTTON */
+
+ .mybutton {
+     padding: 0.8rem 1.3rem;
+     border-radius: 6px;
+     font-size: 1rem;
+     font-weight: 300;
+     border: none;
+ }
+
+ .btn_close_register {
+    background-color: #EBEBEB;
+    color: #1C1919;
+ }
+
+ .btn_cancel_event {
+     background-color: white;
+     border: 1px #D42E2E solid;
+     color: #de0c0c;
+ }
+
+
+ .btn_cancel_event:hover {
+    background-color: #D42E2E;
+    border: 1px #D42E2E solid;
+    color: #FFFFFF;
+}

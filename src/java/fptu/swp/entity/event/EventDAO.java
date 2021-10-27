@@ -964,10 +964,12 @@ public class EventDAO {
                 for (i = 0; i < listLocation.size() - 1; i++) {
                     location += listLocation.get(i) + ", ";
                 }
-                location += listLocation.get(i);
-                String time = getTimeOfEventDetail(conn, currentEventId);
-                list.add(new EventDetailDTO(currentEventId, eventName, location, date, time, organizerName, following, joining, statusId));
-                Collections.reverse(list); //Added Date: 26-10-2021
+                if (listLocation.size() != 0) {
+                    location += listLocation.get(i);
+                    String time = getTimeOfEventDetail(conn, currentEventId);
+                    list.add(new EventDetailDTO(currentEventId, eventName, location, date, time, organizerName, following, joining, statusId));
+                    Collections.reverse(list); //Added Date: 26-10-2021
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

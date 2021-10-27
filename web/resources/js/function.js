@@ -1,88 +1,248 @@
-// function sendMsg(frm) {
-//   //get message
-//   var msg = frm.value;
-//   //add new data to firebase location
-//   ref.push({ time: new Date().toUTCString(), msg: msg });
-//   //clear input text
-//   frm.value = "";
-// }
- function sendReply(frm) {
-    var cmtID = frm.CmtID.value;
-     // reply object 
-     var id = "test1";
-     var contents = "test1";
-     var userId = "test1";
-     var userAvatar = "test1";
-     var userName = "test1";
-     var userRoleName = "test1";
-     var replyDatetime = "test1";
-     var statusId = "test1";
-      var replyInfor = {  id:id, 
-        contents: contents, 
-        userId:userId, 
-        userAvatar:userAvatar, 
-        userName:userName, 
-        userRoleName:userRoleName,
-        replyDatetime:  replyDatetime,
-        statusId : statusId 
-    };
-
-     database.ref('comments/'+ cmtID +'/replyList').push(replyInfor);
- }
-
- function sendCmt(frm) { // return the id of comment in firebase, need for reply
-     var commentID = frm.commentID.value;
-     var contents = frm.contents.value;
-     var username = frm.userName.value;
-     
-     var newCmt = cmtRef.push({
-         commentID:commentID,
-         contents:contents,
-         username:username,
-         replyList:'first'
-     });
-
-     frm.commentID.value = "";
-     frm.contents.value = "";
-     frm.userName.value = "";
-
- }
 
 
-// var ref = new Firebase(
-//   "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/comments"
-// );
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+var database = firebase.database();
+var cmtRef = database.ref('comments');
 
+var app_eventId;
+var app_userId;
+var app_userName;
+var app_userAvatar;
+var app_userRoleName;
 
+function setEventId (eventId) {
+  app_eventId = eventId;
+}
 
+function setUserId (userId) {
+    app_userId = userId;
+}
+function setUserAvatar (userAvatar) {
+    app_userAvatar = userAvatar;
+}
+function setUserRoleName (userRoleName) {
+    app_userRoleName = userRoleName;
+}
 
-  // Import the functions you need from the SDKs you need
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+function setUserName (userName) {
+    app_userName = userName;
+}
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyCx4WEvFkJXvXVe0ojOiQmjw7-xFkTgYlQ",
-    authDomain: "react-getting-started-30bc6.firebaseapp.com",
-    databaseURL: "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/",
-    projectId: "react-getting-started-30bc6",
-    storageBucket: "react-getting-started-30bc6.appspot.com",
-    messagingSenderId: "91900710322",
-    appId: "1:91900710322:web:6330f47698f45959b068ab"
+function sendReply(commentID, btnReply) {
+  var replyForm = btnReply.parentNode;
+  var replyInput = replyForm.getElementsByClassName("input_reply")[0];
+  var content = replyInput.value;
+
+  if (content === "") {
+    return;
+  }
+
+  var cmtID = commentID;
+  var userId = app_userId;
+  var userAvatar = app_userAvatar;
+  var userName = app_userName;
+  var userRoleName = app_userRoleName;
+
+  var replyInfor = {  
+    content: content, 
+    userId:userId, 
+    userAvatar:userAvatar, 
+    userName:userName, 
+    userRoleName:userRoleName,
+    statusId:"AC"
   };
 
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  var database = firebase.database();
-  var cmtRef = database.ref('comments');
+  database.ref('comments/'+ cmtID +'/replyList').push(replyInfor);
 
-  cmtRef.orderByChild('username').equalTo('Duong').on("child_added", function (snapshot) {
-    //We'll fill this in later.
-    var message = snapshot.val();
-    $("#messages").append(
-      $("<div/>")
-        .css({ border: "1px solid red" })
-        .html(message['username'] + " : " + message['contents'] + " : " + snapshot.key)
-      
-    );
+  replyInput.value = "";
+}
+
+
+function sendCmt() { // return the id of comment in firebase, need for replyObject
+
+  var commentInput = document.getElementById("input_comment");
+  var content = commentInput.value; 
+
+  if (content === "") {
+    return;
+  }
+
+  var eventId = app_eventId; 
+  var userAvatar = app_userAvatar; 
+  var userId = app_userId; 
+  var userName = app_userName; 
+  var userRoleName = app_userRoleName;
+
+  cmtRef.push({
+    content:content,
+    eventId:eventId,
+    userAvatar:userAvatar,
+    userId:userId,
+    userName:userName,
+    userRoleName:userRoleName,
+    statusId:"AC"
   });
+
+  commentInput.value = "";
+}
+
+
+function startOnAddCommentListener () { 
+
+    // ADD COMMENT INTO PAGE
+    cmtRef.orderByChild('eventId').equalTo(app_eventId).on("child_added", function (snapshot) {
+
+      var commentContent = snapshot.val();
+
+      var commentID = snapshot.key; 
+      var content = commentContent['content']; 
+      var eventId = commentContent['eventId']; 
+
+      var isNotValidComment = commentContent['statusId'] == "DA";
+      if (isNotValidComment) {
+        return;
+      }
+
+      var replyList = commentContent['replyList'];    
+      var userAvatar = commentContent['userAvatar']; 
+      var userName = commentContent['userName']; 
+      var userRoleName = commentContent['userRoleName']; 
+
+      var comment_container = document.getElementById("comment");
+      var comment_item_html = '';
+
+      //#region Comment Item Html Code
+      comment_item_html +=' <div id="'+ commentID +'" class="comment_item">'
+      comment_item_html +='     <div class="comment_infor_section">'
+      comment_item_html +='         <div class="avatar_container">'
+      comment_item_html +='             <img class="rounded-circle lec_avatar" src="'+ userAvatar +'" alt="">'
+      comment_item_html +='         </div>'
+      comment_item_html +=''
+      comment_item_html +='         <div class="comment_infor">'
+      comment_item_html +='             <p class="comment_username">' + userName + ' - ' + userRoleName + '</p>'
+      comment_item_html +='             <p class="comment_content">'+content+'</p>'
+      comment_item_html +='             <p class="btn_show_reply" onclick="showReplyBox(this)">Trả lời</p>'
+      comment_item_html +='         </div>'
+      comment_item_html +='     </div>'
+      comment_item_html +=''
+      comment_item_html +='     <div class="reply_box" action ="replyObject">'
+      comment_item_html +='         <input class="input_reply" type="text" name="content" placeholder="Trả lời..." required/>'
+      comment_item_html +='         <input type="hidden" name="commentId" value = "'+commentID+'"/>'
+      comment_item_html +='         <input type="hidden" name="eventId" value = "'+eventId+'"/>'
+      comment_item_html +='         <button onclick="sendReply(\''+ commentID +'\', this)" class="btn_reply">Gửi</button>'
+      comment_item_html +='         <button onclick="hideReplyBox(this)" class="btn_hide_reply">Hủy</button>'
+      comment_item_html +='     </div>'
+      comment_item_html +=' </div>'
+
+      //#endregion
+
+      // Add Comment Section
+      comment_container.innerHTML = comment_item_html + comment_container.innerHTML;
+
+
+      // PROCESS REPLY LIST
+
+      var objectReplyList;
+      if (replyList == undefined) {
+        // Empty list
+        objectReplyList = new Array();
+
+      } else {
+        // Convert JSON Object Array into Javascript Object Array
+          objectReplyList = Object.keys(replyList).map(cmtID => {
+                                                        var comment = replyList[cmtID];
+                                                        comment.commentID = cmtID;    
+                                                        return comment;
+                                                      });
+      }
+      
+
+      // Create Reply Container
+      var replyContainerHtmlCode = '';
+      replyContainerHtmlCode += '<div class="reply_container"> \n'
+
+      for (var replyObject of objectReplyList) {
+
+        var content = replyObject['content'];
+        var userAvatar = replyObject['userAvatar'];
+        var userName = replyObject['userName'];
+        var userRoleName = replyObject['userRoleName'];
+        var isNotValidComment = replyObject['statusId'] == "DA";
+        if (isNotValidComment) {
+          continue;
+        }
+
+        //#region Reply Html Code
+        replyContainerHtmlCode += '    <div class="repComment2"> \n'
+        replyContainerHtmlCode += '        <div class="repComment2a"> \n'
+        replyContainerHtmlCode += '            <img src="'+ userAvatar +'" class="rounded-circle lec_avatar" alt=""> \n'
+        replyContainerHtmlCode += '        </div> \n'
+        replyContainerHtmlCode += '        <div class="repComment2b"> \n'
+        replyContainerHtmlCode += '            <p class="comment_username">' + userName + ' - ' + userRoleName + '</p> \n'
+        replyContainerHtmlCode += '            <p class="comment_content">'+ content +'</p> \n'
+        replyContainerHtmlCode += '        </div> \n'
+        replyContainerHtmlCode += '    </div> \n'
+        //#endregion
+      
+      }
+      replyContainerHtmlCode += '</div>'
+
+      // Above comment item, it is created above
+      var commentItemDiv = document.getElementById(commentID);
+      commentItemDiv.innerHTML += replyContainerHtmlCode;
+    });
+}
+
+function startOnAddReplyListener () {
+  cmtRef.orderByChild('eventId').equalTo(app_eventId).on("child_changed", function (snapshot) {
+    var commentContent = snapshot.val();
+    var commentID = snapshot.key;
+    var isNotValidComment = commentContent['statusId'] == "DA";
+    if (isNotValidComment) {
+      return;
+    }
+
+    var commentItem = document.getElementById(commentID);
+    var replyList = commentContent['replyList'];
+  
+    if (replyList != null && replyList != undefined) {
+
+      var replyObjectList = Object.keys(replyList).map(replyId => replyList[replyId])
+  
+      var replyContainer = commentItem.getElementsByClassName("reply_container")[0];
+      replyContainer.innerHTML = '';
+      for (var replyObject of replyObjectList) {
+        var isNotValidComment = replyObject['statusId'] == "DA";
+        if (isNotValidComment) {
+          continue;
+        }
+
+        var userName = replyObject['userName'];
+        var userRoleName = replyObject['userRoleName'];
+        var userAvatar = replyObject['userAvatar'];
+        var content = replyObject['content'];
+        replyContainer.innerHTML += createComment(userName, userRoleName, userAvatar, content);
+      }
+
+    }
+  });
+  
+  
+  function createComment (userName, userRoleName, userAvatar, content) {
+    var commentHtml = '';
+  
+    commentHtml += '    <div class="repComment2"> \n'
+    commentHtml += '        <div class="repComment2a"> \n'
+    commentHtml += '            <img src="'+ userAvatar +'" class="rounded-circle lec_avatar" alt=""> \n'
+    commentHtml += '        </div> \n'
+    commentHtml += '        <div class="repComment2b"> \n'
+    commentHtml += '            <p class="comment_username">' + userName + ' - ' + userRoleName + '</p> \n'
+    commentHtml += '            <p class="comment_content">'+ content +'</p> \n'
+    commentHtml += '        </div> \n'
+    commentHtml += '    </div> \n'
+  
+    return commentHtml;
+  }
+}
+

@@ -30,7 +30,12 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="resources/css/eventDetail.css"/>
-        <script src="<c:url value='resources/ckeditor/ckeditor.js' />"></script>
+<<<<<<< HEAD
+        <link rel='stylesheet' type='text/css' media='screen' href='resources/css/style.css'>
+        <script src="resources/ckeditor/ckeditor.js"></script>
+=======
+        
+>>>>>>> tai_real_time_backup
     </head>
     <body>
 
@@ -201,6 +206,70 @@
             <%
                 }
             %>
+<<<<<<< HEAD
+            <div class="carouselButton">
+                <% if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {
+                %>
+                <form action="setEventStatus">
+                    <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                    <div class="carouselButton1">
+
+                        <!-- button trigger modal-->
+                        <button class="btn btn-primary hight" type="button" id="a" data-toggle="modal" data-target="#setEvtStatus">
+                            <!--                            <img src="resources/icon/icon_cancel_white.svg" alt="">-->
+                            <p>Sửa trạng thái</p>
+                        </button>
+
+                        <!-- Modal-->
+                        <div class="modal fade" id="setEvtStatus" tabindex="-1" aria-labelledby="setEventModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="setEventModalLabel">Sửa trạng thái sự kiện <%= detail.getName()%></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <select name="eventStatus">
+                                            <option value="2">Đóng đăng kí</option>
+                                            <option value="3">Đã kết thúc</option>
+                                        </select>
+                                        <br>
+                                        <input type="checkbox" id="export" name="export" value="yes">
+                                        <label for="isExporting">Xuất file Excel thành viên tham dự</label><br>
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Lưu</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <%
+                    }
+                    if (detail.getStatusId() == 1) {
+                %>
+                <form action="updateEvent" method="POST">
+                    <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                    <div class="carouselButton1" type="submit">
+                        <button class="hight" id="b">
+                            <!--                            <img src="resources/icon/icon_cancel_white.svg" alt="">-->
+                            <p>Sửa thông tin</p>
+                        </button>
+                    </div>
+                </form>
+                <%
+                        }
+                    }
+                %>
+            </div>
+
+=======
+>>>>>>> tai_real_time_backup
         </section>
 
         <section class="fast">
@@ -452,6 +521,82 @@
         <p id = "date"></p>
     </section>
 
+<<<<<<< HEAD
+<div id ="update_name_desciption">
+
+    <input type='hidden' name="action" value="name and description"/>
+    <!-- EVENT NAME -->
+    <h5 class="title col-12">Tên Sự Kiện</h5>
+    <input class="col-12 col-lg-7" id="input_event_name" type="text"  
+           name="eventName" value="<%= detail.getName()%>">
+
+    <!-- EVENT DESCRIPTION        -->
+    <h5 class="title col-12">Nội Dung Sự Kiện</h5>
+    <textarea class="col-12 col-lg-7" id="input_event_description" rows="7" cols="12"
+              type="text"><%= detail.getDescription()%></textarea>
+    <div id="update-desciption">
+    </div>
+    <button onclick="updateNameAndDescription()">Update</button>
+    <form action="updateEvent" id="update-name-description-form">
+    </form>
+    <script>
+        if (screen.width >= 1200) {
+            CKEDITOR.replace('input_event_description', {
+                width: '58.3333%'
+            });
+        } else {
+            CKEDITOR.replace('input_event_description', {
+                width: '100%'
+            });
+        }
+        function updateNameAndDescription() {
+            var eventDescriptionTest = CKEDITOR.instances.input_event_description.getData();
+            var eventName = document.getElementById("input_event_name").value;
+
+            var form = document.createElement("form");
+            document.body.appendChild(form);
+            //form.method = "POST";
+            form.action = "updateEvent";
+            var inputEventId = document.createElement("INPUT");
+            inputEventId.name = "eventId";
+            inputEventId.value = '<%= detail.getId()%>';
+            inputEventId.type = 'hidden'
+            form.appendChild(inputEventId);
+
+            var inputEventName = document.createElement("INPUT");
+            inputEventName.name = "eventName";
+            inputEventName.value = eventName;
+            inputEventName.type = 'text';
+            form.appendChild(inputEventName);
+
+            var inputDescription = document.createElement("INPUT");
+            inputDescription.name = "description";
+            inputDescription.value = eventDescriptionTest;
+            inputDescription.type = 'text';
+            form.appendChild(inputDescription);
+
+            form.submit();
+        }
+
+    </script>
+</div>
+
+            <div id = "update-poster">
+                <div id="image_container" class="col-12 col-lg-7">
+                <figure id="figure_image" >
+                    <img id="chosen-image" src="data:image/jpg;base64,${detail.poster}">
+                </figure>
+
+                <input class="d-none" type="file" id="upload-button" 
+                       accept="image/*" name="fileUp" value="" style="visibility:hidden;">
+
+                <label id="btn_upload_image" for="upload-button">
+                    Chọn hình ảnh
+                </label>
+            </div>
+
+=======
+>>>>>>> tai_real_time_backup
     <!-- -------------------------gắn link------------------------------- -->
 
     <script>
@@ -461,6 +606,16 @@
         let d1 = "<%= detail.getDate()%>"; 
         let subStringDate = d1.substring(d1.length - 8, d1.length - 10);
         let subStringDay = d1.substring(0, d1.indexOf(","));
+<<<<<<< HEAD
+        dateDOM.innerHTML = subStringDate;
+        dayDOM.innerHTML = subStringDay;
+    }
+    var d = new Date();
+    var thang = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+    document.getElementById("date").innerHTML = "COVID-19, "
+            + d.getDate() + "/" + thang[d.getMonth()] + "/" +
+            +d.getFullYear();
+=======
             dateDOM.innerHTML = subStringDate;
             dayDOM.innerHTML = subStringDay;
         }
@@ -469,6 +624,7 @@
         document.getElementById("date").innerHTML = "COVID-19, "
             + d.getDate() + "/" + thang[d.getMonth()] + "/" +
             + d.getFullYear();
+>>>>>>> tai_real_time_backup
     </script>
 
     <!-- click chuột đổi màu button  -->
@@ -477,6 +633,55 @@
             if (!$(this).hasClass('red')) {
                 $(this).removeClass('blue').addClass('red');
             } else {
+<<<<<<< HEAD
+                $(this).removeClass('red').addClass('blue');
+                ;
+            }
+
+        });
+        $('#b').click(function () {
+            if (!$(this).hasClass('red')) {
+                $(this).removeClass('blue').addClass('red');
+            } else {
+                $(this).removeClass('red').addClass('blue');
+                ;
+            }
+
+        });
+
+    </script>
+
+
+    <!--     comment ko dùng nút 
+          
+        <script type="text/javascript">
+            // Using jQuery.
+    
+            $(function () {
+                $('form').each(function () {
+                    $(this).find('input').keypress(function (e) {
+                        // Enter pressed?
+                        if (e.which == 10 || e.which == 13) {
+                            this.form.submit();
+                        }
+                    });
+    
+                    $(this).find('input[type=submit]').hide();
+                });
+            });
+        </script>-->
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+            integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN"
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
+            integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
+    crossorigin="anonymous"></script>
+
+    <script src="resources/js/eventDetail.js"></script>
+=======
                 $(this).removeClass('red').addClass('blue');;
             }
 
@@ -523,59 +728,7 @@
     </script>
 
     <!-- COPY PART -->
-<div id ="update_name_desciption">
-
-    <input type='hidden' name="action" value="name and description"/>
-    <!-- EVENT NAME -->
-    <h5 class="title col-12">Tên Sự Kiện</h5>
-    <input class="col-12 col-lg-7" id="input_event_name" type="text"  
-           name="eventName" value="<%= detail.getName()%>">
-
-    <!-- EVENT DESCRIPTION        -->
-    <h5 class="title col-12">Nội Dung Sự Kiện</h5>
-    <textarea class="col-12 col-lg-7" id="input_event_description" rows="7" cols="12"
-              type="text"><%= detail.getDescription()%></textarea>
-    <div id="update-desciption">
-    </div>
-    <button onclick="updateNameAndDescription()">Update</button>
-    <form action="updateEvent" id="update-name-description-form">
-    </form>
-    <script>
-        if (screen.width >= 1200) {
-            CKEDITOR.replace('input_event_description', {
-                width: '58.3333%'
-            });
-        } else {
-            CKEDITOR.replace('input_event_description', {
-                width: '100%'
-            });
-        }
-        function updateNameAndDescription() {
-            var eventDescriptionTest = CKEDITOR.instances.input_event_description.getData();
-            var eventName = document.getElementById("input_event_name").value;
-            var form = document.createElement("form");
-            document.body.appendChild(form);
-            //form.method = "POST";
-            form.action = "updateEvent";
-            var inputEventId = document.createElement("INPUT");
-            inputEventId.name = "eventId";
-            inputEventId.value = '<%= detail.getId()%>';
-            inputEventId.type = 'hidden'
-            form.appendChild(inputEventId);
-            var inputEventName = document.createElement("INPUT");
-            inputEventName.name = "eventName";
-            inputEventName.value = eventName;
-            inputEventName.type = 'text';
-            form.appendChild(inputEventName);
-            var inputDescription = document.createElement("INPUT");
-            inputDescription.name = "description";
-            inputDescription.value = eventDescriptionTest;
-            inputDescription.type = 'text';
-            form.appendChild(inputDescription);
-            form.submit();
-        }
-    </script>
-</div>
+>>>>>>> tai_real_time_backup
 
 </body>
 

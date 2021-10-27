@@ -4,5 +4,9 @@
                 maxActive="90" maxIdle="30" maxWait="1000"
                 driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" 
                 url="jdbc:sqlserver://localhost:1433;databaseName=EventManagement"
-                username="sa" password="1234"/>
+<<<<<<< HEAD
+                username="sa" password="root"/>
+=======
+                username="sa" password="TangTai123"/>
+>>>>>>> tai_real_time_backup
 </Context>
