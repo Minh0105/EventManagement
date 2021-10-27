@@ -1,3 +1,7 @@
+a, a:hover, a:focus, a:active {
+    text-decoration: none !important; 
+    color: inherit !important;
+}
 
 #menu_container {
     position: relative;
@@ -34,14 +38,14 @@
     display: none;
 }
 
-.menu_button > p {
+.menu_button p {
     color: white;
     text-align: center;
     margin-top: 1rem !important;
     margin-bottom: 1rem !important;
 }
 
-.menu_sub_button > p {
+.menu_sub_button p {
     color: rgba(0, 0, 0, 0.75);
     text-align: center;
     margin-top: 1rem !important;

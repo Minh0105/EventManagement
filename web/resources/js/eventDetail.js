@@ -45,12 +45,16 @@ function onMenuIconClick () {
 // EDIT EVENT DETAIL
 
 $("#btn_edit_event_details").click(showEditEventDetail_Buttons);
-$(".btn_back").click(resetMenu);
 
 function showEditEventDetail_Buttons () {
-    $(".menu_button").hide();
-    $(".menu_sub_button").show();
-    $("#btn_edit_event_details").show();
+    if ($(".menu_sub_button").css("display") == "none") {
+        console.log("...");
+        $(".menu_button").hide();
+        $(".menu_sub_button").show();
+        $("#btn_edit_event_details").show();
+    } else {
+        resetMenu();
+    }
 }
 
 function resetMenu () {
@@ -58,5 +62,18 @@ function resetMenu () {
     $(".menu_button").show();
 }
 
+// UPDATE EVENT DETAIL
 
+$("#btn_update_event_status").click(function () {
+    $('#menu_container').hide();
+    resetMenu();
+})
+
+
+
+function waitingForSubmit (button) {
+    button.disabled=true;
+    button.value='Submitting...'; 
+    button.form.submit();
+}
 

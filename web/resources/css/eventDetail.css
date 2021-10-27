@@ -1,12 +1,11 @@
 @import url(organizer_event_operation_menu.css);
-
+@import url(event_status_modal.css);
 
 * { 
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 
 
 /* POSTER PART  */
@@ -822,13 +821,4 @@
     width: 60px;
     object-fit: contain;
     height: fit-content;
-}
-
- 
- /* UPDATE EVENT STATUS MODAL */
-.status_dot {
-    width: 1rem;
-    height: 1rem;
-    border-radius: 0.5rem;
-    background-color: #29ba48;
 }

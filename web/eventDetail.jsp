@@ -30,7 +30,6 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="resources/css/eventDetail.css"/>
-
         
     </head>
     <body>
@@ -58,7 +57,6 @@
                 </div>
 
                 <!-- CARE PART  -->
-
                 <div id="care_infor_part">
                     <p class="care_infor_text"> <%= detail.getFollowing() %> người đã quan tâm</p> 
                     <div id="dot"></div>
@@ -92,51 +90,48 @@
                             <p>Thời gian và địa điểm</p>
                         </div>
 
-                    
 
-                    <div type="button" data-toggle="modal" 
-                        data-target="#setEvtStatus" id="btn_update_event_status" 
-                        class="menu_button">
+                    <div type="button" data-toggle="modal" data-target="#setEvtStatus" id="btn_update_event_status" class="menu_button">
                         <p>Cập nhật trạng thái sự kiện</p>
                     </div>
 
 
                     <div id="btn_add_summary" class="menu_button">
-                        <p>Thêm nội dung tổng kết</p>
+                        <a href="addSummaryContent?eventId=1"><p>Thêm nội dung tổng kết</p></a>
                     </div>
                     
 
                     <div id="btn_view_member" class="menu_button">
-                        <p>Xem danh sách thành viên</p>
+                        <a href="viewMember?eventId=1"><p>Xem danh sách thành viên</p></a>
                     </div>
 
                 </div>
             </div>
 
             <!-- Modal-->
-            <div class="modal fade" id="setEvtStatus" tabindex="-1" aria-labelledby="setEventModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 id="setEventModalLabel">Cập nhật trạng thái sự kiện</h5>
-                            <p id="modal_event_name"><%= detail.getName()%></p>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <img src="resources/icon/icon_exit">
-                            </button>
-                        </div>
-
-                        <div>
-                            <span class="status_dot green_dot"></span>
-                            <span class="status_text">Đã đóng đăng kí</span>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Lưu</button>
-                        </div>
+            <div class="modal fade" id="setEvtStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title my_modal_title" id="exampleModalLabel">Cập nhật trạng thái sự kiện</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
                     </div>
+                    
+                    <div class="modal-body">
+                        <h5 class="my_modal_title"><%= detail.getName() %></h5>
+                        <span class="status_dot green_dot"></span>
+                        <span class="status_text">Sắp diễn ra</span>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="mybutton btn_close_register">Đóng đăng kí</button>
+                      <button type="button" class="mybutton btn_cancel_event">Ngừng sự kiện</button>
+                    </div>
+                  </div>
                 </div>
-            </div>
+              </div>
     <%
         }
     %>
@@ -158,16 +153,17 @@
                             <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
                             <input type="hidden" name="isJoining" value="<%= checkJoining%>"/>
                             <div class="carouselButton1">
-                                <button class="hight" type="submit" id="a">
-                                    <%if (checkJoining) {
-                                    %>
-                                    <img src="resources/icon/icon_cancel_white.svg" alt="">
-                                    <p>Hủy Tham Gia</p>
+                                <button onclick="waitingForSubmit(this)" class="hight" type="submit" id="a">
                                     <%
-                                    } else {
+                                        if (checkJoining) {
                                     %>
-                                    <img src="resources/icon/icon_join_white.svg" alt="">
-                                    <p>Sẽ Tham Gia</p>
+                                            <img src="resources/icon/icon_cancel_white.svg" alt="">
+                                            <p>Hủy Tham Gia</p>
+                                    <%
+                                        } else {
+                                    %>
+                                            <img src="resources/icon/icon_join_white.svg" alt="">
+                                            <p>Sẽ Tham Gia</p>
                                     <%
                                         }
                                     %>
@@ -178,7 +174,7 @@
                             <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
                             <input type="hidden" name="isFollowed" value="<%= checkFollowed%>"/>
                             <div class="carouselButton1" type="submit">
-                                <button class="hight" id="b">
+                                <button onclick="waitingForSubmit(this)" class="hight" id="b">
                                     <%
                                         if (checkFollowed) {
                                     %>
@@ -187,8 +183,8 @@
                                     <%
                                         } else { 
                                     %>
-                                            <img src="resources/icon/icon_care_white.svg" alt="">
-                                            <p>Quan Tâm</p>
+                                        <img src="resources/icon/icon_care_white.svg" alt="">
+                                        <p>Quan Tâm</p>
                                     <%
                                         }
                                     %>
@@ -310,7 +306,7 @@
 
                     <div id="comment">
                         <!-- COMMENT WILL BE CREATED BY FIREBASE and JAVASCRIPT -->
-                        <%
+                        <!-- <%
                             List<CommentDTO> listComment = (List<CommentDTO>) request.getAttribute("LIST_COMMENT");
                             for (CommentDTO comment : listComment) {
                         %>
@@ -372,8 +368,9 @@
                         <%
                                 }
                             }
-                        %>  -->
-                    </div>
+                        %> 
+                    </div> -->
+                
                 </div>
 
                 <!-- Hỏi Đáp -->
@@ -504,16 +501,13 @@
 
     <script src="resources/js/eventDetail.js"></script>
 
+
     <!-- Firebase -->
     <link rel="profile" href="<c:url value='http://gmpg.org/xfn/11' />" />
-
+    <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js""></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js""></script>
     <script src="resources/js/configFirebase.js"></script>
-
-
-    <script src="<c:url value="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js" />"></script>
-    <script src="<c:url value="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js" />"></script>
-
-    <script src="<c:url value="resources/js/function.js" />"></script>
+    <script src="resources/js/function.js""></script>
 
     <script>
         setEventId ('<%= detail.getId() %>');
@@ -524,7 +518,6 @@
         startOnAddCommentListener();
         startOnAddReplyListener();
     </script>
-
 
 </body>
 
