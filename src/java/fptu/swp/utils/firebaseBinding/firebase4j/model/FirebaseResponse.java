@@ -1,4 +1,4 @@
-package net.thegreshams.firebase4j.model;
+package fptu.swp.utils.firebaseBinding.firebase4j.model;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

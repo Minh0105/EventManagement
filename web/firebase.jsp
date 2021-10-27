@@ -29,7 +29,7 @@
             CMT ID <input type="text" style="border: 1px green solid;" name="CmtID" value=""> 
             <input  type="submit" onclick="sendReply(this.form)" value="Reply"/>
         </form>
-        
+        <h2>${requestScope.isSuccess}</h2>
         <div id="messages">
 
         </div>

@@ -391,6 +391,41 @@
                 }
             </script>
         </c:if>
+        <c:if test="${requestScope.mapComment ne null}">
+            <div>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Content</th>
+                            <th>Event ID</th>
+                            <th>userAvatar</th>
+                            <th>userName</th>
+                            <th>userRoleName</th>
+                            <th>StatusID</th>
+                            <th>Ban comment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="comment" items="${requestScope.mapComment.items}" varStatus="status">
+                            <tr>
+                                <td>${status.count}</td>
+                                <td>${comment.value.content}</td>
+                                <td>${comment.value.eventId}</td>
+                                <td>...</td>
+                                <td>${comment.value.userName}</td>
+                                <td>${comment.value.userRoleName}</td>
+                                <td>${comment.value.statusId}</td>
+                                <td><button onclick="banComment(${comment.key})">Ban</button>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+
+            </div>
+            
+        </c:if>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
                 integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
         crossorigin="anonymous"></script>

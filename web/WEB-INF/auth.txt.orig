@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+=LoginPage,InvalidPage,login
+STUDENT=updateProfile,UpdateProfilePage,logout,ViewInfoPage,viewNewfeed,NewfeedPage,viewEventDetail,EventDetailPage,followEvent,joinEvent,comment,reply,askQuestion,FilterEventStudentPage,viewEventListByStudent,AllEventPage,filterEvent
+=======
 =LoginPage,InvalidPage,login,addNotification
 STUDENT=updateProfile,UpdateProfilePage,logout,ViewInfoPage,viewNewfeed,NewfeedPage,viewEventDetail,EventDetailPage,followEvent,joinEvent,comment,reply,askQuestion,FilterEventStudentPage,test
+>>>>>>> firebase-DuongMh
 LECTURER=updateProfile,UpdateProfilePage,logout,ViewInfoPage,viewNewfeed,NewfeedPage,viewEventDetail,EventDetailPage,comment,reply
 CLUB'S LEADER=updateProfile,UpdateProfilePage,logout,ViewInfoPage,viewNewfeed,NewfeedPage,viewEventDetail,EventDetailPage,searchLocation,locAndTimePage,viewSlotAndTimeFree,modifyLocation,appendEventDetail,appendEventDetailPage,uploadFile,reviewEventPage,reviewEvent,createEvent,handleMultipart,comment,reply,updateEvent
 DEPARTMENT'S MANAGER=updateProfile,UpdateProfilePage,logout,ViewInfoPage,viewNewfeed,NewfeedPage,viewEventDetail,EventDetailPage,searchLocation,locAndTimePage,viewSlotAndTimeFree,modifyLocation,appendEventDetail,appendEventDetailPage,uploadFile,reviewEventPage,reviewEvent,createEvent,handleMultipart,comment,reply,updateEvent
