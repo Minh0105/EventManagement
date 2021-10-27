@@ -416,9 +416,23 @@
                                 <td>${comment.value.userName}</td>
                                 <td>${comment.value.userRoleName}</td>
                                 <td>${comment.value.statusId}</td>
-                                <td><button onclick="banComment(${comment.key})" />Ban</button>
-                                </td>
+                                <td><button onclick="banComment('${comment.key}')" >Ban</button></td>
                             </tr>
+                            <c:if test="${comment.value.replyList ne null}" >
+                                <c:forEach var="reply" items="${comment.value.replyList}" varStatus="stt">
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <tr>
+                                        <td>${stt.count}</td>
+                                        <td>${reply.value.content}</td>
+                                        <td>${reply.value.eventId}</td>
+                                        <td><img src="${reply.value.userAvatar}"></td>
+                                        <td>${reply.value.userName}</td>
+                                        <td>${reply.value.userRoleName}</td>
+                                        <td>${reply.value.statusId}</td>
+                                        <td><button onclick="banReply('${comment.key}' , '${reply.key}')" >Ban</button></td>
+                                    </tr>
+                                </c:forEach>
+                            </c:if>
                         </c:forEach>
                     </tbody>
                 </table>
@@ -426,7 +440,9 @@
             </div>
             
         </c:if>
-        
+        <script src="<c:url value="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js" />"></script>
+        <script src="<c:url value="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js" />"></script>
+        <script src="resources/js/comment.js" ></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
                 integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
         crossorigin="anonymous"></script>

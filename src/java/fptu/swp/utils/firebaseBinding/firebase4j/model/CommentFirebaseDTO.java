@@ -5,6 +5,7 @@
  */
 package fptu.swp.utils.firebaseBinding.firebase4j.model;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -51,8 +52,8 @@ public class CommentFirebaseDTO {
         this.eventId = eventId;
     }
 
-    public Map<String, ReplyFirebaseDTO> getReplyList() {
-        return replyList;
+    public HashMap<String, ReplyFirebaseDTO> getReplyList() {
+        return (HashMap<String, ReplyFirebaseDTO>) replyList;
     }
 
     public void setReplyList(Map<String, ReplyFirebaseDTO> replyList) {

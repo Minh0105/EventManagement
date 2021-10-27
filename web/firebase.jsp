@@ -13,7 +13,7 @@
         <title>JSP Page</title>
         <link rel="profile" href="<c:url value='http://gmpg.org/xfn/11' />" />
         <script src="<c:url value='https://code.jquery.com/jquery-1.10.2.js' />"></script>
-        <script src="<c:url value='https://cdn.firebase.com/v0/firebase.js' />"></script>
+<!--        <script src="<c:url value='https://cdn.firebase.com/v0/firebase.js' />"></script>-->
     </head>
     <body>
         <div>

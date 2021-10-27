@@ -16,6 +16,7 @@ public class ReplyFirebaseDTO {
     private int userId;
     private String userName;
     private String userRoleName;
+    private int eventId;
     
     public ReplyFirebaseDTO(String content, String statusId, String userAvatar, int userId, String userName, String userRoleName) {
         this.content = content;
@@ -75,6 +76,14 @@ public class ReplyFirebaseDTO {
 
     public void setUserRoleName(String userRoleName) {
         this.userRoleName = userRoleName;
+    }
+
+    public int getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(int eventId) {
+        this.eventId = eventId;
     }
 
     @Override

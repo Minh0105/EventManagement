@@ -28,7 +28,7 @@ import org.apache.log4j.PropertyConfigurator;
  */
 public class LoadFileServletListener implements ServletContextListener {
     
-    private static Logger logger;
+    private static org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(LoadFileServletListener.class);
     
     public void contextInitialized(ServletContextEvent sce) {
         configLog4J(sce);
@@ -49,7 +49,7 @@ public class LoadFileServletListener implements ServletContextListener {
         System.setProperty("PATH", context.getRealPath("/"));
         
         PropertyConfigurator.configure(fullpath);
-        logger = Logger.getLogger(LoadFileServletListener.class);
+        LOGGER = Logger.getLogger(LoadFileServletListener.class);
     }
     
 
@@ -87,10 +87,10 @@ public class LoadFileServletListener implements ServletContextListener {
             roadmap.keySet().forEach((key) -> {
                 System.out.println(key + ":" + roadmap.get(key));
             });
-            logger.info("Load Roadmap Success");
+            LOGGER.info("Load Roadmap Success");
         } catch (NullPointerException | UnsupportedOperationException | IOException npe) {
             npe.printStackTrace();
-            logger.fatal("Load Roadmap Failed: " + npe.getMessage());
+            LOGGER.fatal("Load Roadmap Failed: " + npe.getMessage());
         } finally {
             try {
                 if (fr != null) {
@@ -168,6 +168,10 @@ public class LoadFileServletListener implements ServletContextListener {
             context.removeAttribute("ROADMAP");
             context.removeAttribute("AUTH");
             Schedule.shutdownSchedule();
+//            LOGGER.info("KIll Thread Success");
+//            Thread th = Thread.currentThread();
+//            
+//            th.stop();
         } catch (UnsupportedOperationException ex) {
             ex.printStackTrace();
         }
