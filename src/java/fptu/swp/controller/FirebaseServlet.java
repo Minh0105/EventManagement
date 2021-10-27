@@ -42,7 +42,7 @@ public class FirebaseServlet extends HttpServlet {
             Map<String, Object> mapData = firebase.getAllCommentAndReplyInFirebase();
             for (String key : mapData.keySet()) {
                 System.out.println("Key : " + key);
-                System.out.println("        Data: " + (CommentFirebaseDTO) mapData.get(key));
+                //System.out.println("        Data: " + (CommentFirebaseDTO) mapData.get(key));
             }
             request.setAttribute("mapData", mapData);
         } catch (FirebaseException ex) {

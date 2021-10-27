@@ -8,6 +8,7 @@ package fptu.swp.controller;
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
 import fptu.swp.entity.location.LocationDTO;
+import fptu.swp.entity.schedule.Schedule;
 import fptu.swp.entity.user.LecturerBriefInfoDTO;
 import fptu.swp.entity.user.UserDTO;
 import java.io.FileInputStream;
@@ -85,6 +86,7 @@ public class CreateEventServlet extends HttpServlet {
                 if((checkInsertDateTimeLocation = eventDao.insertNewEventDateTimeLocation(chosenDate, chosenLocationList, chosenTimeRange, eventId)) 
                         && (checkInsertLecturersInEvent = eventDao.insertNewEventLecturer(chosenLecturerList, eventId))){
                     url = VIEW_NEWFEED_SERVLET;
+                    Schedule.updateSchedule();
                     session.removeAttribute("ChosenLecturerList");
                     session.removeAttribute("ChosenLocationList");
                     session.removeAttribute("ChosenDate");

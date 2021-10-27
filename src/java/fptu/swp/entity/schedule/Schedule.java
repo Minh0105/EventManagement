@@ -30,16 +30,18 @@ public class Schedule {
 
     public static void initializeScheduler() {
         try {
-
             ScheduleDAO dao = new ScheduleDAO();
             List<ScheduleDTO> listTimingNoti = dao.getListTimingNoti();
-            //List<ScheduleDTO> listTimingFinish = dao.get
+            List<ScheduleDTO> listTimingFinish = dao.getListTimingFinish();
+            
             UserDAO userDao = new UserDAO();
+            EventDAO eventDao = new EventDAO();
+            
+            Date now = new Date();
             
             if (listTimingNoti != null) {
                 for (ScheduleDTO s : listTimingNoti) {
-                    //System.out.println(s.toString());
-                    Date now = new Date();
+                    System.out.println(s.toString());
                     //Date halfMinBeforeNow = new Date(System.currentTimeMillis() - 30 * 1000); //CAI NAY DE TEST
 
                     Date oneHourAfterNow = new Date(System.currentTimeMillis() - 3600 * 1000);
@@ -63,6 +65,31 @@ public class Schedule {
                 }
             }
             
+            if (listTimingFinish != null) {
+                for (ScheduleDTO s : listTimingFinish) {
+                    
+                    System.out.println(s.toString());
+                    
+                    //Date halfMinBeforeNow = new Date(System.currentTimeMillis() - 30 * 1000); //CAI NAY DE TEST
+
+                    //Date oneHourAfterNow = new Date(System.currentTimeMillis() - 3600 * 1000);
+
+                    //long remainingTime = now.getTime() - halfMinBeforeNow.getTime();  //CAI NAY DE TEST
+
+                    long remainingTime = s.getRunningTime().getTime() - now.getTime(); //Con 1 gio nua bat dau su kien
+                    System.out.println("Event ket thuc sau: " + remainingTime +" miliseconds");
+                    scheduler.schedule(()
+                            -> {
+                        try {
+                            eventDao.updateEventStatus(s.getEventId(), 3);
+                            
+                        } catch (Exception ex) {
+                            //Chua biet ghi gi hmu
+                        }
+                    }, remainingTime, TimeUnit.MILLISECONDS);
+                }
+            }
+            
             
         } catch (Exception ex) {
             //Chua biet ghi gi hmu
@@ -72,7 +99,6 @@ public class Schedule {
     public static void updateSchedule(){
             scheduler.shutdown();
             scheduler = Executors.newScheduledThreadPool(1);
-            initializeScheduler();
-            
+            initializeScheduler();   
     }
 }

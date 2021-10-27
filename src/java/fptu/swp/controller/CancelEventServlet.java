@@ -7,6 +7,7 @@ package fptu.swp.controller;
 
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
+import fptu.swp.entity.schedule.Schedule;
 import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -62,6 +63,7 @@ public class CancelEventServlet extends HttpServlet {
             if (detail != null) {
                 if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {
                     if (eventDao.cancelEvent(eventId)) {
+                        Schedule.updateSchedule();
                         if ("ADMIN".equals(loginUser.getRoleName())) {
                             url = FILTER_EVENT_SERVLET_PATH;
                         }

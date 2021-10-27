@@ -62,49 +62,51 @@ public class EventDAO {
                         + " LEFT JOIN tblUsers m ON s.userId = m.id"
                         + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
                         + "                  LEFT JOIN tblLocations u ON locationId = u.id) t ON s.id = t.eventId"
-                        + " WHERE s.id IN (SELECT eventId FROM tblStudentsInEvents WHERE studentId = ? AND isFollowing = 1) AND s.statusId = 1";
+                        + " WHERE s.id IN (SELECT eventId FROM tblStudentsInEvents WHERE studentId = ? AND isFollowing = 1) AND (s.statusId = 1 OR s.statusId =2)";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, studentId);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     eventId = rs.getInt("eventId");
-                    if (currentEventId != eventId) { //qua 1 event khac
-                        if (currentEventId != 0) { //event khong phai event dau tien
+                    if (currentEventId != eventId) {
+                        if (currentEventId != 0) {
                             int i = 0;
                             String location = "";
                             for (i = 0; i < listLocation.size() - 1; i++) {
                                 location += listLocation.get(i) + ", ";
-                            }//format cuoi location
+                            }
                             location += listLocation.get(i);
                             EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
                             list.add(card);
                         }
-                        listLocation.clear(); //qua moi event khoi tao lai list dia diem
+                        listLocation.clear();
                         currentEventId = eventId;
                         eventName = rs.getString("eventName");
                         byte[] tmp = rs.getBytes("eventPoster");
                         eventPoster = Base64.getEncoder().encodeToString(tmp);
                         organizerName = rs.getString("organizerName");
-                        formatter = new SimpleDateFormat("EEEE, dd/MM/yyyy");
                         Date dateFromDB = rs.getTimestamp("date");
                         date = formatter.format(dateFromDB).toString();
-                        locationName = rs.getString("locationName"); //lay location cua 1 record
+                        locationName = rs.getString("locationName");
                         following = rs.getInt("followers");
                         joining = rs.getInt("participants");
-                        listLocation.add(locationName); // add location vao chuoi
+                        listLocation.add(locationName);
                     } else {
                         locationName = rs.getString("locationName");
                         listLocation.add(locationName);
                     }
                 }
-                int i = 0;
-                String location = "";
-                for (i = 0; i < listLocation.size() - 1; i++) {
-                    location += listLocation.get(i) + ", ";
-                } //format chuoi location
-                location += listLocation.get(i);
-                EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
-                list.add(card);
+                if (listLocation.size() != 0) {
+                    int i = 0;
+                    String location = "";
+                    for (i = 0; i < listLocation.size() - 1; i++) {
+                        location += listLocation.get(i) + ", ";
+                    }
+                    location += listLocation.get(i);
+                    EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                    list.add(card);
+                }
+
             }
 
         } catch (Exception e) {
@@ -148,7 +150,7 @@ public class EventDAO {
                         + " LEFT JOIN tblUsers m ON s.userId = m.id"
                         + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
                         + "                  LEFT JOIN tblLocations u ON locationId = u.id) t ON s.id = t.eventId"
-                        + " WHERE s.id IN (SELECT eventId FROM tblStudentsInEvents WHERE studentId = ? AND isJoining = 1) AND s.statusId = 1";
+                        + " WHERE s.id IN (SELECT eventId FROM tblStudentsInEvents WHERE studentId = ? AND isJoining = 1) AND (s.statusId = 1 OR s.statusId = 2)";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, studentId);
                 rs = stm.executeQuery();
@@ -171,7 +173,6 @@ public class EventDAO {
                         byte[] tmp = rs.getBytes("eventPoster");
                         eventPoster = Base64.getEncoder().encodeToString(tmp);
                         organizerName = rs.getString("organizerName");
-                        formatter = new SimpleDateFormat("EEEE, dd/MM/yyyy");
                         Date dateFromDB = rs.getTimestamp("date");
                         date = formatter.format(dateFromDB).toString();
                         locationName = rs.getString("locationName");
@@ -183,14 +184,16 @@ public class EventDAO {
                         listLocation.add(locationName);
                     }
                 }
-                int i = 0;
-                String location = "";
-                for (i = 0; i < listLocation.size() - 1; i++) {
-                    location += listLocation.get(i) + ", ";
+                if (listLocation.size() != 0) {
+                    int i = 0;
+                    String location = "";
+                    for (i = 0; i < listLocation.size() - 1; i++) {
+                        location += listLocation.get(i) + ", ";
+                    }
+                    location += listLocation.get(i);
+                    EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                    list.add(card);
                 }
-                location += listLocation.get(i);
-                EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
-                list.add(card);
             }
 
         } catch (Exception e) {
@@ -287,14 +290,16 @@ public class EventDAO {
                         listLocation.add(locationName);
                     }
                 }
-                int i = 0;
-                String location = "";
-                for (i = 0; i < listLocation.size() - 1; i++) {
-                    location += listLocation.get(i) + ", ";
+                if (listLocation.size() != 0) {
+                    int i = 0;
+                    String location = "";
+                    for (i = 0; i < listLocation.size() - 1; i++) {
+                        location += listLocation.get(i) + ", ";
+                    }
+                    location += listLocation.get(i);
+                    EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                    list.add(card);
                 }
-                location += listLocation.get(i);
-                EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
-                list.add(card);
 
             }
         } catch (Exception e) {
@@ -871,7 +876,7 @@ public class EventDAO {
         ResultSet rs = null;
         List<String> listLocation = new ArrayList<>();
 
-        String locationName = "";  
+        String locationName = "";
         String sql = "";
         int eventId = 0;
         int currentEventId = 0;
@@ -1082,20 +1087,22 @@ public class EventDAO {
     }
 
     public boolean updateFollowersListAfterCreateEvent(List<UserDTO> listFollowers, int eventId) throws SQLException {
-        if(listFollowers == null || listFollowers.size() == 0) return true;
-        
+        if (listFollowers == null || listFollowers.size() == 0) {
+            return true;
+        }
+
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
         String sql = "";
-        
+
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 sql = "INSERT INTO tblStudentsInEvents(eventId, studentId, isFollowing, isJoining) "
-                            + " VALUES(?,?,1,0)";
+                        + " VALUES(?,?,1,0)";
                 stm = conn.prepareStatement(sql);
-                for(UserDTO student : listFollowers){
+                for (UserDTO student : listFollowers) {
                     stm.setInt(1, eventId);
                     stm.setInt(2, student.getId());
                     check = stm.executeUpdate() > 0;
@@ -1122,7 +1129,7 @@ public class EventDAO {
         }
         return check;
     }
-    
+
     public boolean updateEventStatus(int eventId, int statusId) throws SQLException {
         boolean check = false;
         Connection conn = null;
@@ -1137,7 +1144,7 @@ public class EventDAO {
                 stm.setInt(1, statusId);
                 stm.setInt(2, eventId);
                 check = stm.executeUpdate() > 0;
-                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -1150,7 +1157,7 @@ public class EventDAO {
         }
         return check;
     }
-    
+
     public boolean updateEventInfo(EventDetailDTO detail) throws SQLException {
         boolean check = false;
         Connection conn = null;
@@ -1166,7 +1173,7 @@ public class EventDAO {
                 stm.setString(2, detail.getDescription());
                 stm.setInt(3, detail.getId());
                 check = stm.executeUpdate() > 0;
-                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -1179,7 +1186,7 @@ public class EventDAO {
         }
         return check;
     }
-    
+
     public boolean updateEventPoster(int eventId, FileInputStream savedPic) throws SQLException {
         boolean check = false;
         Connection conn = null;
@@ -1194,7 +1201,7 @@ public class EventDAO {
                 stm.setBinaryStream(1, savedPic);
                 stm.setInt(2, eventId);
                 check = stm.executeUpdate() > 0;
-                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -1207,18 +1214,18 @@ public class EventDAO {
         }
         return check;
     }
-    
-    public List<Integer> getListEventIdByStatusId(int statusId) throws NamingException, SQLException{
+
+    public List<Integer> getListEventIdByStatusId(int statusId) throws NamingException, SQLException {
         List<Integer> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-         try {
+        try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT id\n" +
-                                " FROM tblEvents\n" +
-                                " WHERE statusId = ?";
+                String sql = "SELECT id\n"
+                        + " FROM tblEvents\n"
+                        + " WHERE statusId = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, statusId);
                 rs = stm.executeQuery();
@@ -1240,5 +1247,5 @@ public class EventDAO {
         }
         return list;
     }
-    
+
 }
