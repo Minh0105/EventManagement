@@ -5,6 +5,7 @@
  */
 package fptu.swp.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import static fptu.swp.controller.FirebaseServlet.LOGGER;
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
@@ -98,20 +99,23 @@ public class ManageByAdminServlet extends HttpServlet {
 
                 // firebase get the value of comment in firebase
                 FirebaseBindingSingleton firebase = FirebaseBindingSingleton.getInstance(linkToFirebase);
-                HashMap<String, Object> mapComment = (HashMap<String, Object>) firebase.getAllCommentAndReplyInFirebase();
-//                Map<String, CommentFirebaseDTO> mapComment = new HashMap<>();
-//                for(String key : map.keySet()){
-//                    mapComment.put(key, (CommentFirebaseDTO) map.get(key));
-//                }
+
+                HashMap<String, CommentFirebaseDTO> mapComment = (HashMap<String, CommentFirebaseDTO>) firebase.getAllCommentAndReplyInFirebase();
+                
+                
                 request.setAttribute("mapComment", mapComment);
                 LOGGER.info("Request Attribute LIST_ORGANIZER_EVENT: " + mapComment);
                 url = ADMIN_PAGE_PATH;
 
             }
-        } catch (Exception ex) {
+        } catch (JsonProcessingException ex) {
             LOGGER.error(ex);
         } catch (FirebaseException ex) {
-            java.util.logging.Logger.getLogger(ManageByAdminServlet.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.error(ex);
+        } catch (UnsupportedEncodingException ex) {
+            LOGGER.error(ex);
+        } catch (Exception ex) {
+            LOGGER.error(ex);
         } finally {
             RequestDispatcher dis = request.getRequestDispatcher(url);
             dis.forward(request, response);

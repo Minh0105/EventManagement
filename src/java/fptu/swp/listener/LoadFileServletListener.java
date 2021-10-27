@@ -167,6 +167,7 @@ public class LoadFileServletListener implements ServletContextListener {
             ServletContext context = sce.getServletContext();
             context.removeAttribute("ROADMAP");
             context.removeAttribute("AUTH");
+            Schedule.shutdownSchedule();
         } catch (UnsupportedOperationException ex) {
             ex.printStackTrace();
         }

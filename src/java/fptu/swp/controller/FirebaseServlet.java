@@ -5,6 +5,10 @@
  */
 package fptu.swp.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import static fptu.swp.controller.ManageByAdminServlet.LOGGER;
+import fptu.swp.entity.schedule.ScheduleDTO;
 import fptu.swp.utils.firebaseBinding.firebase4j.demo.FirebaseBindingSingleton;
 import java.io.IOException;
 
@@ -18,7 +22,10 @@ import fptu.swp.utils.firebaseBinding.firebase4j.error.FirebaseException;
 import fptu.swp.utils.firebaseBinding.firebase4j.error.JacksonUtilityException;
 import fptu.swp.utils.firebaseBinding.firebase4j.model.CommentFirebaseDTO;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,15 +46,16 @@ public class FirebaseServlet extends HttpServlet {
 
             // firebase get the value of comment in firebase
             FirebaseBindingSingleton firebase = FirebaseBindingSingleton.getInstance(linkToFirebase);
-            Map<String, Object> mapData = firebase.getAllCommentAndReplyInFirebase();
-            for (String key : mapData.keySet()) {
-                System.out.println("Key : " + key);
-                System.out.println("        Data: " + (CommentFirebaseDTO) mapData.get(key));
-            }
-            request.setAttribute("mapData", mapData);
+
+            HashMap<String, CommentFirebaseDTO> mapComment = (HashMap<String, CommentFirebaseDTO>) firebase.getAllCommentAndReplyInFirebase();
+            request.setAttribute("mapComment", mapComment);
+            LOGGER.info("Request Attribute LIST_ORGANIZER_EVENT: " + mapComment);
+
         } catch (FirebaseException ex) {
             LOGGER.error(ex);
         } catch (UnsupportedEncodingException ex) {
+            LOGGER.error(ex);
+        } catch (JsonProcessingException ex) {
             LOGGER.error(ex);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher("firebase.jsp");
@@ -96,9 +104,9 @@ public class FirebaseServlet extends HttpServlet {
 
     private void sendNotificationSource() throws FirebaseException, JacksonUtilityException, IOException {
         String linkToFirebase = "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/";
-            // Send Notification for one certain User
+        // Send Notification for one certain User
         FirebaseBindingSingleton firebaseBinding = FirebaseBindingSingleton.getInstance(linkToFirebase);
-        boolean res = firebaseBinding.sendNotificationToUserID("test for notifi", 4);
+        firebaseBinding.sendNotificationToUserID(new ScheduleDTO());
     }
 
     // for add All the list of notificationDTO

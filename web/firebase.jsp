@@ -16,23 +16,39 @@
         <script src="<c:url value='https://cdn.firebase.com/v0/firebase.js' />"></script>
     </head>
     <body>
-        <h1>JSON</h1>
-        <form onSubmit="return false;">
-            CommentID <input type="text" name="commentID" id="" value="" /><br>
-                        Content <input type="text" name="contents" id="" value="" /><br>
-                        Username <input type="text" name="userName" id="" value="" /><br>
-            <!--<input type="text" name="txt" value="" />-->
-            <input  type="submit" onclick="sendCmt(this.form)" />
-            
-        </form>
-        <form onsubmit="return false;">
-            CMT ID <input type="text" style="border: 1px green solid;" name="CmtID" value=""> 
-            <input  type="submit" onclick="sendReply(this.form)" value="Reply"/>
-        </form>
-        <h2>${requestScope.isSuccess}</h2>
-        <div id="messages">
+        <div>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Content</th>
+                            <th>Event ID</th>
+                            <th>userAvatar</th>
+                            <th>userName</th>
+                            <th>userRoleName</th>
+                            <th>StatusID</th>
+                            <th>Ban comment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="comment" items="${requestScope.mapComment}" varStatus="status">
+                            <tr>
+                                <td>${status.count}</td>
+                                <td>${comment.value.content}</td>
+                                <td>${comment.value.eventId}</td>
+                                <td><img src="${comment.value.userAvatar}" /></td>
+                                <td>${comment.value.userName}</td>
+                                <td>${comment.value.userRoleName}</td>
+                                <td>${comment.value.statusId}</td>
+                                <td><button onclick="banComment(${comment.key})">Ban</button>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
 
-        </div>
+            </div>
+        <script src="resources/js/comment.js" ></script>
         
         
         <script src="<c:url value="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js" />"></script>

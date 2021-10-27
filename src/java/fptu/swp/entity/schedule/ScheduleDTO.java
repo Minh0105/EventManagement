@@ -16,6 +16,8 @@ public class ScheduleDTO {
     private Date runningTime;
     private String eventName;
     private String organizerAvatar;
+    private String message;
+    private int userId;
 
     public ScheduleDTO() {
     }
@@ -58,6 +60,23 @@ public class ScheduleDTO {
     public void setOrganizerAvatar(String organizerAvatar) {
         this.organizerAvatar = organizerAvatar;
     }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
 
     @Override
     public String toString() {

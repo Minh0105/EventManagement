@@ -1,10 +1,12 @@
 package fptu.swp.utils.firebaseBinding.firebase4j.demo;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.JsonParseException;
 import java.io.UnsupportedEncodingException;
 import com.fasterxml.jackson.databind.ObjectMapper; 
 import com.fasterxml.jackson.databind.ObjectWriter; 
 import fptu.swp.entity.event.CommentDTO;
+import fptu.swp.entity.schedule.ScheduleDTO;
 import fptu.swp.utils.firebaseBinding.firebase4j.model.EventNotification;
 
 
@@ -15,6 +17,7 @@ import fptu.swp.utils.firebaseBinding.firebase4j.error.FirebaseException;
 import fptu.swp.utils.firebaseBinding.firebase4j.error.JacksonUtilityException;
 import fptu.swp.utils.firebaseBinding.firebase4j.model.CommentFirebaseDTO;
 import fptu.swp.utils.firebaseBinding.firebase4j.model.FirebaseResponse;
+import java.util.HashMap;
 import java.util.Map;
 import org.codehaus.jackson.map.JsonMappingException;
 
@@ -47,27 +50,36 @@ public class FirebaseBindingSingleton {
     private FirebaseBindingSingleton() {
     }
     
-    public Map<String, Object> getAllCommentAndReplyInFirebase() throws FirebaseException, UnsupportedEncodingException {
+    public Map<String, CommentFirebaseDTO> getAllCommentAndReplyInFirebase() throws FirebaseException, UnsupportedEncodingException, JsonProcessingException, IOException {
         
         Firebase firebase = new Firebase(FIREBASE_DATABASE_LINK_EVENT_COMMENT);
         FirebaseResponse response = firebase.get();
-        return response.getBody();
+        
+        Map<String, Object> map = response.getBody();
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, CommentFirebaseDTO> mapData = new HashMap<>();
+        for (String key : map.keySet()) {
+                String jsonString = objectMapper.writeValueAsString(map.get(key));
+                CommentFirebaseDTO comment = objectMapper.readValue(jsonString, CommentFirebaseDTO.class);
+                mapData.put(key, comment);
+        }
+        
+        return mapData;
     }
     
     // content is the content of message, and userID is the one who can recieved the message in notification card
-    public boolean sendNotificationToUserID(String content, int userID) throws FirebaseException, JacksonUtilityException, UnsupportedEncodingException, IOException {
+    public boolean sendNotificationToUserID(ScheduleDTO dto) throws FirebaseException, JacksonUtilityException, UnsupportedEncodingException, IOException {
         
-        String strUserID = Integer.toString(userID);
         System.out.println(FIREBASE_DATABASE_URL);
         Firebase firebase = new Firebase(FIREBASE_DATABASE_LINK_EVENT_NOTIFICATION);
         
 //        Map<String, Object> data = new LinkedHashMap<>();
-        EventNotification eventNotification = new EventNotification(strUserID, content);
+        
 //        data.put("haha", "dcm");
         // id is null for auto-render unique ID in firebase
         
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String json = ow.writeValueAsString(eventNotification);
+        String json = ow.writeValueAsString(dto);
         FirebaseResponse response = firebase.post(json);
         return response.getSuccess();
     }
