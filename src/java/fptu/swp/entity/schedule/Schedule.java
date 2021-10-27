@@ -49,6 +49,7 @@ public class Schedule {
                     //long remainingTime = now.getTime() - halfMinBeforeNow.getTime();  //CAI NAY DE TEST
 
                     long remainingTime = s.getRunningTime().getTime() - oneHourAfterNow.getTime(); //Con 1 gio nua bat dau su kien
+                    System.out.println("Gui noti event: "+s.getEventName() +" sau: "+remainingTime +" milisecondss");
                     scheduler.schedule(()
                             -> {
                         try {

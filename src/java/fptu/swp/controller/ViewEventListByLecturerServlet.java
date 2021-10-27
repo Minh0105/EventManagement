@@ -7,10 +7,10 @@ package fptu.swp.controller;
 
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
+import fptu.swp.entity.user.UserDAO;
 import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -19,15 +19,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 /**
  *
  * @author triet
  */
-public class FilterEventServlet extends HttpServlet {
-static final Logger LOGGER = Logger.getLogger(FilterEventServlet.class);
+public class ViewEventListByLecturerServlet extends HttpServlet {
+static final Logger LOGGER = Logger.getLogger(ViewEventListByLecturerServlet.class);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,55 +39,41 @@ static final Logger LOGGER = Logger.getLogger(FilterEventServlet.class);
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        LOGGER.info("Begin FilterEventServlet");
+        LOGGER.info("Begin ViewEventListByLecturerServlet");
         //declare var
+        UserDAO userDao = new UserDAO();
         EventDAO eventDao = new EventDAO();
-        
+
         //get roadmap
         ServletContext context = request.getServletContext();
         HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
 
         //default url
         final String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
-        final String MANAGE_BY_ADMIN_SERVLET = context.getInitParameter("MANAGE_BY_ADMIN_SERVLET");
-        final String STUDENT_VIEW_EVENT_LIST_SERVLET = context.getInitParameter("STUDENT_VIEW_EVENT_LIST_SERVLET");
-        final String ORGANIZER_VIEW_EVENT_LIST_SERVLET = context.getInitParameter("ORGANIZER_VIEW_EVENT_LIST_SERVLET");
-        final String LECTURER_VIEW_EVENT_LIST_SERVLET = context.getInitParameter("LECTURER_VIEW_EVENT_LIST_SERVLET");
+        final String ALL_EVENT_PAGE_LABEL = context.getInitParameter("ALL_EVENT_PAGE_LABEL");
         final String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
-        final String MANAGE_BY_ADMIN_SERVLET_PATH = roadmap.get(MANAGE_BY_ADMIN_SERVLET);
-        final String STUDENT_VIEW_EVENT_LIST_SERVLET_PATH = roadmap.get(STUDENT_VIEW_EVENT_LIST_SERVLET);
-        final String ORGANIZER_VIEW_EVENT_LIST_SERVLET_PATH = roadmap.get(ORGANIZER_VIEW_EVENT_LIST_SERVLET);
-        final String LECTURER_VIEW_EVENT_LIST_SERVLET_PATH = roadmap.get(LECTURER_VIEW_EVENT_LIST_SERVLET);
+        final String ALL_EVENT_PAGE_PATH = roadmap.get(ALL_EVENT_PAGE_LABEL);
         String url = INVALID_PAGE_PATH;
-        String idOrganizer = request.getParameter("idOrganizer");
-        String eventStatus = request.getParameter("eventStatus");
-        String organizerType = request.getParameter("organizerType");
-        try{
-            HttpSession session = request.getSession();
-            UserDTO loginUser = (UserDTO) session.getAttribute("USER");
-            int organizerId = (idOrganizer == null)? 0:Integer.parseInt(idOrganizer);
-            int statusId = (eventStatus == null)? 0:Integer.parseInt(eventStatus);
-            List<EventDetailDTO> listEvent = eventDao.filterEvent(organizerId, statusId);
-            request.setAttribute("LIST_EVENT", listEvent);
-            LOGGER.info("Request Attribute LIST_EVENT: " + listEvent);
-            if("ADMIN".equals(loginUser.getRoleName())){
-                url = MANAGE_BY_ADMIN_SERVLET_PATH + "?management=event";
+
+        //parameter
+        String type = request.getParameter("list");
+        try {
+            if ("filterAll".equals(type)) {
+                List<UserDTO> listOrganizer = userDao.getListAllOrganizer();
+                request.setAttribute("LIST_ORGANIZER_EVENT", listOrganizer);
+                List<EventDetailDTO> listEvent = (List<EventDetailDTO>) request.getAttribute("LIST_EVENT");
+                request.setAttribute("LIST_EVENT", listEvent);
+                LOGGER.info("Request Attribute LIST_EVENT: " + listEvent);
+                LOGGER.info("Request Attribute LIST_ORGANIZER_EVENT: " + listOrganizer);
+                url = ALL_EVENT_PAGE_PATH;
             }
-            if("STUDENT".equals(loginUser.getRoleName())){
-                url = STUDENT_VIEW_EVENT_LIST_SERVLET_PATH + "?list=filterAll";
-            }
-            if("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName())){
-                url = ORGANIZER_VIEW_EVENT_LIST_SERVLET_PATH + "?list=filterAll";
-            }
-            if("LECTURER".equals(loginUser.getRoleName())){
-                url = LECTURER_VIEW_EVENT_LIST_SERVLET_PATH + "?list=filterAll";
-            }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             LOGGER.error(ex);
-        }finally {
+        } finally {
             RequestDispatcher dis = request.getRequestDispatcher(url);
             dis.forward(request, response);
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

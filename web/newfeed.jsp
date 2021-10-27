@@ -67,11 +67,12 @@
                                 <button class="btn btn-outline-light profile-button logout " type="submit">
                                     <img src="resources/icon/log_out_icon.svg">Log Out</button> 
                             </form>   -->
-                            <form action="viewEventListByStudent" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                            <form action="AllEventPage" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <button class="btn btn-outline-light profile-button logout " type="submit">
                                     <img src="resources/icon/log_out_icon.svg">View All Event</button> 
-                                <input type ="hidden" name="list" value="filterAll"/>
-                            </form>  
+                            </form>
+
 
                         </li>				
                     </ul>

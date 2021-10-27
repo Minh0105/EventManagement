@@ -89,6 +89,14 @@
         <param-value>viewEventListByStudent</param-value>
     </context-param>
     <context-param>
+        <param-name>ORGANIZER_VIEW_EVENT_LIST_SERVLET</param-name>
+        <param-value>viewEventListByOrganizer</param-value>
+    </context-param>
+    <context-param>
+        <param-name>LECTURER_VIEW_EVENT_LIST_SERVLET</param-name>
+        <param-value>viewEventListByLecturer</param-value>
+    </context-param>
+    <context-param>
         <param-name>ALL_EVENT_PAGE_LABEL</param-name>
         <param-value>AllEventPage</param-value>
     </context-param>
@@ -180,6 +188,14 @@
         <servlet-name>UpdateEventServlet</servlet-name>
         <servlet-class>fptu.swp.controller.UpdateEventServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewEventListByOrganizerServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.ViewEventListByOrganizerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewEventListByLecturerServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.ViewEventListByLecturerServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -243,6 +259,14 @@
     <servlet-mapping>
         <servlet-name>UpdateEventServlet</servlet-name>
         <url-pattern>/UpdateEventServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewEventListByOrganizerServlet</servlet-name>
+        <url-pattern>/ViewEventListByOrganizerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewEventListByLecturerServlet</servlet-name>
+        <url-pattern>/ViewEventListByLecturerServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

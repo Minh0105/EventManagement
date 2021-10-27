@@ -34,3 +34,5 @@ viewEventListByStudent=ViewEventListByStudentServlet
 AllEventPage=allEvent.jsp
 cancelEvent=CancelEventServlet
 updateEvent=UpdateEventServlet
+viewEventListByOrganizer=ViewEventListByOrganizerServlet
+viewEventListByLecturer=ViewEventListByLecturerServlet
