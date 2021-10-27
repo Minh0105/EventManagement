@@ -43,6 +43,7 @@ public class ScheduleDAO {
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     int eventId = rs.getInt("eventId");
+                    //int startSlot = rs.getInt("startSlot");
                     String runningDate = sdf.format(rs.getTimestamp("runningDate"));
                     String time = runningDate.substring(0,11) + rs.getString("rangeDetail").substring(0,5);
                     Date startTime = sdf.parse(time);

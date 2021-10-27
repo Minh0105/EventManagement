@@ -52,7 +52,7 @@ public class EventDAO {
         int following = 0;
         int joining = 0;
         List<String> listLocation = new ArrayList<>();
-        SimpleDateFormat formatter = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("EEEE, dd/MM/yyyy");
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
@@ -140,7 +140,7 @@ public class EventDAO {
         int following = 0;
         int joining = 0;
         List<String> listLocation = new ArrayList<>();
-        SimpleDateFormat formatter = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("EEEE, dd/MM/yyyy");
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
