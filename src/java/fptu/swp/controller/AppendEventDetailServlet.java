@@ -5,17 +5,22 @@
  */
 package fptu.swp.controller;
 
+import fptu.swp.entity.event.EventDetailDTO;
 import fptu.swp.entity.location.LocationDTO;
 import fptu.swp.entity.range.RangeDAO;
 import fptu.swp.entity.range.RangeDTO;
 import fptu.swp.entity.user.LecturerBriefInfoDTO;
 import fptu.swp.entity.user.UserDAO;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +32,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -103,11 +110,11 @@ public class AppendEventDetailServlet extends HttpServlet {
                     dayId = Integer.parseInt(str.substring(2));
                 }
                 String chosenTimeRange = "";
-                if(startSlot.getId() == endSlot.getId()){
-                    chosenTimeRange = startSlot.getId() + " (" + rangeDao.getDetailSlotById(startSlot.getId()) +")";
-                }else{
+                if (startSlot.getId() == endSlot.getId()) {
+                    chosenTimeRange = startSlot.getId() + " (" + rangeDao.getDetailSlotById(startSlot.getId()) + ")";
+                } else {
                     chosenTimeRange = startSlot.getId() + " - " + endSlot.getId()
-                        + " (" + rangeDao.getDetailSlotById(startSlot.getId()).substring(0, 5) + " - " + rangeDao.getDetailSlotById(endSlot.getId()).substring(7) + ")";
+                            + " (" + rangeDao.getDetailSlotById(startSlot.getId()).substring(0, 5) + " - " + rangeDao.getDetailSlotById(endSlot.getId()).substring(7) + ")";
                 }
                 session.setAttribute("ChosenTimeRange", chosenTimeRange);
                 LOGGER.info("Session Attribute - ChosenTimeRange : " + chosenTimeRange);
@@ -125,6 +132,33 @@ public class AppendEventDetailServlet extends HttpServlet {
 
                 LOGGER.info("Session Attribute - LecturerList : " + lecturerList);
                 session.setAttribute("LecturerList", lecturerList);
+
+                EventDetailDTO detail = (EventDetailDTO) session.getAttribute("EVENT_DETAIL_REVIEW");
+                if (detail == null) {
+                    InputStream is = null;
+                    byte[] imageBytes = null;
+                    URL fileDefaultPoster = new URL("https://daihoc.fpt.edu.vn/media/2020/06/banner04.png");
+                    try {
+                        is = fileDefaultPoster.openStream();
+                        imageBytes = IOUtils.toByteArray(is);
+                    } catch (IOException e) {
+                        LOGGER.error("Failed while reading bytes from %s: %s" + fileDefaultPoster.toExternalForm() + e.getMessage());
+                        e.printStackTrace();
+                        // Perform any other exception handling that's appropriate.
+                    } finally {
+                        if (is != null) {
+                            is.close();
+                        }
+                    }
+                    if (imageBytes != null) {
+                        String poster = Base64.getEncoder().encodeToString(imageBytes);
+                        detail = new EventDetailDTO();
+                        detail.setPoster(poster);
+                        LOGGER.info("Session attribute: EVENT_DETAIL_REVIEW: " + detail);
+                        session.setAttribute("EVENT_DETAIL_REVIEW", detail);
+                    }
+
+                }
 
                 // URL for go to appendEventDetail
                 url = APPEND_EVENT_DETAIL_PAGE;

@@ -125,10 +125,12 @@
                                 <p class="event_infor event_join"><%= card.getJoining() %></p>
                                 <% 
                                     boolean hasFollow = false;
-                                    for (EventCardDTO event : listFollowingCard) {
-                                        if (event.getId() == card.getId()) {
-                                            hasFollow = true;
-                                            break;
+                                    if (listFollowingCard != null) {
+                                        for (EventCardDTO event : listFollowingCard) {
+                                            if (event.getId() == card.getId()) {
+                                                hasFollow = true;
+                                                break;
+                                            }
                                         }
                                     }
                                     if (hasFollow) {
@@ -136,11 +138,14 @@
                                         <p class="event_infor follow_tag"></p>
                                 <%
                                     }
+
                                     boolean hasJoin = false;
-                                    for (EventCardDTO event : listJoiningCard) {
-                                        if (event.getId() == card.getId()) {
-                                            hasJoin = true;
-                                            break;
+                                    if (listJoiningCard != null) {
+                                        for (EventCardDTO event : listJoiningCard) {
+                                            if (event.getId() == card.getId()) {
+                                                hasJoin = true;
+                                                break;
+                                            }
                                         }
                                     }
                                     if (hasJoin) {

@@ -67,6 +67,8 @@ public class CreateEventServlet extends HttpServlet {
         //default URL
         final String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
         final String VIEW_NEWFEED_SERVLET = context.getInitParameter("VIEW_NEWFEED_SERVLET");
+        final String CHANGE_DETAIL_BY_CREATING_NEW_EVENT_SERVLET = context.getInitParameter("CHANGE_DETAIL_BY_CREATING_NEW_EVENT_SERVLET");
+        
         String url = INVALID_PAGE_LABEL;
         
         try {
@@ -86,6 +88,10 @@ public class CreateEventServlet extends HttpServlet {
                 if((checkInsertDateTimeLocation = eventDao.insertNewEventDateTimeLocation(chosenDate, chosenLocationList, chosenTimeRange, eventId)) 
                         && (checkInsertLecturersInEvent = eventDao.insertNewEventLecturer(chosenLecturerList, eventId))){
                     url = VIEW_NEWFEED_SERVLET;
+                                  
+                    if(session.getAttribute("CHANGING_EVENT_ID") != null){
+                        url=CHANGE_DETAIL_BY_CREATING_NEW_EVENT_SERVLET +"?stage=end&eventId="+eventId;
+                    }
                     Schedule.updateSchedule();
                     session.removeAttribute("ChosenLecturerList");
                     session.removeAttribute("ChosenLocationList");

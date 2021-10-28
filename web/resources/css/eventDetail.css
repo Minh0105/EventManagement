@@ -843,3 +843,28 @@
     color: white !important;
 }
 
+/* CHOOSE IMAGE  */
+
+#image_container {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+#chosen-image {
+  height: 30vh;
+  width: 100%;
+  min-height: 250px;
+  max-height: 30vh;
+  object-fit: cover;
+  border: none;
+}
+
+
+/* UPLOAD BUTTON */
+#btn_upload_image {
+  display: inline-block;
+  background-color: #136aeb;
+  border-radius: 6px;
+  padding: 8px 1rem;
+  color: white;
+}
