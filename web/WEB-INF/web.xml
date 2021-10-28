@@ -104,6 +104,10 @@
         <param-name>FILTER_EVENT_SERVLET</param-name>
         <param-value>filterEvent</param-value>
     </context-param>
+    <context-param>
+        <param-name>CHANGE_DETAIL_BY_CREATING_NEW_EVENT_SERVLET</param-name>
+        <param-value>changeDetailByCreatingNewEvent</param-value>
+    </context-param>
     <filter>
         <filter-name>FilterAuth</filter-name>
         <filter-class>fptu.swp.filter.FilterAuth</filter-class>
@@ -196,6 +200,14 @@
         <servlet-name>ViewEventListByLecturerServlet</servlet-name>
         <servlet-class>fptu.swp.controller.ViewEventListByLecturerServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ChangePosterServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.ChangePosterServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeDetailByCreatingNewEventServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.ChangeDetailByCreatingNewEventServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -267,6 +279,14 @@
     <servlet-mapping>
         <servlet-name>ViewEventListByLecturerServlet</servlet-name>
         <url-pattern>/ViewEventListByLecturerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePosterServlet</servlet-name>
+        <url-pattern>/ChangePosterServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeDetailByCreatingNewEventServlet</servlet-name>
+        <url-pattern>/ChangeDetailByCreatingNewEventServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

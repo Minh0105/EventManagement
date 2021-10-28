@@ -11,8 +11,11 @@ import fptu.swp.entity.location.LocationDTO;
 import fptu.swp.entity.user.LecturerBriefInfoDTO;
 import fptu.swp.entity.user.UserDAO;
 import fptu.swp.entity.user.UserDTO;
+import fptu.swp.fakefileinputstream.FakeFileInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -89,12 +92,10 @@ public class HandleMultipartServlet extends HttpServlet {
         //default URL
         final String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
         final String REVIEW_EVENT_PAGE_LABEL = context.getInitParameter("REVIEW_EVENT_PAGE_LABEL");
-        final String ADD_CHOSEN_LECTURER_SERVLET = context.getInitParameter("ADD_CHOSEN_LECTURER_SERVLET");
-        final String REMOVE_CHOSEN_LECTURER_SERVLET = context.getInitParameter("REMOVE_CHOSEN_LECTURER_SERVLET");
+
         String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
         String REVIEW_EVENT_PAGE_PATH = roadmap.get(REVIEW_EVENT_PAGE_LABEL);
-        String ADD_CHOSEN_LECTURER_SERVLET_PATH = roadmap.get(ADD_CHOSEN_LECTURER_SERVLET);
-        String REMOVE_CHOSEN_LECTURER_SERVLET_PATH = roadmap.get(REMOVE_CHOSEN_LECTURER_SERVLET);
+        
         String url = INVALID_PAGE_PATH;
 
         try {
@@ -161,7 +162,9 @@ public class HandleMultipartServlet extends HttpServlet {
                                 poster = Base64.getEncoder().encodeToString(item.get());
                             }else{
                                 poster = detail.getPoster();
-                                posterStream = (FileInputStream) session.getAttribute("EVENT_POSTER_STREAM");
+                                byte[] posterBytes = Base64.getDecoder().decode(poster);
+                                InputStream posterInputStream = new ByteArrayInputStream(posterBytes);
+                                posterStream =  new FakeFileInputStream(posterInputStream);
                             }
                         } catch (Exception ex) {
                             LOGGER.error(ex);

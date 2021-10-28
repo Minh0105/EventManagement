@@ -576,7 +576,43 @@
         }
     </script>
 </div>
+            
+            <!-- EVENT IMAGE  -->
+            <h5 class="title col-12">Ảnh sự kiện</h5>
 
+            <div id="image_container" class="col-12 col-lg-7">
+                <figure id="figure_image" >
+                    <img id="chosen-image" src="data:image/jpg;base64,<%= detail.getPoster() %>">
+                </figure>
+
+                <input class="d-none" type="file" id="upload-button" 
+                       accept="image/*" name="fileUp" value="" style="visibility:hidden;">
+
+                <label id="btn_upload_image" for="upload-button">
+                    Chọn hình ảnh
+                </label>
+                <button id="btn_review" class="mt-0" onclick="sendDataToServer2()">Cập nhật</button>
+            </div>
+                <div id="submiter"></div>
+                <script src="resources/js/create_event.js"></script>
+        <script>
+            function sendDataToServer2 () {
+            var form = '<form id="submit_form" action="changePoster" method="POST" enctype="multipart/form-data">'
+            form += '<input type="hidden" name="eventId" value="<%= detail.getId()%>" />'
+            form += "</form>"    
+
+            var eventImageBackgroundInput = document.getElementById("upload-button").cloneNode();
+            eventImageBackgroundInput.style.display = "none";
+
+            document.getElementById("submiter").innerHTML = form;
+            document.getElementById("submit_form").appendChild(eventImageBackgroundInput);
+            console.log(document.getElementById("submit_form").innerHTML);
+
+            // Trigger send Request
+            document.getElementById("submit_form").submit();
+        }
+        </script>
+        <a href="changeDetailByCreatingNewEvent?stage=start&eventId=<%= detail.getId() %>">Thứ nulo mắc gì chọn datetimelocation ngoo gòi bắt t lòi l làm cho cái chức năng sửa z</a>
 </body>
 
 </html>

@@ -8,10 +8,20 @@ package fptu.swp.controller;
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
 import fptu.swp.entity.schedule.Schedule;
+import fptu.swp.entity.schedule.ScheduleDTO;
+import fptu.swp.entity.user.UserDAO;
 import fptu.swp.entity.user.UserDTO;
+import fptu.swp.utils.firebaseBinding.firebase4j.demo.FirebaseBindingSingleton;
+import fptu.swp.utils.firebaseBinding.firebase4j.error.FirebaseException;
+import fptu.swp.utils.firebaseBinding.firebase4j.error.JacksonUtilityException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -44,6 +54,7 @@ public class CancelEventServlet extends HttpServlet {
 
         // declare var
         EventDAO eventDao = new EventDAO();
+        UserDAO userDao = new UserDAO();
 
         // get roadmap
         ServletContext context = request.getServletContext();
@@ -61,8 +72,22 @@ public class CancelEventServlet extends HttpServlet {
             UserDTO loginUser = (UserDTO) session.getAttribute("USER");
             EventDetailDTO detail = eventDao.getEventDetail(eventId);
             if (detail != null) {
+                String linkToFirebase = "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/";
+                FirebaseBindingSingleton firebase = FirebaseBindingSingleton.getInstance(linkToFirebase);
                 if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {
                     if (eventDao.cancelEvent(eventId)) {
+                        List<Integer> listFollowers = userDao.getFollowersIdByEventId(eventId);
+                        for (int studentId : listFollowers) {
+                            ScheduleDTO s = new ScheduleDTO();
+                            s.setEventId(eventId);
+                            s.setEventName(detail.getName());
+                            s.setOrganizerAvatar(detail.getOrganizerAvatar());
+                            s.setRunningTime(new Date());
+                            String message = "Sự kiện " + detail.getName() + " đã bị hủy.";
+                            s.setMessage(message);
+                            s.setUserId(studentId);
+                            System.out.println("Send noti of Cancel Event with Id: " + eventId + "  is " + firebase.sendNotificationToUserID(s));
+                        }
                         Schedule.updateSchedule();
                         if ("ADMIN".equals(loginUser.getRoleName())) {
                             url = FILTER_EVENT_SERVLET_PATH;
@@ -70,9 +95,12 @@ public class CancelEventServlet extends HttpServlet {
                     }
                 }
             }
-
         } catch (Exception ex) {
             LOGGER.error(ex);
+        } catch (FirebaseException ex) {
+            Logger.getLogger(CancelEventServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JacksonUtilityException ex) {
+            Logger.getLogger(CancelEventServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             RequestDispatcher dis = request.getRequestDispatcher(url);
             dis.forward(request, response);
