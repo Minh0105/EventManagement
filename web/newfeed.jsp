@@ -71,8 +71,12 @@
                         </div>
 
                         <div class="filter_button">
-                           <button onclick="showStudentCaredEvents(this)">Đã quan tâm</button>
+                           <button onclick="showStudentFollowedEvents(this)">Đã quan tâm</button>
                         </div>
+
+                        <div class="filter_button">
+                            <button onclick="showStudentJoinedEvents(this)">Đã tham gia</button>
+                         </div>
                 <%
                     } else if (userRoleName.equals("CLUB'S LEADER") || userRoleName.equals("DEPARTMENT'S MANAGER")) {
                 %>
@@ -105,11 +109,13 @@
         </div>
         <!-- COPY PART -->
 
-
+        
         <div id="card_container" class="container-fluid">
             <div id="card_container_row" class="row gx-1 gy-4">
                 <%
                     List<EventCardDTO> listCard = (List<EventCardDTO>) request.getAttribute("LIST_CARD");
+                    List<EventCardDTO> listFollowingCard = (List<EventCardDTO>) request.getAttribute("LIST_FOLLOWING_CARD");
+                    List<EventCardDTO> listJoiningCard = (List<EventCardDTO>) request.getAttribute("LIST_JOINING_CARD");
                     if (listCard != null) {
                         for (EventCardDTO card : listCard) {
                 %>
@@ -117,7 +123,33 @@
                                 <p class="event_infor event_date"><%= card.getDate() %></p>
                                 <p class="event_infor event_follow"><%= card.getFollowing() %></p>
                                 <p class="event_infor event_join"><%= card.getJoining() %></p>
-                                <p class="event_infor special_tag"></p>
+                                <% 
+                                    boolean hasFollow = false;
+                                    for (EventCardDTO event : listFollowingCard) {
+                                        if (event.getId() == card.getId()) {
+                                            hasFollow = true;
+                                            break;
+                                        }
+                                    }
+                                    if (hasFollow) {
+                                %>
+                                        <p class="event_infor follow_tag"></p>
+                                <%
+                                    }
+                                    boolean hasJoin = false;
+                                    for (EventCardDTO event : listJoiningCard) {
+                                        if (event.getId() == card.getId()) {
+                                            hasJoin = true;
+                                            break;
+                                        }
+                                    }
+                                    if (hasJoin) {
+                                %> 
+                                        <p class="event_infor join_tag"></p>
+                                <%
+                                    }
+                                %>
+                                
                                 <div class="item">
                                     <div class="image_and_infor_container">
                                         <img class="event_image" src="data:image/jpg;base64,<%= card.getPoster() %>" alt="">
@@ -164,6 +196,7 @@
             <h4>Developed By Aladudu Group</h4>
             <p>COVID-19, 20/9/2021</p>
         </footer>
+        
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
                 integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN"
         crossorigin="anonymous"></script>
@@ -172,10 +205,8 @@
                 integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
         crossorigin="anonymous"></script>
 
-        // COPY PART
         <script type="text/javascript" src="resources/js/newfeed_function.js" >
         </script>
-        // COPY PART
 
     </body>
 

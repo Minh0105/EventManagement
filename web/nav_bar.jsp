@@ -30,7 +30,7 @@
     <body>
         <nav class="navbar navbar-expand-md navbar-light navbar-color sticky-top">
             <div id="nav_content" class="container-fluid">
-                <a id="navbar_branch" href="#">
+                <a id="navbar_branch" href="viewNewfeed">
                     <img id="app_icon" src="resources/icon/app_icon.svg">
                     <h5 class="d-none d-md-block">FPT Event Management</h5>
                 </a>
@@ -52,22 +52,24 @@
                             </a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a href="#" class="nav-link">
+                            <ahref="#" class="nav-link">
                                 <img id="btn_menu" src="resources/icon/hamburger_button_icon.svg" alt="hamburger_button" />
                             </a>
                         </li>	
                         
                         <div id="nav_expanded_panel">
 
-                            <div class="logout_">
-                                 
+                            <div id="logout_button_panel">
+                                <a id="logout_link" href="logout">
+                                    <img src="resources/icon/log_out_icon.svg" />
+                                    <span id="btn_log_out">Log out</span> 
+                                </a> 
                             </div>
-                            <img src="resources/icon/log_out_icon.svg" />
-                            <a id="btn_log_out" href="logout">Log out</a> 
 
                         </div>   	
                     </ul>
                 </div>
             </div>
         </nav>
+        <script src="resources/js/nav_bar.js"></script>
 </html>

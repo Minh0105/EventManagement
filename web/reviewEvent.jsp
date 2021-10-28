@@ -159,7 +159,10 @@
                         </div>
                     </div>
 
-                    <a id="btn_create_event" href="createEvent">Create event</a>
+                    <div class="mt-5">
+                        <a id="btn_create_event" href="createEvent">Create event</a>
+                    </div>
+                    
                 </div>
             </div>
         </div>

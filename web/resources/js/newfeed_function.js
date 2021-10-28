@@ -107,7 +107,32 @@ function showThisMonthEvents(button) {
 }
 
 
-function showStudentCaredEvents(button) {
+function showStudentFollowedEvents(button) {
+
+    var eventCollection = getAllEvents();
+    for (var event of eventCollection) {
+        var hasFollowTag = event.getElementsByClassName("follow_tag").length > 0;
+        if (hasFollowTag) {
+            event.style.display = "block";
+        } else {
+            event.style.display = "none";
+        }
+    }
+
+    processFilterClick(button);
+}
+
+
+function showStudentJoinedEvents(button) {
+    var eventCollection = getAllEvents();
+    for (var event of eventCollection) {
+        var hasFollowTag = event.getElementsByClassName("join_tag").length > 0;
+        if (hasFollowTag) {
+            event.style.display = "block";
+        } else {
+            event.style.display = "none";
+        }
+    }
     processFilterClick(button);
 }
 

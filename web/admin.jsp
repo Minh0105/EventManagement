@@ -24,15 +24,10 @@
     <body>
 
         <div class="header1" id="b">
-
-
-
             <div class="header3">
-
-                <div  class="link">                   
-                    <h2> FRESH REPORT </h2>          
+                <div id="big_title" class="link">                   
+                    <h4 class="text-center"> FPT Event Management </h4>          
                     <ul>
-
                         <li class="nav-item">
                             <a class="nav-link" href="manageByAdmin?management=organizer">Organizer
                                 Management
@@ -55,13 +50,13 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="manageByAdmin?management=comment">Comment
-                                Management</a>
+                            <a class="nav-link" href="manageByAdmin?management=comment">Comment Management</a>
                         </li>
                         <li class="nav-item col-md-6">
                             <form action="logout" class="">
-                                <button class="btn btn-light profile-button logout " type="submit">
-                                    <img src="resources/icon/log_out_icon.svg">Log Out</button> 
+                                <button class="btn btn-light profile-button logout mt-5 d-flex align-items-center" type="submit">
+                                    <span style="white-space: nowrap; color: rgba(0, 0, 0, 0.85) ;">Log out<span>
+                                </button> 
                             </form>   
 
                         </li>
@@ -75,6 +70,8 @@
 
             </div>
         </div>
+
+        <img id="btn_show_sidebar" onclick="showSideBar()"/>
 
         <script>
             var a = document.getElementById("a");
@@ -98,44 +95,44 @@
     <div class="header4">
 
         <c:if test="${requestScope.LIST_ORGANIZER ne null}">
-            <div class="col-md-6 "><h1>Organizer Management</h1></div>
+            <div class=""><h4 class="right_title">Organizer Management</h4></div>
             <div class="row g-2">
                 <div class="col-md-6 ">
-                    _________________________Thêm Club's Leader_____________________________
+                    <b class="mb-3">Tạo tài khoản Chủ nhiệm câu lạc bộ</b>
                     <form action="manageUserByAdmin" method="POST">
                         <input type="hidden" name="roleId" value="3"/>
                         <input type="hidden" name="action" value="Create"/>
-                        <div class="col-md-6"><label class="labels">Email</label><input class="form-control" type="email" name="email" required/> <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
+                        <div class=""><label class="labels">Email</label><input class="form-control" type="email" name="email" required/> <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
                         </div>
-                        <div class="col-md-6"><label class="labels">Name</label><input class="form-control" type="text" name="name"required/><br></div>
-                        <div class="col-md-6"> <button type="submit" class="btn btn-primary">Add Club's Leader</button> </div>
+                        <div class=""><label class="labels">Name</label><input class="form-control" type="text" name="name"required/><br></div>
+                        <div class="text-right"> <button type="submit" class="btn btn-primary">Add Club's Leader</button> </div>
                     </form></div>
                 <div class="col-md-6">
-                    _________________________Thêm Department's Manager_____________________________
+                    <b class="mb-3">Tạo tài khoản Quản lí bộ phận</b>
                     <form action="manageUserByAdmin" method="POST">
                         <input type="hidden" name="roleId" value="4"/>
                         <input type="hidden" name="action" value="Create"/>
-                        <div class="col-md-6"><label class="labels">Email</label><input class="form-control" type="email" name="email" required/> <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
+                        <div class=""><label class="labels">Email</label><input class="form-control" type="email" name="email" required/> <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
                         </div>
-                        <div class="col-md-6"><label class="labels">Name</label><input class="form-control" type="text" name="name"required/><br></div>
-                        <div class="col-md-6"><button type="submit" class="btn btn-primary">Add Department's Manager </button></div>
+                        <div class=""><label class="labels">Name</label><input class="form-control" type="text" name="name"required/><br></div>
+                        <div class="text-right"><button type="submit" class="btn btn-primary">Add Department's Manager </button></div>
                     </form>
                 </div></div>
             <br>
 
-            <div  class="service">
-                <table border="1">
+            <div class="service">
+                <table>
                     <thead>
                         <tr class="service1" >
-                            <th colspan="1" >No</th>
-                            <th colspan="2" >Email</th>
+                            <th colspan="1">No</th>
+                            <th colspan="2">Email</th>
                             <th colspan="2">Name</th>                       
                             <th colspan="3">Phone Number</th>
                             <th colspan="2">Role Name</th>
                             <th colspan="2">Status</th>
                             <th colspan="2">Description</th>
-                            <th colspan="2">NumOfEvent</th>
-                            <th colspan="4">Deactivate</th>
+                            <th colspan="1">NoE</th>
+                            <th colspan="4"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -148,15 +145,15 @@
                                 <td colspan="2">${organizer.roleName}</td>
                                 <td colspan="2">${organizer.status}</td>
                                 <td colspan="2">${organizer.description}</td>
-                                <td colspan="2">${organizer.numOfEvent}</td>
-                                <td colspan="4">
+                                <td colspan="1">${organizer.numOfEvent}</td>
+                                <td colspan="4" class="button_td">
                                     <form action="manageUserByAdmin" method="POST">
                                         <input type="hidden" name="userId" value="${organizer.id}"/>
                                         <c:if test="${organizer.status eq 'Activated'}">
                                             <input  type="submit" name="action" value="Deactivate"/>
                                         </c:if>
                                         <c:if test="${organizer.status eq 'Deactivated'}">
-                                            <input type="submit" name="action" value="Reactivate"/>
+                                            <input type="submit" name="action" value="Activate"/>
                                         </c:if>
 
                                     </form>
@@ -171,10 +168,9 @@
             </div>
         </c:if>
         <c:if test="${requestScope.LIST_STUDENT ne null}">
-            <div class="col-md-6 "><h1>Student Management</h1></div>
+            <div class=""><h4 class="right_title">Student Management</h4></div>
             <div class="service" >
-
-                <table border="1">
+                <table>
                     <thead>
                         <tr class="service1">
                             <th>No</th>
@@ -184,7 +180,7 @@
                             <th>Phone Number</th>
                             <th>Role Name</th>
                             <th>Status</th>
-                            <th>Deactivate</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -197,14 +193,14 @@
                                 <td>${student.phoneNum}</td>
                                 <td>${student.roleName}</td>
                                 <td>${student.status}</td>
-                                <td>
+                                <td class="button_td">
                                     <form action="manageUserByAdmin" method="POST">
                                         <input type="hidden" name="userId" value="${student.id}"/>
                                         <c:if test="${student.status eq 'Activated'}">                             
                                             <input type="submit" name="action" value="Deactivate"/></button>
                                         </c:if>
                                         <c:if test="${student.status eq 'Deactivated'}">
-                                            <input type="submit" name="action" value="Reactivate"/>
+                                            <input type="submit" name="action" value="Activate"/>
                                         </c:if>
                                     </form>
                                 </td>
@@ -215,16 +211,15 @@
             </div>
         </c:if>
         <c:if test="${requestScope.LIST_LECTURER ne null}">
-
-            <div class="col-md-6 "><h1>Lecturer Management</h1></div><br>
-            _________________________Thêm Lecturer_____________________________
+            <div class=""><h4 class="right_title">Lecturer Management</h4></div><br>
             <form action="manageUserByAdmin" method="POST">
+                <label class="col-md-6">Thêm Lecturer</label>
                 <input type="hidden" name="roleId" value="2"/>
                 <input type="hidden" name="action" value="Create"/>
                 <div class="col-md-6"><label class="labels">Email</label><input class="form-control" type="email" name="email" required/> <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
                 </div>
                 <div class="col-md-6"><label class="labels">Name</label><input class="form-control" type="text" name="name"required/><br></div>
-                <div class="col-md-6"><button type="submit" class="btn btn-primary">Add Lecturer</button></div>
+                <div class="col-md-6 text-right"><button type="submit" class="btn btn-primary">Add Lecturer</button></div>
             </form> <br>  
 
             <!--                <div>
@@ -261,18 +256,18 @@
 
 
             <div class="service">
-                <table border="1">
+                <table>
                     <thead>
                         <tr class="service1">
                             <th>No</th>
                             <th>Email</th>
                             <th>Name</th>
                             <th>Address</th>
-                            <th>Phone Number</th>
+                            <th>Phone number</th>
                             <th>Role Name</th>
                             <th>Status</th>
                             <th>Description</th>
-                            <th>Deactivate</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -286,14 +281,14 @@
                                 <td>${lecturer.roleName}</td>
                                 <td>${lecturer.status}</td>
                                 <td>${lecturer.description}</td>
-                                <td>
+                                <td class="button_td" >
                                     <form action="manageUserByAdmin" method="POST">
                                         <input type="hidden" name="userId" value="${lecturer.id}"/>
                                         <c:if test="${lecturer.status eq 'Activated'}">
                                             <input type="submit" name="action" value="Deactivate"/>
                                         </c:if>
                                         <c:if test="${lecturer.status eq 'Deactivated'}">
-                                            <input type="submit" name="action" value="Reactivate"/>
+                                            <input type="submit" name="action" value="Activate"/>
                                         </c:if>
                                     </form>
                                 </td>
@@ -305,9 +300,9 @@
             </div>
         </c:if>
         <c:if test="${requestScope.LIST_ORGANIZER_EVENT ne null}">
-            <div class="col-md-6 "><h1>Event Management</h1></div>
+            <div class=""><h4 class="right_title">Event Management</h4></div>
             <div>
-                <div class="col-md-6 "><h3>Tìm event theo: </h3></div><br>
+                <div class="col-md-6 "><h4>Tìm event theo: </h4></div><br>
                 <!--           ĐÃ LOAD LIST ALL ORGANIZER, Select o day là khi nguoi dùng ho chon option nào thì mình show LIST ORGANIZER-->
 
                 <form  action ="filterEvent">
@@ -360,7 +355,9 @@
                                 }
                             </script>
                         </div><br>
-                        <div class="col-md-6"> <input type="submit" value="Search" class="btn btn-primary" /></div>
+                        <div class="col-md-6 text-right"> 
+                            <input type="submit" value="Search" class="btn btn-primary" />
+                        </div>
                     </div> 
                 </form><br>
                 <div id="allOrganizer">
@@ -413,7 +410,7 @@
                 <div>
                     <c:if test="${requestScope.LIST_EVENT ne null}">
                         <div class="service">
-                            <table border="1">
+                            <table>
                                 <thead>
                                     <tr class="service1">
                                         <th>No</th>
@@ -487,18 +484,18 @@
         </script>
     </c:if>
     <c:if test="${requestScope.mapComment ne null}">
-        <div>
-            <table border="1">
+        <div class=""><h4 class="right_title">Student Management</h4></div>
+        <div class="service">
+            <table>
                 <thead>
                     <tr>
                         <th>No</th>
                         <th>Content</th>
                         <th>Event ID</th>
-                        <th>userAvatar</th>
-                        <th>userName</th>
-                        <th>userRoleName</th>
-                        <th>StatusID</th>
-                        <th>Ban comment</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th colspan="2"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -507,11 +504,10 @@
                             <td>${status.count}</td>
                             <td>${comment.value.content}</td>
                             <td>${comment.value.eventId}</td>
-                            <td><img src="${comment.value.userAvatar}"></td>
                             <td>${comment.value.userName}</td>
                             <td>${comment.value.userRoleName}</td>
                             <td>${comment.value.statusId}</td>
-                            <td><button onclick="banComment('${comment.key}')" >Ban</button></td>
+                            <td class="button_td"><button onclick="banComment('${comment.key}')" >Ban</button></td>
                         </tr>
                         <c:if test="${comment.value.replyList ne null}" >
                             <c:forEach var="reply" items="${comment.value.replyList}" varStatus="stt">
@@ -520,11 +516,10 @@
                                     <td>${stt.count}</td>
                                     <td>${reply.value.content}</td>
                                     <td>${reply.value.eventId}</td>
-                                    <td><img src="${reply.value.userAvatar}"></td>
                                     <td>${reply.value.userName}</td>
                                     <td>${reply.value.userRoleName}</td>
                                     <td>${reply.value.statusId}</td>
-                                    <td><button onclick="banReply('${comment.key}', '${reply.key}')" >Ban</button></td>
+                                    <td class="button_td"><button onclick="banReply('${comment.key}', '${reply.key}')" >Ban</button></td>
                                 </tr>
                             </c:forEach>
                         </c:if>

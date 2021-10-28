@@ -16,20 +16,27 @@
     position: fixed;
     background-color: transparent;
     overflow: hidden;
+    z-index: 10;
 }
 
-.header3{
-    background-color: #c8d6e5;
+.header3 {
+    background-color: #216fc2;
     top: 0px;
-    left: 0;
+    left: -290px;
     width: 300px;
     height: 100vh;
     z-index: 1;
-    position: fixed;
+    position: absolute;
     flex-grow: 1;
     box-shadow: 0px 4px 10px rgb(0 0 0 / 5%);
-   
+    transition: left 0.5s;
 }
+
+.header3:hover {
+    left: 0;
+}
+
+
 
 /* BAR */
 .wrapper{
@@ -91,7 +98,6 @@
     
     display: flex;
     margin-top: 2rem;
-    align-items: center;
     flex-direction: column;
     justify-content: center;
 }
@@ -141,12 +147,14 @@
     justify-content: center;
     gap: 10px;
     }
+
     .header3{
         width: 100px;
         justify-items: center;
         display: contents;
         justify-content: center;
     }
+    
     .wrapper{
         margin: 0.75rem;
         display: block;
@@ -158,7 +166,6 @@
     }
     .link{
         margin-top: 0;
-       
         display: block;
         margin-left: 10px;
     }
@@ -210,9 +217,11 @@
 .header4{
     width: auto;
     height: auto;
-    background-color: #eeeeee;
-    margin-left: 300px;
+    margin-left: calc(1.2rem + 10px);
+    margin-right: 1.2rem;
 }
+
+
 /* banner */
 .banner button{
     border-radius: 5px;
@@ -254,4 +263,102 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+}
+
+
+
+
+/* TAI PART */
+
+.right_title {
+    margin-top: 1rem;
+}
+
+.service {
+    margin-top: 2rem;
+}
+
+.service table, .service td, .service th, .service tr {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.service td, .service th, .service tr {
+    padding: 6px 3px;
+    align-items: center;
+    text-align: center;
+}
+
+.button_td {
+    padding: 0px!important;
+}
+
+.button_td form {
+    
+}
+
+
+input[value="Deactivate"], .button_td > button {
+    background-color: rgba(82, 41, 9, 0.831);
+    color: white;
+    border: none;
+    width: 100%;
+    display: block;
+    height: 5.2vh;
+    min-height: 30px;
+}
+
+input[value="Activate"] {
+    background-color: rgb(32, 167, 32);
+    color: white;
+    border: none;
+    width: 100%;
+    height: 100%;
+    display: block;
+    height: 5.2vh;
+    min-height: 30px;
+}
+
+input[value="Activate"]:hover {
+    background-color: rgb(8, 120, 8);
+}
+
+input[value="Deactivate"]:hover, .button_td > button:hover {
+    background-color: rgb(247, 76, 76);
+    color: white;
+}
+
+body {
+    background-color: #fff5e9 !important;
+    padding-bottom: 50vh;
+}
+
+#big_title {
+    padding-bottom: 2rem !important;
+}
+
+#big_title h4 {
+    margin-bottom: 0 !important;
+    color: white;
+}
+
+.link > ul {
+    border-top: 1px solid rgba(255, 255, 255, 0.75) !important;
+    margin-top: 2rem !important;
+}
+
+
+.nav-item > .nav-link {
+    color: white;
+}
+
+.btn-primary {
+    background-color: #497fba;
+}
+
+.avatar_td > img {
+    height: 3rem;
+    width: 3rem;
+    object-fit: cover;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.75);
 }

@@ -37,7 +37,7 @@
 
                 <!-- CHOSEN LOCATION -->
                 <div id="chosen_date_container" class="col-12 col-md-7 col-lg-6 container-fluid">
-                    <div class="row gx-1 gy-1">
+                    <div class="row gx-1 gy-2">
                         <c:forEach var="locationDTO" items="${sessionScope.ChosenLocationList}" >     
                             <div class="col-6 col-md-4">
                                 <div class="date_pill">           
@@ -80,7 +80,13 @@
 
             <div id="image_container" class="col-12 col-lg-7">
                 <figure id="figure_image" >
-                    <img id="chosen-image" src="data:image/jpg;base64,${eventDetail.poster}">
+                    <img id="chosen-image" 
+                    <c:if test="${not empty eventDetail.poster}">
+                        src="data:image/jpg;base64,${eventDetail.poster}">
+                    </c:if>
+                    <c:if test="${empty eventDetail.poster}">
+                        src="resouces/image/default_image.png">
+                    </c:if>
                 </figure>
 
                 <input class="d-none" type="file" id="upload-button" 

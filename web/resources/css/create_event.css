@@ -129,6 +129,7 @@
   max-height: 30vh;
   object-fit: cover;
   border: none;
+  border-radius: 1rem;
 }
 
 
