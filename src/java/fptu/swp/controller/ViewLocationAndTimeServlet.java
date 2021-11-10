@@ -23,6 +23,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -53,6 +54,8 @@ public class ViewLocationAndTimeServlet extends HttpServlet {
         Set<RangeDateDTO> listBusySlot = new HashSet<>();
         List<Integer> listLocationId = new ArrayList<>();
         List<RangeDateDTO> listBusySlotArrayList;
+        HttpSession session = null;
+        int eventId = -1;
 
         // get roadmap
         ServletContext context = request.getServletContext();
@@ -73,6 +76,12 @@ public class ViewLocationAndTimeServlet extends HttpServlet {
         }
 
         try {
+            session = request.getSession(false);
+            Integer changingEventId = (Integer) session.getAttribute("CHANGING_EVENT_ID");
+            LOGGER.info("CHANGING EVENT ID: " + changingEventId);
+            if(changingEventId != null){
+                eventId = changingEventId;
+            }
             LOGGER.info("Start Day: " + startDayAndMonth);
 //            Date startDate = new Date(Integer.parseInt(startDayAndMonth.substring(0, 4)), Integer.parseInt(startDayAndMonth.substring(5, 7)), Integer.parseInt(startDayAndMonth.substring(8)));           
             Date startDate = Date.valueOf(startDayAndMonth);
@@ -83,9 +92,9 @@ public class ViewLocationAndTimeServlet extends HttpServlet {
                 int index = StrLocationId.indexOf("-");
                 int locationId = Integer.parseInt(StrLocationId.substring(0, index));
                 // result of busy slot in week for each locationId
-                LOGGER.info("List Busy slot of " + StrLocationId + " : " + dao.getFreeSlotByFirstDateOfWeek(locationId, startDate));
+                LOGGER.info("List Busy slot of " + StrLocationId + " : " + dao.getFreeSlotByFirstDateOfWeek(locationId, startDate, eventId));
                 
-                listBusySlot.addAll(dao.getFreeSlotByFirstDateOfWeek(locationId, startDate));
+                listBusySlot.addAll(dao.getFreeSlotByFirstDateOfWeek(locationId, startDate, eventId));
             }
             
             LOGGER.info("List Busy Slot : " + listBusySlot);

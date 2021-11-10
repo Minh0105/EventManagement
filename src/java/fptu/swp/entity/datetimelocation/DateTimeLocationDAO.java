@@ -19,36 +19,49 @@ import javax.naming.NamingException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 /**
  *
  * @author admin
  */
-public class DateTimeLocationDAO implements Serializable{
-    
-    public Set<RangeDateDTO> getFreeSlotByFirstDateOfWeek(int locationId, Date firstDateOfWeek) throws NamingException, SQLException {
-        
+public class DateTimeLocationDAO implements Serializable {
+
+    public Set<RangeDateDTO> getFreeSlotByFirstDateOfWeek(int locationId, Date firstDateOfWeek, int eventId) throws NamingException, SQLException {
+
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         Set<RangeDateDTO> listRangeDate;
-        
+
         try {
             con = DBHelper.makeConnection();
-            String sql = "select DATEPART(dw,[date]) as day , rangeId "
-                        +"from tblDateTimeLocation "
-                        +"where locationId = ? AND [date] between ? AND DATEADD(DAY,6, ?) AND statusId = 1";
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, locationId);
-            ps.setString(2, firstDateOfWeek.toString());
-            ps.setString(3, firstDateOfWeek.toString());
+            if (eventId != -1) {
+                String sql = "select DATEPART(dw,[date]) as day , rangeId "
+                        + "from tblDateTimeLocation "
+                        + "where locationId = ? AND [date] between ? AND DATEADD(DAY,6, ?) AND statusId = 1 AND eventId <> ?";
+                ps = con.prepareStatement(sql);
+                ps.setInt(1, locationId);
+                ps.setString(2, firstDateOfWeek.toString());
+                ps.setString(3, firstDateOfWeek.toString());
+                ps.setInt(4, eventId);
+            } else {
+                String sql = "select DATEPART(dw,[date]) as day , rangeId "
+                        + "from tblDateTimeLocation "
+                        + "where locationId = ? AND [date] between ? AND DATEADD(DAY,6, ?) AND statusId = 1";
+                ps = con.prepareStatement(sql);
+                ps.setInt(1, locationId);
+                ps.setString(2, firstDateOfWeek.toString());
+                ps.setString(3, firstDateOfWeek.toString());
+            }
+
             rs = ps.executeQuery();
             RangeDateDTO rangeDate;
             listRangeDate = new HashSet();
             while (rs.next()) {
                 // get from DB each ele
                 int dayInWeek = rs.getInt("day");
+                if(dayInWeek == 1){
+                    dayInWeek = 8;
+                }
                 int rangeId = rs.getInt("rangeId");
                 System.out.println("Busy Slot DB: " + dayInWeek + "-" + rangeId);
                 // inject into DTO
@@ -56,9 +69,9 @@ public class DateTimeLocationDAO implements Serializable{
                 // add DTO ele to list
                 listRangeDate.add(rangeDate);
             }
-            
+
             return listRangeDate;
-            
+
         } finally {
             if (con != null) {
                 con.close();
@@ -70,9 +83,10 @@ public class DateTimeLocationDAO implements Serializable{
                 ps.close();
             }
         }
-        
-    }    
+
+    }
 //Lay thoi gian va dia diem to chuc cua 1 event
+
     public List<DateTimeLocationDTO> getListDateTimeLocationByEventId(int eventId) throws SQLException {
         List<DateTimeLocationDTO> list = new ArrayList<>();
         Connection conn = null;
@@ -146,6 +160,5 @@ public class DateTimeLocationDAO implements Serializable{
         }
         return check;
     }
-
 
 }

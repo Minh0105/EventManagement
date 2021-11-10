@@ -3,13 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/updateEvent.jsp</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/follow_up.jsp</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/WEB-INF/auth.txt</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/eventDetail.jsp</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/WEB-INF/roadmap.txt</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/UpdateFollowUpServlet.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/CreateEventServlet.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/ChangeDetailByCreatingNewEventServlet.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/entity/datetimelocation/DateTimeLocationDAO.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/ViewLocationAndTimeServlet.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/newfeed.jsp</file>
         </group>
     </open-files>
 </project-private>
