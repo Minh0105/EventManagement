@@ -23,10 +23,11 @@ public class EventDetailDTO {
     private String organizerDescription;
     private String organizerAvatar;
     private int statusId;
+    private String followUp;
     public EventDetailDTO() {
     }
 
-    public EventDetailDTO(int id, String name, String poster, String location, String date, String time, String organizerName, int following, int joining, String description, String organizerDescription, String organizerAvatar, int statusId) {
+    public EventDetailDTO(int id, String name, String poster, String location, String date, String time, String organizerName, int following, int joining, String description, String organizerDescription, String organizerAvatar, int statusId, String followUp) {
         this.id = id;
         this.name = name;
         this.poster = poster;
@@ -40,6 +41,7 @@ public class EventDetailDTO {
         this.organizerDescription = organizerDescription;
         this.organizerAvatar = organizerAvatar;
         this.statusId = statusId;
+        this.followUp = followUp;
     }
 
     public EventDetailDTO(int id, String name, String location, String date, String time, String organizerName, int following, int joining, int statusId) {
@@ -158,8 +160,16 @@ public class EventDetailDTO {
         this.statusId = statusId;
     }
 
+    public String getFollowUp() {
+        return followUp;
+    }
+
+    public void setFollowUp(String followUp) {
+        this.followUp = followUp;
+    }
+
     @Override
     public String toString() {
-        return "EventDetail{" + "id=" + id + ", name=" + name + ", poster=" + poster + ", location=" + location + ", date=" + date + ", time=" + time + ", organizerName=" + organizerName + ", following=" + following + ", joining=" + joining + ", description=" + description + ", organizerDescription=" + organizerDescription + ", organizerAvatar=" + organizerAvatar + '}';
+        return "EventDetailDTO{" + "id=" + id + ", name=" + name + ", poster=" + poster + ", location=" + location + ", date=" + date + ", time=" + time + ", organizerName=" + organizerName + ", following=" + following + ", joining=" + joining + ", description=" + description + ", organizerDescription=" + organizerDescription + ", organizerAvatar=" + organizerAvatar + ", statusId=" + statusId + ", followUp=" + followUp + '}';
     }
 }

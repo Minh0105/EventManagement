@@ -108,6 +108,14 @@
         <param-name>CHANGE_DETAIL_BY_CREATING_NEW_EVENT_SERVLET</param-name>
         <param-value>changeDetailByCreatingNewEvent</param-value>
     </context-param>
+    <context-param>
+        <param-name>UPDATE_EVENT_PAGE_LABEL</param-name>
+        <param-value>UpdateEventPage</param-value>
+    </context-param>
+    <context-param>
+        <param-name>UPDATE_FOLLOWUP_PAGE_LABEL</param-name>
+        <param-value>UpdateFollowUpPage</param-value>
+    </context-param>
     <filter>
         <filter-name>FilterAuth</filter-name>
         <filter-class>fptu.swp.filter.FilterAuth</filter-class>
@@ -208,6 +216,14 @@
         <servlet-name>ChangeDetailByCreatingNewEventServlet</servlet-name>
         <servlet-class>fptu.swp.controller.ChangeDetailByCreatingNewEventServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateFollowUpServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.UpdateFollowUpServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrganizerRedirectServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.OrganizerRedirectServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -287,6 +303,14 @@
     <servlet-mapping>
         <servlet-name>ChangeDetailByCreatingNewEventServlet</servlet-name>
         <url-pattern>/ChangeDetailByCreatingNewEventServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateFollowUpServlet</servlet-name>
+        <url-pattern>/UpdateFollowUpServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrganizerRedirectServlet</servlet-name>
+        <url-pattern>/OrganizerRedirectServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

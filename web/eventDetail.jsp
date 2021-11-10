@@ -75,10 +75,10 @@
                 <div id="menu_panel">   
         
                     <div id="btn_edit_event_details" class="menu_button">
-                        <p>Chỉnh sửa thông tin sự kiện</p>
+                        <a href="organizerRedirect?action=updateInformation&eventId=<%= detail.getId()%>"><p>Chỉnh sửa thông tin sự kiện</p></a>
                     </div>
 
-                        <div id="btn_edit_event_content" class="menu_sub_button">
+<!--                        <div id="btn_edit_event_content" class="menu_sub_button">
                             <p>Nội dung sự kiện</p>
                         </div>
 
@@ -88,7 +88,7 @@
 
                         <div id="btn_edit_event_time_and_lock" class="menu_sub_button">
                             <p>Thời gian và địa điểm</p>
-                        </div>
+                        </div>-->
 
 
                     <div type="button" data-toggle="modal" data-target="#setEvtStatus" id="btn_update_event_status" class="menu_button">
@@ -97,12 +97,12 @@
 
 
                     <div id="btn_add_summary" class="menu_button">
-                        <a href="addSummaryContent?eventId=1"><p>Thêm nội dung tổng kết</p></a>
+                        <a href="organizerRedirect?action=updateFollowUp&eventId=<%= detail.getId()%>"><p>Sửa nội dung tiến trình</p></a>
                     </div>
                     
 
                     <div id="btn_view_member" class="menu_button">
-                        <a href="viewMember?eventId=1"><p>Xem danh sách thành viên</p></a>
+                        <a href="viewMember?eventId=<%= detail.getId()%>"><p>Xem danh sách thành viên</p></a>
                     </div>
 
                 </div>
@@ -220,7 +220,7 @@
 
                 <li class="nav-item" id="first_tab_button">
                     <a class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#end"
-                    role="tab" aria-controls="home" aria-selected="true">Tổng kết</a>
+                    role="tab" aria-controls="home" aria-selected="true">Tiến trình</a>
                 </li>
 
                 <li class="nav-item">
@@ -240,13 +240,13 @@
               </ul>
 
             <div class="tab-content" id="myTabContent">
-                <!-- Tổng kết -->
+                <!-- Tiến trình -->
                 <div class="tab-pane fade show" id="end" role="tabpanel" aria-labelledby="end-tab">
-                    <img id="post_image" src="resources/image/eventDetail 9.png"/>
+<!--                    <img id="post_image" src="resources/image/eventDetail 9.png"/>-->
                     <section class="navWord">
-                        <h2 class="content_title w-full-parent text-center">Tổng kết sự kiện</h3>
+                        <h2 class="content_title w-full-parent text-center">Tiến trình sự kiện</h3>
                         <!-- <p><%= detail.getDescription()%></p> -->
-                        <p>Nội dung tổng kết sự kiện ở đây. Tôi là Tăng Tấn Tài, xin chào mọi người, hy vọng sau sự kiện mọi người đã có được những giây phút thư giãn giải trí, hy vọng mọi người donate cho team chúng tôi thật nhiều để sau này còn có nhiều show hơn</p>
+                        <p><%= detail.getFollowUp() %>
                     </section>   
 
                 </div>
@@ -523,96 +523,7 @@
     </script>
 
     <!-- COPY PART -->
-<div id ="update_name_desciption">
 
-    <input type='hidden' name="action" value="name and description"/>
-    <!-- EVENT NAME -->
-    <h5 class="title col-12">Tên Sự Kiện</h5>
-    <input class="col-12 col-lg-7" id="input_event_name" type="text"  
-           name="eventName" value="<%= detail.getName()%>">
-
-    <!-- EVENT DESCRIPTION        -->
-    <h5 class="title col-12">Nội Dung Sự Kiện</h5>
-    <textarea class="col-12 col-lg-7" id="input_event_description" rows="7" cols="12"
-              type="text"><%= detail.getDescription()%></textarea>
-    <div id="update-desciption">
-    </div>
-    <button onclick="updateNameAndDescription()">Update</button>
-    <form action="updateEvent" id="update-name-description-form">
-    </form>
-    <script>
-        if (screen.width >= 1200) {
-            CKEDITOR.replace('input_event_description', {
-                width: '58.3333%'
-            });
-        } else {
-            CKEDITOR.replace('input_event_description', {
-                width: '100%'
-            });
-        }
-        function updateNameAndDescription() {
-            var eventDescriptionTest = CKEDITOR.instances.input_event_description.getData();
-            var eventName = document.getElementById("input_event_name").value;
-            var form = document.createElement("form");
-            document.body.appendChild(form);
-            //form.method = "POST";
-            form.action = "updateEvent";
-            var inputEventId = document.createElement("INPUT");
-            inputEventId.name = "eventId";
-            inputEventId.value = '<%= detail.getId()%>';
-            inputEventId.type = 'hidden'
-            form.appendChild(inputEventId);
-            var inputEventName = document.createElement("INPUT");
-            inputEventName.name = "eventName";
-            inputEventName.value = eventName;
-            inputEventName.type = 'text';
-            form.appendChild(inputEventName);
-            var inputDescription = document.createElement("INPUT");
-            inputDescription.name = "description";
-            inputDescription.value = eventDescriptionTest;
-            inputDescription.type = 'text';
-            form.appendChild(inputDescription);
-            form.submit();
-        }
-    </script>
-</div>
-            
-            <!-- EVENT IMAGE  -->
-            <h5 class="title col-12">Ảnh sự kiện</h5>
-
-            <div id="image_container" class="col-12 col-lg-7">
-                <figure id="figure_image" >
-                    <img id="chosen-image" src="data:image/jpg;base64,<%= detail.getPoster() %>">
-                </figure>
-
-                <input class="d-none" type="file" id="upload-button" 
-                       accept="image/*" name="fileUp" value="" style="visibility:hidden;">
-
-                <label id="btn_upload_image" for="upload-button">
-                    Chọn hình ảnh
-                </label>
-                <button id="btn_review" class="mt-0" onclick="sendDataToServer2()">Cập nhật</button>
-            </div>
-                <div id="submiter"></div>
-                <script src="resources/js/create_event.js"></script>
-        <script>
-            function sendDataToServer2 () {
-            var form = '<form id="submit_form" action="changePoster" method="POST" enctype="multipart/form-data">'
-            form += '<input type="hidden" name="eventId" value="<%= detail.getId()%>" />'
-            form += "</form>"    
-
-            var eventImageBackgroundInput = document.getElementById("upload-button").cloneNode();
-            eventImageBackgroundInput.style.display = "none";
-
-            document.getElementById("submiter").innerHTML = form;
-            document.getElementById("submit_form").appendChild(eventImageBackgroundInput);
-            console.log(document.getElementById("submit_form").innerHTML);
-
-            // Trigger send Request
-            document.getElementById("submit_form").submit();
-        }
-        </script>
-        <a href="changeDetailByCreatingNewEvent?stage=start&eventId=<%= detail.getId() %>">Thứ nulo mắc gì chọn datetimelocation ngoo gòi bắt t lòi l làm cho cái chức năng sửa z</a>
 </body>
 
 </html>

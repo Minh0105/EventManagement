@@ -34,6 +34,8 @@ static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         LOGGER.info("Begin UpdateEventServlet");
         // declare var
@@ -45,9 +47,7 @@ static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(
 
         //default url
         final String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
-        final String FILTER_EVENT_SERVLET = context.getInitParameter("FILTER_EVENT_SERVLET");
         final String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
-        final String FILTER_EVENT_SERVLET_PATH = roadmap.get(FILTER_EVENT_SERVLET);
         final String VIEW_EVENTDETAIL_SERVLET = context.getInitParameter("VIEW_EVENTDETAIL_SERVLET");
         final String VIEW_EVENTDETAIL_SERVLET_PATH = roadmap.get(VIEW_EVENTDETAIL_SERVLET);
         String url = INVALID_PAGE_PATH;
@@ -58,6 +58,7 @@ static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(
             int eventId = Integer.parseInt(request.getParameter("eventId"));
             String eventName = request.getParameter("eventName");
             String description = request.getParameter("description");
+           
             EventDetailDTO detail = eventDao.getEventDetail(eventId);
             if (detail != null) {
                 if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {

@@ -333,6 +333,7 @@ public class EventDAO {
         String description = "";
         String organizerDescription = "";
         String organizerAvatar = "";
+        String followUp = "";
         int statusId = 0;
         List<String> listLocation = new ArrayList<>();
         List<RangeDTO> listTime = new ArrayList<>();
@@ -343,7 +344,7 @@ public class EventDAO {
                 String sql
                         = "SELECT s.name eventName, s.poster eventPoster, m.name organizerName, t.date date,"
                         + " t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants,"
-                        + " s.description description, m.description organizerDescription, m.avatar organizerAvatar, s.statusId statusId"
+                        + " s.description description, m.description organizerDescription, m.avatar organizerAvatar, s.statusId statusId, s.followUp followUp"
                         + " FROM tblEvents s"
                         + " LEFT JOIN tblUsers m ON s.userId = m.id"
                         + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
@@ -366,6 +367,7 @@ public class EventDAO {
                     organizerDescription = rs.getString("organizerDescription");
                     organizerAvatar = rs.getString("organizerAvatar");
                     statusId = rs.getInt("statusId");
+                    followUp = rs.getString("followUp");
                     listLocation.add(locationName);
                 }
                 while (rs.next()) {
@@ -380,7 +382,7 @@ public class EventDAO {
                 }
                 location += listLocation.get(i);
                 String time = getTimeOfEventDetail(conn, eventId);
-                detail = new EventDetailDTO(eventId, eventName, eventPoster, location, date, time, organizerName, following, joining, description, organizerDescription, organizerAvatar, statusId);
+                detail = new EventDetailDTO(eventId, eventName, eventPoster, location, date, time, organizerName, following, joining, description, organizerDescription, organizerAvatar, statusId, followUp);
             }
 
         } catch (Exception e) {
@@ -499,13 +501,14 @@ public class EventDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "INSERT INTO tblEvents(name, description, poster, createDate, statusId, userId, numberOfFollowers, numberOfParticipants) "
-                        + " VALUES(?,?,?,CURRENT_TIMESTAMP,1,?,0,0)";
+                String sql = "INSERT INTO tblEvents(name, description, poster, createDate, statusId, userId, numberOfFollowers, numberOfParticipants, followUp) "
+                        + " VALUES(?,?,?,CURRENT_TIMESTAMP,1,?,0,0,?)";
                 stm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 stm.setString(1, detail.getName());
                 stm.setString(2, detail.getDescription());
                 stm.setBinaryStream(3, savedPic);
                 stm.setInt(4, organizerId);
+                stm.setString(5, detail.getFollowUp());
                 check = stm.executeUpdate() > 0;
                 if (check) {
                     generatedKeys = stm.getGeneratedKeys();
@@ -1250,4 +1253,31 @@ public class EventDAO {
         return list;
     }
 
+        public boolean updateEventFollowUp(EventDetailDTO detail) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "UPDATE tblEvents"
+                        + " SET followUp = ?"
+                        + " WHERE id = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, detail.getFollowUp());
+                stm.setInt(2, detail.getId());
+                check = stm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
 }

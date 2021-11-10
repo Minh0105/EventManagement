@@ -172,7 +172,7 @@ public class HandleMultipartServlet extends HttpServlet {
                     }
                 }
                 EventDetailDTO review = new EventDetailDTO(0, eventName, poster, location, chosenDate,
-                        chosenTimeRange, organizerName, 0, 0, description, organizerDescription, organizerAvatar, 1);
+                        chosenTimeRange, organizerName, 0, 0, description, organizerDescription, organizerAvatar, 1, "Hiện chưa có thông tin tiến trình sự kiện.");
                 LOGGER.info("Session attribute: EVENT_DETAIL_REVIEW: " + review);
                 session.setAttribute("EVENT_DETAIL_REVIEW", review);
                 LOGGER.info("Session attribute: EVENT_POSTER_STREAM: " + review);

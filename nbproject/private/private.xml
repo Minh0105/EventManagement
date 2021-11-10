@@ -3,22 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/entity/schedule/Schedule.java</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/SearchLocationServlet.java</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/eventDetail.jsp</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/ChangeDetailByCreatingNewEventServlet.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/updateEvent.jsp</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/follow_up.jsp</file>
             <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/WEB-INF/auth.txt</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/ViewLocationAndTimeServlet.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/eventDetail.jsp</file>
             <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/WEB-INF/roadmap.txt</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/appendEventDetail.jsp</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/loc_and_time.jsp</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/reviewEvent.jsp</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/NewfeedServlet.java</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/ModifyLocationServlet.java</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/admin.jsp</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/HandleMultipartServlet.java</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/CancelEventServlet.java</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/AppendEventDetailServlet.java</file>
+            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/UpdateFollowUpServlet.java</file>
         </group>
     </open-files>
 </project-private>

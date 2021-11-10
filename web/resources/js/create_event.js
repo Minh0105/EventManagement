@@ -143,7 +143,7 @@ function createEventDetailParameter() {
     var htmlContent = "";
 
     var eventName = document.getElementById("input_event_name").value;
-    var eventNameInput = '<input type="hidden" name="eventName" value="' + eventName + '" /> \n';
+    var eventNameInput = '<textarea style="display:none;" name="eventName">'+ eventName + '</textarea>';
 
     var eventDescriptionTest = CKEDITOR.instances.input_event_description.getData();
     var eventDescriptionInput = '<textarea style="display:none;" name="description">'+ eventDescriptionTest + '</textarea>';
