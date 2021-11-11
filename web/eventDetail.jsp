@@ -75,21 +75,20 @@
                 <div id="menu_panel">   
         
                     <div id="btn_edit_event_details" class="menu_button">
-                        <a href="organizerRedirect?action=updateInformation&eventId=<%= detail.getId()%>"><p>Chỉnh sửa thông tin sự kiện</p></a>
+                        <p>Chỉnh sửa thông tin sự kiện</p></a>
                     </div>
 
-<!--                        <div id="btn_edit_event_content" class="menu_sub_button">
-                            <p>Nội dung sự kiện</p>
-                        </div>
-
-                        <div id="btn_edit_event_poster" class="menu_sub_button">
-                            <p>Ảnh bìa</p>
-                        </div>
-
-                        <div id="btn_edit_event_time_and_lock" class="menu_sub_button">
+                    <div id="btn_edit_event_content" class="menu_sub_button">
+                        <a href="changeDetailByCreatingNewEvent?stage=start&eventId=<%= detail.getId()%>">
                             <p>Thời gian và địa điểm</p>
-                        </div>-->
+                        </a>
+                    </div>
 
+                    <div id="btn_edit_event_time_and_lock" class="menu_sub_button">
+                        <a href="organizerRedirect?action=updateInformation&eventId=<%= detail.getId()%>">
+                            <p>Thông tin sự kiện</p>
+                        </a>
+                    </div>
 
                     <div type="button" data-toggle="modal" data-target="#setEvtStatus" id="btn_update_event_status" class="menu_button">
                         <p>Cập nhật trạng thái sự kiện</p>
@@ -445,12 +444,7 @@
         </div>
     </section>
 
-
-    <!--END-->
-    <section class="end">
-        <h4>Developed By Aladudu Group</h4>
-        <p id = "date"></p>
-    </section>
+    <%@include file="footer.jsp" %>
 
     <!-- -------------------------gắn link------------------------------- -->
 

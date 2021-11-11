@@ -2,22 +2,22 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="fptu.swp.entity.user.LecturerBriefInfoDTO"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Create Event</title>
+        <title>Tạo sự kiện</title>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <link rel='stylesheet' type='text/css' media='screen' href='resources/css/create_event.css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script>
+        <!-- <script>
             history.forward();
-        </script>
+        </script> -->
         <script src="<c:url value='resources/ckeditor/ckeditor.js' />"></script>
     </head>
 
@@ -31,13 +31,11 @@
             </div>
         </nav>
 
-        <div id="body" class="container-fluid">
-
+        <div>
             <div id="date_time_row" class="row"> 
-
                 <!-- CHOSEN LOCATION -->
                 <div id="chosen_date_container" class="col-12 col-md-7 col-lg-6 container-fluid">
-                    <div class="row gx-1 gy-2">
+                    <div id="location_container" class="row gy-2">
                         <c:forEach var="locationDTO" items="${sessionScope.ChosenLocationList}" >     
                             <div class="col-6 col-md-4">
                                 <div class="date_pill">           
@@ -55,30 +53,33 @@
                 </div>
 
                 <!-- BACK BUTTON -->
-                <div id="btn_back_container" class="col-5 col-md-2 col-lg-2">
-                    <p id="btn_back" onclick="goBackToDateAndTimeScreen()">
+                <div id="btn_back_container d-flex align-items-center" class="col-5 col-md-2 col-lg-2">
+                    <p style="float:right; margin-bottom: 0 !important;" class="mybutton btn-blue" onclick="goBackToDateAndTimeScreen()">
                         Quay về trước
                     </p>
                 </div>
 
             </div>
+        </div>
+
+        <div id="body" class="container-fluid">
 
             <c:set var="eventDetail" value="${sessionScope.EVENT_DETAIL_REVIEW}" />
 
             <!-- EVENT NAME -->
             <h5 class="title col-12">Tên Sự Kiện</h5>
-            <input class="col-12 col-lg-7" id="input_event_name" type="text"  
+            <input class="col-12 my-text-input" id="input_event_name" type="text"  
                    name="eventName" value="${eventDetail.name}">
 
             <!-- EVENT DESCRIPTION        -->
             <h5 class="title col-12">Nội Dung Sự Kiện</h5>
-            <textarea class="col-12 col-lg-7" id="input_event_description" rows="7" cols="12"
+            <textarea class="col-12" id="input_event_description" rows="7" cols="12"
                       type="text"name="description">${eventDetail.description}</textarea>
 
             <!-- EVENT IMAGE  -->
             <h5 class="title col-12">Ảnh sự kiện</h5>
 
-            <div id="image_container" class="col-12 col-lg-7">
+            <div id="image_container" class="col-12">
                 <figure id="figure_image" >
                     <img id="chosen-image" 
                     <c:if test="${not empty eventDetail.poster}">
@@ -92,9 +93,12 @@
                 <input class="d-none" type="file" id="upload-button" 
                        accept="image/*" name="fileUp" value="" style="visibility:hidden;">
 
-                <label id="btn_upload_image" for="upload-button">
-                    Chọn hình ảnh
-                </label>
+                <div class="text-right">
+                    <label class="mybutton btn-blue" id="btn_upload_image" for="upload-button">
+                        Chọn hình ảnh
+                    </label>
+                </div>       
+                
             </div>
 
             <!-- LECTURER -->
@@ -104,72 +108,56 @@
 
             <div id="chosen_lecturer_container">
                 <c:forEach var="chosenLec" items="${sessionScope.ChosenLecturerList}">
-                    <div class="chosen_lecturer_item">
-                        <div class="d-flex align-items-center">
-                            <img class="rounded-circle lec-avatar " src="${chosenLec.avatar}"> 
-                            <p class="chosen_lec_name">${chosenLec.name}</p>
+                    <div class="chosen_lecturer">
+                        <div>
+                            <span class="mr-3">${chosenLec.name}</span>
+                            <img onclick="onRemoveChosenLecturerClick('${chosenLec.id}', this)" class="btn_remove_lec" style="width: 1rem; height: 1rem;" src="resources/icon/icon_remove_lecturer.svg">
+                            <input class="chosen_lecturer_id d-none" type="hidden" name="chosen_lecturer" value="${chosenLec.id}"/>
                         </div>
-                        <input class="chosen_lecturer d-none" type="hidden" name="chosen_lecturer" value="1"/>
-                        <img class="btn_remove_lec" onclick="onRemoveChosenLecturerClick('${chosenLec.id}')" src="resources/icon/icon_remove_lecturer.svg"/>
                     </div>
                 </c:forEach>
             </div>
 
             <!-- SEARCH LECTURER  -->
-            <input class="col-12 col-lg-7" type="text" id="myInput" onkeyup="myFunction()"
-                   placeholder="Search for names.." title="Type in a name">
+            <input class="col-12 my-text-input" type="text" id="myInput" onkeyup="myFunction()"
+                   placeholder="Nhập tên giảng viên" title="Type in a name">
 
             <!-- LECTURER LIST -->
-            <ul id="lecturer_list">
+            <div id="floated_lecturer_list">
 
                 <%
                     ArrayList<LecturerBriefInfoDTO> lecturerList = (ArrayList) session.getAttribute("LecturerList");
                     ArrayList<LecturerBriefInfoDTO> chosenLecturerList = (ArrayList) session.getAttribute("ChosenLecturerList");
 
                     for (LecturerBriefInfoDTO lecturer : lecturerList) {
-                %>
-                <li>
-                    <div 
-                        <%
-                            if ((chosenLecturerList != null) && chosenLecturerList.contains(lecturer)) {
-                        %>
-                        style="display: none" 
-                        <%
-                            }
-                        %>
-                        class="lecturer_infor col-12 col-lg-7" onclick="onChooseLecturer(this)">
-                        <input type="hidden" name="chosen_lecturer" value="<%= lecturer.getId()%>"/>
-                        <img class="rounded-circle lec-avatar" src="<%= lecturer.getAvatar()%>"> 
-                        <span class="lec_name"><%= lecturer.getName()%></span>
-                    </div>
-                </li>
+                    %>
+                        <div class="lec_item" onclick="onChooseLecturer(this)" 
+                    <%
+                        if ((chosenLecturerList != null) && chosenLecturerList.contains(lecturer)) {
+                    %>
+                            style="display: none"
+                    <%
+                        }
+                    %>      >
+                            <img class="lec_ava" src="<%= lecturer.getAvatar()%>">
+                            <p class="d-inline-block mb-0 ml-3 lec_name" style="color: #303030;"><%= lecturer.getName()%></p>
+                            <input type="hidden" name="chosen_lecturer" value="<%= lecturer.getId()%>"/>
+                        </div>
                 <%
                     }
                 %>
+            </div> 
 
-            </ul>
-
-            <p id="btn_review" onclick="sendDataToServer()">Xem trước</p>
+            <div class="text-center">
+                <button class="mybutton btn-orange mt-5" onclick="sendDataToServer()">Xem trước</button>
+            </div>
         </div>
 
+        <%@include file="footer.jsp" %>
+        
         <div id="submiter"></div>
-
         <script src="resources/js/create_event.js"></script>
-
-        <footer style="height: 400px;">
-
-        </footer>
-        <script>
-                if (screen.width >= 1200) {
-                    CKEDITOR.replace('input_event_description', {
-                        width: '58.3333%'
-                    });
-                } else {
-                    CKEDITOR.replace('input_event_description', {
-                        width: '100%'
-                    });
-                }
-        </script>
+        <script src="resources/js/setUpCKEditor.js"></script>
     </body>
 
 </html>

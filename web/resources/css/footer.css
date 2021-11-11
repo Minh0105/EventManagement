@@ -1,0 +1,22 @@
+footer {
+    padding: 6vh 8vh;
+    background-color: white;
+    border-top: 1px solid #D5D5D5;
+    margin-top: 35vh;
+}
+
+footer p {
+    margin: 0px !important;
+}
+
+#group_name {
+    font-size: 1.37rem;
+    opacity: 0.5;
+    color: black;
+}
+
+#copyright {
+    font-size: 1.0625;
+    opacity: 0.5;
+    color: black;
+}

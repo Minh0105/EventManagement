@@ -215,10 +215,7 @@
         <script language="javascript1.5">var js_version = "1.5"</script>
         <script language="javascript1.6">var js_version = "1.6"</script>
 
-        <footer class="end">
-            <h4>Developed By Aladudu Group</h4>
-            <p>COVID-19, 20/9/2021</p>
-        </footer>
+        <%@include file="footer.jsp" %>
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
                 integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN"

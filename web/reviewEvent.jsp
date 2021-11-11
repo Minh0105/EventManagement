@@ -169,11 +169,7 @@
     </section>
 
 
-    <!--END-->
-    <section class="end">
-        <h4>Developed By Aladudu Group</h4>
-        <p id = "date"></p>
-    </section>
+    <%@include file="footer.jsp" %>
 
     <!-- -------------------------gắn link------------------------------- -->
 

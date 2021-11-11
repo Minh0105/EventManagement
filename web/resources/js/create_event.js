@@ -14,20 +14,25 @@ uploadButton.onchange = () => {
 
 //Search
 function myFunction() {
-    var input, filter, lecturer_list, a, txtValue;
+    var input, keyword, lecturer_list, txtLecName, txtValue;
     input = document.getElementById("myInput");
-    filter = input.value.toUpperCase().trim();
+    keyword = input.value.toUpperCase().trim();
 
-    lecturer_list = document.getElementById("lecturer_list");
-    li_list = lecturer_list.getElementsByTagName("li");
-    for (var lecItem of li_list) {
-        a = lecItem.getElementsByClassName("lec_name")[0];
-        txtValue = a.textContent || a.innerText;
-        if (txtValue.toUpperCase().trim().includes(filter)) {
-            lecItem.style.display = "block";
+    lecturer_list = document.getElementsByClassName("lec_item");
+    for (var lecItem of lecturer_list) {
+        txtLecName = lecItem.getElementsByClassName("lec_name")[0];
+        txtValue = txtLecName.textContent || txtLecName.innerText;
+        if (txtValue.toUpperCase().trim().includes(keyword)) {
+            lecItem.style.display = "flex";
         } else {
             lecItem.style.display = "none";
         }
+    }
+
+    if (isAllLecturerDisplayNone()) {
+        hideLecturerList();
+    } else {
+        showLecturerList();
     }
 }
 
@@ -39,62 +44,58 @@ function onChooseLecturer(button) {
 
     // Extract Lecturer Data
     var lecId = button.getElementsByTagName("input")[0].value;
-    var lecAvatar = button.getElementsByClassName("lec-avatar")[0].src;
     var lecName = button.getElementsByClassName("lec_name")[0].innerHTML;
 
     // Button Model
-//     <div class="chosen_lecturer_item col-12 col-lg-7">
-    //     <div class="d-flex align-items-center">
-    //         <img class="rounded-circle lec-avatar " src="${chosenLec.avatar}"> 
-    //         <p class="chosen_lec_name">${chosenLec.name}</p>
-    //     </div>
-    //     <input class="chosen_lecturer d-none" type="hidden" name="chosen_lecturer" value="1"/>
-    //     <img class="btn_remove_lec" onclick="onRemoveChosenLecturerClick('${chosenLec.id}', this)" src="resources/icon/icon_remove_lecturer.svg"/>
-//     </div>
-
-    // Create Chosen Lecturer ELement
-    var divChosenLecItem = document.createElement("div");
-    divChosenLecItem.className = "chosen_lecturer_item col-12 col-lg-7";
-
-    var divAvarName = document.createElement("div");
-    divAvarName.className = "d-flex align-items-center";
-
-    var imgLecAvar = document.createElement("img");
-    imgLecAvar.className = "rounded-circle lec-avatar";
-    imgLecAvar.src = lecAvatar;
-
-    var pLecName = document.createElement("p");
-    pLecName.className = "chosen_lec_name ";
-    pLecName.innerHTML = lecName;
-
-    divAvarName.appendChild(imgLecAvar);
-    divAvarName.appendChild(pLecName);
-
-    var inputLecIdValue = document.createElement("input");
-    inputLecIdValue.className = "chosen_lecturer d-none";
-    inputLecIdValue.type = "hidden";
-    inputLecIdValue.name= "chosen_lecturer";
-    inputLecIdValue.value= lecId;
-
-    var btnRemoveLec =  document.createElement("img");
-    btnRemoveLec.className = "btn_remove_lec";
-    btnRemoveLec.setAttribute("onclick", 'onRemoveChosenLecturerClick("'+ lecId +'", this)'); 
-    btnRemoveLec.src="resources/icon/icon_remove_lecturer.svg"
-
-    divChosenLecItem.appendChild(divAvarName);
-    divChosenLecItem.appendChild(inputLecIdValue);
-    divChosenLecItem.appendChild(btnRemoveLec);
+    var chosen_lec_div = "";
+    chosen_lec_div += '<div class="chosen_lecturer"> \n';
+    chosen_lec_div += '    <div> \n';
+    chosen_lec_div += '        <span class="mr-3">'+lecName+'</span> \n';
+    chosen_lec_div += '        <img onclick="onRemoveChosenLecturerClick(\''+lecId+'\', this)" class="btn_remove_lec" style="width: 1rem; height: 1rem;" src="resources/icon/icon_remove_lecturer.svg"> \n';
+    chosen_lec_div += '        <input class="chosen_lecturer_id d-none" type="hidden" name="chosen_lecturer" value="'+lecId+'"/> \n';
+    chosen_lec_div += '    </div> \n';
+    chosen_lec_div += '</div> \n';
 
     // Add pContainer to Html page
     var chosenLecturerContainer = document.getElementById("chosen_lecturer_container");
-    chosenLecturerContainer.appendChild(divChosenLecItem);
+    chosenLecturerContainer.appendChild(createNodeFromHtml(chosen_lec_div));
+
+    if (isAllLecturerDisplayNone()) {
+        hideLecturerList();
+    }
+}
+
+function showLecturerList () {
+    document.getElementById("floated_lecturer_list").style.display = 'flex';
+}
+
+function hideLecturerList () {
+    document.getElementById("floated_lecturer_list").style.display = 'none';
+}
+
+function isAllLecturerDisplayNone () {
+    var lecturer_item = document.getElementsByClassName("lec_item");
+    for (var lecturer of lecturer_item) {
+        if (lecturer.style.display != "none") {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function createNodeFromHtml (html) {
+    var div = document.createElement("div");
+    div.innerHTML = html.trim();
+    return div.firstChild;
 }
 
 function onRemoveChosenLecturerClick(removedLecturerID, button) {
-    var grandPa = button.parentNode.parentNode
-    grandPa.removeChild(button.parentNode);
+    showLecturerList();
+    var grandPa = button.parentNode.parentNode.parentNode;
+    grandPa.removeChild(button.parentNode.parentNode);
 
-    var lecturerInforElementList = document.getElementsByClassName("lecturer_infor");
+    var lecturerInforElementList = document.getElementsByClassName("lec_item");
 
     for (var lecInfor of lecturerInforElementList) {
         var lecInforID = lecInfor.getElementsByTagName("input")[0].value;
@@ -130,12 +131,12 @@ function sendDataToServer () {
 
 function createChosenLecturerParameter() {
     var htmlContent = "";
-    var chosenLecturerElements = document.getElementsByClassName("chosen_lecturer");
+    var chosenLecturerElements = document.getElementsByClassName("chosen_lecturer_id");
 
     for (var chosenLec of chosenLecturerElements) {
         htmlContent += chosenLec.outerHTML + "\n";
     }
-
+    console.log(htmlContent);
     return htmlContent;
 }
 

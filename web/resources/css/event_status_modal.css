@@ -1,3 +1,6 @@
+
+@import url(mybutton.css);
+
 .status_dot {
     width: 0.7rem;
     height: 0.7rem;
@@ -27,17 +30,6 @@
 .modal-footer {
     border-top: none !important;
 }
-
-
- /* BUTTON */
-
- .mybutton {
-     padding: 0.8rem 1.3rem;
-     border-radius: 6px;
-     font-size: 1rem;
-     font-weight: 300;
-     border: none;
- }
 
  .btn_close_register {
     background-color: #EBEBEB;
