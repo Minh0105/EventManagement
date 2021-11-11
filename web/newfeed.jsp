@@ -105,7 +105,7 @@
                 <img src="resources/icon/icon_create_new_event.svg" />
                 <button >Tiếp tục sửa sự kiện</button>
             </a>
-            <a id="btn_create_event" href="#">
+            <a id="btn_create_event" href="cancelUpdateEvent">
                 <img src="resources/icon/icon_create_new_event.svg" />
                 <button >Hủy sửa đổi sự kiện</button>
             </a>

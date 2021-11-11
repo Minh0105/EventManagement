@@ -224,6 +224,10 @@
         <servlet-name>OrganizerRedirectServlet</servlet-name>
         <servlet-class>fptu.swp.controller.OrganizerRedirectServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CancelUpdateEventServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.CancelUpdateEventServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -311,6 +315,10 @@
     <servlet-mapping>
         <servlet-name>OrganizerRedirectServlet</servlet-name>
         <url-pattern>/OrganizerRedirectServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelUpdateEventServlet</servlet-name>
+        <url-pattern>/CancelUpdateEventServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

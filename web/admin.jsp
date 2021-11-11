@@ -121,6 +121,7 @@
             <br>
 
             <div class="service">
+                <span>${requestScope.NOTIFICATION}</span>
                 <table>
                     <thead>
                         <tr class="service1" >

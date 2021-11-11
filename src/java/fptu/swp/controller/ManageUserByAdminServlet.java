@@ -5,6 +5,7 @@
  */
 package fptu.swp.controller;
 
+import fptu.swp.email.EmailSender;
 import fptu.swp.entity.user.UserDAO;
 import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 /**
@@ -56,6 +58,8 @@ public class ManageUserByAdminServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         try {
+            HttpSession session = request.getSession(false);
+            UserDTO loginUser = (UserDTO) session.getAttribute("USER");
             if ("Deactivate".equals(action)) {
                 int userId = Integer.parseInt(request.getParameter("userId"));
                 if (userDao.deactivateUser(userId)) {
@@ -70,8 +74,13 @@ public class ManageUserByAdminServlet extends HttpServlet {
                     }
                     url = MANAGE_BY_ADMIN_SERVLET_PATH + "?management=" + role;
                     request.setAttribute("TEXT_SEARCH", searchTxt);
+                    if(EmailSender.sendEmail(loginUser, userDao.getUserById(userId), "Ban account!", "Account của bạn đã bị ban khỏi hệ thống!", "fptu eventmanager")){
+                        request.setAttribute("NOTIFICATION", "Gửi mail thành công!");
+                    }else{
+                        request.setAttribute("NOTIFICATION", "Gửi mail không thành công!");
+                    }
                 }
-            } else if ("Reactivate".equals(action)) {
+            } else if ("Activate".equals(action)) {
                 int userId = Integer.parseInt(request.getParameter("userId"));
                 if (userDao.reactivateUser(userId)) {
                     int roleId = userDao.getUserRoleId(userId);

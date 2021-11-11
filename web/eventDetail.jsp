@@ -127,7 +127,11 @@
 
                     <div class="modal-footer">
                       <button type="button" class="mybutton btn_close_register">Đóng đăng kí</button>
-                      <button type="button" class="mybutton btn_cancel_event">Ngừng sự kiện</button>
+                      <form action="cancelEvent" method="POST">
+                          <button type="submit" class="mybutton btn_cancel_event">Ngừng sự kiện</button>
+                          <input type="hidden" name="eventId" value="<%= detail.getId() %>"/>
+                      </form>
+                      
                     </div>
                   </div>
                 </div>
