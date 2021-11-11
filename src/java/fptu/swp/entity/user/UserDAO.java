@@ -819,4 +819,56 @@ public class UserDAO {
         }
         return list;
     }
+    
+    public UserDTO getUserById(int id) throws SQLException, NamingException {
+       UserDTO user = null;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT id, email, name, avatar, address, phoneNum,roleId,statusId, description"
+                        + " FROM tblUsers"
+                        + " WHERE id = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, id);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    String email = rs.getString("email");
+                    String name = rs.getString("name");
+                    String avatar = rs.getString("avatar");
+                    String address = rs.getString("address");
+                    String phoneNum = rs.getString("phoneNum");
+                    int roleId = rs.getInt("roleId");
+                    String roleName = "";
+                    if (roleId == 1) {
+                        roleName = "STUDENT";
+                    } else if (roleId == 2) {
+                        roleName = "LECTURER";
+                    } else if (roleId == 3) {
+                        roleName = "CLUB'S LEADER";
+                    } else if (roleId == 4) {
+                        roleName = "DEPARTMENT'S MANAGER";
+                    } else if (roleId == 5) {
+                        roleName = "ADMIN";
+                    }
+                    String status = (rs.getString("statusId").equals("AC")) ? "Activated" : "Deactivated";
+                    String description = rs.getString("description");
+                    user = new UserDTO(id, email, name, avatar, address, phoneNum, roleName, status, description);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return user;
+    }
 }

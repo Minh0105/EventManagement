@@ -65,6 +65,9 @@ public class CancelEventServlet extends HttpServlet {
         final String FILTER_EVENT_SERVLET = context.getInitParameter("FILTER_EVENT_SERVLET");
         final String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
         final String FILTER_EVENT_SERVLET_PATH = roadmap.get(FILTER_EVENT_SERVLET);
+        final String VIEW_NEWFEED_SERVLET = context.getInitParameter("VIEW_NEWFEED_SERVLET");
+        final String VIEW_NEWFEED = roadmap.get(VIEW_NEWFEED_SERVLET);
+        
         String url = INVALID_PAGE_PATH;
         int eventId = Integer.parseInt(request.getParameter("eventId"));
         try {
@@ -91,6 +94,8 @@ public class CancelEventServlet extends HttpServlet {
                         Schedule.updateSchedule();
                         if ("ADMIN".equals(loginUser.getRoleName())) {
                             url = FILTER_EVENT_SERVLET_PATH;
+                        }if ("DEPARTMENT'S MANAGER".equals(loginUser.getRoleName()) || "CLUB'S LEADER".equals(loginUser.getRoleName())) {
+                            url = VIEW_NEWFEED;
                         }
                     }
                 }
