@@ -65,6 +65,13 @@
                                     <span id="btn_log_out">Log out</span> 
                                 </a> 
                             </div>
+                            
+                            <div id="logout_button_panel">
+                                <a id="logout_link" href="redirectListEvent">
+                                    <img src="resources/icon/log_out_icon.svg" />
+                                    <span id="btn_log_out">View All Event</span> 
+                                </a> 
+                            </div>
 
                         </div>   	
                     </ul>

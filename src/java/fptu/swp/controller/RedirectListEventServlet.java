@@ -5,8 +5,9 @@
  */
 package fptu.swp.controller;
 
-import fptu.swp.entity.event.EventCardDTO;
 import fptu.swp.entity.event.EventDAO;
+import fptu.swp.entity.event.EventDetailDTO;
+import fptu.swp.entity.user.UserDAO;
 import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,21 +15,18 @@ import java.util.HashMap;
 import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 /**
  *
  * @author triet
  */
-@WebServlet(name = "NewfeedServlet", urlPatterns = {"/NewfeedServlet"})
-public class NewfeedServlet extends HttpServlet {
+public class RedirectListEventServlet extends HttpServlet {
 
-    static final Logger LOGGER = Logger.getLogger(NewfeedServlet.class);
+    static final Logger LOGGER = Logger.getLogger(RedirectListEventServlet.class);
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,49 +40,28 @@ public class NewfeedServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        LOGGER.info("Begin NewfeedServlet");
+        LOGGER.info("Begin RedirectListEventServlet");
+
         //declare var
-        List<EventCardDTO> listCard = null;
-        List<EventCardDTO> listFollowing = null;
-        List<EventCardDTO> listJoining = null;
+        UserDAO userDao = new UserDAO();
+        EventDAO eventDao = new EventDAO();
 
         //get roadmap
         ServletContext context = request.getServletContext();
         HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
 
         //default url
-        String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
-        String NEWFEED_PAGE_LABEL = context.getInitParameter("NEWFEED_PAGE_LABEL");
-        String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
-        String NEWFEED_PAGE_PATH = roadmap.get(NEWFEED_PAGE_LABEL);
+        final String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
+        final String ALL_EVENT_PAGE_LABEL = context.getInitParameter("ALL_EVENT_PAGE_LABEL");
+        final String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
+        final String ALL_EVENT_PAGE_PATH = roadmap.get(ALL_EVENT_PAGE_LABEL);
         String url = INVALID_PAGE_PATH;
-
         try {
-            HttpSession session = request.getSession();
-            UserDTO loginUser = (UserDTO) session.getAttribute("USER");
-            EventDAO eventDao = new EventDAO();
+            List<UserDTO> listOrganizer = userDao.getListAllOrganizer();
+            request.setAttribute("LIST_ORGANIZER_EVENT", listOrganizer);
 
-            listCard = eventDao.getNewFeedEventList(loginUser);
-            LOGGER.info("LIST EVENT CARD:" + listCard);
-            request.setAttribute("LIST_CARD", listCard);
-
-            //chi lay event co statusId  = 1
-            if ("STUDENT".equals(loginUser.getRoleName())) {
-                listFollowing = eventDao.getFollowedEventList(loginUser.getId());
-                LOGGER.info("LIST FOLLOWING EVENT CARD:" + listFollowing);
-                request.setAttribute("LIST_FOLLOWING_CARD", listFollowing);
-
-                listJoining = eventDao.getJoiningEventList(loginUser.getId());
-                LOGGER.info("LIST JOINING EVENT CARD:" + listJoining);
-                request.setAttribute("LIST_JOINING_CARD", listJoining);
-            }
-            if ("LECTURER".equals(loginUser.getRoleName())) {
-                List<EventCardDTO> listAdded = eventDao.getNewFeedEventListOfLecturerId(loginUser);
-                LOGGER.info("LIST EVENT CARD OF THIS LECTURER:" + listAdded);
-                request.setAttribute("LIST_EVENT_CARD_LECTURER", listAdded);
-            }
-
-            url = NEWFEED_PAGE_PATH;
+            LOGGER.info("Request Attribute LIST_ORGANIZER_EVENT: " + listOrganizer);
+            url = ALL_EVENT_PAGE_PATH;
         } catch (Exception e) {
             LOGGER.error(e);
         } finally {

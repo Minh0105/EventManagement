@@ -87,6 +87,14 @@ public class ViewEventDetailServlet extends HttpServlet {
                 request.setAttribute("IS_JOINING", checkJoining);
                 LOGGER.info("This student is following: " + checkFollowed + " - is joining: "+ checkJoining);
             }
+            if("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName())){
+                List<UserDTO> listFollowers = userDao.getFollowersByEventId(eventId);
+                List<UserDTO> listParticipants = userDao.getParticipantsByEventId(eventId);
+                request.setAttribute("LIST_FOLLOWERS",listFollowers);
+                request.setAttribute("LIST_PARTICIPANTS", listParticipants);
+                LOGGER.info("List Followers: " + listFollowers);
+                LOGGER.info("List Participants: " + listParticipants);
+            }
             
             url = EVENTDETAIL_PAGE_PATH;
 

@@ -228,6 +228,10 @@
         <servlet-name>CancelUpdateEventServlet</servlet-name>
         <servlet-class>fptu.swp.controller.CancelUpdateEventServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RedirectListEventServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.RedirectListEventServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -319,6 +323,10 @@
     <servlet-mapping>
         <servlet-name>CancelUpdateEventServlet</servlet-name>
         <url-pattern>/CancelUpdateEventServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RedirectListEventServlet</servlet-name>
+        <url-pattern>/RedirectListEventServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
