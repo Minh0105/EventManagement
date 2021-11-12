@@ -44,3 +44,4 @@ UpdateFollowUpPage=follow_up.jsp
 updateFollowUp=UpdateFollowUpServlet
 cancelUpdateEvent=CancelUpdateEventServlet
 redirectListEvent=RedirectListEventServlet
+RelevantEventPage=relevantEvent.jsp

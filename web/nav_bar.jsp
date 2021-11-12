@@ -52,28 +52,43 @@
                             </a>
                         </li>
                         <li class="nav-item dropdown">
-                            <ahref="#" class="nav-link">
-                                <img id="btn_menu" src="resources/icon/hamburger_button_icon.svg" alt="hamburger_button" />
+                        <ahref="#" class="nav-link">
+                            <img id="btn_menu" src="resources/icon/hamburger_button_icon.svg" alt="hamburger_button" />
                             </a>
-                        </li>	
-                        
-                        <div id="nav_expanded_panel">
+                            </li>	
 
-                            <div id="logout_button_panel">
-                                <a id="logout_link" href="logout">
-                                    <img src="resources/icon/log_out_icon.svg" />
-                                    <span id="btn_log_out">Log out</span> 
-                                </a> 
-                            </div>
-                            
-                            <div id="logout_button_panel">
-                                <a id="logout_link" href="redirectListEvent">
-                                    <img src="resources/icon/log_out_icon.svg" />
-                                    <span id="btn_log_out">View All Event</span> 
-                                </a> 
-                            </div>
+                            <div id="nav_expanded_panel">
 
-                        </div>   	
+                                <div id="logout_button_panel">
+                                    <a id="logout_link" href="logout">
+                                        <img src="resources/icon/log_out_icon.svg" />
+                                        <span id="btn_log_out">Log out</span> 
+                                    </a> 
+                                </div>
+
+                                <div id="logout_button_panel">
+                                    <a id="logout_link" href="redirectListEvent?action=all">
+                                        <img src="resources/icon/log_out_icon.svg" />
+                                        <span id="btn_log_out">View All Event</span> 
+                                    </a> 
+                                </div>
+                                <c:if test="${sessionScope.USER.roleName eq 'STUDENT'}">
+                                    <div id="logout_button_panel">
+                                        <a id="logout_link" href="redirectListEvent?action=joined">
+                                            <img src="resources/icon/log_out_icon.svg" />
+                                            <span id="btn_log_out">View Joined Event</span> 
+                                        </a> 
+                                    </div>
+                                </c:if>
+                                    <c:if test="${sessionScope.USER.roleName eq 'LECTURER'}">
+                                    <div id="logout_button_panel">
+                                        <a id="logout_link" href="redirectListEvent?action=added">
+                                            <img src="resources/icon/log_out_icon.svg" />
+                                            <span id="btn_log_out">View Added Event</span> 
+                                        </a> 
+                                    </div>
+                                </c:if>
+                            </div>   	
                     </ul>
                 </div>
             </div>

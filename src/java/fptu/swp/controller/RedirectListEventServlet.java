@@ -18,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 /**
@@ -53,15 +54,38 @@ public class RedirectListEventServlet extends HttpServlet {
         //default url
         final String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
         final String ALL_EVENT_PAGE_LABEL = context.getInitParameter("ALL_EVENT_PAGE_LABEL");
+        final String RELEVANT_EVENT_PAGE_LABEL = context.getInitParameter("RELEVANT_EVENT_PAGE_LABEL");
         final String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
         final String ALL_EVENT_PAGE_PATH = roadmap.get(ALL_EVENT_PAGE_LABEL);
+        final String RELEVANT_EVENT_PAGE_PATH = roadmap.get(RELEVANT_EVENT_PAGE_LABEL);
         String url = INVALID_PAGE_PATH;
         try {
-            List<UserDTO> listOrganizer = userDao.getListAllOrganizer();
-            request.setAttribute("LIST_ORGANIZER_EVENT", listOrganizer);
+            String action = request.getParameter("action");
+            if ("all".equals(action)) {
+                List<UserDTO> listOrganizer = userDao.getListAllOrganizer();
+                request.setAttribute("LIST_ORGANIZER_EVENT", listOrganizer);
 
-            LOGGER.info("Request Attribute LIST_ORGANIZER_EVENT: " + listOrganizer);
-            url = ALL_EVENT_PAGE_PATH;
+                LOGGER.info("Request Attribute LIST_ORGANIZER_EVENT: " + listOrganizer);
+                url = ALL_EVENT_PAGE_PATH;
+            } else {
+                HttpSession session = request.getSession(false);
+                UserDTO loginUser = (UserDTO) session.getAttribute("USER");
+                List<EventDetailDTO> listEvent = null;
+                if ("joined".equals(action) && "STUDENT".equals(loginUser.getRoleName())) {
+                    listEvent = eventDao.getListJoinedEventOfStudent(loginUser.getId());
+                    request.setAttribute("LIST_EVENT", listEvent);
+                    LOGGER.info("Request Attribute LIST_EVENT joined by this STUDENT: " + listEvent);
+                    url = RELEVANT_EVENT_PAGE_PATH;
+                }
+                else if ("added".equals(action) && "LECTURER".equals(loginUser.getRoleName())) {
+                    listEvent = eventDao.getListAddedEventOfLecturer(loginUser.getId());
+                    request.setAttribute("LIST_EVENT", listEvent);
+                    LOGGER.info("Request Attribute LIST_EVENT added to this LECTURER: " + listEvent);
+                    url = RELEVANT_EVENT_PAGE_PATH;
+                }
+                
+            }
+
         } catch (Exception e) {
             LOGGER.error(e);
         } finally {

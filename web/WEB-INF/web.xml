@@ -116,6 +116,10 @@
         <param-name>UPDATE_FOLLOWUP_PAGE_LABEL</param-name>
         <param-value>UpdateFollowUpPage</param-value>
     </context-param>
+    <context-param>
+        <param-name>RELEVANT_EVENT_PAGE_LABEL</param-name>
+        <param-value>RelevantEventPage</param-value>
+    </context-param>
     <filter>
         <filter-name>FilterAuth</filter-name>
         <filter-class>fptu.swp.filter.FilterAuth</filter-class>
