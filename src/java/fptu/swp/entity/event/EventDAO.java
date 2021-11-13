@@ -232,7 +232,7 @@ public class EventDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 String sql = "";
-                if ("STUDENT".equals(loginUser.getRoleName())) {
+                if ("STUDENT".equals(loginUser.getRoleName()) || "LECTURER".equals(loginUser.getRoleName())) {
                     sql = "SELECT s.id eventId, s.name eventName, s.poster eventPoster, m.name organizerName, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants"
                             + " FROM tblEvents s"
                             + " LEFT JOIN tblUsers m ON s.userId = m.id"
@@ -249,16 +249,94 @@ public class EventDAO {
                             + " WHERE s.userId = ? AND s.statusId = 1";
                     stm = conn.prepareStatement(sql);
                     stm.setInt(1, loginUser.getId());
-                } else if ("LECTURER".equals(loginUser.getRoleName())) {
-                    sql = "SELECT s.id eventId, s.name eventName, s.poster eventPoster, m.name organizerName, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants"
-                            + " FROM tblEvents s"
-                            + " LEFT JOIN tblUsers m ON s.userId = m.id"
-                            + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
-                            + "                  LEFT JOIN tblLocations u ON locationId = u.id) t ON s.id = t.eventId"
-                            + " WHERE s.statusId = 1 AND s.id IN (SELECT eventId FROM tblLecturersInEvents WHERE lecturerId = ?)";
-                    stm = conn.prepareStatement(sql);
-                    stm.setInt(1, loginUser.getId());
                 }
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    eventId = rs.getInt("eventId");
+                    if (currentEventId != eventId) {
+                        if (currentEventId != 0) {
+                            int i = 0;
+                            String location = "";
+                            for (i = 0; i < listLocation.size() - 1; i++) {
+                                location += listLocation.get(i) + ", ";
+                            }
+                            location += listLocation.get(i);
+                            EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                            list.add(card);
+                        }
+                        listLocation.clear();
+                        currentEventId = eventId;
+                        eventName = rs.getString("eventName");
+                        byte[] tmp = rs.getBytes("eventPoster");
+                        eventPoster = Base64.getEncoder().encodeToString(tmp);
+                        organizerName = rs.getString("organizerName");
+                        Date dateFromDB = rs.getTimestamp("date");
+                        date = formatter.format(dateFromDB).toString();
+                        locationName = rs.getString("locationName");
+                        following = rs.getInt("followers");
+                        joining = rs.getInt("participants");
+                        listLocation.add(locationName);
+                    } else {
+                        locationName = rs.getString("locationName");
+                        listLocation.add(locationName);
+                    }
+                }
+                if (listLocation.size() != 0) {
+                    int i = 0;
+                    String location = "";
+                    for (i = 0; i < listLocation.size() - 1; i++) {
+                        location += listLocation.get(i) + ", ";
+                    }
+                    location += listLocation.get(i);
+                    EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                    list.add(card);
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
+    }
+
+    public List<EventCardDTO> getNewFeedEventListOfLecturerId(UserDTO loginUser) throws SQLException {
+        List<EventCardDTO> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int eventId = 0;
+        int currentEventId = 0;
+        String eventName = "";
+        String eventPoster = "";
+        String organizerName = "";
+        String date = "";
+        String locationName = "";
+        int following = 0;
+        int joining = 0;
+        List<String> listLocation = new ArrayList<>();
+        SimpleDateFormat formatter = new SimpleDateFormat("EEEE, dd/MM/yyyy");
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT s.id eventId, s.name eventName, s.poster eventPoster, m.name organizerName, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants"
+                        + " FROM tblEvents s"
+                        + " LEFT JOIN tblUsers m ON s.userId = m.id"
+                        + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
+                        + "                  LEFT JOIN tblLocations u ON locationId = u.id) t ON s.id = t.eventId"
+                        + " WHERE s.statusId = 1 AND s.id IN (SELECT eventId FROM tblLecturersInEvents WHERE lecturerId = ?)";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, loginUser.getId());
+
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     eventId = rs.getInt("eventId");
@@ -990,6 +1068,189 @@ public class EventDAO {
         return list;
     }
 
+    public List<EventDetailDTO> getListJoinedEventOfStudent(int studentId) throws SQLException {
+        List<EventDetailDTO> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<String> listLocation = new ArrayList<>();
+
+        String locationName = "";
+        String sql = "";
+        int eventId = 0;
+        int currentEventId = 0;
+        String eventName = "";
+        String organizerName = "";
+        String date = "";
+        int following = 0;
+        int joining = 0;
+        int statusId = 0;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                sql = "SELECT s.id id, s.name eventName, m.name organizerName, t.date date,\n"
+                        + "t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants, s.statusId statusId\n"
+                        + " FROM tblEvents s\n"
+                        + " LEFT JOIN tblUsers m ON s.userId = m.id\n"
+                        + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation\n"
+                        + " LEFT JOIN tblLocations u ON locationId = u.id) t ON s.id = t.eventId\n"
+                        + " WHERE s.id IN (SELECT eventId FROM tblStudentsInEvents WHERE studentId = ? AND isJoining = 1)";
+
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, studentId);
+
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    eventId = rs.getInt("id");
+                    if (currentEventId != eventId) {
+                        if (currentEventId != 0) {
+                            int i = 0;
+                            String location = "";
+                            for (i = 0; i < listLocation.size() - 1; i++) {
+                                location += listLocation.get(i) + ", ";
+                            }
+                            location += listLocation.get(i);
+                            String time = getTimeOfEventDetail(conn, currentEventId);
+                            list.add(new EventDetailDTO(currentEventId, eventName, location, date, time, organizerName, following, joining, statusId));
+                        }
+                        listLocation.clear();
+                        currentEventId = eventId;
+                        eventName = rs.getString("eventName");
+                        organizerName = rs.getString("organizerName");
+                        Date dateFromDB = rs.getTimestamp("date");
+                        date = formatter.format(dateFromDB).toString();
+                        locationName = rs.getString("locationName");
+                        following = rs.getInt("followers");
+                        joining = rs.getInt("participants");
+                        statusId = rs.getInt("statusId");
+                        listLocation.add(locationName);
+                    } else {
+                        locationName = rs.getString("locationName");
+                        listLocation.add(locationName);
+                    }
+
+                }
+                int i = 0;
+                String location = "";
+                for (i = 0; i < listLocation.size() - 1; i++) {
+                    location += listLocation.get(i) + ", ";
+                }
+                if (listLocation.size() != 0) {
+                    location += listLocation.get(i);
+                    String time = getTimeOfEventDetail(conn, currentEventId);
+                    list.add(new EventDetailDTO(currentEventId, eventName, location, date, time, organizerName, following, joining, statusId));
+                    Collections.reverse(list); //Added Date: 26-10-2021
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
+    }
+    public List<EventDetailDTO> getListAddedEventOfLecturer(int lecturerId) throws SQLException {
+        List<EventDetailDTO> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<String> listLocation = new ArrayList<>();
+
+        String locationName = "";
+        String sql = "";
+        int eventId = 0;
+        int currentEventId = 0;
+        String eventName = "";
+        String organizerName = "";
+        String date = "";
+        int following = 0;
+        int joining = 0;
+        int statusId = 0;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                sql = "SELECT s.id id, s.name eventName, m.name organizerName, t.date date,\n"
+                        + "t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants, s.statusId statusId\n"
+                        + " FROM tblEvents s\n"
+                        + " LEFT JOIN tblUsers m ON s.userId = m.id\n"
+                        + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation\n"
+                        + " LEFT JOIN tblLocations u ON locationId = u.id) t ON s.id = t.eventId\n"
+                        + " WHERE s.id IN (SELECT eventId FROM tblLecturersInEvents WHERE lecturerId = ?)";
+
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, lecturerId);
+
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    eventId = rs.getInt("id");
+                    if (currentEventId != eventId) {
+                        if (currentEventId != 0) {
+                            int i = 0;
+                            String location = "";
+                            for (i = 0; i < listLocation.size() - 1; i++) {
+                                location += listLocation.get(i) + ", ";
+                            }
+                            location += listLocation.get(i);
+                            String time = getTimeOfEventDetail(conn, currentEventId);
+                            list.add(new EventDetailDTO(currentEventId, eventName, location, date, time, organizerName, following, joining, statusId));
+                        }
+                        listLocation.clear();
+                        currentEventId = eventId;
+                        eventName = rs.getString("eventName");
+                        organizerName = rs.getString("organizerName");
+                        Date dateFromDB = rs.getTimestamp("date");
+                        date = formatter.format(dateFromDB).toString();
+                        locationName = rs.getString("locationName");
+                        following = rs.getInt("followers");
+                        joining = rs.getInt("participants");
+                        statusId = rs.getInt("statusId");
+                        listLocation.add(locationName);
+                    } else {
+                        locationName = rs.getString("locationName");
+                        listLocation.add(locationName);
+                    }
+
+                }
+                int i = 0;
+                String location = "";
+                for (i = 0; i < listLocation.size() - 1; i++) {
+                    location += listLocation.get(i) + ", ";
+                }
+                if (listLocation.size() != 0) {
+                    location += listLocation.get(i);
+                    String time = getTimeOfEventDetail(conn, currentEventId);
+                    list.add(new EventDetailDTO(currentEventId, eventName, location, date, time, organizerName, following, joining, statusId));
+                    Collections.reverse(list); //Added Date: 26-10-2021
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
+    }
+
     public String getTimeOfEventDetail(Connection conn, int eventId) throws SQLException {
         String time = "";
         PreparedStatement stm = null;
@@ -1253,7 +1514,7 @@ public class EventDAO {
         return list;
     }
 
-        public boolean updateEventFollowUp(EventDetailDTO detail) throws SQLException {
+    public boolean updateEventFollowUp(EventDetailDTO detail) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;

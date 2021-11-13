@@ -78,6 +78,11 @@ public class NewfeedServlet extends HttpServlet {
                 LOGGER.info("LIST JOINING EVENT CARD:" + listJoining);
                 request.setAttribute("LIST_JOINING_CARD", listJoining);
             }
+            if ("LECTURER".equals(loginUser.getRoleName())) {
+                List<EventCardDTO> listAdded = eventDao.getNewFeedEventListOfLecturerId(loginUser);
+                LOGGER.info("LIST EVENT CARD OF THIS LECTURER:" + listAdded);
+                request.setAttribute("LIST_EVENT_CARD_LECTURER", listAdded);
+            }
 
             url = NEWFEED_PAGE_PATH;
         } catch (Exception e) {

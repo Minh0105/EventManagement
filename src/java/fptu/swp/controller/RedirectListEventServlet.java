@@ -5,15 +5,12 @@
  */
 package fptu.swp.controller;
 
-import fptu.swp.entity.event.CommentDTO;
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
-import fptu.swp.entity.user.LecturerBriefInfoDTO;
 import fptu.swp.entity.user.UserDAO;
 import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.ServletContext;
@@ -28,9 +25,9 @@ import org.apache.log4j.Logger;
  *
  * @author triet
  */
-public class ViewEventDetailServlet extends HttpServlet {
+public class RedirectListEventServlet extends HttpServlet {
 
-    static final Logger LOGGER = Logger.getLogger(ViewEventDetailServlet.class);
+    static final Logger LOGGER = Logger.getLogger(RedirectListEventServlet.class);
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,65 +41,57 @@ public class ViewEventDetailServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        LOGGER.info("Begin ViewEventDetailServlet");
+        LOGGER.info("Begin RedirectListEventServlet");
+
+        //declare var
+        UserDAO userDao = new UserDAO();
+        EventDAO eventDao = new EventDAO();
+
         //get roadmap
         ServletContext context = request.getServletContext();
         HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
-        String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
-        String EVENTDETAIL_PAGE_LABEL = context.getInitParameter("EVENTDETAIL_PAGE_LABEL");
-        String EVENTDETAIL_PAGE_PATH = roadmap.get(EVENTDETAIL_PAGE_LABEL);
-        String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
 
         //default url
+        final String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
+        final String ALL_EVENT_PAGE_LABEL = context.getInitParameter("ALL_EVENT_PAGE_LABEL");
+        final String RELEVANT_EVENT_PAGE_LABEL = context.getInitParameter("RELEVANT_EVENT_PAGE_LABEL");
+        final String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
+        final String ALL_EVENT_PAGE_PATH = roadmap.get(ALL_EVENT_PAGE_LABEL);
+        final String RELEVANT_EVENT_PAGE_PATH = roadmap.get(RELEVANT_EVENT_PAGE_LABEL);
         String url = INVALID_PAGE_PATH;
-
         try {
-            int eventId = Integer.parseInt(request.getParameter("eventId"));
-            HttpSession session = request.getSession();
-            UserDTO loginUser = (UserDTO) session.getAttribute("USER");
-            EventDAO eventDao = new EventDAO();
-            EventDetailDTO detail = eventDao.getEventDetail(eventId);
-            System.out.println(detail.toString());
-            UserDAO userDao = new UserDAO();
-            List<LecturerBriefInfoDTO> listLecturer = userDao.getListLecturerBriefInfo(eventId);
-            List<CommentDTO> listComment = eventDao.getListCommentByEventId(eventId, false);
-            List<CommentDTO> listQuestion = eventDao.getListCommentByEventId(eventId, true);
+            String action = request.getParameter("action");
+            if ("all".equals(action)) {
+                List<UserDTO> listOrganizer = userDao.getListAllOrganizer();
+                request.setAttribute("LIST_ORGANIZER_EVENT", listOrganizer);
 
-            LOGGER.info("Event detail: " + detail);
-            request.setAttribute("EVENT_DETAIL", detail);
-
-            LOGGER.info("List lecturer of event: " + listLecturer);
-            request.setAttribute("LIST_LECTURER", listLecturer);
-
-            LOGGER.info("List comment of detail: " + listComment);
-            request.setAttribute("LIST_COMMENT", listComment);
-            
-            LOGGER.info("List question of detail: " + listQuestion);
-            request.setAttribute("LIST_QUESTION", listQuestion);
-            
-            if("STUDENT".equals(loginUser.getRoleName())){
-                boolean checkFollowed = eventDao.checkFollowed( loginUser.getId(), eventId);
-                boolean checkJoining = eventDao.checkJoining(loginUser.getId(), eventId);
-                request.setAttribute("IS_FOLLOWED",checkFollowed);
-                request.setAttribute("IS_JOINING", checkJoining);
-                LOGGER.info("This student is following: " + checkFollowed + " - is joining: "+ checkJoining);
+                LOGGER.info("Request Attribute LIST_ORGANIZER_EVENT: " + listOrganizer);
+                url = ALL_EVENT_PAGE_PATH;
+            } else {
+                HttpSession session = request.getSession(false);
+                UserDTO loginUser = (UserDTO) session.getAttribute("USER");
+                List<EventDetailDTO> listEvent = null;
+                if ("joined".equals(action) && "STUDENT".equals(loginUser.getRoleName())) {
+                    listEvent = eventDao.getListJoinedEventOfStudent(loginUser.getId());
+                    request.setAttribute("LIST_EVENT", listEvent);
+                    LOGGER.info("Request Attribute LIST_EVENT joined by this STUDENT: " + listEvent);
+                    url = RELEVANT_EVENT_PAGE_PATH;
+                }
+                else if ("added".equals(action) && "LECTURER".equals(loginUser.getRoleName())) {
+                    listEvent = eventDao.getListAddedEventOfLecturer(loginUser.getId());
+                    request.setAttribute("LIST_EVENT", listEvent);
+                    LOGGER.info("Request Attribute LIST_EVENT added to this LECTURER: " + listEvent);
+                    url = RELEVANT_EVENT_PAGE_PATH;
+                }
+                
             }
-            if("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName())){
-                List<UserDTO> listFollowers = userDao.getFollowersByEventId(eventId);
-                List<UserDTO> listParticipants = userDao.getParticipantsByEventId(eventId);
-                request.setAttribute("LIST_FOLLOWERS",listFollowers);
-                request.setAttribute("LIST_PARTICIPANTS", listParticipants);
-                LOGGER.info("List Followers: " + listFollowers);
-                LOGGER.info("List Participants: " + listParticipants);
-            }
-            
-            url = EVENTDETAIL_PAGE_PATH;
 
         } catch (Exception e) {
             LOGGER.error(e);
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
