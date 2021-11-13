@@ -4,6 +4,7 @@
     box-sizing: border-box;
     
 }
+
 /* Header */
 .header{
    
@@ -20,7 +21,7 @@
 }
 
 .header3 {
-    background-color: #216fc2;
+    background-color: #FF855E;
     top: 0px;
     left: -290px;
     width: 300px;
@@ -178,7 +179,8 @@
     }
 }
 .logout{
-    color: black !important;
+    color:white !important;
+    
 }
 /* Header 2 */
 .header2{
@@ -298,8 +300,8 @@
 
 
 input[value="Deactivate"], .button_td > button {
-    background-color: rgba(82, 41, 9, 0.831);
-    color: white;
+    background-color: white;
+    color: red;
     border: none;
     width: 100%;
     display: block;
@@ -308,8 +310,8 @@ input[value="Deactivate"], .button_td > button {
 }
 
 input[value="Activate"] {
-    background-color: rgb(32, 167, 32);
-    color: white;
+    background-color: white;
+    color: green;
     border: none;
     width: 100%;
     height: 100%;
@@ -319,18 +321,13 @@ input[value="Activate"] {
 }
 
 input[value="Activate"]:hover {
-    background-color: rgb(8, 120, 8);
+  
 }
 
 input[value="Deactivate"]:hover, .button_td > button:hover {
-    background-color: rgb(247, 76, 76);
-    color: white;
+
 }
 
-body {
-    background-color: #fff5e9 !important;
-    padding-bottom: 50vh;
-}
 
 #big_title {
     padding-bottom: 2rem !important;
