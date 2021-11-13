@@ -99,14 +99,6 @@
     top: 40px;
 }
 
-.mybutton {
-    padding: 0.5rem 0.8rem;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: 300;
-    border: none;
-}
-
 #logout_button_panel {
     background-color: white;
     border-radius: 6px;

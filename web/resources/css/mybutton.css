@@ -21,6 +21,11 @@
     color: white;
 }
 
+.btn-grey {
+    background-color: #797979 !important;
+    color: white;
+}
+
 .btn-orange {
     background-color: #FA5810 !important;
     color: white;

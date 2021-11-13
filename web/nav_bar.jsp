@@ -57,10 +57,17 @@
                         <ahref="#" class="nav-link">
                             <img id="btn_menu" src="resources/icon/hamburger_button_icon.svg" alt="hamburger_button" />
                             </a>
-                        </li>	
+                        </li>
                         
-                        </li>	
-                            <div id="nav_expanded_panel">
+                        <div id="notification_board" >
+                            <div id="notif_header">
+                                <p>Thông báo</p>
+                            </div>
+                            <div id="notif_body">
+                            </div>
+                        </div>
+
+                        <div id="nav_expanded_panel">
 
                                 <div id="logout_button_panel">
                                     <a id="logout_link" href="logout">
