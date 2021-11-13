@@ -12,6 +12,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Chi tiết</title>
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
               integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
               crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -19,13 +20,14 @@
               integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="resources/sweetalert2.all.min.js"></script>  
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
         <link rel="stylesheet" type="text/css" href="resources/css/nav_bar.css"/>
+        <link rel="stylesheet" type="text/css" href="resources/css/notification.css"/>
     </head>
     <body>
         <nav class="navbar navbar-expand-md navbar-light navbar-color sticky-top">
@@ -47,7 +49,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link">
                                 <img id="btn_bell" src="resources/icon/bell_icon.svg" alt="Bell_icon" />
                             </a>
                         </li>
@@ -58,18 +60,32 @@
                         </li>	
                         
                         <div id="nav_expanded_panel">
-
                             <div id="logout_button_panel">
                                 <a id="logout_link" href="logout">
                                     <img src="resources/icon/log_out_icon.svg" />
                                     <span id="btn_log_out">Log out</span> 
                                 </a> 
                             </div>
-
                         </div>   	
+
+                        <div id="notification_board" >
+                            <div id="notif_header">
+                                <p>Thông báo</p>
+                            </div>
+                            <div id="notif_body">
+                            </div>
+                        </div>
                     </ul>
                 </div>
             </div>
         </nav>
+
+        <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js""></script>
+        <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js""></script>
         <script src="resources/js/nav_bar.js"></script>
+        <script src="resources/js/configFirebase.js"></script>
+        <script src="resources/js/realtime_notification.js"></script>
+        <script>
+            listenNotification("${sessionScope.USER.id}");
+        </script>
 </html>

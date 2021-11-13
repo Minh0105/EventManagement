@@ -50,10 +50,9 @@
 
 /* BODY  */
 
-#body {
-  padding: 0 1rem;
+body {
+  background-color: #ebebeb;
 }
-
 
 /* CHOSEN DATE AND TIME SECTION */
 
@@ -65,14 +64,15 @@
   align-items: center;
   padding: 0.8rem;
   background-color: white;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.35);
+  position: sticky;
 }
 
 .date_pill {
   background-color: #FA5810;
   border-radius: 5px;
   width: 100%;
-  padding: 7px 0px;
+  padding: 5px 0px;
 }
 
 .date_content {
@@ -87,7 +87,7 @@
 
 #chosen_date, #chosen_time {
   margin-bottom: 0px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 500;
 }
 
@@ -129,16 +129,6 @@
 }
 
 
-/* UPLOAD BUTTON */
-#btn_upload_image {
-  display: inline-block;
-  background-color: #136aeb;
-  border-radius: 6px;
-  padding: 8px 1rem;
-  color: white;
-}
-
-
 /* REVIEW BUTTON */
 #btn_review {
   display: inline-block;
@@ -165,6 +155,17 @@
   border-radius: 5px;
 }
 
+.place_holder {
+  width:fit-content; 
+  padding: 0.7rem 1.2rem; 
+  display: inline-block; 
+  margin-top:4px; 
+  margin-right: 4px;
+  background-color: #e3e3e3; 
+  border: 1px solid #969696;  
+  border-radius: 5px;
+}
+
 .chosen_lecturer_item .lec-avatar {
   display: inline-block;
   border: 1px black solid;
@@ -182,8 +183,9 @@
   font-size: 1.1rem;
 }
 
-.chosen_lecturer_item .btn_remove_lec {
-  float: right;
+.btn_remove_lec {
+  height: 1rem;
+  width: 1rem;
 }
 
 
@@ -217,7 +219,16 @@
 }
 
 #body {
-  padding: 3vh 25vw;
+  padding: 3vh 21.5vw;
+}
+
+#body_content {
+  padding: 10vh 3.5vw;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background-color: #FFFFFF;
+  margin-top: 5vh;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.35);
 }
 
 #location_container {
@@ -251,7 +262,7 @@
 #floated_lecturer_list {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
-  width: 30vw;
+  width: 40vw;
   height: fit-content;
   max-height: 280px;
   overflow-y: scroll; 
@@ -259,8 +270,8 @@
   background-color: white; 
   padding: 20px 20px 20px 0px;
   box-shadow: 0px 0px 35px rgba(0, 0, 0, 0.3);
-  position: relative;
-  display: flex;
+  position: absolute;
+  display: none;
   flex-direction: column;
 }
 
@@ -276,3 +287,26 @@
   background-color: #808080; 
   border-radius: 0.54rem;
 }
+
+.sub_title {
+  margin-bottom: 0.25rem;
+  font-size: 1.1rem;
+  color: #343434;
+}
+
+
+#btn_hide_lecturer_list {
+  height: 1rem;
+  width: 100%;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  opacity: 0.85;
+}
+
+#btn_hide_lecturer_list img {
+  float: right;
+  height: 1rem;
+  width: 1rem;
+}
+

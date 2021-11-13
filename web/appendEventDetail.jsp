@@ -32,7 +32,7 @@
         </nav>
 
         <div>
-            <div id="date_time_row" class="row"> 
+            <div id="date_time_row" class="row mr-0"> 
                 <!-- CHOSEN LOCATION -->
                 <div id="chosen_date_container" class="col-12 col-md-7 col-lg-6 container-fluid">
                     <div id="location_container" class="row gy-2">
@@ -61,95 +61,107 @@
 
             </div>
         </div>
-
         <div id="body" class="container-fluid">
+            <div id="body_content" class="container-fluid">
+                <c:set var="eventDetail" value="${sessionScope.EVENT_DETAIL_REVIEW}" />
 
-            <c:set var="eventDetail" value="${sessionScope.EVENT_DETAIL_REVIEW}" />
+                <!-- EVENT NAME -->
+                <h5 class="title col-12 mt-0">Tên Sự Kiện</h5>
+                <input class="col-12 my-text-input" id="input_event_name" type="text"  
+                    name="eventName" value="${eventDetail.name}">
 
-            <!-- EVENT NAME -->
-            <h5 class="title col-12">Tên Sự Kiện</h5>
-            <input class="col-12 my-text-input" id="input_event_name" type="text"  
-                   name="eventName" value="${eventDetail.name}">
+                <!-- EVENT DESCRIPTION        -->
 
-            <!-- EVENT DESCRIPTION        -->
-            <h5 class="title col-12">Nội Dung Sự Kiện</h5>
-            <textarea class="col-12" id="input_event_description" rows="7" cols="12"
-                      type="text"name="description">${eventDetail.description}</textarea>
+                <h5 class="title col-12">Nội Dung Sự Kiện</h5>
+                <textarea class="col-12" id="input_event_description" rows="7" cols="12"
+                        type="text"name="description">${eventDetail.description}</textarea>
 
-            <!-- EVENT IMAGE  -->
-            <h5 class="title col-12">Ảnh sự kiện</h5>
+                <script src="resources/js/setUpCKEditor.js"></script>
 
-            <div id="image_container" class="col-12">
-                <figure id="figure_image" >
-                    <img id="chosen-image" 
-                    <c:if test="${not empty eventDetail.poster}">
-                        src="data:image/jpg;base64,${eventDetail.poster}">
-                    </c:if>
-                    <c:if test="${empty eventDetail.poster}">
-                        src="resouces/image/default_image.png">
-                    </c:if>
-                </figure>
+                <!-- EVENT IMAGE  -->
+                <h5 class="title col-12">Ảnh sự kiện</h5>
 
-                <input class="d-none" type="file" id="upload-button" 
-                       accept="image/*" name="fileUp" value="" style="visibility:hidden;">
+                <div id="image_container" class="col-12">
+                    <figure id="figure_image" >
+                        <img id="chosen-image" 
+                        <c:if test="${not empty eventDetail.poster}">
+                            src="data:image/jpg;base64,${eventDetail.poster}">
+                        </c:if>
+                        <c:if test="${empty eventDetail.poster}">
+                            src="resouces/image/default_image.png">
+                        </c:if>
+                    </figure>
 
-                <div class="text-right">
-                    <label class="mybutton btn-blue" id="btn_upload_image" for="upload-button">
-                        Chọn hình ảnh
-                    </label>
-                </div>       
-                
-            </div>
+                    <input class="d-none" type="file" id="upload-button" 
+                        accept="image/*" name="fileUp" value="" style="visibility:hidden;">
 
-            <!-- LECTURER -->
-            <!-- CHOSEN LECTURER -->
-            <h5 class="title">Danh sách giảng viên</h5>
-            <p>Đã chọn</p>
+                    <div class="text-right">
+                        <label class="mybutton btn-blue" id="btn_upload_image" for="upload-button">
+                            Chọn hình ảnh
+                        </label>
+                    </div>       
+                    
+                </div>
 
-            <div id="chosen_lecturer_container">
-                <c:forEach var="chosenLec" items="${sessionScope.ChosenLecturerList}">
-                    <div class="chosen_lecturer">
+                <!-- LECTURER -->
+                <!-- CHOSEN LECTURER -->
+                <h5 class="title">Danh sách giảng viên</h5>
+                <p class="sub_title">Đã chọn</p>
+                <div id="chosen_lecturer_container">
+                    <div class="place_holder">
                         <div>
-                            <span class="mr-3">${chosenLec.name}</span>
-                            <img onclick="onRemoveChosenLecturerClick('${chosenLec.id}', this)" class="btn_remove_lec" style="width: 1rem; height: 1rem;" src="resources/icon/icon_remove_lecturer.svg">
-                            <input class="chosen_lecturer_id d-none" type="hidden" name="chosen_lecturer" value="${chosenLec.id}"/>
+                            <span class="mr-3" style="visibility: hidden;">Placleholder name</span>
+                            <img class="btn_remove_lec" style="visibility:hidden;" src="resources/icon/icon_remove_lecturer.svg">
                         </div>
                     </div>
-                </c:forEach>
-            </div>
+                    <c:forEach var="chosenLec" items="${sessionScope.ChosenLecturerList}">
+                        <div class="chosen_lecturer">
+                            <div>
+                                <span class="mr-3">${chosenLec.name}</span>
+                                <img onclick="onRemoveChosenLecturerClick('${chosenLec.id}', this)" class="btn_remove_lec"src="resources/icon/icon_remove_lecturer.svg">
+                                <input class="chosen_lecturer_id d-none" type="hidden" name="chosen_lecturer" value="${chosenLec.id}"/>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
 
-            <!-- SEARCH LECTURER  -->
-            <input class="col-12 my-text-input" type="text" id="myInput" onkeyup="myFunction()"
-                   placeholder="Nhập tên giảng viên" title="Type in a name">
+                <p class="sub_title mt-3">Tìm kiếm giảng viên</p>
 
-            <!-- LECTURER LIST -->
-            <div id="floated_lecturer_list">
+                <!-- SEARCH LECTURER  -->
+                <input class="col-12 my-text-input my-0" type="text" id="myInput" onkeyup="onSearchLecturerName()"
+                    placeholder="Nhập tên giảng viên" title="Type in a name">
 
-                <%
-                    ArrayList<LecturerBriefInfoDTO> lecturerList = (ArrayList) session.getAttribute("LecturerList");
-                    ArrayList<LecturerBriefInfoDTO> chosenLecturerList = (ArrayList) session.getAttribute("ChosenLecturerList");
-
-                    for (LecturerBriefInfoDTO lecturer : lecturerList) {
-                    %>
-                        <div class="lec_item" onclick="onChooseLecturer(this)" 
+                <!-- LECTURER LIST -->
+                <div id="floated_lecturer_list">
+                    <div id="btn_hide_lecturer_list" onclick="hideLecturerList()">
+                        <img src="resources/icon/icon_btn_gray_x.svg" >
+                    </div>
                     <%
-                        if ((chosenLecturerList != null) && chosenLecturerList.contains(lecturer)) {
-                    %>
-                            style="display: none"
+                        ArrayList<LecturerBriefInfoDTO> lecturerList = (ArrayList) session.getAttribute("LecturerList");
+                        ArrayList<LecturerBriefInfoDTO> chosenLecturerList = (ArrayList) session.getAttribute("ChosenLecturerList");
+
+                        for (LecturerBriefInfoDTO lecturer : lecturerList) {
+                        %>
+                            <div class="lec_item" onclick="onChooseLecturer(this)" 
+                        <%
+                            if ((chosenLecturerList != null) && chosenLecturerList.contains(lecturer)) {
+                        %>
+                                style="display: none"
+                        <%
+                            }
+                        %>      >
+                                <img class="lec_ava" src="<%= lecturer.getAvatar()%>">
+                                <p class="d-inline-block mb-0 ml-3 lec_name" style="color: #303030;"><%= lecturer.getName()%></p>
+                                <input type="hidden" name="chosen_lecturer" value="<%= lecturer.getId()%>"/>
+                            </div>
                     <%
                         }
-                    %>      >
-                            <img class="lec_ava" src="<%= lecturer.getAvatar()%>">
-                            <p class="d-inline-block mb-0 ml-3 lec_name" style="color: #303030;"><%= lecturer.getName()%></p>
-                            <input type="hidden" name="chosen_lecturer" value="<%= lecturer.getId()%>"/>
-                        </div>
-                <%
-                    }
-                %>
-            </div> 
+                    %>
+                </div> 
 
-            <div class="text-center">
-                <button class="mybutton btn-orange mt-5" onclick="sendDataToServer()">Xem trước</button>
+                <div class="text-right">
+                    <button style="margin-top:1rem" class="mybutton btn-orange" onclick="sendDataToServer()">Xem trước</button>
+                </div>
             </div>
         </div>
 
@@ -157,7 +169,12 @@
         
         <div id="submiter"></div>
         <script src="resources/js/create_event.js"></script>
-        <script src="resources/js/setUpCKEditor.js"></script>
+        <script>
+            var noLecturerChosen = document.getElementsByClassName("chosen_lecturer").length == 0;
+            if (noLecturerChosen == false) {
+                hideChosenLecturerPlaceHolder();
+            }
+        </script>
     </body>
 
 </html>

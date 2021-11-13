@@ -8,3 +8,11 @@ $('#btn_menu').click(function () {
         $('#nav_expanded_panel').hide();
     }
 });
+
+$('#btn_bell').click (function () {
+    if ($('#notification_board').css("display") == "none") {
+        $('#notification_board').show();
+    } else {
+        $('#notification_board').hide();
+    }
+})

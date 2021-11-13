@@ -3,6 +3,8 @@ let uploadButton = document.getElementById("upload-button");
 let chosenImage = document.getElementById("chosen-image");
 let fileName = document.getElementById("file-name");
 
+let chosenLecturerPlaceHolder = document.getElementsByClassName("place_holder")[0];
+
 uploadButton.onchange = () => {
     let reader = new FileReader();
     reader.readAsDataURL(uploadButton.files[0]);
@@ -13,16 +15,23 @@ uploadButton.onchange = () => {
 };
 
 //Search
-function myFunction() {
-    var input, keyword, lecturer_list, txtLecName, txtValue;
+function onSearchLecturerName() {
+    var input, keyword, lecturer_list;
     input = document.getElementById("myInput");
     keyword = input.value.toUpperCase().trim();
 
+    if (keyword == "") {
+        hideLecturerList();
+        return;
+    } 
+
     lecturer_list = document.getElementsByClassName("lec_item");
     for (var lecItem of lecturer_list) {
-        txtLecName = lecItem.getElementsByClassName("lec_name")[0];
-        txtValue = txtLecName.textContent || txtLecName.innerText;
-        if (txtValue.toUpperCase().trim().includes(keyword)) {
+        var lec = getLecturerInforFromLecItem(lecItem);
+        console.log("Lec: " + lec.name);
+        var matchName = lec.name.toUpperCase().trim().includes(keyword); 
+        var hasNotBeenChosen = checkHasBeenChosen(lec.id) == false;
+        if (matchName && hasNotBeenChosen) {
             lecItem.style.display = "flex";
         } else {
             lecItem.style.display = "none";
@@ -34,6 +43,45 @@ function myFunction() {
     } else {
         showLecturerList();
     }
+}
+
+function checkHasBeenChosen (lecturerId) {
+    var chosenLecturer = document.getElementsByClassName("chosen_lecturer");
+    var chosenLecInfor;
+
+    for (var chosenLecItem of chosenLecturer) {
+        chosenLecInfor = getLecturer_NameAndId_From_ChosenLecItem(chosenLecItem);
+        if (chosenLecInfor.id == lecturerId) {
+            return true;
+        }        
+    }
+
+    return false;
+}
+
+function getLecturerInforFromLecItem (lecItem) {
+    
+    var txtLecName = lecItem.getElementsByClassName("lec_name")[0];
+    var lec_name = txtLecName.textContent || txtLecName.innerText;
+
+    var txtLecId = lecItem.getElementsByTagName("input")[0];
+    var lec_id = txtLecId.value;
+    
+    var imgAvatar = lecItem.getElementsByClassName("lec_ava")[0];
+    var lec_ava = imgAvatar.getAttribute("src");
+    let lecturer = {name : lec_name, id : lec_id, ava : lec_ava};
+    return lecturer;
+}
+
+function getLecturer_NameAndId_From_ChosenLecItem (lecItem) {
+    var txtLecName = lecItem.getElementsByTagName("span")[0];
+    var lec_name = txtLecName.textContent || txtLecName.innerText;
+
+    var txtLecId = lecItem.getElementsByClassName("chosen_lecturer_id")[0];
+    var lec_id = txtLecId.value;
+    
+    let lecturer = {name : lec_name, id : lec_id};
+    return lecturer;
 }
 
 
@@ -63,6 +111,16 @@ function onChooseLecturer(button) {
     if (isAllLecturerDisplayNone()) {
         hideLecturerList();
     }
+
+    hideChosenLecturerPlaceHolder();
+}
+
+function hideChosenLecturerPlaceHolder () {
+    chosenLecturerPlaceHolder.style.display = "none";
+}
+
+function showChosenLecturerPlaceHolder () {
+    chosenLecturerPlaceHolder.style.display = "flex";
 }
 
 function showLecturerList () {
@@ -105,6 +163,10 @@ function onRemoveChosenLecturerClick(removedLecturerID, button) {
         }
     }
 
+    var noLecturerChosen = document.getElementsByClassName("chosen_lecturer").length == 0;
+    if (noLecturerChosen) {
+        showChosenLecturerPlaceHolder();
+    }
 }
 
 

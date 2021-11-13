@@ -48,8 +48,8 @@
                 </table>
 
             </div>
+        <script src="resources/js/configFirebase.js" ></script>
         <script src="resources/js/comment.js" ></script>
-        
         
         <script src="<c:url value="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js" />"></script>
         <script src="<c:url value="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js" />"></script>
