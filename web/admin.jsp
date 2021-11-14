@@ -52,6 +52,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="manageByAdmin?management=comment">Comment Management</a>
                         </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="manageByAdmin?management=authorization">Email Sending Authorization</a>
+                        </li>
+                        
                         <li class="nav-item col-md-6">
                             <form action="logout" class="">
                                 <button class="btn btn-light profile-button logout mt-5 d-flex align-items-center" type="submit">

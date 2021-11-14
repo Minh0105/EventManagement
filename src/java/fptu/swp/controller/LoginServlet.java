@@ -83,6 +83,12 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("USER", user);
                     if ("ADMIN".equals(user.getRoleName())) {
                         url = MANAGE_BY_ADMIN_SERVLET_PATH + "?management=organizer";
+                        String authorizing = (String) session.getAttribute("AUTHORIZING");
+                        if(authorizing != null){
+                            if("true".equals(authorizing)){
+                                session.setAttribute("ACCESS_TOKEN", accessToken);
+                            }
+                        }
                     } else {
                         url = VIEW_NEWFEED_SERVLET_PATH;
                     }
@@ -90,9 +96,9 @@ public class LoginServlet extends HttpServlet {
                 }
             }
         } finally {
-            RequestDispatcher dis = request.getRequestDispatcher(url);
-            dis.forward(request, response);
-//            response.sendRedirect(url);
+//            RequestDispatcher dis = request.getRequestDispatcher(url);
+//            dis.forward(request, response);
+            response.sendRedirect(url);
         }
         
     }
