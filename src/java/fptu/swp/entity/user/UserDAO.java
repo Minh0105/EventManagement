@@ -730,7 +730,6 @@ public class UserDAO {
                     String phoneNum = rs.getString("phoneNum");
                     String roleName = "STUDENT";
                     String status = (rs.getString("statusId").equals("AC")) ? "Activated" : "Deactivated";
-                    String description = rs.getString("description");
                     list.add(new UserDTO(id, email, name, avatar, address, phoneNum, roleName, status));
                 }
             }
@@ -770,7 +769,6 @@ public class UserDAO {
                     String phoneNum = rs.getString("phoneNum");
                     String roleName = "STUDENT";
                     String status = (rs.getString("statusId").equals("AC")) ? "Activated" : "Deactivated";
-                    String description = rs.getString("description");
                     list.add(new UserDTO(id, email, name, avatar, address, phoneNum, roleName, status));
                 }
             }

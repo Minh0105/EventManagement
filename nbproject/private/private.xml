@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/META-INF/context.xml</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/WEB-INF/roadmap.txt</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/ManageByAdminServlet.java</file>
+            <file>file:/E:/WorkingSet%20CODE/NetBeansProjects/EventManagement/src/java/fptu/swp/entity/user/UserDTO.java</file>
+            <file>file:/E:/WorkingSet%20CODE/NetBeansProjects/EventManagement/src/java/fptu/swp/entity/user/UserDAO.java</file>
+            <file>file:/E:/WorkingSet%20CODE/NetBeansProjects/EventManagement/src/java/fptu/swp/controller/AppendEventDetailServlet.java</file>
         </group>
     </open-files>
 </project-private>
