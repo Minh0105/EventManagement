@@ -82,17 +82,24 @@ public class LoginServlet extends HttpServlet {
                     LOGGER.info("USER: " + user);
                     session.setAttribute("USER", user);
                     if ("ADMIN".equals(user.getRoleName())) {
-                        url = MANAGE_BY_ADMIN_SERVLET_PATH + "?management=organizer";
+                        url = MANAGE_BY_ADMIN_SERVLET + "?management=organizer";
+                        String authorizing = (String) session.getAttribute("AUTHORIZING_SENDING_EMAIL");
+                        if(authorizing != null){
+                            if("true".equals(authorizing)){
+                                session.setAttribute("ACCESS_TOKEN", accessToken);
+                                session.setAttribute("EMAIL_NAME", googlePojo.getName());
+                            }
+                        }
                     } else {
-                        url = VIEW_NEWFEED_SERVLET_PATH;
+                        url = VIEW_NEWFEED_SERVLET;
                     }
                     
                 }
             }
         } finally {
-            RequestDispatcher dis = request.getRequestDispatcher(url);
-            dis.forward(request, response);
-//            response.sendRedirect(url);
+//            RequestDispatcher dis = request.getRequestDispatcher(url);
+//            dis.forward(request, response);
+            response.sendRedirect(url);
         }
         
     }
