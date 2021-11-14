@@ -26,6 +26,13 @@ public class UserDTO implements Serializable, Comparable<UserDTO> {
     public UserDTO() {
     }
 
+    public UserDTO(String email, String name, String phoneNum) {
+        this.email = email;
+        this.name = name;
+        this.phoneNum = phoneNum;
+    }
+    
+
     public UserDTO(int id, String email, String name, String avatar, String address, String phoneNum, String roleName) {
         this.id = id;
         this.email = email;
