@@ -3,10 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/LoginServlet.java</file>
             <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/ManageUserByAdminServlet.java</file>
             <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/email/EmailSender.java</file>
             <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/email/OAuth2Authenticator.java</file>
+=======
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/META-INF/context.xml</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/admin.jsp</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/nav_bar.jsp</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/infor.jsp</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/resources/js/function.js</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/allEvent.jsp</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/eventDetail.jsp</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/resources/js/loc_and_time.js</file>
+>>>>>>> c00c2a0f957eabfdc91c2e558f3461a040279d69
         </group>
     </open-files>
 </project-private>

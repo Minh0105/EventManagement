@@ -18,8 +18,9 @@
         integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+           <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     </head>
     <body>
 
@@ -59,8 +60,8 @@
                         
                         <li class="nav-item col-md-6">
                             <form action="logout" class="">
-                                <button class="btn btn-light profile-button logout mt-5 d-flex align-items-center" type="submit">
-                                    <span style="white-space: nowrap; color: rgba(0, 0, 0, 0.85) ;">Log out<span>
+                                <button class="btn btn-link profile-button logout mt-5 d-flex align-items-center" type="submit">
+                                    <span style="color:white"><h5>Log out</h5><span>
                                 </button> 
                             </form>   
 
@@ -97,66 +98,94 @@
 
         </script>
     </div>
+  
     <div class="header4">
+      
+          <c:if test="${requestScope.LIST_ORGANIZER ne null}">
+                 <div class=""><h3 class="right_title">Organizer Management</h3></div>
+  <!-- Button trigger modal -->
+  <div class="text-right"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Tạo tài khoản mới
+</button></div>
 
-        <c:if test="${requestScope.LIST_ORGANIZER ne null}">
-            <div class=""><h4 class="right_title">Organizer Management</h4></div>
-            <div class="row g-2">
-                <div class="col-md-6 ">
-                    <b class="mb-3">Tạo tài khoản Chủ nhiệm câu lạc bộ</b>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tạo tài khoản</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+    
+
+                <div class="col-md-12 ">
                     <form action="manageUserByAdmin" method="POST">
-                        <input type="hidden" name="roleId" value="3"/>
+                        <label class="labels">Loại tài khoản</label>
+                      <select class="form-control" name="roleId">
+                        <option value="3">Chủ nhiệm câu lạc bộ</option>
+                       <option value="4">Trưởng phòng quản lý </option>
+  
+                     </select>
                         <input type="hidden" name="action" value="Create"/>
                         <div class=""><label class="labels">Email</label><input class="form-control" type="email" name="email" required/> <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
                         </div>
                         <div class=""><label class="labels">Name</label><input class="form-control" type="text" name="name"required/><br></div>
-                        <div class="text-right"> <button type="submit" class="btn btn-primary">Add Club's Leader</button> </div>
+                        <div class="text-right"> <button type="submit" class="btn btn-primary">Tạo tài khoản mới</button> </div>
                     </form></div>
-                <div class="col-md-6">
-                    <b class="mb-3">Tạo tài khoản Quản lí bộ phận</b>
-                    <form action="manageUserByAdmin" method="POST">
-                        <input type="hidden" name="roleId" value="4"/>
-                        <input type="hidden" name="action" value="Create"/>
-                        <div class=""><label class="labels">Email</label><input class="form-control" type="email" name="email" required/> <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
-                        </div>
-                        <div class=""><label class="labels">Name</label><input class="form-control" type="text" name="name"required/><br></div>
-                        <div class="text-right"><button type="submit" class="btn btn-primary">Add Department's Manager </button></div>
-                    </form>
-                </div></div>
-            <br>
+               
+      </div>
+    
+      </div>
+    </div>
+  </div>
+
+      
 
             <div class="service">
+                   
                 <span>${requestScope.NOTIFICATION}</span>
-                <table>
-                    <thead>
+         
+                <table class="table table-bordered text-center">
+                 
+                    <thead class="thead-light">
                         <tr class="service1" >
-                            <th colspan="1">No</th>
-                            <th colspan="2">Email</th>
-                            <th colspan="2">Name</th>                       
-                            <th colspan="3">Phone Number</th>
-                            <th colspan="2">Role Name</th>
-                            <th colspan="2">Status</th>
-                            <th colspan="2">Description</th>
-                            <th colspan="1">NoE</th>
-                            <th colspan="4"></th>
+                            <th >No</th>
+                            <th>Email</th>
+                            <th >Name</th>                       
+                            <th >Phone Number</th>
+                            <th >Role Name</th>
+                            <th >Status</th>
+                            <th>Description</th>
+                            <th>NoE</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER}" varStatus="status">
                             <tr class="service2">
-                                <td colspan="1" >${status.count}</td>
-                                <td colspan="2">${organizer.email}</td>
-                                <td colspan="2">${organizer.name}</td>           
-                                <td colspan="3">${organizer.phoneNum}</td>
-                                <td colspan="2">${organizer.roleName}</td>
-                                <td colspan="2">${organizer.status}</td>
-                                <td colspan="2">${organizer.description}</td>
-                                <td colspan="1">${organizer.numOfEvent}</td>
-                                <td colspan="4" class="button_td">
+                                <td >${status.count}</td>
+                                <td >${organizer.email}</td>
+                                <td >${organizer.name}</td>           
+                                <td>${organizer.phoneNum}</td>
+                                <td >${organizer.roleName}</td>
+                                <td >
+                              <c:if test="${organizer.status eq 'Activated'}">                             
+                                            <img src="resources/icon/Rectangle 263.svg">
+                                        </c:if>
+                                        <c:if test="${organizer.status eq 'Deactivated'}">
+                           <img src="resources/icon/Rectangle 264.svg">
+                                        </c:if>
+                                </td>
+                                <td >${organizer.description}</td>
+                                <td >${organizer.numOfEvent}</td>
+                                <td class="button_td" >
                                     <form action="manageUserByAdmin" method="POST">
-                                        <input type="hidden" name="userId" value="${organizer.id}"/>
+                                        <input   type="hidden" name="userId" value="${organizer.id}"/>
                                         <c:if test="${organizer.status eq 'Activated'}">
-                                            <input  type="submit" name="action" value="Deactivate"/>
+                                            <input type="submit" name="action" value="Deactivate"/>
                                         </c:if>
                                         <c:if test="${organizer.status eq 'Deactivated'}">
                                             <input type="submit" name="action" value="Activate"/>
@@ -169,15 +198,16 @@
 
                         </c:forEach>
                     </tbody> 
-                </table>
-
-            </div>
+                </table>                    
+                   
+                
         </c:if>
+            
         <c:if test="${requestScope.LIST_STUDENT ne null}">
-            <div class=""><h4 class="right_title">Student Management</h4></div>
+            <div class=""><h3 class="right_title">Student Management</h3></div>
             <div class="service" >
-                <table>
-                    <thead>
+                <table class="table table-bordered text-center">
+                    <thead class="thead-light">
                         <tr class="service1">
                             <th>No</th>
                             <th>Email</th>
@@ -198,12 +228,18 @@
                                 <td>${student.address}
                                 <td>${student.phoneNum}</td>
                                 <td>${student.roleName}</td>
-                                <td>${student.status}</td>
+                                <td>   <c:if test="${student.status eq 'Activated'}">                             
+                                            <img src="resources/icon/Rectangle 263.svg">
+                                        </c:if>
+                                        <c:if test="${student.status eq 'Deactivated'}">
+                           <img src="resources/icon/Rectangle 264.svg">
+                                        </c:if>
+                                </td>
                                 <td class="button_td">
                                     <form action="manageUserByAdmin" method="POST">
                                         <input type="hidden" name="userId" value="${student.id}"/>
                                         <c:if test="${student.status eq 'Activated'}">                             
-                                            <input type="submit" name="action" value="Deactivate"/></button>
+                                            <input type="submit" name="action" value="Deactivate"/>
                                         </c:if>
                                         <c:if test="${student.status eq 'Deactivated'}">
                                             <input type="submit" name="action" value="Activate"/>
@@ -217,25 +253,49 @@
             </div>
         </c:if>
         <c:if test="${requestScope.LIST_LECTURER ne null}">
-            <div class=""><h4 class="right_title">Lecturer Management</h4></div><br>
+             <div class=""><h3 class="right_title">Lecturer Management</h3></div>
+             <!-- Button trigger modal -->
+  <div class="text-right"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Tạo tài khoản mới
+</button></div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tạo tài khoản</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">          
             <form action="manageUserByAdmin" method="POST">
-                <label class="col-md-6">Thêm Lecturer</label>
+        
                 <input type="hidden" name="roleId" value="2"/>
                 <input type="hidden" name="action" value="Create"/>
-                <div class="col-md-6"><label class="labels">Email</label><input class="form-control" type="email" name="email" required/> <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
+                <div class="col-md-12"><label class="labels">Email</label><input class="form-control" type="email" name="email" required/> <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
                 </div>
-                <div class="col-md-6"><label class="labels">Name</label><input class="form-control" type="text" name="name"required/><br></div>
-                <div class="col-md-6 text-right"><button type="submit" class="btn btn-primary">Add Lecturer</button></div>
+                <div class="col-md-12"><label class="labels">Name</label><input class="form-control" type="text" name="name"required/><br></div>
+                <div class="col-md-12 text-right"><button type="submit" class="btn btn-primary">Add Lecturer</button></div>
             </form> <br>  
+      </div>
+    
+      </div>
+    </div>
+  </div>
 
-            <!--                <div>
-                                 button trigger modal
+      
+       
+
+                      <!-- <div>
+                            
                                 <button class="btn btn-primary hight" type="button" id="a" data-toggle="modal" data-target="#createNewLecturer">
                                     <p>Thêm tài khoản giảng viên</p>
                                 </button>
             
-                                 Modal
-                                <div class="modal fade" id="createNewLecturer" tabindex="-1" aria-labelledby="createNewLecturerLabel" aria-hidden="true">
+                                
+                                <div class="modal fade" id="createNewLecture" tabindex="-1" aria-labelledby="createNewLecturerLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -258,12 +318,12 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>-->
-
+                            </div> -->
+       
 
             <div class="service">
-                <table>
-                    <thead>
+                <table class="table table-bordered text-center">
+                    <thead class="thead-light">
                         <tr class="service1">
                             <th>No</th>
                             <th>Email</th>
@@ -285,7 +345,13 @@
                                 <td>${lecturer.address}</td>
                                 <td>${lecturer.phoneNum}</td>
                                 <td>${lecturer.roleName}</td>
-                                <td>${lecturer.status}</td>
+                                <td> <c:if test="${lecturer.status eq 'Activated'}">                             
+                                            <img src="resources/icon/Rectangle 263.svg">
+                                        </c:if>
+                                        <c:if test="${lecturer.status eq 'Deactivated'}">
+                           <img src="resources/icon/Rectangle 264.svg">
+                                        </c:if>
+                                </td>
                                 <td>${lecturer.description}</td>
                                 <td class="button_td" >
                                     <form action="manageUserByAdmin" method="POST">
@@ -306,7 +372,7 @@
             </div>
         </c:if>
         <c:if test="${requestScope.LIST_ORGANIZER_EVENT ne null}">
-            <div class=""><h4 class="right_title">Event Management</h4></div>
+            <div class=""><h3 class="right_title">Event Management</h3></div>
             <div>
                 <div class="col-md-6 "><h4>Tìm event theo: </h4></div><br>
                 <!--           ĐÃ LOAD LIST ALL ORGANIZER, Select o day là khi nguoi dùng ho chon option nào thì mình show LIST ORGANIZER-->
@@ -416,8 +482,8 @@
                 <div>
                     <c:if test="${requestScope.LIST_EVENT ne null}">
                         <div class="service">
-                            <table>
-                                <thead>
+                            <table class="table table-bordered text-center">
+                                <thead class="thead-light">
                                     <tr class="service1">
                                         <th>No</th>
                                         <th>Name</th>
@@ -428,7 +494,7 @@
                                         <th>Following</th>
                                         <th>Joining</th>
                                         <th>Status</th>
-                                        <th>View detail</th>
+                                        <th>Detail</th>
                                         <th>Cancel</th>
                                     </tr>
                                 </thead>
@@ -444,15 +510,15 @@
                                             <td>${event.following}</td>
                                             <td>${event.joining}</td>
                                             <td>${event.statusId}</td>
-                                            <td><a href="viewEventDetail?eventId=${event.id}">Chi tiết</a></td>
+                                            <td><a class="btn btn-link" href="viewEventDetail?eventId=${event.id}">Detail</a></td>
                                             <td>
                                                 <c:if test="${event.statusId == 1 || event.statusId == 2}">
-                                                    <form action="cancelEvent" method="POST">
+                                                    <form  action="cancelEvent" method="POST">
                                                         <input type="hidden" name="eventId" value="${event.id}"/>
                                                         <input type="hidden" name="organizerType" value="$${param.organizerType}"/>
                                                         <input type="hidden" name="eventStatus" value="${param.eventStatus}"/>
                                                         <input type="hidden" name="idOrganizer" value="${param.idOrganizer}"/>
-                                                        <input type="submit" name="action" value="Cancel"/>
+                                                        <input style="color:red" class="btn btn-link" type="submit" name="action" value="Cancel"/>
                                                     </form>
                                                 </c:if>
                                             </td>
@@ -490,10 +556,10 @@
         </script>
     </c:if>
     <c:if test="${requestScope.mapComment ne null}">
-        <div class=""><h4 class="right_title">Student Management</h4></div>
+  <div class=""><h3 class="right_title">Comment Management</h3></div>
         <div class="service">
-            <table>
-                <thead>
+            <table class="table table-bordered text-center">
+                <thead class="thead-light" >
                     <tr>
                         <th>No</th>
                         <th>Content</th>
