@@ -57,19 +57,9 @@ public class ManageUserByAdminServlet extends HttpServlet {
         String searchTxt = request.getParameter("searchTxt");
         String action = request.getParameter("action");
 
-        //default oauth2
-        String SMTP_SERVER_HOST = "smtp.gmail.com";
-        String SMTP_SERVER_PORT = "587";
-        String SUBJECT = "Sending mail with Gmail SMTP and Java Mail";
-        String BODY = "Hi,<br><br>This is a programmatic email.";
-
         try {
             HttpSession session = request.getSession(false);
             UserDTO loginUser = (UserDTO) session.getAttribute("USER");
-
-            String FROM_USER_EMAIL = loginUser.getEmail();
-            String FROM_USER_FULLNAME = (String) session.getAttribute("EMAIL_NAME");
-            String FROM_USER_ACCESSTOKEN = (String) session.getAttribute("ACCESS_TOKEN");
 
             if ("Deactivate".equals(action)) {
                 int userId = Integer.parseInt(request.getParameter("userId"));
@@ -86,13 +76,28 @@ public class ManageUserByAdminServlet extends HttpServlet {
                     url = MANAGE_BY_ADMIN_SERVLET_PATH + "?management=" + role;
                     request.setAttribute("TEXT_SEARCH", searchTxt);
                     String TO_USER_EMAIL = userDao.getUserById(userId).getEmail();
+                    String sendEmail = (String) session.getAttribute("AUTHORIZING_SENDING_EMAIL");
+                    if (sendEmail != null) {
+                        if ("true".equals(sendEmail)) {
+                            //default oauth2
+                            String SMTP_SERVER_HOST = "smtp.gmail.com";
+                            String SMTP_SERVER_PORT = "587";
+                            String SUBJECT = "Sending mail with Gmail SMTP and Java Mail";
+                            String BODY = "Hi,<br><br>Triết test gửi email có dấu.";
 
-                    if (EmailSender.sendMail(SMTP_SERVER_HOST, SMTP_SERVER_PORT, FROM_USER_EMAIL, FROM_USER_ACCESSTOKEN, FROM_USER_EMAIL, FROM_USER_FULLNAME, TO_USER_EMAIL, SUBJECT, BODY)){
-                        //if (EmailSender.sendEmail(FROM_USER_EMAIL, loginUser, userDao.getUserById(userId), SUBJECT, BODY, FROM_USER_ACCESSTOKEN)){
-                        request.setAttribute("NOTIFICATION", "Gửi mail thành công!");
-                    } else {
-                        request.setAttribute("NOTIFICATION", "Gửi mail không thành công!");
+                            String FROM_USER_EMAIL = loginUser.getEmail();
+                            String FROM_USER_FULLNAME = (String) session.getAttribute("EMAIL_NAME");
+                            String FROM_USER_ACCESSTOKEN = (String) session.getAttribute("ACCESS_TOKEN");
+
+                            if (EmailSender.sendMail(SMTP_SERVER_HOST, SMTP_SERVER_PORT, FROM_USER_EMAIL, FROM_USER_ACCESSTOKEN, FROM_USER_EMAIL, FROM_USER_FULLNAME, TO_USER_EMAIL, SUBJECT, BODY)) {
+                                //if (EmailSender.sendEmail(FROM_USER_EMAIL, loginUser, userDao.getUserById(userId), SUBJECT, BODY, FROM_USER_ACCESSTOKEN)){
+                                request.setAttribute("NOTIFICATION", "Gửi mail thành công!");
+                            } else {
+                                request.setAttribute("NOTIFICATION", "Gửi mail không thành công!");
+                            }
+                        }
                     }
+
                 }
             } else if ("Activate".equals(action)) {
                 int userId = Integer.parseInt(request.getParameter("userId"));

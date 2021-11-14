@@ -162,16 +162,18 @@ public class EmailSender {
             Session session = Session.getInstance(props);
             session.setDebug(true);
 
+            int port = Integer.parseInt(smtpServerPort);
+            
             final URLName unusedUrlName = null;
             SMTPTransport transport = new SMTPTransport(session, unusedUrlName);
             // If the password is non-null, SMTP tries to do AUTH LOGIN.
             final String emptyPassword = "";
-            transport.connect(smtpServerHost, 587, fromUserEmail, emptyPassword);
+            transport.connect(smtpServerHost, port, fromUserEmail, emptyPassword);
             MimeMessage msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress(fromUserEmail, fromUserFullName));
             msg.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
-            msg.setSubject(subject);
-            msg.setContent(body, "text/html");
+            msg.setSubject(subject,"utf-8");
+            msg.setContent(body, "text/html; charset=UTF-8");
 //
 //            //SMTPTransport transport = OAuth2Authenticator.connectToSmtp(smtpServerHost, Integer.parseInt(smtpServerPort), fromUserEmail, smtpUserAccessToken, true);
 //            //transport.connect(smtpServerHost, smtpUserName, null);

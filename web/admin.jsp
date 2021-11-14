@@ -55,8 +55,14 @@
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link" href="manageByAdmin?management=authorization">Email Sending Authorization</a>
+                            <a class="nav-link" href="authorizeSendingEmail">Email Sending Authorization</a>
                         </li>
+                        <c:if test="${sessionScope.AUTHORIZING_SENDING_EMAIL eq 'true'}">
+                            <li class="nav-item">
+                            <a class="nav-link" href="#">Sending email when deactivate user enabled!!!</a>
+                        </li>
+                        </c:if>
+                        
                         
                         <li class="nav-item col-md-6">
                             <form action="logout" class="">

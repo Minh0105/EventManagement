@@ -108,11 +108,6 @@ public class ManageByAdminServlet extends HttpServlet {
                 url = ADMIN_PAGE_PATH;
 
             }
-            else if ("authorization".equals(type)) {
-                request.getSession(false).setAttribute("AUTHORIZING","true");
-                url = "https://accounts.google.com/o/oauth2/auth?scope=profile+email+https://www.googleapis.com/auth/gmail.compose+https://mail.google.com/&redirect_uri=http://localhost:8084/EventManagement/login&response_type=code&client_id=253183940371-k316famgkbmmteshdv4ktc2021p1como.apps.googleusercontent.com&approval_prompt=force";
-
-            }
         } catch (JsonProcessingException ex) {
             LOGGER.error(ex);
         } catch (FirebaseException ex) {
