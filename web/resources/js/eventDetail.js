@@ -70,10 +70,18 @@ $("#btn_update_event_status").click(function () {
 })
 
 
-
 function waitingForSubmit (button) {
     button.disabled=true;
     button.value='Submitting...'; 
     button.form.submit();
 }
 
+$optionMenu = $("#export_option_menu");
+$optionMenu.hide();
+$("#btn_export_excel").click(function () {
+    if ($optionMenu.css("display") == "none") {
+        $optionMenu.show();
+    } else {
+        $optionMenu.hide();
+    }
+});

@@ -222,10 +222,8 @@
             </div>
         </div>
 
-        
-
         <!-- CONTENT -->
-        <section id="content">
+        <section id="content" class="d-none">
              <!-- CONTENT NAVIGATION -->
             <ul class="nav nav-tabs" id="tab_container">
                 <li class="nav-item" id="first_tab_button">
@@ -452,8 +450,84 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- PARTICIPANT LIST -->
+        <section id="member_list">
+            <h4>
+                DSTV Tham gia
+            </h4>
+            <table id="member_table">
+                <tr>
+                    <th>Email</th>
+                    <th>Tên</th>
+                </tr>
+                
+                <c:if test="${empty requestScope.LIST_PARTICIPANTS}">
+                    <p>Chưa có người quan tâm</p>
+                </c:if>
+                    
+                <c:if test="${not empty requestScope.LIST_FOLLOWERS}">
+                    <c:forEach var="user" items="${requestScope.LIST_FOLLOWERS}">
+                        <tr>
+                            <td>${user.email}</td>
+                            <td>${user.name}</td>
+                        </tr>
+                    </c:forEach>
+                </c:if>
+                   
+            </table>
+            
+            <br>
+            <br>
+
+            <!-- FOLLOWER LIST -->
+            <div>
+                <h4>
+                    DSTV Quan tâm
+                </h4>
+                <table id="member_table">
+                    <tr>
+                        <th>Email</th>
+                        <th>Tên</th>
+                    </tr>
+                    
+                    <c:if test="${empty requestScope.LIST_FOLLOWERS}">
+                        <p>Chưa có người quan tâm</p>
+                    </c:if>
+                        
+                    <c:if test="${not empty requestScope.LIST_FOLLOWERS}">
+                        <c:forEach var="user" items="${requestScope.LIST_FOLLOWERS}">
+                            <tr>
+                                <td>${user.email}</td>
+                                <td>${user.name}</td>
+                            </tr>
+                        </c:forEach>
+                    </c:if>
+                       
+                </table>
+            </div>
+                    
+            <!--EXPORT EXCEL OPTION PANEL-->
+            <button id="btn_export_excel" class="mybutton btn-green" >
+                Xuất file Excel
+            </button>
+
+            <div id="export_option_menu">
+                <a class="mybutton" href="exportExcel?eventId=<%= detail.getId()%>&action=joinOnly">
+                    Thành viên tham gia
+                </a>
+
+                <a class="mybutton" href="exportExcel?eventId=<%= detail.getId()%>&action=followOnly">
+                    Thành viên quan tâm
+                </a>
+
+                <a class="mybutton" href="exportExcel?eventId=<%= detail.getId()%>&action=all">
+                    Tất cả
+                </a>
+            </div>
+
+        </section>
 
     <%@include file="footer.jsp" %>
 

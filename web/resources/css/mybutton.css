@@ -18,15 +18,27 @@
 /* COLOR  */
 .btn-blue {
     background-color: #136aeb !important;
-    color: white;
+    color: white !important;
 }
 
 .btn-grey {
     background-color: #797979 !important;
-    color: white;
+    color: white !important;
 }
 
 .btn-orange {
     background-color: #FA5810 !important;
-    color: white;
+    color: white !important;
+}
+
+.btn-green {
+    background-color: #2C9436 !important;
+    color: white !important;
+}
+
+
+/* SHADOW  */
+
+.no-shadow {
+    box-shadow: none !important;
 }

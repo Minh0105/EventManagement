@@ -176,13 +176,14 @@ body {
 }
 
 .organizer_name marquee {
-    font-size: 1.7rem;
+    font-size: 1.75rem;
     word-break:keep-all;
 }
 
 .organizer_name p {
-    font-size: 1.45rem;
-    color: rgba(0, 0, 0, 0.6);
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
 }
 
 
@@ -561,4 +562,74 @@ body {
   border-radius: 6px;
   padding: 8px 1rem;
   color: white;
+}
+
+
+
+/* MEMBER LIST */
+
+#member_list {
+    background-color: white;
+    margin-top: 3px;
+    padding: 20px 4rem;
+    height: max-content;
+    min-width: 100vh;
+    position: relative;
+}
+
+table, th, td {
+    border: 1px solid black !important;
+}
+
+th {
+    background-color: #F0F0F0;
+}
+
+td, th {
+    padding: 10px;
+}
+
+#member_table {
+    margin-top: 0.5rem;
+}
+
+
+/* EXCEL EXPORT  */
+
+#btn_export_excel {
+    position: absolute; 
+    right: 20px; 
+    top:20px
+}
+
+#export_option_menu {
+    width: max-content; 
+    height: fit-content;;
+    background-color: white; 
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    top: 40px;
+    right: 60px;
+}
+
+
+#export_option_menu > * {
+    width: 100%;
+}
+
+
+a {
+    text-decoration: none !important;
+}
+
+a:hover {
+    text-decoration: none !important;
 }

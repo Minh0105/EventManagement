@@ -3,17 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/tangtantai/Projects/EventManagement/web/loc_and_time_test.jsp</file>
-            <file>file:/Users/tangtantai/Projects/EventManagement/src/java/fptu/swp/fakefileinputstream/FakeFileInputStream.java</file>
-            <file>file:/Users/tangtantai/Projects/EventManagement/web/invalid.html</file>
-            <file>file:/Users/tangtantai/Projects/EventManagement/web/META-INF/context.xml</file>
+            <file>file:/Users/tangtantai/Projects/EventManagement/src/java/fptu/swp/controller/ViewEventDetailServlet.java</file>
             <file>file:/Users/tangtantai/Projects/EventManagement/web/eventDetail.jsp</file>
-            <file>file:/Users/tangtantai/Projects/EventManagement/web/nav_bar.jsp</file>
-            <file>file:/Users/tangtantai/Projects/EventManagement/web/location_and_time.html</file>
-            <file>file:/Users/tangtantai/Projects/EventManagement/web/appendEventDetail.jsp</file>
-            <file>file:/Users/tangtantai/Projects/EventManagement/web/updateEvent.jsp</file>
-            <file>file:/Users/tangtantai/Projects/EventManagement/src/java/fptu/swp/entity/user/LecturerBriefInfoDTO.java</file>
-            <file>file:/Users/tangtantai/Projects/EventManagement/web/newfeed.jsp</file>
+            <file>file:/Users/tangtantai/Projects/EventManagement/src/java/fptu/swp/controller/HandleMultipartServlet.java</file>
+            <file>file:/Users/tangtantai/Projects/EventManagement/src/java/fptu/swp/entity/user/UserDTO.java</file>
         </group>
     </open-files>
 </project-private>
