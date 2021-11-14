@@ -136,7 +136,11 @@ body {
   border-radius: 6px;
   padding: 8px 1rem;
   color: white;
-  margin-bottom: 200px;
+  margin-top: 1rem;
+}
+
+#btn_update_description_container {
+  text-align: right;
   margin-top: 1rem;
 }
 
@@ -310,3 +314,6 @@ body {
   width: 1rem;
 }
 
+#figure_image {
+  margin-bottom: 0 !important;
+}

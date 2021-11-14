@@ -48,7 +48,6 @@ $("#btn_edit_event_details").click(showEditEventDetail_Buttons);
 
 function showEditEventDetail_Buttons () {
     if ($(".menu_sub_button").css("display") == "none") {
-        console.log("...");
         $(".menu_button").hide();
         $(".menu_sub_button").show();
         $("#btn_edit_event_details").show();
@@ -76,6 +75,26 @@ function waitingForSubmit (button) {
     button.form.submit();
 }
 
+var body = document.getElementById("html_body");
+var memberList = document.getElementById("member_list");
+var eventContent = document.getElementById("content");
+
+function showMemberList () {
+    memberList.style.display = "block";
+    eventContent.style.display = "none";
+    body.style.backgroundColor = "white !important";
+    $('#menu_container').hide();
+    resetMenu();
+}
+
+function goBackToContent () {
+    if (memberList.style.display != "none") {
+        memberList.style.display = "none";
+        eventContent.style.display = "block";
+        body.style.backgroundColor = "#F0F0F0 !important";
+    }
+}
+
 $optionMenu = $("#export_option_menu");
 $optionMenu.hide();
 $("#btn_export_excel").click(function () {
@@ -85,3 +104,6 @@ $("#btn_export_excel").click(function () {
         $optionMenu.hide();
     }
 });
+
+
+

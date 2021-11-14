@@ -38,6 +38,13 @@ a, a:hover, a:focus, a:active {
     display: none;
 }
 
+.menu_button button {
+    background-color: transparent !important; 
+    border: none !important;
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
 .menu_button p {
     color: white;
     text-align: center;

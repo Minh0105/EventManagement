@@ -515,7 +515,6 @@ body {
 }
 
 
-
 .tab-pane {
     min-height: 95vh !important;
 }
@@ -571,8 +570,9 @@ body {
 #member_list {
     background-color: white;
     margin-top: 3px;
-    padding: 20px 4rem;
+    padding: 20px 2rem;
     height: max-content;
+    min-height: 100vh;
     min-width: 100vh;
     position: relative;
 }
@@ -596,10 +596,19 @@ td, th {
 
 /* EXCEL EXPORT  */
 
-#btn_export_excel {
+#member_list_buttons {
     position: absolute; 
     right: 20px; 
-    top:20px
+    top:20px;
+    width: 9.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+}
+
+#member_list_buttons > * {
+    width: 100%;
 }
 
 #export_option_menu {
@@ -632,4 +641,14 @@ a {
 
 a:hover {
     text-decoration: none !important;
+}
+
+#export_option_menu a {
+    border: 1px solid #2C9436 !important;
+    color: #2C9436 !important;
+}
+
+#export_option_menu a:hover {
+    background-color: #2C9436 !important;
+    color: white !important;
 }

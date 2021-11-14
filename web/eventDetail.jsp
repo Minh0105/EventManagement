@@ -32,7 +32,7 @@
         <link rel="stylesheet" type="text/css" href="resources/css/eventDetail.css"/>
         <script src="<c:url value='resources/ckeditor/ckeditor.js' />"></script>
     </head>
-    <body>
+    <body id="html_body">
 
         <%@include file="nav_bar.jsp" %>
         
@@ -107,7 +107,7 @@
                     
 
                     <div id="btn_view_member" class="menu_button">
-                        <a href="viewMember?eventId=<%= detail.getId()%>"><p>Xem danh sách thành viên</p></a>
+                        <button onclick="showMemberList()"><p>Xem danh sách thành viên</p></button>
                     </div>
 
                 </div>
@@ -223,7 +223,7 @@
         </div>
 
         <!-- CONTENT -->
-        <section id="content" class="d-none">
+        <section id="content">
              <!-- CONTENT NAVIGATION -->
             <ul class="nav nav-tabs" id="tab_container">
                 <li class="nav-item" id="first_tab_button">
@@ -453,76 +453,72 @@
         </section>
 
         <!-- PARTICIPANT LIST -->
-        <section id="member_list">
+        <section id="member_list" style="display: none;">
             <h4>
                 DSTV Tham gia
             </h4>
-            <table id="member_table">
-                <tr>
-                    <th>Email</th>
-                    <th>Tên</th>
-                </tr>
-                
-                <c:if test="${empty requestScope.LIST_PARTICIPANTS}">
-                    <p>Chưa có người quan tâm</p>
-                </c:if>
-                    
-                <c:if test="${not empty requestScope.LIST_FOLLOWERS}">
+            <c:if test="${empty requestScope.LIST_PARTICIPANTS}">
+                <p>Chưa có người tham gia</p>
+            </c:if>
+            <c:if test="${not empty requestScope.LIST_PARTICIPANTS}">
+                <table id="member_table">
+                    <tr>
+                        <th>Email</th>
+                        <th>Tên</th>
+                    </tr>
+                    <c:forEach var="user" items="${requestScope.LIST_PARTICIPANTS}">
+                        <tr>
+                            <td>${user.email}</td>
+                            <td>${user.name}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </c:if>
+            <br>
+            <br>
+
+            <!-- FOLLOWER LIST -->
+            <h4>
+                DSTV Quan tâm
+            </h4>
+            <c:if test="${empty requestScope.LIST_FOLLOWERS}">
+                <p>Chưa có người quan tâm</p>
+            </c:if>
+            <c:if test="${not empty requestScope.LIST_FOLLOWERS}">
+                <table id="member_table">
+                    <tr>
+                        <th>Email</th>
+                        <th>Tên</th>
+                    </tr>
                     <c:forEach var="user" items="${requestScope.LIST_FOLLOWERS}">
                         <tr>
                             <td>${user.email}</td>
                             <td>${user.name}</td>
                         </tr>
                     </c:forEach>
-                </c:if>
-                   
-            </table>
-            
-            <br>
-            <br>
-
-            <!-- FOLLOWER LIST -->
-            <div>
-                <h4>
-                    DSTV Quan tâm
-                </h4>
-                <table id="member_table">
-                    <tr>
-                        <th>Email</th>
-                        <th>Tên</th>
-                    </tr>
-                    
-                    <c:if test="${empty requestScope.LIST_FOLLOWERS}">
-                        <p>Chưa có người quan tâm</p>
-                    </c:if>
-                        
-                    <c:if test="${not empty requestScope.LIST_FOLLOWERS}">
-                        <c:forEach var="user" items="${requestScope.LIST_FOLLOWERS}">
-                            <tr>
-                                <td>${user.email}</td>
-                                <td>${user.name}</td>
-                            </tr>
-                        </c:forEach>
-                    </c:if>
-                       
                 </table>
-            </div>
+            </c:if>
                     
             <!--EXPORT EXCEL OPTION PANEL-->
-            <button id="btn_export_excel" class="mybutton btn-green" >
-                Xuất file Excel
-            </button>
+            <div id="member_list_buttons">
+                <button id="btn_export_excel" class="mybutton btn-green" >
+                    Xuất file Excel
+                </button>
+                <button id="btn_back_to_content" class="mybutton btn-grey" onclick="goBackToContent()" >
+                    Quay lại
+                </button>
+            </div>
 
             <div id="export_option_menu">
-                <a class="mybutton" href="exportExcel?eventId=<%= detail.getId()%>&action=joinOnly">
+                <a class="mybutton no-shadow" href="exportExcel?eventId=<%= detail.getId()%>&action=joinOnly">
                     Thành viên tham gia
                 </a>
 
-                <a class="mybutton" href="exportExcel?eventId=<%= detail.getId()%>&action=followOnly">
+                <a class="mybutton no-shadow" href="exportExcel?eventId=<%= detail.getId()%>&action=followOnly">
                     Thành viên quan tâm
                 </a>
 
-                <a class="mybutton" href="exportExcel?eventId=<%= detail.getId()%>&action=all">
+                <a class="mybutton no-shadow" href="exportExcel?eventId=<%= detail.getId()%>&action=all">
                     Tất cả
                 </a>
             </div>

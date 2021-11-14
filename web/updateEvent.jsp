@@ -63,7 +63,11 @@
     
                 <form action="updateEvent" id="update-name-description-form">
                 </form>
-    
+
+                <div id="btn_update_description_container">
+                    <button id="btn_update_description" class="mybutton btn-big btn-orange" onclick="updateNameAndDescription()">Cập nhật thông tin</button>
+                </div>
+
                 <script src="resources/js/setUpCKEditor.js"></script>
                 <script>
                     function updateNameAndDescription() {
@@ -109,7 +113,7 @@
                         Chọn hình ảnh
                     </label>
 
-                    <button id="btn_review" class="mybutton btn-big btn-orange" onclick="sendUpdateInfor()">Cập nhật</button>
+                    <button id="btn_review" class="mybutton btn-big btn-orange" onclick="updatePoster()">Cập nhật ảnh bìa</button>
                 </div>
             </div>
         </div>
@@ -121,13 +125,9 @@
         <script src="resources/js/create_event.js"></script>
 
         <script>
-                function sendUpdateInfor () {
-                    updateNameAndDescription()
-                    updatePoster();
-                }
-
                 function updatePoster() {
-                    var form = '<form id="submit_form" action="changePoster" method="POST" enctype="multipart/form-data">'
+                    var form = '';
+                    form += '<form id="submit_form" action="changePoster" method="POST" enctype="multipart/form-data">'
                     form += '<input type="hidden" name="eventId" value="<%= detail.getId()%>" />'
                     form += "</form>"
 
