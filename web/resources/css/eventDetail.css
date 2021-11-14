@@ -2,7 +2,7 @@
 @import url(event_status_modal.css);
 
 body {
-    background-color: #F0F0F0 !important;
+    background-color: #f6f6f6 !important;
 }
 
 /* POSTER PART  */
@@ -276,7 +276,7 @@ body {
 
 .nav-tabs {
     border: none !important;
-    margin-bottom: 1rem !important;
+    margin-bottom: 0.4rem !important;
 }
 
 .nav-tabs .nav-link.active {
@@ -633,7 +633,6 @@ td, th {
 #export_option_menu > * {
     width: 100%;
 }
-
 
 a {
     text-decoration: none !important;
