@@ -35,7 +35,7 @@
     <body>
 
         <%@include file="nav_bar.jsp" %>
-        
+
         <%
             UserDTO loginUser = (UserDTO) session.getAttribute("USER");
             EventDetailDTO detail = (EventDetailDTO) request.getAttribute("EVENT_DETAIL");
@@ -58,9 +58,9 @@
 
                 <!-- CARE PART  -->
                 <div id="care_infor_part">
-                    <p class="care_infor_text"> <%= detail.getFollowing() %> người đã quan tâm</p> 
+                    <p class="care_infor_text"> <%= detail.getFollowing()%> người đã quan tâm</p> 
                     <div id="dot"></div>
-                    <p class="care_infor_text"> <%= detail.getJoining() %> người sẽ tham gia</p>
+                    <p class="care_infor_text"> <%= detail.getJoining()%> người sẽ tham gia</p>
                 </div>
 
             </div>
@@ -68,140 +68,157 @@
 
         <!-- COPY PART -->
         <!-- EVENT ORGANIZER BUTTONS  -->
-    <%
-        if (("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName())) && (detail.getStatusId() == 1 || detail.getStatusId() == 2)) {
-    %>
-            <div id="menu_container">   
-                <div id="menu_panel">   
-        
-                    <div id="btn_edit_event_details" class="menu_button">
-                        <a href="organizerRedirect?action=updateInformation&eventId=<%= detail.getId()%>"><p>Chỉnh sửa thông tin sự kiện</p></a>
-                    </div>
+        <%
+            if (("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName())) && (detail.getStatusId() == 1 || detail.getStatusId() == 2)) {
+        %>
+        <div id="menu_container">   
+            <div id="menu_panel">   
 
-<!--                        <div id="btn_edit_event_content" class="menu_sub_button">
-                            <p>Nội dung sự kiện</p>
-                        </div>
-
-                        <div id="btn_edit_event_poster" class="menu_sub_button">
-                            <p>Ảnh bìa</p>
-                        </div>
-
-                        <div id="btn_edit_event_time_and_lock" class="menu_sub_button">
-                            <p>Thời gian và địa điểm</p>
-                        </div>-->
-
-
-                    <div type="button" data-toggle="modal" data-target="#setEvtStatus" id="btn_update_event_status" class="menu_button">
-                        <p>Cập nhật trạng thái sự kiện</p>
-                    </div>
-
-
-                    <div id="btn_add_summary" class="menu_button">
-                        <a href="organizerRedirect?action=updateFollowUp&eventId=<%= detail.getId()%>"><p>Sửa nội dung tiến trình</p></a>
-                    </div>
-                    
-
-                    <div id="btn_view_member" class="menu_button">
-                        <a href="viewMember?eventId=<%= detail.getId()%>"><p>Xem danh sách thành viên</p></a>
-                    </div>
-
+                <div id="btn_edit_event_details" class="menu_button">
+                    <a href="organizerRedirect?action=updateInformation&eventId=<%= detail.getId()%>"><p>Chỉnh sửa thông tin sự kiện</p></a>
                 </div>
-            </div>
 
-            <!-- Modal-->
-            <div class="modal fade" id="setEvtStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
+                <!--                        <div id="btn_edit_event_content" class="menu_sub_button">
+                                            <p>Nội dung sự kiện</p>
+                                        </div>
+                
+                                        <div id="btn_edit_event_poster" class="menu_sub_button">
+                                            <p>Ảnh bìa</p>
+                                        </div>
+                
+                                        <div id="btn_edit_event_time_and_lock" class="menu_sub_button">
+                                            <p>Thời gian và địa điểm</p>
+                                        </div>-->
+
+
+                <div type="button" data-toggle="modal" data-target="#setEvtStatus" id="btn_update_event_status" class="menu_button">
+                    <p>Cập nhật trạng thái sự kiện</p>
+                </div>
+
+
+                <div id="btn_add_summary" class="menu_button">
+                    <a href="organizerRedirect?action=updateFollowUp&eventId=<%= detail.getId()%>"><p>Sửa nội dung tiến trình</p></a>
+                </div>
+
+
+                <div id="btn_view_member" class="menu_button">
+                    <a href="viewMember?eventId=<%= detail.getId()%>"><p>Xem danh sách thành viên</p></a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Modal-->
+        <div class="modal fade" id="setEvtStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title my_modal_title" id="exampleModalLabel">Cập nhật trạng thái sự kiện</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+                        <h5 class="modal-title my_modal_title" id="exampleModalLabel">Cập nhật trạng thái sự kiện</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    
+
                     <div class="modal-body">
-                        <h5 class="my_modal_title"><%= detail.getName() %></h5>
+                        <h5 class="my_modal_title"><%= detail.getName()%></h5>
                         <span class="status_dot green_dot"></span>
                         <span class="status_text">Sắp diễn ra</span>
                     </div>
 
                     <div class="modal-footer">
-                      <button type="button" class="mybutton btn_close_register">Đóng đăng kí</button>
-                      <form action="cancelEvent" method="POST">
-                          <button type="submit" class="mybutton btn_cancel_event">Ngừng sự kiện</button>
-                          <input type="hidden" name="eventId" value="<%= detail.getId() %>"/>
-                      </form>
-                      
+                        <form action="updateEventStatus" method="POST">
+                            <%
+                                if (detail.getStatusId() == 1) {
+                            %>
+                            <button type="submit" class="mybutton btn_close_register">Đóng đăng kí</button>
+                            <%
+                                }
+                                if (detail.getStatusId() == 2) {
+
+                            %>
+                            <button type="submit" class="mybutton btn_close_register">Mở đăng kí</button>
+                            <% 
+                                }
+                            %>
+
+                            <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                        </form>
+
+                        <form action="cancelEvent" method="POST">
+                            <button type="submit" class="mybutton btn_cancel_event">Ngừng sự kiện</button>
+                            <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                        </form>
+
                     </div>
-                  </div>
                 </div>
-              </div>
-    <%
-        }
-    %>
+            </div>
+        </div>
+        <%
+            }
+        %>
 
         <!-- COPY PART -->
-                
+
         <section class="carousel">
             <div class="carouselWrite">
                 <h3><%= detail.getDate()%> - <%= detail.getLocation()%> <br>
                     <%= detail.getTime()%>
                 </h3>
             </div>
-                
+
             <%
                 if ("STUDENT".equals(loginUser.getRoleName()) && detail.getStatusId() == 1) {
                     boolean checkFollowed = (boolean) request.getAttribute("IS_FOLLOWED");
                     boolean checkJoining = (boolean) request.getAttribute("IS_JOINING");
             %>
-                    <div class="carouselButton">
-                        <form action="joinEvent">
-                            <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
-                            <input type="hidden" name="isJoining" value="<%= checkJoining%>"/>
-                            <div class="carouselButton1">
-                                <button onclick="waitingForSubmit(this)" class="hight" type="submit" id="a">
-                                    <%
-                                        if (checkJoining) {
-                                    %>
-                                            <img src="resources/icon/icon_cancel_white.svg" alt="">
-                                            <p>Hủy Tham Gia</p>
-                                    <%
-                                        } else {
-                                    %>
-                                            <img src="resources/icon/icon_join_white.svg" alt="">
-                                            <p>Sẽ Tham Gia</p>
-                                    <%
-                                        }
-                                    %>
-                                </button>
-                            </div>
-                        </form>
-                        <form action="followEvent">
-                            <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
-                            <input type="hidden" name="isFollowed" value="<%= checkFollowed%>"/>
-                            <div class="carouselButton1" type="submit">
-                                <button onclick="waitingForSubmit(this)" class="hight" id="b">
-                                    <%
-                                        if (checkFollowed) {
-                                    %>
-                                        <img src="resources/icon/icon_cancel_white.svg" alt="">
-                                        <p>Hủy Quan Tâm</p>
-                                    <%
-                                        } else { 
-                                    %>
-                                        <img src="resources/icon/icon_care_white.svg" alt="">
-                                        <p>Quan Tâm</p>
-                                    <%
-                                        }
-                                    %>
-                                </button>
-                            </div>
-                        </form>
+            <div class="carouselButton">
+                <form action="joinEvent">
+                    <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                    <input type="hidden" name="isJoining" value="<%= checkJoining%>"/>
+                    <div class="carouselButton1">
+                        <button onclick="waitingForSubmit(this)" class="hight" type="submit" id="a">
+                            <%
+                                if (checkJoining) {
+                            %>
+                            <img src="resources/icon/icon_cancel_white.svg" alt="">
+                            <p>Hủy Tham Gia</p>
+                            <%
+                            } else {
+                            %>
+                            <img src="resources/icon/icon_join_white.svg" alt="">
+                            <p>Sẽ Tham Gia</p>
+                            <%
+                                }
+                            %>
+                        </button>
                     </div>
+                </form>
+                <form action="followEvent">
+                    <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                    <input type="hidden" name="isFollowed" value="<%= checkFollowed%>"/>
+                    <div class="carouselButton1" type="submit">
+                        <button onclick="waitingForSubmit(this)" class="hight" id="b">
+                            <%
+                                if (checkFollowed) {
+                            %>
+                            <img src="resources/icon/icon_cancel_white.svg" alt="">
+                            <p>Hủy Quan Tâm</p>
+                            <%
+                            } else {
+                            %>
+                            <img src="resources/icon/icon_care_white.svg" alt="">
+                            <p>Quan Tâm</p>
+                            <%
+                                }
+                            %>
+                        </button>
+                    </div>
+                </form>
+            </div>
             <%
-                } else if (("CLUB'S LEADER".equals(loginUser.getRoleName())) || ("DEPARTMENT'S MANAGER".equals(loginUser.getRoleName()))) {
+            } else if (("CLUB'S LEADER".equals(loginUser.getRoleName())) || ("DEPARTMENT'S MANAGER".equals(loginUser.getRoleName()))) {
             %> 
-                    <img onclick="onMenuIconClick()" id="btn_event_operation_menu" src="resources/icon/icon_orange_hamburger_button.svg">
+            <img onclick="onMenuIconClick()" id="btn_event_operation_menu" src="resources/icon/icon_orange_hamburger_button.svg">
             <%
                 }
             %>
@@ -210,324 +227,327 @@
         <section class="fast">
             <div class="fastWord">
                 <marquee direction="up" behavior="slide" loop = "2" scrollamount="5" word-break: keep-all;">
-                    <%= detail.getName()%>
-                </marquee>
-                <p><%= detail.getOrganizerName()%></p>
-            </div>
-        </section>
-
-        <div id="grey_line"></div>
-
-        <!-- nav -->
-        <section id="content">
-            <ul class="nav nav-tabs" id="tab_container">
-
-                <li class="nav-item" id="first_tab_button">
-                    <a class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#end"
-                    role="tab" aria-controls="home" aria-selected="true">Tiến trình</a>
-                </li>
-
-                <li class="nav-item">
-                  <a class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
-                  role="tab" aria-controls="home" aria-selected="true">Giới thiệu</a>
-                </li>
-
-                <li class="nav-item" id="comment_tab_button">
-                  <a class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                  role="tab" aria-controls="profile" aria-selected="false">Thảo luận</a>
-                </li>
-
-                <li class="nav-item" id="discuss_tab_button">
-                  <a class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button"
-                  role="tab" aria-controls="contact" aria-selected="false">Hỏi đáp</a>
-                </li>
-              </ul>
-
-            <div class="tab-content" id="myTabContent">
-                <!-- Tiến trình -->
-                <div class="tab-pane fade show" id="end" role="tabpanel" aria-labelledby="end-tab">
-<!--                    <img id="post_image" src="resources/image/eventDetail 9.png"/>-->
-                    <section class="navWord">
-                        <h2 class="content_title w-full-parent text-center">Tiến trình sự kiện</h3>
-                        <!-- <p><%= detail.getDescription()%></p> -->
-                        <p><%= detail.getFollowUp() %>
-                    </section>   
-
-                </div>
-
-                <!-- Giới Thiệu -->
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <section class="navWord">
-                        <h2 class="content_title">Nội Dung Sự Kiện</h3>
-                        <p><%= detail.getDescription()%></p>
-                    </section>   
-                    <!-- Giảng Viên -->
-                    <section class="single">
-                        <h2 class="content_title">
-                            Giảng Viên
-                        </h3>
-                    </section>
-                    <!-- Thẻ -->
-                    <section id="lecturer_section">
-                        <div id="lecturer_container" class="container">
-                            <div id="lecturer_row" class="row">
-                                <%
-                                    for (LecturerBriefInfoDTO lecturer : listLecturer) {
-                                %>
-                                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-6">
-                                    <div class="lecturer_card">
-                                        <div class="lec_ava_container">
-                                            <img src="<%= lecturer.getAvatar()%>" class="rounded-circle" alt="">
-                                        </div>
-                                        <h4><%= lecturer.getName()%></h4>
-                                        <h5><%= lecturer.getDescription()%></h5>
-                                    </div>
-                                </div>
-                                <%
-                                    }
-                                %>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- người tổ chức -->
-                    <h2 class="content_title">Người Tổ Chức</h3>
-                    <div class="organizer_container">
-                        <img src="<%= detail.getOrganizerAvatar()%>" class="rounded-circle" alt="">
-                        <div class="organizer_infor">
-                            <h5><%= detail.getOrganizerName()%></h5>
-                            <p><%= detail.getOrganizerDescription()%></p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Comment -->
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    
-                    <form id="comment_box" action="comment" name="loginBox" target="#here">
-                        <input id="input_comment" type="text" placeholder="Vui lòng nhập bình luận của bạn" name="content" required/>
-                        <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
-                        <input onclick="sendCmt()" id="btn_enter_comment" type="button" value="Bình luận"/>
-                    </form>
-
-                    <div id="comment">
-                        <!-- COMMENT WILL BE CREATED BY FIREBASE and JAVASCRIPT -->
-                        <!-- <%
-                            List<CommentDTO> listComment = (List<CommentDTO>) request.getAttribute("LIST_COMMENT");
-                            for (CommentDTO comment : listComment) {
-                        %>
-                                <div class="comment_item">
-                                    <div class="comment_infor_section">
-                                        <div class="avatar_container">
-                                            <img class="rounded-circle lec_avatar" src="<%= comment.getUserAvatar()%>" alt="">
-                                        </div>
-    
-                                        <div class="comment_infor">
-                                            <p class="comment_username"><%= comment.getUserName()%> - <%= comment.getUserRoleName()%></p>
-                                            <p class="comment_content"><%= comment.getContents()%></p>
-                                            <p class="btn_show_reply" onclick="showReplyBox(this)">Trả lời</p>
-                                        </div>
-                                    </div>
-
-                                    <form class="reply_box" action ="reply" >
-                                        <input class="input_reply" type="text" name="content" placeholder="Trả lời..." required/>
-                                        <input type="hidden" name="commentId" value = "<%= comment.getCommentId()%>"/>
-                                        <input type="hidden" name="eventId" value = "<%= detail.getId()%>"/>
-                                        <input class="btn_reply" type="submit" value="Gửi"/>
-                                    </form>
-
-                                    <div class="reply_container">
-                                        <div class="repComment2">
-                                            <div class="repComment2a">
-                                                <img src="resources/image/mock_avatar.jpeg" class="rounded-circle" class="rounded-circle" alt="">
-                                            </div>
-                                            <div class="repComment2b">
-                                                <p class="comment_username">Tester - Student</p>
-                                                <p class="comment_content">Xin chào mình là Tester Reply</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="repComment2">
-                                            <div class="repComment2a">
-                                                <img src="resources/image/mock_avatar.jpeg" class="rounded-circle" class="rounded-circle" alt="">
-                                            </div>
-                                            <div class="repComment2b">
-                                                <p class="comment_username">Tester 2 - Student</p>
-                                                <p class="comment_content">Hay thật đấy</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                        <%
-                            List<ReplyDTO> listReply = comment.getReplyList();
-                            for (ReplyDTO reply : listReply) {
-                        %>
-                                <div class="repComment2">
-                                    <div class="repComment2a">
-                                        <img src="<%= reply.getUserAvatar()%>" class="rounded-circle" class="rounded-circle" alt="">
-                                    </div>
-                                    <div class="repComment2b">
-                                        <p class="comment_username"><%= reply.getUserName()%> - <%= reply.getUserRoleName()%></p>
-                                        <p class="comment_content"><%= reply.getContents()%></p>
-                                    </div>
-                                </div>
-                        <%
-                                }
-                            }
-                        %> 
-                    </div> -->
-                
-                </div>
-
-                <!-- Hỏi Đáp -->
-                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                    <div class="ask">
-                        <%
-                            if ("STUDENT".equals(loginUser.getRoleName())) {
-                        %>
-                                <form action ="askQuestion">
-                                    <textarea id="input_question" type="text" placeholder="Vui lòng nhập câu hỏi của bạn....." name="content" required></textarea>
-                                    
-                                    <div style="width: 100%; display:flex; justify-content:flex-end">
-                                        <button id="btn_enter_question" type="submit" class="sendButton">Gửi</button>
-                                    </div>
-                                    
-                                    <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
-
-                                </form>
-                        <%
-                            }
-                            List<CommentDTO> listQuestion = (List<CommentDTO>) request.getAttribute("LIST_QUESTION");
-                            for (CommentDTO question : listQuestion) {
-                        %>
-                        <div class="comment_item">
-                            <div class="avatar_container">
-                                <img class="rounded-circle lec_avatar" src="<%= question.getUserAvatar()%>" class="rounded-circle" alt="">
-                            </div>
-
-                            <div class="comment_infor">
-                                <p class="comment_username"><%= question.getUserName()%> - <%= question.getUserRoleName()%></p>
-                                <p class="comment_content"><%= question.getContents()%></p>
-
-                            <%
-                                if (!"STUDENT".equals(loginUser.getRoleName())) {
-                            %>
-                                    <p class="btn_show_reply" onclick="showReply(this)">Trả lời</p>
-                                    <form class="reply_box" action ="reply" >
-                                        <input class="input_reply" type="text" name="content" placeholder="Nhập nội dung câu trả lời" required/>
-                                        <input type="hidden" name="commentId" value = "<%= question.getCommentId()%>"/>
-                                        <input type="hidden" name="eventId" value = "<%= detail.getId()%>"/>
-                                        <input onclick="sendReply()" class="btn_reply" value="Gửi"/>
-                                    </form>
-                            <%
-                                }
-                            %>
-                            </div>
-                        </div>
-                        <%
-                            List<ReplyDTO> listReply = question.getReplyList();
-                            for (ReplyDTO reply : listReply) {
-                        %>
-                                <div class="repComment2">
-                                    <div class="repComment2a">
-                                        <img src="<%= reply.getUserAvatar()%>" class="rounded-circle" class="rounded-circle" alt="">
-                                    </div>
-                                    <div class="repComment2b">
-                                        <p class="comment_username"><%= reply.getUserName()%> - <%= reply.getUserRoleName()%></p>
-                                        <p class="comment_content"><%= reply.getContents()%></p>
-                                    </div>
-                                </div>
-                        <%
-                                }
-                            }
-                        %>
-                    </div>
-                </div>
-
-
-            </div>
+                         <%= detail.getName()%>
+            </marquee>
+            <p><%= detail.getOrganizerName()%></p>
         </div>
     </section>
 
+    <div id="grey_line"></div>
 
-    <!--END-->
-    <section class="end">
-        <h4>Developed By Aladudu Group</h4>
-        <p id = "date"></p>
-    </section>
+    <!-- nav -->
+    <section id="content">
+        <ul class="nav nav-tabs" id="tab_container">
 
-    <!-- -------------------------gắn link------------------------------- -->
+            <li class="nav-item" id="first_tab_button">
+                <a class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#end"
+                   role="tab" aria-controls="home" aria-selected="true">Tiến trình</a>
+            </li>
 
-    <script>
-        let dateDOM = document.getElementById('date_render'); // 1,2,3,4,.. 31
-        let dayDOM = document.getElementById('day_render'); // Mon, Tue,..
-        if (dateDOM && dayDOM) {
-        let d1 = "<%= detail.getDate()%>"; 
-        let subStringDate = d1.substring(d1.length - 8, d1.length - 10);
-        let subStringDay = d1.substring(0, d1.indexOf(","));
-            dateDOM.innerHTML = subStringDate;
-            dayDOM.innerHTML = subStringDay;
-        }
-        var d = new Date();
-        var thang = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
-        document.getElementById("date").innerHTML = "COVID-19, "
-            + d.getDate() + "/" + thang[d.getMonth()] + "/" +
-            + d.getFullYear();
-    </script>
+            <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                   role="tab" aria-controls="home" aria-selected="true">Giới thiệu</a>
+            </li>
 
-    <!-- click chuột đổi màu button  -->
-    <script type="text/javascript" id="a">
+            <li class="nav-item" id="comment_tab_button">
+                <a class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                   role="tab" aria-controls="profile" aria-selected="false">Thảo luận</a>
+            </li>
+
+            <li class="nav-item" id="discuss_tab_button">
+                <a class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button"
+                   role="tab" aria-controls="contact" aria-selected="false">Hỏi đáp</a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+            <!-- Tiến trình -->
+            <div class="tab-pane fade show" id="end" role="tabpanel" aria-labelledby="end-tab">
+                <!--                    <img id="post_image" src="resources/image/eventDetail 9.png"/>-->
+                <section class="navWord">
+                    <h2 class="content_title w-full-parent text-center">Tiến trình sự kiện</h3>
+                    <!-- <p><%= detail.getDescription()%></p> -->
+                        <p><%= detail.getFollowUp()%>
+                            </section>   
+
+                            </div>
+
+                            <!-- Giới Thiệu -->
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <section class="navWord">
+                                <h2 class="content_title">Nội Dung Sự Kiện</h3>
+                                    <p><%= detail.getDescription()%></p>
+                            </section>   
+                            <!-- Giảng Viên -->
+                            <section class="single">
+                                <h2 class="content_title">
+                                    Giảng Viên
+                                    </h3>
+                            </section>
+                            <!-- Thẻ -->
+                            <section id="lecturer_section">
+                                <div id="lecturer_container" class="container">
+                                    <div id="lecturer_row" class="row">
+                                        <%
+                                            for (LecturerBriefInfoDTO lecturer : listLecturer) {
+                                        %>
+                                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-6">
+                                            <div class="lecturer_card">
+                                                <div class="lec_ava_container">
+                                                    <img src="<%= lecturer.getAvatar()%>" class="rounded-circle" alt="">
+                                                </div>
+                                                <h4><%= lecturer.getName()%></h4>
+                                                <h5><%= lecturer.getDescription()%></h5>
+                                            </div>
+                                        </div>
+                                        <%
+                                            }
+                                        %>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- người tổ chức -->
+                            <h2 class="content_title">Người Tổ Chức</h3>
+                                <div class="organizer_container">
+                                    <img src="<%= detail.getOrganizerAvatar()%>" class="rounded-circle" alt="">
+                                    <div class="organizer_infor">
+                                        <h5><%= detail.getOrganizerName()%></h5>
+                                        <p><%= detail.getOrganizerDescription()%></p>
+                                    </div>
+                                </div>
+
+                        </div>
+
+                        <!-- Comment -->
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                            <form id="comment_box" action="comment" name="loginBox" target="#here">
+                                <input id="input_comment" type="text" placeholder="Vui lòng nhập bình luận của bạn" name="content" required/>
+                                <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                                <input onclick="sendCmt()" id="btn_enter_comment" type="button" value="Bình luận"/>
+                            </form>
+
+                            <div id="comment">
+                                <!-- COMMENT WILL BE CREATED BY FIREBASE and JAVASCRIPT -->
+                                <!-- <%
+                                    List<CommentDTO> listComment = (List<CommentDTO>) request.getAttribute("LIST_COMMENT");
+                                    for (CommentDTO comment : listComment) {
+                                %>
+                                        <div class="comment_item">
+                                            <div class="comment_infor_section">
+                                                <div class="avatar_container">
+                                                    <img class="rounded-circle lec_avatar" src="<%= comment.getUserAvatar()%>" alt="">
+                                                </div>
+            
+                                                <div class="comment_infor">
+                                                    <p class="comment_username"><%= comment.getUserName()%> - <%= comment.getUserRoleName()%></p>
+                                                    <p class="comment_content"><%= comment.getContents()%></p>
+                                                    <p class="btn_show_reply" onclick="showReplyBox(this)">Trả lời</p>
+                                                </div>
+                                            </div>
+        
+                                            <form class="reply_box" action ="reply" >
+                                                <input class="input_reply" type="text" name="content" placeholder="Trả lời..." required/>
+                                                <input type="hidden" name="commentId" value = "<%= comment.getCommentId()%>"/>
+                                                <input type="hidden" name="eventId" value = "<%= detail.getId()%>"/>
+                                                <input class="btn_reply" type="submit" value="Gửi"/>
+                                            </form>
+        
+                                            <div class="reply_container">
+                                                <div class="repComment2">
+                                                    <div class="repComment2a">
+                                                        <img src="resources/image/mock_avatar.jpeg" class="rounded-circle" class="rounded-circle" alt="">
+                                                    </div>
+                                                    <div class="repComment2b">
+                                                        <p class="comment_username">Tester - Student</p>
+                                                        <p class="comment_content">Xin chào mình là Tester Reply</p>
+                                                    </div>
+                                                </div>
+        
+                                                <div class="repComment2">
+                                                    <div class="repComment2a">
+                                                        <img src="resources/image/mock_avatar.jpeg" class="rounded-circle" class="rounded-circle" alt="">
+                                                    </div>
+                                                    <div class="repComment2b">
+                                                        <p class="comment_username">Tester 2 - Student</p>
+                                                        <p class="comment_content">Hay thật đấy</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                <%
+                                    List<ReplyDTO> listReply = comment.getReplyList();
+                                    for (ReplyDTO reply : listReply) {
+                                %>
+                                        <div class="repComment2">
+                                            <div class="repComment2a">
+                                                <img src="<%= reply.getUserAvatar()%>" class="rounded-circle" class="rounded-circle" alt="">
+                                            </div>
+                                            <div class="repComment2b">
+                                                <p class="comment_username"><%= reply.getUserName()%> - <%= reply.getUserRoleName()%></p>
+                                                <p class="comment_content"><%= reply.getContents()%></p>
+                                            </div>
+                                        </div>
+                                <%
+                                        }
+                                    }
+                                %> 
+                            </div> -->
+
+                            </div>
+
+                            <!-- Hỏi Đáp -->
+                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                <div class="ask">
+                                    <%
+                                        if ("STUDENT".equals(loginUser.getRoleName())) {
+                                    %>
+                                    <form action ="askQuestion">
+                                        <textarea id="input_question" type="text" placeholder="Vui lòng nhập câu hỏi của bạn....." name="content" required></textarea>
+
+                                        <div style="width: 100%; display:flex; justify-content:flex-end">
+                                            <button id="btn_enter_question" type="submit" class="sendButton">Gửi</button>
+                                        </div>
+
+                                        <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+
+                                    </form>
+                                    <%
+                                        }
+                                        List<CommentDTO> listQuestion = (List<CommentDTO>) request.getAttribute("LIST_QUESTION");
+                                        for (CommentDTO question : listQuestion) {
+                                    %>
+                                    <div class="comment_item">
+                                        <div class="avatar_container">
+                                            <img class="rounded-circle lec_avatar" src="<%= question.getUserAvatar()%>" class="rounded-circle" alt="">
+                                        </div>
+
+                                        <div class="comment_infor">
+                                            <p class="comment_username"><%= question.getUserName()%> - <%= question.getUserRoleName()%></p>
+                                            <p class="comment_content"><%= question.getContents()%></p>
+
+                                            <%
+                                                if (!"STUDENT".equals(loginUser.getRoleName())) {
+                                            %>
+                                            <p class="btn_show_reply" onclick="showReply(this)">Trả lời</p>
+                                            <form class="reply_box" action ="reply" >
+                                                <input class="input_reply" type="text" name="content" placeholder="Nhập nội dung câu trả lời" required/>
+                                                <input type="hidden" name="commentId" value = "<%= question.getCommentId()%>"/>
+                                                <input type="hidden" name="eventId" value = "<%= detail.getId()%>"/>
+                                                <input onclick="sendReply()" class="btn_reply" value="Gửi"/>
+                                            </form>
+                                            <%
+                                                }
+                                            %>
+                                        </div>
+                                    </div>
+                                    <%
+                                        List<ReplyDTO> listReply = question.getReplyList();
+                                        for (ReplyDTO reply : listReply) {
+                                    %>
+                                    <div class="repComment2">
+                                        <div class="repComment2a">
+                                            <img src="<%= reply.getUserAvatar()%>" class="rounded-circle" class="rounded-circle" alt="">
+                                        </div>
+                                        <div class="repComment2b">
+                                            <p class="comment_username"><%= reply.getUserName()%> - <%= reply.getUserRoleName()%></p>
+                                            <p class="comment_content"><%= reply.getContents()%></p>
+                                        </div>
+                                    </div>
+                                    <%
+                                            }
+                                        }
+                                    %>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        </div>
+                </section>
+
+
+                <!--END-->
+                <section class="end">
+                    <h4>Developed By Aladudu Group</h4>
+                    <p id = "date"></p>
+                </section>
+
+                <!-- -------------------------gắn link------------------------------- -->
+
+                <script>
+                    let dateDOM = document.getElementById('date_render'); // 1,2,3,4,.. 31
+                    let dayDOM = document.getElementById('day_render'); // Mon, Tue,..
+                    if (dateDOM && dayDOM) {
+                        let d1 = "<%= detail.getDate()%>";
+                        let subStringDate = d1.substring(d1.length - 8, d1.length - 10);
+                        let subStringDay = d1.substring(0, d1.indexOf(","));
+                        dateDOM.innerHTML = subStringDate;
+                        dayDOM.innerHTML = subStringDay;
+                    }
+                    var d = new Date();
+                    var thang = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+                    document.getElementById("date").innerHTML = "COVID-19, "
+                            + d.getDate() + "/" + thang[d.getMonth()] + "/" +
+                            +d.getFullYear();
+                </script>
+
+                <!-- click chuột đổi màu button  -->
+                <script type="text/javascript" id="a">
         $('#a').click(function () {
             if (!$(this).hasClass('red')) {
                 $(this).removeClass('blue').addClass('red');
             } else {
-                $(this).removeClass('red').addClass('blue');;
+                $(this).removeClass('red').addClass('blue');
+                ;
             }
 
-        }); $('#b').click(function () {
+        });
+        $('#b').click(function () {
             if (!$(this).hasClass('red')) {
                 $(this).removeClass('blue').addClass('red');
             } else {
-                $(this).removeClass('red').addClass('blue');;
+                $(this).removeClass('red').addClass('blue');
+                ;
             }
 
         });
 
-    </script>
+                </script>
 
 
-    <script type="text/javascript" src="js/jquery.min.js"></script>
+                <script type="text/javascript" src="js/jquery.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-        integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
-        integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
-        crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+                        integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN"
+                crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
+                        integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
+                crossorigin="anonymous"></script>
 
-    <script src="resources/js/eventDetail.js"></script>
+                <script src="resources/js/eventDetail.js"></script>
 
 
-    <!-- COPY PART -->
+                <!-- COPY PART -->
 
-    <link rel="profile" href="<c:url value='http://gmpg.org/xfn/11' />" />
-    <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js""></script>
-    <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js""></script>
-    <script src="resources/js/configFirebase.js"></script>
-    <script src="resources/js/function.js""></script>
+                <link rel="profile" href="<c:url value='http://gmpg.org/xfn/11' />" />
+                <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js""></script>
+                <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js""></script>
+                <script src="resources/js/configFirebase.js"></script>
+                <script src="resources/js/function.js""></script>
 
-    <script>
-        setEventId ('<%= detail.getId() %>');
-        setUserId ('<%= loginUser.getId() %>');
-        setUserAvatar ('<%= loginUser.getAvatar() %>');
-        setUserRoleName ('<%= loginUser.getRoleName() %>');
-        setUserName ('<%= loginUser.getName() %>');
+                <script>
+        setEventId('<%= detail.getId()%>');
+        setUserId('<%= loginUser.getId()%>');
+        setUserAvatar('<%= loginUser.getAvatar()%>');
+        setUserRoleName('<%= loginUser.getRoleName()%>');
+        setUserName('<%= loginUser.getName()%>');
         startOnAddCommentListener();
         startOnAddReplyListener();
-    </script>
+                </script>
 
-    <!-- COPY PART -->
+                <!-- COPY PART -->
 
-</body>
+                </body>
 
-</html>
+                </html>

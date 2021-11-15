@@ -244,6 +244,10 @@
         <servlet-name>LoginPageRedirectServlet</servlet-name>
         <servlet-class>fptu.swp.controller.LoginPageRedirectServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateEventStatusServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.UpdateEventStatusServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -347,6 +351,10 @@
     <servlet-mapping>
         <servlet-name>LoginPageRedirectServlet</servlet-name>
         <url-pattern>/LoginPageRedirectServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateEventStatusServlet</servlet-name>
+        <url-pattern>/UpdateEventStatusServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
