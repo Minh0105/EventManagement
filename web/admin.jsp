@@ -212,6 +212,7 @@
         <c:if test="${requestScope.LIST_STUDENT ne null}">
             <div class=""><h3 class="right_title">Student Management</h3></div>
             <div class="service" >
+                <span>${requestScope.NOTIFICATION}</span>
                 <table class="table table-bordered text-center">
                     <thead class="thead-light">
                         <tr class="service1">
@@ -328,6 +329,7 @@
        
 
             <div class="service">
+                <span>${requestScope.NOTIFICATION}</span>
                 <table class="table table-bordered text-center">
                     <thead class="thead-light">
                         <tr class="service1">
