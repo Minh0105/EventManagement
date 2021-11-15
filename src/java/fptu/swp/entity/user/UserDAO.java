@@ -869,4 +869,43 @@ public class UserDAO {
         }
         return user;
     }
+
+    public List<UserDTO> getUserByEventId(int eventId) throws NamingException, SQLException {
+        List<UserDTO> list = new ArrayList<>();
+        UserDTO userInfo;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT u.name name, u.email email, u.phoneNum phoneNum" +
+                        " FROM tblUsers u" +
+                        " JOIN tblStudentsInEvents v ON u.id = v.studentId AND (v.isFollowing = 1 OR v.isJoining = 1) AND v.eventId = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, eventId);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String name = rs.getString("name");
+                    String email = rs.getString("email");
+                    String phoneNum = rs.getString("phoneNum");
+                    userInfo = new UserDTO(email, name, phoneNum);
+                    list.add(userInfo);
+                }
+                
+                return list;
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
+    }
 }
