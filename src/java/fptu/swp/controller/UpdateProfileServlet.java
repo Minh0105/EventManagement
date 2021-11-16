@@ -46,9 +46,12 @@ public class UpdateProfileServlet extends HttpServlet {
         //default url
         String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
         String UPDATE_PAGE_LABEL = context.getInitParameter("UPDATE_PAGE_LABEL");
-        String LOGOUT_LABEL = context.getInitParameter("LOGOUT_LABEL");
+
+        String VIEW_NEWFEED_SERVLET = context.getInitParameter("VIEW_NEWFEED_SERVLET");
+        
         String UPDATE_PAGE_PATH = roadmap.get(UPDATE_PAGE_LABEL);
-        String LOGOUT_PATH = roadmap.get(LOGOUT_LABEL);
+        String VIEW_NEWFEED_SERVLET_PATH = roadmap.get(VIEW_NEWFEED_SERVLET);
+        
         String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
         String url = INVALID_PAGE_PATH;
         
@@ -96,8 +99,9 @@ public class UpdateProfileServlet extends HttpServlet {
                 user.setDescription(description);
                 boolean checkUpdate = dao.updateUser(user);
                 if (checkUpdate) {
-                    url = LOGOUT_PATH;
-                    LOGGER.info("UPDATE SUCCESFULLY!!! FORWARD TO LOGOUT SERVLET");
+                    url = VIEW_NEWFEED_SERVLET_PATH;
+                    session.setAttribute("USER", user);
+                    LOGGER.info("UPDATE SUCCESFULLY. NEW INFO: "+ user +". FORWARD TO VIEW NEW FEED SERVLET");
                 }
             } else {
                 LOGGER.info("Invalidate input!!!" + userError);
