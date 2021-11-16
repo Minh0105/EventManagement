@@ -49,6 +49,7 @@ public class EventDAO {
         String organizerName = "";
         String date = "";
         String locationName = "";
+        int statusId=0;
         int following = 0;
         int joining = 0;
         List<String> listLocation = new ArrayList<>();
@@ -57,7 +58,7 @@ public class EventDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 String sql
-                        = "SELECT s.id eventId, s.name eventName, s.poster eventPoster, m.name organizerName, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants"
+                        = "SELECT s.id eventId, s.name eventName, s.poster eventPoster, m.name organizerName, s.statusId statusId, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants"
                         + " FROM tblEvents s"
                         + " LEFT JOIN tblUsers m ON s.userId = m.id"
                         + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
@@ -76,7 +77,7 @@ public class EventDAO {
                                 location += listLocation.get(i) + ", ";
                             }
                             location += listLocation.get(i);
-                            EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                            EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, statusId, following, joining);
                             list.add(card);
                         }
                         listLocation.clear();
@@ -88,6 +89,7 @@ public class EventDAO {
                         Date dateFromDB = rs.getTimestamp("date");
                         date = formatter.format(dateFromDB).toString();
                         locationName = rs.getString("locationName");
+                        statusId = rs.getInt("statusId");
                         following = rs.getInt("followers");
                         joining = rs.getInt("participants");
                         listLocation.add(locationName);
@@ -103,7 +105,7 @@ public class EventDAO {
                         location += listLocation.get(i) + ", ";
                     }
                     location += listLocation.get(i);
-                    EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                    EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, statusId, following, joining);
                     list.add(card);
                 }
 
@@ -137,6 +139,7 @@ public class EventDAO {
         String organizerName = "";
         String date = "";
         String locationName = "";
+        int statusId=0;
         int following = 0;
         int joining = 0;
         List<String> listLocation = new ArrayList<>();
@@ -145,7 +148,7 @@ public class EventDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 String sql
-                        = "SELECT s.id eventId, s.name eventName, s.poster eventPoster, m.name organizerName, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants"
+                        = "SELECT s.id eventId, s.name eventName, s.poster eventPoster, m.name organizerName, s.statusId statusId, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants"
                         + " FROM tblEvents s"
                         + " LEFT JOIN tblUsers m ON s.userId = m.id"
                         + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
@@ -164,7 +167,7 @@ public class EventDAO {
                                 location += listLocation.get(i) + ", ";
                             }
                             location += listLocation.get(i);
-                            EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                            EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, statusId, following, joining);
                             list.add(card);
                         }
                         listLocation.clear();
@@ -176,6 +179,7 @@ public class EventDAO {
                         Date dateFromDB = rs.getTimestamp("date");
                         date = formatter.format(dateFromDB).toString();
                         locationName = rs.getString("locationName");
+                        statusId = rs.getInt("statusId");
                         following = rs.getInt("followers");
                         joining = rs.getInt("participants");
                         listLocation.add(locationName);
@@ -191,7 +195,7 @@ public class EventDAO {
                         location += listLocation.get(i) + ", ";
                     }
                     location += listLocation.get(i);
-                    EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                    EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, statusId, following, joining);
                     list.add(card);
                 }
             }
@@ -224,6 +228,7 @@ public class EventDAO {
         String organizerName = "";
         String date = "";
         String locationName = "";
+        int statusId = 0;
         int following = 0;
         int joining = 0;
         List<String> listLocation = new ArrayList<>();
@@ -233,7 +238,7 @@ public class EventDAO {
             if (conn != null) {
                 String sql = "";
                 if ("STUDENT".equals(loginUser.getRoleName()) || "LECTURER".equals(loginUser.getRoleName())) {
-                    sql = "SELECT s.id eventId, s.name eventName, s.poster eventPoster, m.name organizerName, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants"
+                    sql = "SELECT s.id eventId, s.name eventName, s.poster eventPoster, m.name organizerName, s.statusId statusId, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants"
                             + " FROM tblEvents s"
                             + " LEFT JOIN tblUsers m ON s.userId = m.id"
                             + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
@@ -241,12 +246,12 @@ public class EventDAO {
                             + " WHERE s.statusId = 1";
                     stm = conn.prepareStatement(sql);
                 } else if ("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName())) {
-                    sql = "SELECT s.id eventId, s.name eventName, s.poster eventPoster, m.name organizerName, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants"
+                    sql = "SELECT s.id eventId, s.name eventName, s.poster eventPoster, m.name organizerName, s.statusId statusId, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants"
                             + " FROM tblEvents s"
                             + " LEFT JOIN tblUsers m ON s.userId = m.id"
                             + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
                             + "                  LEFT JOIN tblLocations u ON locationId = u.id) t ON s.id = t.eventId"
-                            + " WHERE s.userId = ? AND s.statusId = 1";
+                            + " WHERE s.userId = ?";
                     stm = conn.prepareStatement(sql);
                     stm.setInt(1, loginUser.getId());
                 }
@@ -261,7 +266,7 @@ public class EventDAO {
                                 location += listLocation.get(i) + ", ";
                             }
                             location += listLocation.get(i);
-                            EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                            EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, statusId, following, joining);
                             list.add(card);
                         }
                         listLocation.clear();
@@ -273,6 +278,7 @@ public class EventDAO {
                         Date dateFromDB = rs.getTimestamp("date");
                         date = formatter.format(dateFromDB).toString();
                         locationName = rs.getString("locationName");
+                        statusId=rs.getInt("statusId");
                         following = rs.getInt("followers");
                         joining = rs.getInt("participants");
                         listLocation.add(locationName);
@@ -288,7 +294,7 @@ public class EventDAO {
                         location += listLocation.get(i) + ", ";
                     }
                     location += listLocation.get(i);
-                    EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                    EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, statusId, following, joining);
                     list.add(card);
                 }
 
@@ -321,6 +327,7 @@ public class EventDAO {
         String organizerName = "";
         String date = "";
         String locationName = "";
+        int statusId = 0;
         int following = 0;
         int joining = 0;
         List<String> listLocation = new ArrayList<>();
@@ -328,7 +335,7 @@ public class EventDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT s.id eventId, s.name eventName, s.poster eventPoster, m.name organizerName, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants"
+                String sql = "SELECT s.id eventId, s.name eventName, s.poster eventPoster, m.name organizerName, s.statusId statusId, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants"
                         + " FROM tblEvents s"
                         + " LEFT JOIN tblUsers m ON s.userId = m.id"
                         + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
@@ -348,7 +355,7 @@ public class EventDAO {
                                 location += listLocation.get(i) + ", ";
                             }
                             location += listLocation.get(i);
-                            EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                            EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, statusId, following, joining);
                             list.add(card);
                         }
                         listLocation.clear();
@@ -360,6 +367,7 @@ public class EventDAO {
                         Date dateFromDB = rs.getTimestamp("date");
                         date = formatter.format(dateFromDB).toString();
                         locationName = rs.getString("locationName");
+                        statusId = rs.getInt("statusId");
                         following = rs.getInt("followers");
                         joining = rs.getInt("participants");
                         listLocation.add(locationName);
@@ -375,7 +383,7 @@ public class EventDAO {
                         location += listLocation.get(i) + ", ";
                     }
                     location += listLocation.get(i);
-                    EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, following, joining);
+                    EventCardDTO card = new EventCardDTO(currentEventId, eventName, eventPoster, location, date, organizerName, statusId, following, joining);
                     list.add(card);
                 }
 

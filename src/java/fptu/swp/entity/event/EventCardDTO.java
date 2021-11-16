@@ -18,19 +18,21 @@ public class EventCardDTO {
     private String location;
     private String date;
     private String organizerName;
+    private int statusId;
     private int following;
     private int joining;
 
     public EventCardDTO() {
     }
 
-    public EventCardDTO(int id, String name, String poster, String location, String date, String organizerName, int following, int joining) {
+    public EventCardDTO(int id, String name, String poster, String location, String date, String organizerName, int statusId, int following, int joining) {
         this.id = id;
         this.name = name;
         this.poster = poster;
         this.location = location;
         this.date = date;
         this.organizerName = organizerName;
+        this.statusId = statusId;
         this.following = following;
         this.joining = joining;
     }
@@ -97,6 +99,14 @@ public class EventCardDTO {
 
     public void setJoining(int joining) {
         this.joining = joining;
+    }
+
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
     }
 
  
