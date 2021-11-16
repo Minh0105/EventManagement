@@ -510,15 +510,15 @@
             </div>
 
             <div id="export_option_menu">
-                <a class="mybutton no-shadow" href="exportExcel?eventId=<%= detail.getId()%>&action=joinOnly">
+                <a class="mybutton no-shadow" href="downloadMemberListInExcelFile?eventId=<%=detail.getId()%>&people=participant">
                     Thành viên tham gia
                 </a>
 
-                <a class="mybutton no-shadow" href="exportExcel?eventId=<%= detail.getId()%>&action=followOnly">
+                <a class="mybutton no-shadow" href="downloadMemberListInExcelFile?eventId=<%=detail.getId()%>&people=follower">
                     Thành viên quan tâm
                 </a>
 
-                <a class="mybutton no-shadow" href="exportExcel?eventId=<%= detail.getId()%>&action=all">
+                <a class="mybutton no-shadow" href="downloadMemberListInExcelFile?eventId=<%=detail.getId()%>&people=all">
                     Tất cả
                 </a>
             </div>

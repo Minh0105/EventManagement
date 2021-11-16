@@ -164,17 +164,6 @@ body {
 }
 
 
-
-
-
-/* Hight2 */
-/* click đổi màu */
-
-/* Fast Word */
-.organizer_name{
-
-}
-
 .organizer_name marquee {
     font-size: 1.75rem;
     word-break:keep-all;
@@ -196,7 +185,7 @@ body {
 }
 
 #body_content {
-    padding: 7vh 3.5vw;
+    padding: 5vw;
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.15);
     background-color: #FFFFFF;
@@ -245,6 +234,7 @@ body {
 
 #organizer_name {
     font-weight: 500;
+    margin-bottom: 0!important;
 }
 
 #organizer_description {
@@ -280,30 +270,26 @@ body {
 }
 
 .nav-tabs .nav-link.active {
-    color: #0240fb !important;
-    font-weight: 500;
+    color: #1e0ce6 !important;
+    font-weight: 500 !important;
 }
 
 .nav-tabs .nav-link {
-    color: #98979D;
+    color: rgba(0, 0, 0, 0.4) !important;
+    font-weight: 300 !important;
 }
 
 .nav-item a {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
 }
 
 #tab_container {
+
 }
 
 #first_tab_button > a {
     padding-left: 0px !important;
 }
-
-#myTabContent {
-    padding-right: 1.3rem;
-    padding-left: 1.3rem;
-}
-
 
 /* LECTURER */
 

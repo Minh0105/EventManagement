@@ -2,15 +2,20 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
+}
+
+a, a:hover {
+    text-decoration: none !important;
+    white-space: nowrap !important;
 }
 
 /* Header */
 .header{
    
 }
+
 /* Header1 */
-.header1{
+.header1 {
     width: 300px;
     height: 100vh;
     display: flex;
@@ -18,25 +23,26 @@
     background-color: transparent;
     overflow: hidden;
     z-index: 10;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.7);
+    left: -290px;
+    transition: left 0.5s;
 }
 
 .header3 {
-    background-color: #FF855E;
+    background: rgb(230,75,13);
+    background: linear-gradient(307deg, rgba(230,75,13,1) 0%, rgb(240, 105, 56) 100%);
     top: 0px;
-    left: -290px;
     width: 300px;
     height: 100vh;
     z-index: 1;
     position: absolute;
     flex-grow: 1;
     box-shadow: 0px 4px 10px rgb(0 0 0 / 5%);
-    transition: left 0.5s;
 }
 
-.header3:hover {
+.header1:hover {
     left: 0;
 }
-
 
 
 /* BAR */
@@ -91,40 +97,38 @@
     transform: rotate(-45deg);
 }
 
-
-
-
-
 .link{
-    
     display: flex;
-    margin-top: 2rem;
     flex-direction: column;
     justify-content: center;
 }
 
-.nav-item a{
-  
+.nav-item a {
     gap: 20px;
-    font-size: 15px;
-    font-weight: 700;
-    position: absolute;
-    color: black;
+    font-size: 1.15rem;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.075);
+    border-radius: 10px;
 }
+
 .nav-item a:hover{
-        border-radius: 5px;
-        background-color: #8e44ad;
-        color: white;
-       
+    background-color: #FFFFFF;
+    color: #ff5922;
 }
+
+.nav-item a.selected {
+    background-color: #FFFFFF !important;
+    color: #ff5922 !important;
+}
+
 .nav-item{
-     list-style-type:none;
+    list-style-type:none;
     display: flex;
-    margin-top: 3rem;
-  
+    margin-top: 0.5rem;
     justify-content: start;
     margin-right: 11.5rem
 }
+
 .linkP{
     display: none;
 }
@@ -172,9 +176,7 @@
     }
    
     .nav-item a{
-       
-        padding-right: 30rem;
-        width: max-content;
+        width: 100%;
         display:block;        
     }
 }
@@ -253,9 +255,12 @@
     width: 223px;
     height: 35px;
 }
+
 /* Service */
-.service table{
+
+.service table {
     width: 100%;
+    margin-bottom: 0!important;
 }
 
 .select2 td{
@@ -272,41 +277,52 @@
 
 /* TAI PART */
 
+.top_title {
+    padding: 1.5rem 1rem;
+}
+
 .right_title {
-    margin-top: 1rem;
+    margin: 0px !important;
+    font-size: 1.5rem;
+    color: #ff4f14;
+    font-weight: 400;
 }
 
 .service {
-    margin-top: 2rem;
-}
-
-.service table, .service td, .service th, .service tr {
-    border: 1px solid rgba(0, 0, 0, 0.5);
+    margin: 0px 1rem;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    border-collapse: collapse;
 }
 
 .service td, .service th, .service tr {
-    padding: 6px 3px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    vertical-align: middle !important;
+}
+
+.service td, .service th, .service tr {
+    padding: 12px;
     align-items: center;
     text-align: center;
 }
 
 .button_td {
-    padding: 0px!important;
+    padding: 12px!important;
 }
 
-.button_td form {
-    
-}
-
-
-input[value="Deactivate"], .button_td > button {
+input[value="Deactivate"], input[value="Cancel"], .button_td > button {
     background-color: white;
-    color: red;
+    color: rgb(89, 89, 89);
     border: none;
     width: 100%;
     display: block;
     height: 5.2vh;
     min-height: 30px;
+}
+
+input[value="Deactivate"]:hover, input[value="Cancel"], .button_td > button:hover {
+    color: rgb(230, 51, 51);
 }
 
 input[value="Activate"] {
@@ -328,21 +344,16 @@ input[value="Deactivate"]:hover, .button_td > button:hover {
 
 }
 
-
 #big_title {
-    padding-bottom: 2rem !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.75);
+    padding: 1rem;
 }
 
 #big_title h4 {
-    margin-bottom: 0 !important;
-    color: white;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0 !important;
+    font-weight: 400;
 }
-
-.link > ul {
-    border-top: 1px solid rgba(255, 255, 255, 0.75) !important;
-    margin-top: 2rem !important;
-}
-
 
 .nav-item > .nav-link {
     color: white;
@@ -358,4 +369,63 @@ input[value="Deactivate"]:hover, .button_td > button:hover {
     object-fit: cover;
     border-radius: 3px;
     border: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+td p, td a {
+    white-space: nowrap;
+    text-align: middle;
+    vertical-align: center;
+    display: inline-block;
+    margin-bottom: 0 !important;
+    max-width: 15vw;
+    min-width: 5vw;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    background-color: white;
+}
+
+td p:hover, td a:hover {
+    overflow: visible;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+    border-radius: 5px; 
+}
+
+td {
+    height: 3vh;
+    position: relative;
+}
+
+ul {
+    padding: 1.5rem 1rem!important;
+}
+
+ul li {
+    width: 100%;
+}
+
+li .nav-link {
+   width: 100%; 
+}
+
+#btn_logout, #btn_logout:hover {
+    text-decoration: none !important;
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.75);
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.rec_green {
+    width: 100%;
+    height: 2rem;
+    border-radius: 0.5rem;
+    background-color: limegreen;
+}
+
+.rec_red {
+    width: 100%;
+    height: 2rem;
+    border-radius: 0.5rem;
+    background-color: rgb(198, 198, 198);
 }

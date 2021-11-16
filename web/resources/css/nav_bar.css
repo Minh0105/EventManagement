@@ -1,6 +1,10 @@
 
 @import url(margin.css);
 
+a, a:hover {
+    text-decoration: none !important;
+}
+
 #app_icon {
     height: 35px;
 }
