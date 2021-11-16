@@ -35,7 +35,7 @@
     <body id="html_body">
 
         <%@include file="nav_bar.jsp" %>
-        
+
         <%
             UserDTO loginUser = (UserDTO) session.getAttribute("USER");
             EventDetailDTO detail = (EventDetailDTO) request.getAttribute("EVENT_DETAIL");
@@ -96,54 +96,74 @@
                         </a>
                     </div>
 
-                    <div type="button" data-toggle="modal" data-target="#setEvtStatus" id="btn_update_event_status" class="menu_button">
-                        <p>Cập nhật trạng thái sự kiện</p>
-                    </div>
+                <div type="button" data-toggle="modal" data-target="#setEvtStatus" id="btn_update_event_status" class="menu_button">
+                    <p>Cập nhật trạng thái sự kiện</p>
+                </div>
 
 
-                    <div id="btn_add_summary" class="menu_button">
-                        <a href="organizerRedirect?action=updateFollowUp&eventId=<%= detail.getId()%>"><p>Sửa nội dung tiến trình</p></a>
-                    </div>
-                    
+                <div id="btn_add_summary" class="menu_button">
+                    <a href="organizerRedirect?action=updateFollowUp&eventId=<%= detail.getId()%>"><p>Sửa nội dung tiến trình</p></a>
+                </div>
 
                     <div id="btn_view_member" class="menu_button">
                         <button onclick="showMemberList()"><p>Xem danh sách thành viên</p></button>
                     </div>
 
+                <div id="btn_view_member" class="menu_button">
+                    <a href="viewMember?eventId=<%= detail.getId()%>"><p>Xem danh sách thành viên</p></a>
                 </div>
-            </div>
 
-            <!-- Modal-->
-            <div class="modal fade" id="setEvtStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
+            </div>
+        </div>
+
+        <!-- Modal-->
+        <div class="modal fade" id="setEvtStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title my_modal_title" id="exampleModalLabel">Cập nhật trạng thái sự kiện</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+                        <h5 class="modal-title my_modal_title" id="exampleModalLabel">Cập nhật trạng thái sự kiện</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    
+
                     <div class="modal-body">
-                        <h5 class="my_modal_title"><%= detail.getName() %></h5>
+                        <h5 class="my_modal_title"><%= detail.getName()%></h5>
                         <span class="status_dot green_dot"></span>
                         <span class="status_text">Sắp diễn ra</span>
                     </div>
 
                     <div class="modal-footer">
-                      <button type="button" class="mybutton btn_close_register">Đóng đăng kí</button>
-                      <form action="cancelEvent" method="POST">
-                          <button type="submit" class="mybutton btn_cancel_event">Ngừng sự kiện</button>
-                          <input type="hidden" name="eventId" value="<%= detail.getId() %>"/>
-                      </form>
-                      
+                        <form action="updateEventStatus" method="POST">
+                            <%
+                                if (detail.getStatusId() == 1) {
+                            %>
+                            <button type="submit" class="mybutton btn_close_register">Đóng đăng kí</button>
+                            <%
+                                }
+                                if (detail.getStatusId() == 2) {
+
+                            %>
+                            <button type="submit" class="mybutton btn_close_register">Mở đăng kí</button>
+                            <% 
+                                }
+                            %>
+
+                            <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                        </form>
+
+                        <form action="cancelEvent" method="POST">
+                            <button type="submit" class="mybutton btn_cancel_event">Ngừng sự kiện</button>
+                            <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                        </form>
+
                     </div>
-                  </div>
                 </div>
-              </div>
-    <%
-        }
-    %>
+            </div>
+        </div>
+        <%
+            }
+        %>
 
         <!-- COPY PART -->
         <div id="event_header" class="container-fluid">
@@ -546,7 +566,6 @@
             + d.getFullYear();
     </script>
 
-
     <script type="text/javascript" src="js/jquery.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
@@ -557,25 +576,21 @@
         integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
         crossorigin="anonymous"></script>
 
-    <script src="resources/js/eventDetail.js"></script>
+                <script src="resources/js/eventDetail.js"></script>
 
-
-    <link rel="profile" href="<c:url value='http://gmpg.org/xfn/11' />" />
-    <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js""></script>
-    <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js""></script>
-    <script src="resources/js/configFirebase.js"></script>
-    <script src="resources/js/function.js""></script>
-
-    <script>
-        setEventId ('<%= detail.getId() %>');
-        setUserId ('<%= loginUser.getId() %>');
-        setUserAvatar ('<%= loginUser.getAvatar() %>');
-        setUserRoleName ('<%= loginUser.getRoleName() %>');
-        setUserName ('<%= loginUser.getName() %>');
-        startOnAddCommentListener();
-        startOnAddReplyListener();
-    </script>
-
-</body>
-
+        <link rel="profile" href="<c:url value='http://gmpg.org/xfn/11' />" />
+        <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js""></script>
+        <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js""></script>
+        <script src="resources/js/configFirebase.js"></script>
+        <script src="resources/js/function.js""></script>
+        <script>
+            setEventId('<%= detail.getId()%>');
+            setUserId('<%= loginUser.getId()%>');
+            setUserAvatar('<%= loginUser.getAvatar()%>');
+            setUserRoleName('<%= loginUser.getRoleName()%>');
+            setUserName('<%= loginUser.getName()%>');
+            startOnAddCommentListener();
+            startOnAddReplyListener();
+        </script>
+    </body>
 </html>

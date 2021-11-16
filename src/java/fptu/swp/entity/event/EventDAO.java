@@ -570,7 +570,7 @@ public class EventDAO {
         return list;
     }
 
-    public int insertNewEvent(EventDetailDTO detail, int organizerId, FileInputStream savedPic) throws SQLException {
+    public int insertNewEvent(EventDetailDTO detail, int organizerId, FileInputStream savedPic) throws SQLException, IOException {
         int eventId = 0;
         boolean check = false;
         Connection conn = null;
@@ -607,6 +607,9 @@ public class EventDAO {
             }
             if (conn != null) {
                 conn.close();
+            }
+            if(savedPic != null){
+                savedPic.close();
             }
         }
         return eventId;
@@ -1453,7 +1456,7 @@ public class EventDAO {
         return check;
     }
 
-    public boolean updateEventPoster(int eventId, FileInputStream savedPic) throws SQLException {
+    public boolean updateEventPoster(int eventId, FileInputStream savedPic) throws SQLException, IOException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement stm = null;
@@ -1476,6 +1479,9 @@ public class EventDAO {
             }
             if (conn != null) {
                 conn.close();
+            }
+            if(savedPic != null){
+                savedPic.close();
             }
         }
         return check;
