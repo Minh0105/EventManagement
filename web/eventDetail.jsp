@@ -31,6 +31,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="resources/css/eventDetail.css"/>
         <script src="<c:url value='resources/ckeditor/ckeditor.js' />"></script>
+        <link rel="stylesheet" type="text/css" href="resources/css/mybutton.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/myInputField.css">
     </head>
     <body id="html_body">
 
@@ -75,44 +77,43 @@
 
         <!-- EVENT ORGANIZER BUTTONS  -->
     <%
-        if (("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName())) && (detail.getStatusId() == 1 || detail.getStatusId() == 2)) {
+        if (("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName()))) {
     %>
             <div id="menu_container">   
                 <div id="menu_panel">   
-        
-                    <div id="btn_edit_event_details" class="menu_button">
-                        <p>Chỉnh sửa thông tin sự kiện</p></a>
+                    <% 
+                        if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {
+                    %>
+                            <div id="btn_edit_event_details" class="menu_button">
+                                <p>Chỉnh sửa thông tin sự kiện</p></a>
+                            </div>
+
+                            <div id="btn_edit_event_content" class="menu_sub_button">
+                                <a href="changeDetailByCreatingNewEvent?stage=start&eventId=<%= detail.getId()%>">
+                                    <p>Thời gian và địa điểm</p>
+                                </a>
+                            </div>
+
+                            <div id="btn_edit_event_time_and_lock" class="menu_sub_button">
+                                <a href="organizerRedirect?action=updateInformation&eventId=<%= detail.getId()%>">
+                                    <p>Thông tin sự kiện</p>
+                                </a>
+                            </div>
+                            
+                            <div type="button" data-toggle="modal" data-target="#setEvtStatus" id="btn_update_event_status" class="menu_button">
+                                <p>Cập nhật trạng thái sự kiện</p>
+                            </div>
+                    <% 
+                        }
+                    %>
+
+                    <div id="btn_add_summary" class="menu_button">
+                        <a href="organizerRedirect?action=updateFollowUp&eventId=<%= detail.getId()%>"><p>Sửa nội dung tiến trình</p></a>
                     </div>
-
-                    <div id="btn_edit_event_content" class="menu_sub_button">
-                        <a href="changeDetailByCreatingNewEvent?stage=start&eventId=<%= detail.getId()%>">
-                            <p>Thời gian và địa điểm</p>
-                        </a>
-                    </div>
-
-                    <div id="btn_edit_event_time_and_lock" class="menu_sub_button">
-                        <a href="organizerRedirect?action=updateInformation&eventId=<%= detail.getId()%>">
-                            <p>Thông tin sự kiện</p>
-                        </a>
-                    </div>
-
-                <div type="button" data-toggle="modal" data-target="#setEvtStatus" id="btn_update_event_status" class="menu_button">
-                    <p>Cập nhật trạng thái sự kiện</p>
-                </div>
-
-
-                <div id="btn_add_summary" class="menu_button">
-                    <a href="organizerRedirect?action=updateFollowUp&eventId=<%= detail.getId()%>"><p>Sửa nội dung tiến trình</p></a>
-                </div>
 
                     <div id="btn_view_member" class="menu_button">
                         <button onclick="showMemberList()"><p>Xem danh sách thành viên</p></button>
                     </div>
-
-                <div id="btn_view_member" class="menu_button">
-                    <a href="viewMember?eventId=<%= detail.getId()%>"><p>Xem danh sách thành viên</p></a>
-                </div>
-
             </div>
         </div>
 
@@ -238,7 +239,7 @@
                 <marquee direction="down" behavior="slide" loop="1" scrollamount="2" word-break: keep-all;>
                     <%= detail.getName()%>
                 </marquee>
-                <p><%= detail.getOrganizerName()%></p>
+                <p id="scroll_target_title" class="mb-0"><%= detail.getOrganizerName()%></p>
             </div>
         </div>
 
@@ -301,7 +302,7 @@
                                         <div class="lecturer_card">
                                             <div class="lec_ava_container">
                                                 <div class="sub_container">
-                                                    <img src="<%= lecturer.getAvatar()%>" class="rounded-circle" alt="">
+                                                    <img src="<%= lecturer.getAvatar()%>" class="rounded-circle" alt="" referrerpolicy="no-referrer">
                                                 </div>
                                             </div>
                                             <p class="lec_name"><%= lecturer.getName()%></p>
@@ -318,7 +319,7 @@
                         <!-- ORGANIZER -->
                         <h4 class="content_title">Người tổ chức</h4>
                         <div class="organizer_container">
-                            <img src="<%= detail.getOrganizerAvatar()%>" class="organizer_ava" alt="">
+                            <img src="<%= detail.getOrganizerAvatar()%>" class="organizer_ava" alt="" referrerpolicy="no-referrer">
                             <div class="organizer_infor">
                                 <p id="organizer_name"><%= detail.getOrganizerName()%></p>
                                 <p id="organizer_description"><%= detail.getOrganizerDescription()%></p>
@@ -331,9 +332,9 @@
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         
                         <form id="comment_box" action="comment" name="loginBox" target="#here">
-                            <input id="input_comment" type="text" placeholder="Vui lòng nhập bình luận của bạn" name="content" required/>
+                            <input class="my-text-input dicussion_input" type="text" placeholder="Vui lòng nhập bình luận của bạn" name="content" required/>
                             <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
-                            <input onclick="sendCmt()" id="btn_enter_comment" type="button" value="Bình luận"/>
+                            <input class="mybutton btn-orange mt-3" onclick="sendCmt()" type="button" value="Bình luận"/>
                         </form>
     
                         <div id="comment">
@@ -411,10 +412,10 @@
                                 if ("STUDENT".equals(loginUser.getRoleName())) {
                             %>
                                     <form action ="askQuestion">
-                                        <textarea id="input_question" type="text" placeholder="Vui lòng nhập câu hỏi của bạn....." name="content" required></textarea>
+                                        <textarea id="question_input" class="my-text-input dicussion_input" type="text" placeholder="Vui lòng nhập câu hỏi của bạn....." name="content" required></textarea>
                                         
                                         <div style="width: 100%; display:flex; justify-content:flex-end">
-                                            <button id="btn_enter_question" type="submit" class="sendButton">Gửi</button>
+                                            <button type="submit" class="mybutton btn-orange mt-2">Gửi câu hỏi</button>
                                         </div>
                                         
                                         <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>

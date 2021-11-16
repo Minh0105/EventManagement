@@ -120,7 +120,7 @@ body {
 
 .date_time_section h4{
     font-weight: 400;
-    color: #f14227;
+    color: #ea3e0e;
 }
 
 /* Buttons */
@@ -270,13 +270,12 @@ body {
 }
 
 .nav-tabs .nav-link.active {
-    color: #1e0ce6 !important;
-    font-weight: 500 !important;
+    color: #0c38e6 !important;
 }
 
 .nav-tabs .nav-link {
-    color: rgba(0, 0, 0, 0.4) !important;
-    font-weight: 300 !important;
+    color: rgba(0, 0, 0, 0.25) !important;
+    font-weight: 400 !important;
 }
 
 .nav-item a {
@@ -370,19 +369,19 @@ body {
 
 /* COMMENT */
 
-#input_comment, #input_question {
-    padding: 1rem;    
-    width: 100%;
-    border: 1px solid #c4c4c4;
-    border-radius: 5px;
-    font-size: 1.2rem;
+#question_input {
+    height: 30vh;
+    max-height: 180px;
+}
+
+.dicussion_input { 
+    width: 100%;   
 }
 
 #comment_box {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    margin-top: 1.9rem;
 }
 
 #btn_enter_comment, #btn_enter_question {

@@ -96,7 +96,7 @@
                         accept="image/*" name="fileUp" value="" style="visibility:hidden;">
 
                     <div class="text-right">
-                        <label class="mybutton btn-blue" id="btn_upload_image" for="upload-button">
+                        <label class="mybutton btn-blue mt-3" id="btn_upload_image" for="upload-button">
                             Chọn hình ảnh
                         </label>
                     </div>       

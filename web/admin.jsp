@@ -35,6 +35,13 @@
 
             <body>
                 
+                <%
+                    String authorized = (String) session.getAttribute("ACCESS_TOKEN");
+                    if (authorized == null || authorized.isEmpty()) {
+                        session.setAttribute("AUTHORIZING_SENDING_EMAIL", "false");
+                    }
+                %>
+                
                 <% 
                     String action = request.getParameter("management");
                     boolean organizerSelected = action.equals("organizer");
@@ -71,15 +78,6 @@
                             <li class="nav-item">
                                 <a class="nav-link <%if (commentSelected){%> selected<%}%>" href="manageByAdmin?management=comment">Bình luận</a>
                             </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="authorizeSendingEmail">Email Sending Authorization</a>
-                            </li>
-                            <c:if test="${sessionScope.AUTHORIZING_SENDING_EMAIL eq 'true'}">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Sending email when deactivate user enabled!!!</a>
-                                </li>
-                            </c:if>
 
                             <a id="btn_logout" href="logout">Đăng xuất</a>
                         </ul>

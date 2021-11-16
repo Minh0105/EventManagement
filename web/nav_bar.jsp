@@ -44,7 +44,7 @@
                     <ul id="nav_infor_part" class="navbar-nav ml-auto nav-margin">
                         <li class="nav-item">
                             <a id="icon_name_container" class="nav-link" href="ViewInfoPage"> 
-                                <img id="avatar_icon" class="rounded-circle" src="${sessionScope.USER.avatar}" />
+                                <img id="avatar_icon" class="rounded-circle" src="${sessionScope.USER.avatar}"  referrerpolicy="no-referrer"/>
                                 <span id="avatar_name" class="text-white">${sessionScope.USER.name}</span>
                             </a>
                         </li>
@@ -54,7 +54,7 @@
                             </a>
                         </li>
                         <li class="nav-item dropdown">
-                        <ahref="#" class="nav-link">
+                        <a href="#" class="nav-link">
                             <img id="btn_menu" src="resources/icon/hamburger_button_icon.svg" alt="hamburger_button" />
                             </a>
                         </li>

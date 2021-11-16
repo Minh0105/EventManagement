@@ -34,7 +34,7 @@ $('#menu_container').hide();
 function onMenuIconClick () {
     if ($('#menu_container').css("display") == "none") {
         $('#menu_container').show();
-        document.getElementById('btn_update_event_status').scrollIntoView({ behavior: 'smooth', block: 'center'});
+        document.getElementById('btn_event_operation_menu').scrollIntoView({ behavior: 'smooth', block: 'center'});
     } else {
         $('#menu_container').hide();
         resetMenu();
@@ -85,6 +85,7 @@ function showMemberList () {
     body.style.backgroundColor = "white !important";
     $('#menu_container').hide();
     resetMenu();
+    document.getElementById('scroll_target_title').scrollIntoView({ behavior: 'smooth', block: 'start'});
 }
 
 function goBackToContent () {

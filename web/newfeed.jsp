@@ -179,6 +179,9 @@
                             <div class="infor_container">
                                 <p class="event_date_and_loc"><%= card.getDate()%> - <%= card.getLocation()%></p>
                                 <p class="event_name"><%= card.getName()%></p>
+                                
+                                <p class="event_name"><%= card.getStatusId()%></p> <!--Triet TEST-->
+                                
                                 <p class="event_organizer_name"><%= card.getOrganizerName()%></p>
                             </div>
                         </div>
