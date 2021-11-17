@@ -10,6 +10,7 @@ import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
 import fptu.swp.entity.schedule.ScheduleDTO;
 import fptu.swp.entity.user.UserDAO;
+import fptu.swp.entity.user.UserDTO;
 import fptu.swp.utils.firebaseBinding.firebase4j.demo.FirebaseBindingSingleton;
 import fptu.swp.utils.firebaseBinding.firebase4j.error.FirebaseException;
 import fptu.swp.utils.firebaseBinding.firebase4j.error.JacksonUtilityException;
@@ -71,27 +72,34 @@ public class SendEventNotificationServlet extends HttpServlet {
         String message = "";
         try {
             eventId = Integer.parseInt(request.getParameter("eventId"));
-            message = request.getParameter("message");
-            if (message != null) {
-                EventDetailDTO detail = eventDao.getEventDetail(eventId);
-                if (detail != null) {
-                    String linkToFirebase = "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/";
-                    FirebaseBindingSingleton firebase = FirebaseBindingSingleton.getInstance(linkToFirebase);
-                    List<Integer> listFollowers = userDao.getFollowersIdByEventId(eventId);
-                    url = VIEW_EVENTDETAIL_SERVLET_PATH + "?eventId=" + eventId;
-                    
-                    for (int studentId : listFollowers) {
-                        ScheduleDTO s = new ScheduleDTO();
-                        s.setEventId(eventId);
-                        s.setEventName(detail.getName());
-                        s.setOrganizerAvatar(detail.getOrganizerAvatar());
-                        s.setRunningTime(new Date());
-                        s.setMessage(message);
-                        s.setUserId(studentId);
-                        firebase.sendNotificationToUserID(s);
+
+            int loginUserId = ((UserDTO) request.getSession(false).getAttribute("USER")).getId();
+            int organizerIdOfEvent = userDao.getOrganizerIdByEventId(eventId);
+
+            if (loginUserId == organizerIdOfEvent) {
+                message = request.getParameter("message");
+                if (message != null) {
+                    EventDetailDTO detail = eventDao.getEventDetail(eventId);
+                    if (detail != null) {
+                        String linkToFirebase = "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/";
+                        FirebaseBindingSingleton firebase = FirebaseBindingSingleton.getInstance(linkToFirebase);
+                        List<Integer> listFollowers = userDao.getFollowersIdByEventId(eventId);
+                        url = VIEW_EVENTDETAIL_SERVLET_PATH + "?eventId=" + eventId;
+
+                        for (int studentId : listFollowers) {
+                            ScheduleDTO s = new ScheduleDTO();
+                            s.setEventId(eventId);
+                            s.setEventName(detail.getName());
+                            s.setOrganizerAvatar(detail.getOrganizerAvatar());
+                            s.setRunningTime(new Date());
+                            s.setMessage(message);
+                            s.setUserId(studentId);
+                            firebase.sendNotificationToUserID(s);
+                        }
                     }
                 }
             }
+
         } catch (Exception ex) {
             LOGGER.error(ex);
         } catch (FirebaseException ex) {

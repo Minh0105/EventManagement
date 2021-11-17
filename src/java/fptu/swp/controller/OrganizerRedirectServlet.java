@@ -7,6 +7,7 @@ package fptu.swp.controller;
 
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
+import fptu.swp.entity.user.UserDAO;
 import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,6 +33,7 @@ static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(
         // declare var
         HttpSession session = request.getSession();
         EventDAO eventDao = new EventDAO();
+        UserDAO userDao = new UserDAO();
 
         // get roadmap
         ServletContext context = request.getServletContext();
@@ -51,7 +53,12 @@ static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(
             int eventId = Integer.parseInt(request.getParameter("eventId"));
             UserDTO loginUser = (UserDTO) session.getAttribute("USER");
             EventDetailDTO detail = eventDao.getEventDetail(eventId);
-            if(detail.getOrganizerName().equals(loginUser.getName())){
+            
+            int loginUserId = loginUser.getId();
+            int organizerIdOfEvent = userDao.getOrganizerIdByEventId(eventId);
+
+            if (loginUserId == organizerIdOfEvent) {
+
                 request.setAttribute("UPDATING_EVENT", detail);
                 if("updateInformation".equals((action))){
                     url=UPDATE_EVENT_PAGE_PATH;

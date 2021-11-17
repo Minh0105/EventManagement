@@ -892,8 +892,8 @@ public class UserDAO {
                     userInfo = new UserDTO(email, name, phoneNum);
                     list.add(userInfo);
                 }
-                
-                return list;
+//                
+//                return list;
             }
         } finally {
             if (rs != null) {
@@ -907,5 +907,37 @@ public class UserDAO {
             }
         }
         return list;
+    }
+    
+    public int getOrganizerIdByEventId(int eventId) throws NamingException, SQLException{
+        int organizerId = 0;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT userId" +
+                        " FROM tblEvents" +
+                        " WHERE id = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, eventId);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    organizerId = rs.getInt("userId");
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return organizerId;
     }
 }

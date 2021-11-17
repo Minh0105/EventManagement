@@ -11,6 +11,7 @@ import fptu.swp.entity.schedule.Schedule;
 import fptu.swp.entity.schedule.ScheduleDTO;
 import fptu.swp.entity.user.LecturerBriefInfoDTO;
 import fptu.swp.entity.user.UserDAO;
+import fptu.swp.entity.user.UserDTO;
 import fptu.swp.fakefileinputstream.FakeFileInputStream;
 import fptu.swp.utils.firebaseBinding.firebase4j.demo.FirebaseBindingSingleton;
 import fptu.swp.utils.firebaseBinding.firebase4j.error.FirebaseException;
@@ -74,65 +75,73 @@ public class ChangeDetailByCreatingNewEventServlet extends HttpServlet {
             String stage = request.getParameter("stage");
             int eventId = Integer.parseInt(request.getParameter("eventId"));
             HttpSession session = request.getSession();
-            if ("start".equals(stage)) {//eventId khi stage = start => eventId can xoa
-                EventDetailDTO detail = eventDao.getEventDetail(eventId);
-                if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {
-                    List<LecturerBriefInfoDTO> chosenLecturerList = userDao.getListLecturerBriefInfo(eventId);
-                    session.setAttribute("CHANGING_EVENT_ID", eventId);
-                    LOGGER.info("Session attribute: EVENT_DETAIL_REVIEW: " + detail);
-                    session.setAttribute("EVENT_DETAIL_REVIEW", detail);
 
-                    byte[] posterBytes = Base64.getDecoder().decode(detail.getPoster());
-                    InputStream posterInputStream = new ByteArrayInputStream(posterBytes);
-                    FileInputStream posterStream = new FakeFileInputStream(posterInputStream);
-                    LOGGER.info("Session attribute: EVENT_POSTER_STREAM: " + posterStream);
-                    session.setAttribute("EVENT_POSTER_STREAM", posterStream);
+            int loginUserId = ((UserDTO) session.getAttribute("USER")).getId();
+            int organizerIdOfEvent = userDao.getOrganizerIdByEventId(eventId);
 
-                    LOGGER.info("Session attribute: ChosenLecturerList: " + chosenLecturerList);
-                    session.setAttribute("ChosenLecturerList", chosenLecturerList);
-                    url = CREATE_NEW_EVENT;
-                }
-            } else if ("end".equals(stage)) { //eventId khi stage = end => eventId vua dc them
-                int oldEventId = (Integer) session.getAttribute("CHANGING_EVENT_ID");
-                session.removeAttribute("CHANGING_EVENT_ID");
-                boolean check = false;
-                System.out.println(eventId);
-                EventDetailDTO detail = eventDao.getEventDetail(oldEventId);
-                EventDetailDTO detailNew = eventDao.getEventDetail(eventId);
+            if (loginUserId == organizerIdOfEvent) {
 
-                if (detail != null) {
-                    String oldEventName = detail.getName();
-                    String linkToFirebase = "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/";
-                    FirebaseBindingSingleton firebase = FirebaseBindingSingleton.getInstance(linkToFirebase);
+                if ("start".equals(stage)) {//eventId khi stage = start => eventId can xoa
+                    EventDetailDTO detail = eventDao.getEventDetail(eventId);
                     if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {
-                        if (eventDao.cancelEvent(oldEventId)) {
-                            check = true;
-                            List<Integer> listFollowers = userDao.getFollowersIdByEventId(oldEventId);
-                            for (int studentId : listFollowers) {
-                                if (eventDao.checkExistenceAndOrInsertStudentInEvent(eventId, studentId)) {
-                                    if (eventDao.setFollowingStatus(eventId, studentId, true)) {
-                                        ScheduleDTO s = new ScheduleDTO();
-                                        s.setEventId(eventId);
-                                        s.setEventName(detailNew.getName());
-                                        s.setOrganizerAvatar(detailNew.getOrganizerAvatar());
-                                        s.setRunningTime(new Date());
-                                        String message = "Sự kiện "+oldEventName +" vừa được cập nhật thông tin." + (oldEventName.equals(detailNew.getName())? (""):("Sự kiện được đổi tên thành: " + detailNew.getName()));
-                                        s.setMessage(message);
-                                        s.setUserId(studentId);
-                                        System.out.println("Send noti of Update Event with Id: " + oldEventId + " to new event with Id: "+ eventId +"  is " + firebase.sendNotificationToUserID(s));
-                                        check = true;
-                                    } else {
-                                        check = false;
+                        List<LecturerBriefInfoDTO> chosenLecturerList = userDao.getListLecturerBriefInfo(eventId);
+                        session.setAttribute("CHANGING_EVENT_ID", eventId);
+                        LOGGER.info("Session attribute: EVENT_DETAIL_REVIEW: " + detail);
+                        session.setAttribute("EVENT_DETAIL_REVIEW", detail);
+
+                        byte[] posterBytes = Base64.getDecoder().decode(detail.getPoster());
+                        InputStream posterInputStream = new ByteArrayInputStream(posterBytes);
+                        FileInputStream posterStream = new FakeFileInputStream(posterInputStream);
+                        LOGGER.info("Session attribute: EVENT_POSTER_STREAM: " + posterStream);
+                        session.setAttribute("EVENT_POSTER_STREAM", posterStream);
+
+                        LOGGER.info("Session attribute: ChosenLecturerList: " + chosenLecturerList);
+                        session.setAttribute("ChosenLecturerList", chosenLecturerList);
+                        url = CREATE_NEW_EVENT;
+                    }
+                } else if ("end".equals(stage)) { //eventId khi stage = end => eventId vua dc them
+                    int oldEventId = (Integer) session.getAttribute("CHANGING_EVENT_ID");
+                    session.removeAttribute("CHANGING_EVENT_ID");
+                    boolean check = false;
+                    System.out.println(eventId);
+                    EventDetailDTO detail = eventDao.getEventDetail(oldEventId);
+                    EventDetailDTO detailNew = eventDao.getEventDetail(eventId);
+
+                    if (detail != null) {
+                        String oldEventName = detail.getName();
+                        String linkToFirebase = "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/";
+                        FirebaseBindingSingleton firebase = FirebaseBindingSingleton.getInstance(linkToFirebase);
+                        if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {
+                            if (eventDao.cancelEvent(oldEventId)) {
+                                check = true;
+                                List<Integer> listFollowers = userDao.getFollowersIdByEventId(oldEventId);
+                                for (int studentId : listFollowers) {
+                                    if (eventDao.checkExistenceAndOrInsertStudentInEvent(eventId, studentId)) {
+                                        if (eventDao.setFollowingStatus(eventId, studentId, true)) {
+                                            ScheduleDTO s = new ScheduleDTO();
+                                            s.setEventId(eventId);
+                                            s.setEventName(detailNew.getName());
+                                            s.setOrganizerAvatar(detailNew.getOrganizerAvatar());
+                                            s.setRunningTime(new Date());
+                                            String message = "Sự kiện " + oldEventName + " vừa được cập nhật thông tin." + (oldEventName.equals(detailNew.getName()) ? ("") : ("Sự kiện được đổi tên thành: " + detailNew.getName()));
+                                            s.setMessage(message);
+                                            s.setUserId(studentId);
+                                            System.out.println("Send noti of Update Event with Id: " + oldEventId + " to new event with Id: " + eventId + "  is " + firebase.sendNotificationToUserID(s));
+                                            check = true;
+                                        } else {
+                                            check = false;
+                                        }
                                     }
                                 }
-                            }
-                            Schedule.updateSchedule();
-                            if (check) {
-                                url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
+                                Schedule.updateSchedule();
+                                if (check) {
+                                    url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
+                                }
                             }
                         }
                     }
                 }
+
             }
 
         } catch (Exception ex) {

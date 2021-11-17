@@ -9,6 +9,7 @@ import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
 import fptu.swp.entity.schedule.ScheduleDTO;
 import fptu.swp.entity.user.UserDAO;
+import fptu.swp.entity.user.UserDTO;
 import fptu.swp.utils.firebaseBinding.firebase4j.demo.FirebaseBindingSingleton;
 import fptu.swp.utils.firebaseBinding.firebase4j.error.FirebaseException;
 import fptu.swp.utils.firebaseBinding.firebase4j.error.JacksonUtilityException;
@@ -66,48 +67,55 @@ public class UpdateEventStatusServlet extends HttpServlet {
 
         try {
             eventId = Integer.parseInt(request.getParameter("eventId"));
-            EventDetailDTO detail = eventDao.getEventDetail(eventId);
-            if (detail != null) {
-                currentEventStatus = detail.getStatusId();
 
-                String linkToFirebase = "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/";
-                FirebaseBindingSingleton firebase = FirebaseBindingSingleton.getInstance(linkToFirebase);
-                
-                List<Integer> listFollowers = null;
-                
-                if (currentEventStatus == 1 || currentEventStatus == 2) {
-                    listFollowers = userDao.getFollowersIdByEventId(eventId);
-                }
+            int loginUserId = ((UserDTO) request.getSession(false).getAttribute("USER")).getId();
+            int organizerIdOfEvent = userDao.getOrganizerIdByEventId(eventId);
 
-                if (currentEventStatus == 1) {
-                    if (eventDao.updateEventStatus(eventId, 2)) {
-                        url = VIEW_EVENTDETAIL_SERVLET_PATH + "?eventId=" + eventId;
-                        for (int studentId : listFollowers) {
-                            ScheduleDTO s = new ScheduleDTO();
-                            s.setEventId(eventId);
-                            s.setEventName(detail.getName());
-                            s.setOrganizerAvatar(detail.getOrganizerAvatar());
-                            s.setRunningTime(new Date());
-                            String message = "Sự kiện " + detail.getName() + " đã đóng đăng kí.";
-                            s.setMessage(message);
-                            s.setUserId(studentId);
-                            firebase.sendNotificationToUserID(s);
+            if (loginUserId == organizerIdOfEvent) {
+
+                EventDetailDTO detail = eventDao.getEventDetail(eventId);
+                if (detail != null) {
+                    currentEventStatus = detail.getStatusId();
+
+                    String linkToFirebase = "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/";
+                    FirebaseBindingSingleton firebase = FirebaseBindingSingleton.getInstance(linkToFirebase);
+
+                    List<Integer> listFollowers = null;
+
+                    if (currentEventStatus == 1 || currentEventStatus == 2) {
+                        listFollowers = userDao.getFollowersIdByEventId(eventId);
+                    }
+
+                    if (currentEventStatus == 1) {
+                        if (eventDao.updateEventStatus(eventId, 2)) {
+                            url = VIEW_EVENTDETAIL_SERVLET_PATH + "?eventId=" + eventId;
+                            for (int studentId : listFollowers) {
+                                ScheduleDTO s = new ScheduleDTO();
+                                s.setEventId(eventId);
+                                s.setEventName(detail.getName());
+                                s.setOrganizerAvatar(detail.getOrganizerAvatar());
+                                s.setRunningTime(new Date());
+                                String message = "Sự kiện " + detail.getName() + " đã đóng đăng kí.";
+                                s.setMessage(message);
+                                s.setUserId(studentId);
+                                firebase.sendNotificationToUserID(s);
+                            }
                         }
                     }
-                }
-                if (currentEventStatus == 2) {
-                    if (eventDao.updateEventStatus(eventId, 1)) {
-                        url = VIEW_EVENTDETAIL_SERVLET_PATH + "?eventId=" + eventId;
-                        for (int studentId : listFollowers) {
-                            ScheduleDTO s = new ScheduleDTO();
-                            s.setEventId(eventId);
-                            s.setEventName(detail.getName());
-                            s.setOrganizerAvatar(detail.getOrganizerAvatar());
-                            s.setRunningTime(new Date());
-                            String message = "Sự kiện " + detail.getName() + " đã mở đăng kí tiếp tục.";
-                            s.setMessage(message);
-                            s.setUserId(studentId);
-                            firebase.sendNotificationToUserID(s);
+                    if (currentEventStatus == 2) {
+                        if (eventDao.updateEventStatus(eventId, 1)) {
+                            url = VIEW_EVENTDETAIL_SERVLET_PATH + "?eventId=" + eventId;
+                            for (int studentId : listFollowers) {
+                                ScheduleDTO s = new ScheduleDTO();
+                                s.setEventId(eventId);
+                                s.setEventName(detail.getName());
+                                s.setOrganizerAvatar(detail.getOrganizerAvatar());
+                                s.setRunningTime(new Date());
+                                String message = "Sự kiện " + detail.getName() + " đã mở đăng kí tiếp tục.";
+                                s.setMessage(message);
+                                s.setUserId(studentId);
+                                firebase.sendNotificationToUserID(s);
+                            }
                         }
                     }
                 }

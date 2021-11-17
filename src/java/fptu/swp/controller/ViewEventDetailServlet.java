@@ -43,6 +43,11 @@ public class ViewEventDetailServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         LOGGER.info("Begin ViewEventDetailServlet");
+
+        //declare var
+        EventDAO eventDao = new EventDAO();
+        UserDAO userDao = new UserDAO();
+        
         //get roadmap
         ServletContext context = request.getServletContext();
         HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
@@ -58,14 +63,17 @@ public class ViewEventDetailServlet extends HttpServlet {
             int eventId = Integer.parseInt(request.getParameter("eventId"));
             HttpSession session = request.getSession();
             UserDTO loginUser = (UserDTO) session.getAttribute("USER");
-            EventDAO eventDao = new EventDAO();
+
             EventDetailDTO detail = eventDao.getEventDetail(eventId);
-            System.out.println(detail.toString());
-            UserDAO userDao = new UserDAO();
+            int organizerId = userDao.getOrganizerIdByEventId(eventId);
+
             List<LecturerBriefInfoDTO> listLecturer = userDao.getListLecturerBriefInfo(eventId);
             List<CommentDTO> listComment = eventDao.getListCommentByEventId(eventId, false);
             List<CommentDTO> listQuestion = eventDao.getListCommentByEventId(eventId, true);
 
+            LOGGER.info("Organizer Id: " + organizerId);
+            request.setAttribute("ORGANIZER_ID", organizerId);
+            
             LOGGER.info("Event detail: " + detail);
             request.setAttribute("EVENT_DETAIL", detail);
 
@@ -74,26 +82,26 @@ public class ViewEventDetailServlet extends HttpServlet {
 
             LOGGER.info("List comment of detail: " + listComment);
             request.setAttribute("LIST_COMMENT", listComment);
-            
+
             LOGGER.info("List question of detail: " + listQuestion);
             request.setAttribute("LIST_QUESTION", listQuestion);
-            
-            if("STUDENT".equals(loginUser.getRoleName())){
-                boolean checkFollowed = eventDao.checkFollowed( loginUser.getId(), eventId);
+
+            if ("STUDENT".equals(loginUser.getRoleName())) {
+                boolean checkFollowed = eventDao.checkFollowed(loginUser.getId(), eventId);
                 boolean checkJoining = eventDao.checkJoining(loginUser.getId(), eventId);
-                request.setAttribute("IS_FOLLOWED",checkFollowed);
+                request.setAttribute("IS_FOLLOWED", checkFollowed);
                 request.setAttribute("IS_JOINING", checkJoining);
-                LOGGER.info("This student is following: " + checkFollowed + " - is joining: "+ checkJoining);
+                LOGGER.info("This student is following: " + checkFollowed + " - is joining: " + checkJoining);
             }
-            if("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName())){
+            if ("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName())) {
                 List<UserDTO> listFollowers = userDao.getFollowersByEventId(eventId);
                 List<UserDTO> listParticipants = userDao.getParticipantsByEventId(eventId);
-                request.setAttribute("LIST_FOLLOWERS",listFollowers);
+                request.setAttribute("LIST_FOLLOWERS", listFollowers);
                 request.setAttribute("LIST_PARTICIPANTS", listParticipants);
                 LOGGER.info("List Followers: " + listFollowers);
                 LOGGER.info("List Participants: " + listParticipants);
             }
-            
+
             url = EVENTDETAIL_PAGE_PATH;
 
         } catch (Exception e) {

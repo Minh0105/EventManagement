@@ -9,6 +9,8 @@ import static fptu.swp.controller.HandleMultipartServlet.LOGGER;
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
 import fptu.swp.entity.user.LecturerBriefInfoDTO;
+import fptu.swp.entity.user.UserDAO;
+import fptu.swp.entity.user.UserDTO;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -57,6 +59,7 @@ public class ChangePosterServlet extends HttpServlet {
         
         //declare var
         EventDAO eventDao = new EventDAO();
+        UserDAO userDao = new UserDAO();
         int eventId = 0;
         String inputName = null;
         
@@ -98,7 +101,7 @@ public class ChangePosterServlet extends HttpServlet {
                         } catch (Exception ex) {
                             LOGGER.error(ex);
                         }
-                        if(posterStream != null && detail != null){
+                        if(posterStream != null && detail != null && userDao.getOrganizerIdByEventId(eventId) == ((UserDTO) request.getSession(false).getAttribute("USER")).getId()){
                             eventDao.updateEventPoster(eventId, posterStream);
                             url = VIEW_EVENTDETAIL_SERVLET_PATH+"?eventId=" + eventId;
                         }

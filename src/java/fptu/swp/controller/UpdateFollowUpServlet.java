@@ -7,6 +7,8 @@ package fptu.swp.controller;
 
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
+import fptu.swp.entity.user.UserDAO;
+import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -22,7 +24,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author triet
  */
 public class UpdateFollowUpServlet extends HttpServlet {
-static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(UpdateFollowUpServlet.class);
+
+    static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(UpdateFollowUpServlet.class);
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,6 +44,7 @@ static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(
         LOGGER.info("Begin FollowUpServlet");
         // declare var
         EventDAO eventDao = new EventDAO();
+        UserDAO userDao = new UserDAO();
 
         // get roadmap
         ServletContext context = request.getServletContext();
@@ -51,21 +56,27 @@ static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(
         final String VIEW_EVENTDETAIL_SERVLET = context.getInitParameter("VIEW_EVENTDETAIL_SERVLET");
         final String VIEW_EVENTDETAIL_SERVLET_PATH = roadmap.get(VIEW_EVENTDETAIL_SERVLET);
         String url = INVALID_PAGE_PATH;
-        
+
         try {
 //            HttpSession session = request.getSession();
 //            UserDTO loginUser = (UserDTO) session.getAttribute("USER");
             int eventId = Integer.parseInt(request.getParameter("eventId"));
-            String followUp = request.getParameter("followUp");
-            
-            EventDetailDTO detail = eventDao.getEventDetail(eventId);
-            if (detail != null) {
-                if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {
-                    detail.setFollowUp(followUp);
-                    if(eventDao.updateEventFollowUp(detail)){
-                        url=VIEW_EVENTDETAIL_SERVLET_PATH;
+
+            int loginUserId = ((UserDTO) request.getSession(false).getAttribute("USER")).getId();
+            int organizerIdOfEvent = userDao.getOrganizerIdByEventId(eventId);
+
+            if (loginUserId == organizerIdOfEvent) {
+                String followUp = request.getParameter("followUp");
+
+                EventDetailDTO detail = eventDao.getEventDetail(eventId);
+                if (detail != null) {
+                    if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {
+                        detail.setFollowUp(followUp);
+                        if (eventDao.updateEventFollowUp(detail)) {
+                            url = VIEW_EVENTDETAIL_SERVLET_PATH;
+                        }
+
                     }
-                    
                 }
             }
 
