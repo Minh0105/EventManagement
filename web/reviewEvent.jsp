@@ -51,7 +51,11 @@
             EventDetailDTO detail = (EventDetailDTO) session.getAttribute("EVENT_DETAIL_REVIEW");
             List<LecturerBriefInfoDTO> listLecturer = (List<LecturerBriefInfoDTO>) session.getAttribute("ChosenLecturerList");
         %>
-        <section id="poster_section">
+        
+        <section id="poster_section" style="position: relative;">
+            <div class="review_text">
+                <p>Xem trước</p>
+            </div>
             <div id="poster_image">
                 <img src="data:image/jpg;base64,<%= detail.getPoster()%>" alt="">
             </div>
@@ -61,165 +65,161 @@
                     <div id="orange_decoration"></div>
                     <div id="date_part">
                         <h3 id="date_render"> <%= detail.getDate()%></h3>
-                        <p id="day_render"></p>
+                        <p id="day_render"> </p>
                     </div>
                 </div>
 
                 <!-- CARE PART  -->
-
                 <div id="care_infor_part">
-                    <p class="care_infor_text"> 25 người đã quan tâm</p> 
+                    <p class="care_infor_text"> 0 bạn đã quan tâm</p> 
                     <div id="dot"></div>
-                    <p class="care_infor_text">25 người sẽ tham gia</p>
+                    <p class="care_infor_text"> 0 bạn sẽ tham gia</p>
                 </div>
 
+                <!-- STATUS PART -->
+                <div id="care_infor_part">
+                    <p class="care_infor_text green">Sắp diễn ra</p> 
+                </div>    
+
             </div>
         </section>
 
-        <section class="carousel">
-            <div class="carouselWrite">
-                <h3><%= detail.getDate()%> - <%= detail.getLocation()%> <br>
-                    <%= detail.getTime()%>
-                </h3>
-            </div>
-        </section>
+        <!-- EVENT HEADER -->
+        <div id="event_header" class="container-fluid">
+            <section class="carousel">
+                <div class="date_time_section">
+                    <h4><%= detail.getDate()%>, <%= detail.getTime()%><br>
+                        <%= detail.getLocation()%>
+                    </h4>
+                </div>
+            </section>
 
-        <section class="fast">
-            <div class="fastWord">
-                <marquee direction="up" behavior="slide" loop = "2" scrollamount="5" word-break: keep-all;">
+            <div class="organizer_name">
+                <marquee direction="down" behavior="slide" loop="1" scrollamount="2" word-break: keep-all;>
                     <%= detail.getName()%>
                 </marquee>
-                <p><%= detail.getOrganizerName()%></p>
+                <p id="scroll_target_title" class="mb-0"><%= detail.getOrganizerName()%></p>
             </div>
-        </section>
+        </div>
 
-        <div id="grey_line"></div>
-
-        <!-- nav -->
+        <!-- CONTENT -->
         <section id="content">
+             <!-- CONTENT NAVIGATION -->
             <ul class="nav nav-tabs" id="tab_container">
-                <li class="nav-item" id="home_tab_button">
-                  <a class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
-                  role="tab" aria-controls="home" aria-selected="true">Giới thiệu</a>
+                <li class="nav-item" id="first_tab_button">
+                    <a class="nav-link" id="home-tab"
+                    role="tab" aria-controls="home" aria-selected="true">Tiến trình</a>
+                </li>
+
+                <li class="nav-item">
+                <a class="nav-link active" id="home-tab" 
+                role="tab" aria-controls="home" aria-selected="true">Giới thiệu</a>
                 </li>
 
                 <li class="nav-item" id="comment_tab_button">
-                  <a class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                  role="tab" aria-controls="profile" aria-selected="false">Thảo luận</a>
+                <a class="nav-link" id="profile-tab" type="button"
+                role="tab" aria-controls="profile" aria-selected="false">Thảo luận</a>
                 </li>
 
                 <li class="nav-item" id="discuss_tab_button">
-                  <a class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button"
-                  role="tab" aria-controls="contact" aria-selected="false">Hỏi đáp</a>
+                <a class="nav-link" id="contact-tab" type="button"
+                role="tab" aria-controls="contact" aria-selected="false">Hỏi đáp</a>
                 </li>
-              </ul>
+            </ul>
 
-            <div class="tab-content" id="myTabContent">
-                <!-- Giới Thiệu -->
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <section class="navWord">
-                        <h2 class="content_title">Nội Dung Sự Kiện</h3>
-                        <p><%= detail.getDescription()%></p>
-                    </section>   
-                    <!-- Giảng Viên -->
-                    <section class="single">
-                        <h2 class="content_title">
-                            Giảng Viên
-                        </h3>
-                    </section>
-                    <!-- Thẻ -->
-                    <section id="lecturer_section">
-                        <div id="lecturer_container" class="container">
-                            <div id="lecturer_row" class="row">
-                                <%
-                                    for (LecturerBriefInfoDTO lecturer : listLecturer) {
-                                %>
-                                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-6">
-                                    <div class="lecturer_card">
-                                        <div class="lec_ava_container">
-                                            <img src="<%= lecturer.getAvatar()%>" class="rounded-circle" alt="">
+            <div id="body_content">
+                <div class="tab-content" id="myTabContent">
+                    <!-- FOLLOW UP -->
+                    <div class="tab-pane fade show" id="end" role="tabpanel" aria-labelledby="end-tab">
+                        <section class="navWord">
+                            <h2 class="content_title w-full-parent text-center">Tiến trình sự kiện</h3>
+                            <p><%= detail.getFollowUp() %>
+                        </section>   
+    
+                    </div>
+    
+                    <!-- INTRODUCTION -->
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <section class="navWord">
+                            <h4 class="content_title mt-0">Nội dung sự kiện</h4>
+                            <p><%= detail.getDescription()%></p>
+                        </section>   
+
+                        <!-- LECTURER -->
+                        <section class="single">
+                            <h4 class="content_title">Giảng viên</h4>
+                        </section>
+
+                        <!-- LECTURER CARD -->
+                        <section id="lecturer_section">
+                            <div id="lecturer_container" class="container">
+                                <div id="lecturer_row" class="row">
+                                    <%
+                                        for (LecturerBriefInfoDTO lecturer : listLecturer) {
+                                    %>
+                                    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-6">
+                                        <div class="lecturer_card">
+                                            <div class="lec_ava_container">
+                                                <div class="sub_container">
+                                                    <img src="<%= lecturer.getAvatar()%>" class="rounded-circle" alt="" referrerpolicy="no-referrer">
+                                                </div>
+                                            </div>
+                                            <p class="lec_name"><%= lecturer.getName()%></p>
+                                            <p class="lec_description"><%= lecturer.getDescription()%></p>
                                         </div>
-                                        <h4><%= lecturer.getName()%></h4>
-                                        <h5><%= lecturer.getDescription()%></h5>
                                     </div>
+                                    <%
+                                        }
+                                    %>
                                 </div>
-                                <%
-                                    }
-                                %>
+                            </div>
+                        </section>
+
+                        <!-- ORGANIZER -->
+                        <h4 class="content_title">Người tổ chức</h4>
+                        <div class="organizer_container">
+                            <img src="<%= detail.getOrganizerAvatar()%>" class="organizer_ava" alt="" referrerpolicy="no-referrer">
+                            <div class="organizer_infor">
+                                <p id="organizer_name"><%= detail.getOrganizerName()%></p>
+                                <p id="organizer_description"><%= detail.getOrganizerDescription()%></p>
                             </div>
                         </div>
-                    </section>
-                    <!-- người tổ chức -->
-                    <h2 class="content_title">Người Tổ Chức</h3>
-                    <div class="organizer_container">
-                        <img src="<%= detail.getOrganizerAvatar()%>" class="rounded-circle" alt="">
-                        <div class="organizer_infor">
-                            <h5><%= detail.getOrganizerName()%></h5>
-                            <p><%= detail.getOrganizerDescription()%></p>
-                        </div>
                     </div>
-
-                    <div class="mt-5">
-                        <a id="btn_create_event" href="createEvent">Create event</a>
-                    </div>
-                    
                 </div>
             </div>
+        </section>
+
+        <div class="col-12 text-center" style="margin-top: 20vh;">
+            <a href="createEvent" class="mybutton btn-orange btn-big">Tạo sự kiện</a>
         </div>
-    </section>
 
 
     <%@include file="footer.jsp" %>
 
     <!-- -------------------------gắn link------------------------------- -->
 
-    <script>
-        let dateDOM = document.getElementById('date_render'); // 1,2,3,4,.. 31
-        let dayDOM = document.getElementById('day_render'); // Mon, Tue,..
-        if (dateDOM && dayDOM) {
-        let d1 = "<%= detail.getDate()%>"; 
-        let subStringDate = d1.substring(d1.length - 8, d1.length - 10);
-        let subStringDay = d1.substring(0, d1.indexOf(","));
-            dateDOM.innerHTML = subStringDate;
-            dayDOM.innerHTML = subStringDay;
-        }
-        var d = new Date();
-        var thang = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
-        document.getElementById("date").innerHTML = "COVID-19, "
-            + d.getDate() + "/" + thang[d.getMonth()] + "/" +
-            + d.getFullYear();
-    </script>
-
-    <!-- click chuột đổi màu button  -->
-    <script type="text/javascript" id="a">
-        $('#a').click(function () {
-            if (!$(this).hasClass('red')) {
-                $(this).removeClass('blue').addClass('red');
-            } else {
-                $(this).removeClass('red').addClass('blue');;
+        <script>
+            let dateDOM = document.getElementById('date_render'); // 1,2,3,4,.. 31
+            let dayDOM = document.getElementById('day_render'); // Mon, Tue,..
+            if (dateDOM && dayDOM) {
+                let d1 = "<%= detail.getDate()%>"; 
+                let subStringDate = d1.substring(d1.length - 8, d1.length - 10);
+                let subStringDay = d1.substring(0, d1.indexOf(","));
+                    dateDOM.innerHTML = subStringDate;
+                    dayDOM.innerHTML = subStringDay;
             }
+        </script>
 
-        }); $('#b').click(function () {
-            if (!$(this).hasClass('red')) {
-                $(this).removeClass('blue').addClass('red');
-            } else {
-                $(this).removeClass('red').addClass('blue');;
-            }
-
-        });
-
-    </script>
-
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-        integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
-        integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
-        crossorigin="anonymous"></script>
-
-    <script src="resources/js/eventDetail.js"></script>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+            integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN"
+            crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
+            integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
+            crossorigin="anonymous">
+        </script>
+        <script src="resources/js/eventDetail.js"></script>
 
 </body>
 

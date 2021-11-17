@@ -67,25 +67,31 @@
 
                 <!-- STATUS PART -->
                 <div id="care_infor_part">
-                    <p class="care_infor_text">Sắp diễn ra</p> 
-                </div>
+                    <%if (detail.getStatusId() == 1) { %> 
+                            <p class="care_infor_text green">Sắp diễn ra</p> 
+                    <% } else if (detail.getStatusId() == 2) { %> 
+                            <p class="care_infor_text yellow">Đã đóng đăng kí</p> 
+                    <% } else if (detail.getStatusId() == 3) { %> 
+                            <p class="care_infor_text red">Đã bị hủy</p> 
+                    <% } else if (detail.getStatusId() == 4) { %> 
+                            <p class="care_infor_text grey">Đã kết thúc</p> 
+                    <% } %>
+                </div>    
 
             </div>
         </section>
 
-        <!-- COPY PART -->
-
         <!-- EVENT ORGANIZER BUTTONS  -->
-    <%
         if (("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName()))) {
-    %>
+    %>  
+            <% if (request.getAttribute("ORGANIZER_ID").equals(loginUser.getId())) { %>
             <div id="menu_container">   
                 <div id="menu_panel">   
                     <% 
                         if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {
                     %>
                             <div id="btn_edit_event_details" class="menu_button">
-                                <p>Chỉnh sửa thông tin sự kiện</p></a>
+                                <p>Chỉnh sửa thông tin</p></a>
                             </div>
 
                             <div id="btn_edit_event_content" class="menu_sub_button">
@@ -101,7 +107,7 @@
                             </div>
                             
                             <div type="button" data-toggle="modal" data-target="#setEvtStatus" id="btn_update_event_status" class="menu_button">
-                                <p>Cập nhật trạng thái sự kiện</p>
+                                <p>Cập nhật trạng thái</p>
                             </div>
                     <% 
                         }
@@ -115,9 +121,11 @@
                         <button onclick="showMemberList()"><p>Xem danh sách thành viên</p></button>
                     </div>
             </div>
+
+            <% } %>
         </div>
 
-        <!-- Modal-->
+        <!-- SET EVENT STATUS MODAL  -->
         <div class="modal fade" id="setEvtStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -130,25 +138,26 @@
 
                     <div class="modal-body">
                         <h5 class="my_modal_title"><%= detail.getName()%></h5>
-                        <span class="status_dot green_dot"></span>
-                        <span class="status_text">Sắp diễn ra</span>
+                        <% if (detail.getStatusId() == 1) { %>
+                            <span class="status_dot green_dot"></span>
+                            <span class="status_text">Sắp diễn ra</span>
+                        <% } else if (detail.getStatusId() == 2) { %> 
+                            <span class="status_dot yellow_dot"></span>
+                            <span class="status_text">Đã đóng đăng kí</span>
+                        <% } %>
                     </div>
 
                     <div class="modal-footer">
                         <form action="updateEventStatus" method="POST">
-                            <%
-                                if (detail.getStatusId() == 1) {
-                            %>
-                            <button type="submit" class="mybutton btn_close_register">Đóng đăng kí</button>
-                            <%
-                                }
-                                if (detail.getStatusId() == 2) {
-
-                            %>
-                            <button type="submit" class="mybutton btn_close_register">Mở đăng kí</button>
-                            <% 
-                                }
-                            %>
+                            <% if (detail.getStatusId() == 1) { %>
+                               
+                                <button type="submit" class="mybutton btn_close_register">Đóng đăng kí</button>
+                                 
+                            <% } if (detail.getStatusId() == 2) { %>
+                                
+                                <button type="submit" class="mybutton btn-blue">Mở đăng kí</button>
+                            
+                            <% } %>
 
                             <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
                         </form>
@@ -166,7 +175,7 @@
             }
         %>
 
-        <!-- COPY PART -->
+        <!-- EVENT HEADER -->
         <div id="event_header" class="container-fluid">
             <section class="carousel">
                 <div class="date_time_section">
@@ -229,7 +238,11 @@
                 <%
                     } else if (("CLUB'S LEADER".equals(loginUser.getRoleName())) || ("DEPARTMENT'S MANAGER".equals(loginUser.getRoleName()))) {
                 %> 
+                    <% if (request.getAttribute("ORGANIZER_ID").equals(loginUser.getId())) { %>
+
                         <img onclick="onMenuIconClick()" id="btn_event_operation_menu" src="resources/icon/icon_orange_hamburger_button.svg">
+                        
+                    <% } %>
                 <%
                     }
                 %>
@@ -332,7 +345,7 @@
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         
                         <form id="comment_box" action="comment" name="loginBox" target="#here">
-                            <input class="my-text-input dicussion_input" type="text" placeholder="Vui lòng nhập bình luận của bạn" name="content" required/>
+                            <input id="input_comment" class="my-text-input dicussion_input" type="text" placeholder="Vui lòng nhập bình luận của bạn" name="content" required/>
                             <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
                             <input class="mybutton btn-orange mt-3" onclick="sendCmt()" type="button" value="Bình luận"/>
                         </form>
@@ -546,50 +559,45 @@
 
         </section>
 
+
+
     <%@include file="footer.jsp" %>
 
     <!-- -------------------------gắn link------------------------------- -->
 
-    <script>
-        let dateDOM = document.getElementById('date_render'); // 1,2,3,4,.. 31
-        let dayDOM = document.getElementById('day_render'); // Mon, Tue,..
-        if (dateDOM && dayDOM) {
-        let d1 = "<%= detail.getDate()%>"; 
-        let subStringDate = d1.substring(d1.length - 8, d1.length - 10);
-        let subStringDay = d1.substring(0, d1.indexOf(","));
-            dateDOM.innerHTML = subStringDate;
-            dayDOM.innerHTML = subStringDay;
-        }
-        var d = new Date();
-        var thang = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
-        document.getElementById("date").innerHTML = "COVID-19, "
-            + d.getDate() + "/" + thang[d.getMonth()] + "/" +
-            + d.getFullYear();
-    </script>
+        <script>
+            let dateDOM = document.getElementById('date_render'); // 1,2,3,4,.. 31
+            let dayDOM = document.getElementById('day_render'); // Mon, Tue,..
+            if (dateDOM && dayDOM) {
+                let d1 = "<%= detail.getDate()%>"; 
+                let subStringDate = d1.substring(d1.length - 8, d1.length - 10);
+                let subStringDay = d1.substring(0, d1.indexOf(","));
+                    dateDOM.innerHTML = subStringDate;
+                    dayDOM.innerHTML = subStringDay;
+            }
+        </script>
 
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-        integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN"
-        crossorigin="anonymous"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
-        integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
-        crossorigin="anonymous"></script>
-
-                <script src="resources/js/eventDetail.js"></script>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+            integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN"
+            crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
+            integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
+            crossorigin="anonymous">
+        </script>
+        <script src="resources/js/eventDetail.js"></script>
 
         <link rel="profile" href="<c:url value='http://gmpg.org/xfn/11' />" />
         <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js""></script>
         <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js""></script>
-        <script src="resources/js/configFirebase.js"></script>
-        <script src="resources/js/function.js""></script>
+        <script src="resources/js/function.js"></script>
         <script>
-            setEventId('<%= detail.getId()%>');
-            setUserId('<%= loginUser.getId()%>');
-            setUserAvatar('<%= loginUser.getAvatar()%>');
-            setUserRoleName('<%= loginUser.getRoleName()%>');
-            setUserName('<%= loginUser.getName()%>');
+            setEventId("<%= detail.getId()%>");
+            setUserId("<%= loginUser.getId()%>");
+            setUserAvatar("<%= loginUser.getAvatar()%>");
+            setUserRoleName("<%= loginUser.getRoleName()%>");
+            setUserName("<%= loginUser.getName()%>");
             startOnAddCommentListener();
             startOnAddReplyListener();
         </script>

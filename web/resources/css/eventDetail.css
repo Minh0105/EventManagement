@@ -1,5 +1,6 @@
 @import url(organizer_event_operation_menu.css);
 @import url(event_status_modal.css);
+@import url(color.css);
 
 body {
     background-color: #f6f6f6 !important;
@@ -223,11 +224,6 @@ body {
     margin-top: 1rem;
 }
 
-.organizer_container img{
-    height: 50px;
-    width: 50px;
-}
-
 .organizer_infor {
     margin-left: 1rem;
 }
@@ -315,8 +311,8 @@ body {
 }
 
 .organizer_ava {
-    width: 2rem;
-    height: 2rem;
+    width: 3.125rem;
+    height: 3.125rem;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
     border-radius: 1rem;
 }
@@ -408,6 +404,10 @@ body {
 
 /* Comment container */
 
+#profile p {
+    font-size: 1rem !important;
+}
+
 .comment_item {
     width: 100%;
     margin-top: 2.2rem;
@@ -429,6 +429,7 @@ body {
     font-size: 1rem;
     font-weight: 400;
     margin-bottom: 0px !important;
+    color: rgba(0, 0, 0, 0.5);
 }
 
 .comment_content {
@@ -446,6 +447,10 @@ body {
 
 /* REPLY COMMENT */
 
+.reply_container {
+    margin-left: calc(3.125rem + 12px);
+}
+
 .input_reply {
     padding: 9px;
     font-size: 1rem;
@@ -453,7 +458,6 @@ body {
     border-radius: 6px;
     width: 60%;
     min-width: 150px;
-    margin-botom: 1rem;
 }
 
 .btn_reply, .btn_hide_reply {
@@ -483,6 +487,21 @@ body {
     margin-bottom: 1rem;
 }
 
+.repComment2 {
+    display: flex;
+    margin-top: 0.5rem;
+    align-items: center;
+}
+
+.repComment2a {
+
+}
+
+.repComment2b {
+    margin-left: 12px;
+}
+
+/* ORGANIZER MENU */
 
 #post_image {
     width: 100%;
@@ -636,3 +655,24 @@ a:hover {
     background-color: #2C9436 !important;
     color: white !important;
 }
+
+
+
+/* REVIEW TEXT */
+
+
+.review_text {
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 20%;
+  }
+  
+  .review_text p {
+    color: white;
+    font-size: 1.25rem;
+    margin: 0 !important;
+  }

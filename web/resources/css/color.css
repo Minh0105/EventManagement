@@ -15,5 +15,42 @@
     background-color: #5c5c5c !important;
 }
 
+.bg-green {
+    background-color: #10c600 !important;
+}
+
+.bg-red {
+    background-color: #ff5441 !important;
+}
+
+.bg-grey {
+    background-color: #8a8a8a !important;
+}
+
+.bg-yellow {
+    background-color: #ffae00 !important;
+}
+
+
+/* COLOR */
+
+.green {
+    color: #13bd03 !important;
+}
+
+.red {
+    color: #fe441a !important;
+}
+
+.grey {
+    color: #686868 !important;
+}
+
+.yellow {
+    color: #e69d00 !important;
+}
+
+
+
 
 

@@ -30,6 +30,7 @@
         <script src="resources/sweetalert2.all.min.js"></script> 
 
         <link rel="stylesheet" type="text/css" href="resources/css/newfeed.css"/>
+        <link rel="stylesheet" type="text/css" href="resources/css/mybutton.css"/>
 
     </head>
 
@@ -174,14 +175,29 @@
                     %>
 
                     <div class="item">
+                        <% if (card.getStatusId() == 1) { %>  
+                            <div class="card_status">
+                                <div class="status_rect bg-green"></div>
+                            </div>
+                        <% } else if (card.getStatusId() == 2) { %> 
+                            <div class="card_status">
+                                <div class="status_rect bg-yellow"></div>
+                            </div>
+                        <% } else if (card.getStatusId() == 3) { %> 
+                            <div class="card_status">
+                                <div class="status_rect bg-red"></div>
+                            </div>
+                        <% } else if (card.getStatusId() == 4) { %> 
+                            <div class="card_status">
+                                <div class="status_rect bg-grey"></div>
+                            </div>
+                        <% } %>
+
                         <div class="image_and_infor_container">
                             <img class="event_image" src="data:image/jpg;base64,<%= card.getPoster()%>" alt="">
                             <div class="infor_container">
                                 <p class="event_date_and_loc"><%= card.getDate()%> - <%= card.getLocation()%></p>
                                 <p class="event_name"><%= card.getName()%></p>
-                                
-                                <p class="event_name"><%= card.getStatusId()%></p> <!--Triet TEST-->
-                                
                                 <p class="event_organizer_name"><%= card.getOrganizerName()%></p>
                             </div>
                         </div>
@@ -197,7 +213,7 @@
                                 </div>
                             </div>
                             <form action="viewEventDetail">
-                                <input class ="btnViewDetail" type="submit" value="Chi tiết">
+                                <input class ="btnViewDetail mybutton btn-blue" type="submit" value="Chi tiết">
                                 <input type="hidden" name="eventId" value="<%= card.getId()%>">
                             </form>
                         </div>

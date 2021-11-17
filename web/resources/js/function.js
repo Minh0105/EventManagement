@@ -115,7 +115,7 @@ function startOnAddCommentListener () {
       comment_item_html +=' <div id="'+ commentID +'" class="comment_item">'
       comment_item_html +='     <div class="comment_infor_section">'
       comment_item_html +='         <div class="avatar_container">'
-      comment_item_html +='             <img class="rounded-circle lec_avatar" src="'+ userAvatar +'" alt="">'
+      comment_item_html +='             <img class="organizer_ava" src="'+ userAvatar +'" alt="">'
       comment_item_html +='         </div>'
       comment_item_html +=''
       comment_item_html +='         <div class="comment_infor">'
@@ -129,8 +129,8 @@ function startOnAddCommentListener () {
       comment_item_html +='         <input class="input_reply" type="text" name="content" placeholder="Trả lời..." required/>'
       comment_item_html +='         <input type="hidden" name="commentId" value = "'+commentID+'"/>'
       comment_item_html +='         <input type="hidden" name="eventId" value = "'+eventId+'"/>'
-      comment_item_html +='         <button onclick="sendReply(\''+ commentID +'\', this)" class="btn_reply">Gửi</button>'
-      comment_item_html +='         <button onclick="hideReplyBox(this)" class="btn_hide_reply">Hủy</button>'
+      comment_item_html +='         <button onclick="sendReply(\''+ commentID +'\', this)" class="btn_reply mybutton btn-blue">Gửi</button>'
+      comment_item_html +='         <button onclick="hideReplyBox(this)" class="btn_hide_reply mybutton btn-grey">Hủy</button>'
       comment_item_html +='     </div>'
       comment_item_html +=' </div>'
 
@@ -175,7 +175,7 @@ function startOnAddCommentListener () {
         //#region Reply Html Code
         replyContainerHtmlCode += '    <div class="repComment2"> \n'
         replyContainerHtmlCode += '        <div class="repComment2a"> \n'
-        replyContainerHtmlCode += '            <img src="'+ userAvatar +'" class="rounded-circle lec_avatar" alt=""> \n'
+        replyContainerHtmlCode += '            <img src="'+ userAvatar +'" class="organizer_ava" alt=""> \n'
         replyContainerHtmlCode += '        </div> \n'
         replyContainerHtmlCode += '        <div class="repComment2b"> \n'
         replyContainerHtmlCode += '            <p class="comment_username">' + userName + ' - ' + userRoleName + '</p> \n'
@@ -233,7 +233,7 @@ function startOnAddReplyListener () {
   
     commentHtml += '    <div class="repComment2"> \n'
     commentHtml += '        <div class="repComment2a"> \n'
-    commentHtml += '            <img src="'+ userAvatar +'" class="rounded-circle lec_avatar" alt=""> \n'
+    commentHtml += '            <img src="'+ userAvatar +'" class="organizer_ava" alt=""> \n'
     commentHtml += '        </div> \n'
     commentHtml += '        <div class="repComment2b"> \n'
     commentHtml += '            <p class="comment_username">' + userName + ' - ' + userRoleName + '</p> \n'

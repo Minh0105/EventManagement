@@ -1,3 +1,4 @@
+@import url(color.css);
 
 body {
     min-height: 100vh;
@@ -323,7 +324,7 @@ body {
 /* Image and Event Infor */
 
 p {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .image_and_infor_container {
@@ -348,9 +349,9 @@ p {
     white-space: nowrap;
     overflow: hidden;
     text-overflow:ellipsis;
-    font-weight: 650;
+    font-weight: 600;
     font-size: 1.2rem;
-    color: #FA5810;
+    color: #ff3c00;
     margin-bottom: 0.16rem;
 }
 
@@ -364,6 +365,7 @@ p {
     overflow: hidden;
     text-overflow: ellipsis;
     margin-bottom: 0.16rem;
+    color: rgba(0, 0, 0, 0.75);
 }
 
 .image_and_infor_container .event_organizer_name {
@@ -396,9 +398,10 @@ p {
     white-space: nowrap;
     overflow: hidden;
     text-overflow:ellipsis;
-    font-size: 1.2rem;
     margin-left: 8px;
     margin-bottom: 0px;
+    font-size: 1.1rem;
+    color: rgba(0, 0, 0, 0.75);
 }
 
 .care_infor img {
@@ -412,7 +415,7 @@ p {
     overflow: hidden;
     text-overflow:ellipsis;
     padding: 0.6rem;
-    margin-top: 2rem;
+    margin-top: 3rem;
     display: flex;
     justify-content:space-between;
     align-items: flex-end;
@@ -446,4 +449,26 @@ p {
     justify-content: center;
     flex-direction: column;
     width: 100%;
+}
+
+
+
+
+
+/* CART STATUS */
+
+.card_status {
+    position: absolute;
+    background-color: white; 
+    border-radius: calc(0.45rem + 3px) 0 0 calc(0.45rem + 3px);
+    padding: 3px 0px 3px 3px;
+    top: 12px;
+    right: 15px;
+    font-size: 0.8rem; font-weight: 550;
+}
+
+.card_status > .status_rect {
+    width: 3.2rem;
+    height: 1.2rem;
+    border-radius: 0.45rem 0 0 0.45rem;
 }
