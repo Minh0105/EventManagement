@@ -91,7 +91,7 @@
                         if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {
                     %>
                             <div id="btn_edit_event_details" class="menu_button">
-                                <p>Chỉnh sửa thông tin</p></a>
+                                <p>Chỉnh sửa thông tin</p>
                             </div>
 
                             <div id="btn_edit_event_content" class="menu_sub_button">
@@ -153,7 +153,7 @@
                                
                                 <button type="submit" class="mybutton btn_close_register">Đóng đăng kí</button>
                                  
-                            <% } if (detail.getStatusId() == 2) { %>
+                            <% } else if (detail.getStatusId() == 2) { %>
                                 
                                 <button type="submit" class="mybutton btn-blue">Mở đăng kí</button>
                             
@@ -171,9 +171,6 @@
                 </div>
             </div>
         </div>
-        <%
-            }
-        %>
 
         <!-- EVENT HEADER -->
         <div id="event_header" class="container-fluid">
