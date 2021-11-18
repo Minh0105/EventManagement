@@ -82,8 +82,7 @@
         </section>
 
         <!-- EVENT ORGANIZER BUTTONS  -->
-        if (("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName()))) {
-    %>  
+        <% if (("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName()))) { %>  
             <% if (request.getAttribute("ORGANIZER_ID").equals(loginUser.getId())) { %>
             <div id="menu_container">   
                 <div id="menu_panel">   
@@ -171,6 +170,9 @@
                 </div>
             </div>
         </div>
+        <%
+            }
+        %>
 
         <!-- EVENT HEADER -->
         <div id="event_header" class="container-fluid">
