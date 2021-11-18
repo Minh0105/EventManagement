@@ -119,6 +119,11 @@
                     <div id="btn_view_member" class="menu_button">
                         <button onclick="showMemberList()"><p>Xem danh sách thành viên</p></button>
                     </div>
+
+
+                    <div type="button" data-toggle="modal" data-target="#sendNotificationModal" id="btn_update_event_status" class="menu_button">
+                        <p>Gửi thông báo</p>
+                    </div>
             </div>
 
             <% } %>
@@ -170,6 +175,34 @@
                 </div>
             </div>
         </div>
+
+        <!-- SEND NOTIFICATION MODAL -->
+        <div class="modal fade" id="sendNotificationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <form action="sendNotification" id="notif_form"> 
+                    <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+
+                    <div class="modal-header">
+                        <h5 class="modal-title my_modal_title" id="exampleModalLabel">Gửi thông báo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    filterEve        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body pb-0">
+                        <h5 class="my_modal_title">Nội dung</h5>
+                        <textarea name="message" id="notif_input" class="my-text-input w-full-parent" form="notif_form" rows="8"></textarea>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="mybutton btn-orange m-0 px-5">Gửi</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+
         <%
             }
         %>
@@ -285,7 +318,7 @@
                     <!-- FOLLOW UP -->
                     <div class="tab-pane fade show" id="end" role="tabpanel" aria-labelledby="end-tab">
                         <section class="navWord">
-                            <h2 class="content_title w-full-parent text-center">Tiến trình sự kiện</h3>
+                            <h2 class="w-full-parent text-center">Tiến trình sự kiện</h3>
                             <p><%= detail.getFollowUp() %>
                         </section>   
     

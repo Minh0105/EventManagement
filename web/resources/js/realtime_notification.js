@@ -15,6 +15,7 @@ function listenNotification (userId) {
 
         var notif_Element = createNotificationElement(eventName, organizerAvatar, eventId, message);
         notifContainer.insertBefore(notif_Element, notifContainer.firstChild);
+        $('#no_notif_text').hide();
     });
 }
 

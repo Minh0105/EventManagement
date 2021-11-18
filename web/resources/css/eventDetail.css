@@ -1,6 +1,7 @@
 @import url(organizer_event_operation_menu.css);
 @import url(event_status_modal.css);
 @import url(color.css);
+@import url(general.css);eve
 
 body {
     background-color: #f6f6f6 !important;
@@ -675,4 +676,9 @@ a:hover {
     color: white;
     font-size: 1.25rem;
     margin: 0 !important;
+  }
+
+
+  .navWord > p {
+    margin: 0!important;
   }

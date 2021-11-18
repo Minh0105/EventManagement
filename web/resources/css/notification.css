@@ -12,6 +12,7 @@ nav p {
     right: 70px;
     width: 58vh;
     height: fit-content;
+    min-height: 60vh;
     padding: 0.5rem;
     display: none;
 }

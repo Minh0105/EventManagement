@@ -64,6 +64,7 @@
                                 <p>Thông báo</p>
                             </div>
                             <div id="notif_body">
+                                <p id="no_notif_text" class="text-white" style="margin-left:0.5rem">Bạn không có thông báo nào</p>
                             </div>
                         </div>
 

@@ -3,9 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/META-INF/context.xml</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/LoginServlet.java</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/UpdateProfileServlet.java</file>
+            <file>file:/Users/tangtantai/Projects/EventManagement/web/resources/css/admin.css</file>
+            <file>file:/Users/tangtantai/Projects/EventManagement/src/java/fptu/swp/controller/ViewEventDetailServlet.java</file>
+            <file>file:/Users/tangtantai/Projects/EventManagement/web/META-INF/context.xml</file>
+            <file>file:/Users/tangtantai/Projects/EventManagement/web/nav_bar.jsp</file>
+            <file>file:/Users/tangtantai/Projects/EventManagement/web/admin.jsp</file>
+            <file>file:/Users/tangtantai/Projects/EventManagement/web/resources/css/eventDetail.css</file>
+            <file>file:/Users/tangtantai/Projects/EventManagement/src/java/fptu/swp/controller/HandleMultipartServlet.java</file>
+            <file>file:/Users/tangtantai/Projects/EventManagement/src/java/fptu/swp/controller/UpdateProfileServlet.java</file>
+            <file>file:/Users/tangtantai/Projects/EventManagement/web/eventDetail.jsp</file>
+            <file>file:/Users/tangtantai/Projects/EventManagement/web/updateProfile.jsp</file>
+            <file>file:/Users/tangtantai/Projects/EventManagement/web/resources/css/newfeed.css</file>
+            <file>file:/Users/tangtantai/Projects/EventManagement/web/infor.jsp</file>
+            <file>file:/Users/tangtantai/Projects/EventManagement/src/java/fptu/swp/entity/user/UserDTO.java</file>
+            <file>file:/Users/tangtantai/Projects/EventManagement/web/newfeed.jsp</file>
+            <file>file:/Users/tangtantai/Projects/EventManagement/web/allEvent.jsp</file>
         </group>
     </open-files>
 </project-private>
