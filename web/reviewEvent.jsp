@@ -39,7 +39,6 @@
         <link rel='stylesheet' type='text/css' media='screen' href='resources/css/style.css'>
     </head>
     <body>
-
         <div id="#messages">
 
         </div>
@@ -190,7 +189,12 @@
         </section>
 
         <div class="col-12 text-center" style="margin-top: 20vh;">
-            <a href="createEvent" class="mybutton btn-orange btn-big">Tạo sự kiện</a>
+            <% if (session.getAttribute("CHANGING_EVENT_ID") != null) { %>
+                <a href="createEvent" class="mybutton btn-orange btn-big">Cập nhật sự kiện</a>
+
+            <% } else { %>
+                <a href="createEvent" class="mybutton btn-orange btn-big">Tạo sự kiện</a>
+            <% } %>
         </div>
 
 

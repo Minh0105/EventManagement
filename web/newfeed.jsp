@@ -31,7 +31,7 @@
 
         <link rel="stylesheet" type="text/css" href="resources/css/newfeed.css"/>
         <link rel="stylesheet" type="text/css" href="resources/css/mybutton.css"/>
-
+        <script type="text/javascript" src="resources/js/newfeed_function.js" ></script>
     </head>
 
     <body>
@@ -43,105 +43,109 @@
             String userRoleName = logedInUser.getRoleName();
         %>
 
-        <!-- COPY PART -->
+        <!-- FILTER BAR -->
+
         <div class="d-flex">
             <section id="filter_bar">
                 <div id="decorating_text">
-                    Discover the event world
+                    Sự kiện
                 </div>
 
                 <div id="filter_button_container">
+                    <% if (userRoleName.equals("STUDENT")) { %>
 
-                    <div class="filter_button">
-                        <button class="chosen_button" onclick="showAllEvents(this)">Tất cả</button>
-                    </div>
+                        <div class="filter_button">
+                            <button class="chosen_button" onclick="showAllEvents(this)">Tất cả</button>
+                        </div>
+                        
+                        <div class="filter_button">
+                            <button onclick="showTopEvents(this)">Nổi bật</button>
+                        </div>
 
-                    <%
-                        if (userRoleName.equals("STUDENT")) {
-                    %>
-                    <div class="filter_button">
-                        <button onclick="showTopEvents(this)">Nổi bật</button>
-                    </div>
+                        <div class="filter_button">
+                            <button onclick="showThisWeekEvents(this)">Tuần này</button>
+                        </div>
 
-                    <div class="filter_button">
-                        <button onclick="showThisWeekEvents(this)">Tuần này</button>
-                    </div>
+                        <div class="filter_button">
+                            <button onclick="showThisMonthEvents(this)">Tháng này</button>
+                        </div>
 
-                    <div class="filter_button">
-                        <button onclick="showThisMonthEvents(this)">Tháng này</button>
-                    </div>
+                        <div class="filter_button">
+                            <button onclick="showStudentFollowedEvents(this)">Đã quan tâm</button>
+                        </div>
 
-                    <div class="filter_button">
-                        <button onclick="showStudentFollowedEvents(this)">Đã quan tâm</button>
-                    </div>
+                        <div class="filter_button">
+                            <button onclick="showStudentJoinedEvents(this)">Đã tham gia</button>
+                        </div>
 
-                    <div class="filter_button">
-                        <button onclick="showStudentJoinedEvents(this)">Đã tham gia</button>
-                    </div>
-                    <%
-                    } else if (userRoleName.equals("CLUB'S LEADER") || userRoleName.equals("DEPARTMENT'S MANAGER")) {
-                    %>
-                    <div class="filter_button">
-                        <button onclick="showOrganizerCreatedEvents(this)">Sự kiện của bạn</button>
-                    </div>
-                    <%
-                    } else if (userRoleName.equals("LECTURER")) {
-                    %>
-                    <div class="filter_button">
-                        <button onclick="showLecturerJoinedEvents(this)">Sự kiện có tham gia</button>
-                    </div>
-                    <%
-                        }
-                    %>
+                    <% } else if (userRoleName.equals("CLUB'S LEADER") || userRoleName.equals("DEPARTMENT'S MANAGER")) { %>
+
+                        <div class="filter_button">
+                            <button class="chosen_button" onclick="showOrganizerIncomingEvents(this)">Sắp diễn ra</button>
+                        </div>
+                        <div class="filter_button">
+                            <button onclick="showOrganizedRegisterClosedEvents(this)">Đóng đăng kí</button>
+                        </div>
+                        <div class="filter_button">
+                            <button onclick="showOrganizedEndedEvents(this)">Kết thúc</button>
+                        </div>
+                        <div class="filter_button">
+                            <button onclick="showOrganizerCanceledEvents(this)">Đã bị dừng</button>
+                        </div>
+
+                    <% } else if (userRoleName.equals("LECTURER")) { %>
+                        <div class="filter_button">
+                            <button class="chosen_button" onclick="showAllEvents(this)">Tất cả</button>
+                        </div>
+                        <div class="filter_button">
+                            <button onclick="showLecturerInvitedEvents(this)">Các sự kiện được mời</button>
+                        </div>
+                    <% } %>
                 </div>
             </section>
 
-            <%
-                if (userRoleName.equals("CLUB'S LEADER") || userRoleName.equals("DEPARTMENT'S MANAGER")) {
-            %>
-            <%
-                if (session.getAttribute("CHANGING_EVENT_ID") != null) {
-            %>
-            <a id="btn_create_event" href="searchLocation?txtSearch=">
-                <img src="resources/icon/icon_create_new_event.svg" />
-                <button >Tiếp tục sửa sự kiện</button>
-            </a>
-            <a id="btn_create_event" href="cancelUpdateEvent">
-                <img src="resources/icon/icon_create_new_event.svg" />
-                <button >Hủy sửa đổi sự kiện</button>
-            </a>
-            <%
-            } else {
-            %>
-            <a id="btn_create_event" href="searchLocation?txtSearch=">
-                <img src="resources/icon/icon_create_new_event.svg" />
-                <button >Tạo sự kiện mới</button>
-            </a>
-            <%
-                }
-            %>
-
-            <%
-                }
-            %>
+            <% if (userRoleName.equals("CLUB'S LEADER") || userRoleName.equals("DEPARTMENT'S MANAGER")) { %>
+                <% if (session.getAttribute("CHANGING_EVENT_ID") != null) { %>
+                    <a id="btn_create_event" href="searchLocation?txtSearch=">
+                        <img src="resources/icon/icon_create_new_event.svg" />
+                        <button >Tiếp tục sửa sự kiện</button>
+                    </a>
+                    <a id="btn_create_event" href="cancelUpdateEvent">
+                        <img src="resources/icon/icon_create_new_event.svg" />
+                        <button >Hủy sửa đổi sự kiện</button>
+                    </a>
+                <% } else { %>
+                    <a id="btn_create_event" href="searchLocation?txtSearch=">
+                        <img src="resources/icon/icon_create_new_event.svg" />
+                        <button >Tạo sự kiện mới</button>
+                    </a>
+                <% } %>
+            <% } %>
 
         </div>
-        <!-- COPY PART -->
 
-
+        <!-- CART CONTAINER -->
         <div id="card_container" class="container-fluid">
             <div id="card_container_row" class="row gx-1 gy-4">
-                <%
-                    List<EventCardDTO> listCard = (List<EventCardDTO>) request.getAttribute("LIST_CARD");
-                    List<EventCardDTO> listFollowingCard = (List<EventCardDTO>) request.getAttribute("LIST_FOLLOWING_CARD");
-                    List<EventCardDTO> listJoiningCard = (List<EventCardDTO>) request.getAttribute("LIST_JOINING_CARD");
-                    if (listCard != null) {
-                        for (EventCardDTO card : listCard) {
-                %>
-                <div class="col-12 col-md-6 col-lg-4 event_card">
+            <%
+                List<EventCardDTO> listCard = (List<EventCardDTO>) request.getAttribute("LIST_CARD");
+                List<EventCardDTO> listFollowingCard = (List<EventCardDTO>) request.getAttribute("LIST_FOLLOWING_CARD");
+                List<EventCardDTO> listJoiningCard = (List<EventCardDTO>) request.getAttribute("LIST_JOINING_CARD");
+                List<EventCardDTO> listLecturerInvitedCard = (List<EventCardDTO>) request.getAttribute("LIST_EVENT_CARD_LECTURER");
+                    
+                if (listCard != null) {
+                    for (EventCardDTO card : listCard) {
+            %>
+                <div class="col-12 col-md-6 col-lg-4 event_card" 
+                <% if (card.getStatusId() != 1) { %> 
+                    style="display: none"
+                <% } %>>
+                    
                     <p class="event_infor event_date"><%= card.getDate()%></p>
                     <p class="event_infor event_follow"><%= card.getFollowing()%></p>
                     <p class="event_infor event_join"><%= card.getJoining()%></p>
+                    <p class="event_infor event_status"><%= card.getStatusId()%></p>
+                    
                     <%
                         boolean hasFollow = false;
                         if (listFollowingCard != null) {
@@ -152,11 +156,9 @@
                                 }
                             }
                         }
-                        if (hasFollow) {
-                    %>
-                    <p class="event_infor follow_tag"></p>
-                    <%
-                        }
+                        if (hasFollow) { %>
+                            <p class="event_infor follow_tag"></p>
+                    <%  }
 
                         boolean hasJoin = false;
                         if (listJoiningCard != null) {
@@ -167,12 +169,26 @@
                                 }
                             }
                         }
-                        if (hasJoin) {
-                    %> 
-                    <p class="event_infor join_tag"></p>
-                    <%
-                        }
-                    %>
+                        if (hasJoin) { %> 
+
+                            <p class="event_infor join_tag"></p>
+
+                        <% } %>
+
+                        <% 
+                        
+                            boolean hasInvited = false;
+                            if (listLecturerInvitedCard != null) {
+                                for (EventCardDTO event : listLecturerInvitedCard) {
+                                    if (event.getId() == card.getId()) {
+                                        hasInvited = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (hasInvited) { %> 
+                                <p class="event_infor invited_tag"></p>
+                            <% } %>
 
                     <div class="item">
                         <% if (card.getStatusId() == 1) { %>  
@@ -226,14 +242,6 @@
             </div>
         </div>
 
-        <script language="javascript">var js_version = "1.0"</script>
-        <script language="javascript1.1">var js_version = "1.1"</script>
-        <script language="javascript1.2">var js_version = "1.2"</script>
-        <script language="javascript1.3">var js_version = "1.3"</script>
-        <script language="javascript1.4">var js_version = "1.4"</script>
-        <script language="javascript1.5">var js_version = "1.5"</script>
-        <script language="javascript1.6">var js_version = "1.6"</script>
-
         <%@include file="footer.jsp" %>
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
@@ -243,9 +251,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
                 integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
         crossorigin="anonymous"></script>
-
-        <script type="text/javascript" src="resources/js/newfeed_function.js" >
-        </script>
 
     </body>
 

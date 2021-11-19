@@ -318,7 +318,7 @@
                     <!-- FOLLOW UP -->
                     <div class="tab-pane fade show" id="end" role="tabpanel" aria-labelledby="end-tab">
                         <section class="navWord">
-                            <h2 class="w-full-parent text-center">Tiến trình sự kiện</h3>
+                            <h4 class="w-full-parent text-center">Tiến trình sự kiện</h4>
                             <p><%= detail.getFollowUp() %>
                         </section>   
     

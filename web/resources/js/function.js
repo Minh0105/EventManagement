@@ -115,7 +115,7 @@ function startOnAddCommentListener () {
       comment_item_html +=' <div id="'+ commentID +'" class="comment_item">'
       comment_item_html +='     <div class="comment_infor_section">'
       comment_item_html +='         <div class="avatar_container">'
-      comment_item_html +='             <img class="organizer_ava" src="'+ userAvatar +'" alt="">'
+      comment_item_html +='             <img class="organizer_ava" src="'+ userAvatar +'" alt="" referrerpolicy="no-referrer">'
       comment_item_html +='         </div>'
       comment_item_html +=''
       comment_item_html +='         <div class="comment_infor">'
@@ -175,7 +175,7 @@ function startOnAddCommentListener () {
         //#region Reply Html Code
         replyContainerHtmlCode += '    <div class="repComment2"> \n'
         replyContainerHtmlCode += '        <div class="repComment2a"> \n'
-        replyContainerHtmlCode += '            <img src="'+ userAvatar +'" class="organizer_ava" alt=""> \n'
+        replyContainerHtmlCode += '            <img src="'+ userAvatar +'" class="organizer_ava" alt="" referrerpolicy="no-referrer"> \n'
         replyContainerHtmlCode += '        </div> \n'
         replyContainerHtmlCode += '        <div class="repComment2b"> \n'
         replyContainerHtmlCode += '            <p class="comment_username">' + userName + ' - ' + userRoleName + '</p> \n'
@@ -233,7 +233,7 @@ function startOnAddReplyListener () {
   
     commentHtml += '    <div class="repComment2"> \n'
     commentHtml += '        <div class="repComment2a"> \n'
-    commentHtml += '            <img src="'+ userAvatar +'" class="organizer_ava" alt=""> \n'
+    commentHtml += '            <img src="'+ userAvatar +'" class="organizer_ava" alt="" referrerpolicy="no-referrer"> \n'
     commentHtml += '        </div> \n'
     commentHtml += '        <div class="repComment2b"> \n'
     commentHtml += '            <p class="comment_username">' + userName + ' - ' + userRoleName + '</p> \n'

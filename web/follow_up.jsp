@@ -11,15 +11,37 @@
                 <script src='resources/followup/ckeditor/ckeditor.js'></script>
                 <link rel="stylesheet" href="resources/css/follow_up.css">
                 <link rel="stylesheet" href="resources/css/mybutton.css">
+                <link rel="stylesheet" href="resources/css/eventDetail.css">
             </head>
 
             <body>
                 <%@include file="nav_bar.jsp" %>
 
-                <% EventDetailDTO detail=(EventDetailDTO) request.getAttribute("UPDATING_EVENT"); %>
+                <% 
+                    EventDetailDTO detail =(EventDetailDTO) request.getAttribute("UPDATING_EVENT"); 
+                %>
+
+                 <!-- EVENT HEADER -->
+                <div id="event_header" class="container-fluid">
+                    <section class="carousel">
+                        <div class="date_time_section">
+                            <h4><%= detail.getDate()%>, <%= detail.getTime()%><br>
+                                <%= detail.getLocation()%>
+                            </h4>
+                        </div>
+                    </section>
+
+                    <div class="organizer_name">
+                        <marquee direction="down" behavior="slide" loop="1" scrollamount="2" word-break: keep-all;>
+                            <%= detail.getName()%>
+                        </marquee>
+                        <p id="scroll_target_title" class="mb-0"><%= detail.getOrganizerName()%></p>
+                    </div>
+                </div>
+
                 <div id="body" class="container-fluid">
                     <div id="body_content" class="container-fluid">
-                        <h5 class="title col-12 px-0">Tiến trình</h5>
+                        <h5 class="title col-12 px-0">Cập nhật tiến trình</h5>
                         
                         <textarea class="col-12 px-0" id="input_follow_up" style="min-height: 100vh" row="20" cols="12"
                             type="text"><%=detail.getFollowUp()%>
@@ -34,7 +56,6 @@
                 <form id="add_follow_up_form">
                 </form>
 
-                
                 <script src='resources/js/setUpCKEditor.js'></script>
                 <script>
                         CKEDITOR.replace('input_follow_up', {

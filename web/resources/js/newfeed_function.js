@@ -138,8 +138,16 @@ function showStudentJoinedEvents(button) {
 
 
 // LECTURER
-function showLecturerJoinedEvents (button) { 
-
+function showLecturerInvitedEvents (button) { 
+    var eventCollection = getAllEvents();
+    for (var event of eventCollection) {
+        var hasInvited = event.getElementsByClassName("invited_tag").length > 0;
+        if (hasInvited) {
+            event.style.display = "block";
+        } else {
+            event.style.display = "none";
+        }
+    }
     processFilterClick(button);
 }
 
@@ -232,3 +240,41 @@ function getEndDayOfWeek () {
 
 
 
+// ORGANIZER 
+function showOrganizerIncomingEvents(button) {
+    showEventByStatus(1);
+    processFilterClick(button);
+}
+
+function showOrganizedRegisterClosedEvents(button) {
+    showEventByStatus(2);
+    processFilterClick(button);
+}
+
+function showOrganizedEndedEvents(button) {
+    showEventByStatus(4);
+    processFilterClick(button);
+}
+
+function showOrganizerCanceledEvents(button) {
+    showEventByStatus(3);
+    processFilterClick(button);
+}
+
+function getStatusFromEventCard (event) {
+    return event.getElementsByClassName("event_status")[0].innerHTML;
+}
+
+function showEventByStatus (status) {
+    var allEventList = getAllEvents();
+
+    for (var event of allEventList) {
+        var eventStatus = getStatusFromEventCard(event);
+        if (parseInt(eventStatus) == parseInt(status)) {
+            event.style.display = "block";
+        } else {
+            event.style.display = "none";
+        }
+    }
+
+}
