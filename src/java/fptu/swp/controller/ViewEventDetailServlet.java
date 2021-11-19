@@ -76,6 +76,8 @@ public class ViewEventDetailServlet extends HttpServlet {
             
             LOGGER.info("Event detail: " + detail);
             request.setAttribute("EVENT_DETAIL", detail);
+            
+            LOGGER.info("DATTTTTTTTTTE: " + detail.getDate());
 
             LOGGER.info("List lecturer of event: " + listLecturer);
             request.setAttribute("LIST_LECTURER", listLecturer);

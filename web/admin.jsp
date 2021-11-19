@@ -58,24 +58,24 @@
                         </div>
                         
                         <!-- MENU  -->
-                        <ul>
-                            <li class="nav-item">
+                        <ul id="side_bar_menu">
+                            <li class="nav-item side_bar_option">
                                 <a class="nav-link <%if (organizerSelected){%> selected<%}%>" href="manageByAdmin?management=organizer">Câu lạc bộ, phòng ban</a>
                             </li>
 
-                            <li class="nav-item">
+                            <li class="nav-item side_bar_option">
                                 <a class="nav-link <%if (eventSelected){%> selected<%}%>" href="manageByAdmin?management=event">Sự kiện</a>
                             </li>
 
-                            <li class="nav-item">
+                            <li class="nav-item side_bar_option">
                                 <a class="nav-link <%if (studentSelected){%> selected<%}%>" href="manageByAdmin?management=student">Sinh viên</a>
                             </li>
 
-                            <li class="nav-item">
+                            <li class="nav-item side_bar_option">
                                 <a class="nav-link <%if (lecturerSelected){%> selected<%}%>" href="manageByAdmin?management=lecturer">Giảng viên</a>
                             </li>
 
-                            <li class="nav-item">
+                            <li class="nav-item side_bar_option">
                                 <a class="nav-link <%if (commentSelected){%> selected<%}%>" href="manageByAdmin?management=comment">Bình luận</a>
                             </li>
 

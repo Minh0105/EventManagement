@@ -16,17 +16,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.io.File;
+import java.util.TimeZone;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Statement;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Base64;
+import java.util.Calendar;
 import javax.naming.NamingException;
 
 /**
@@ -444,8 +444,10 @@ public class EventDAO {
                     byte[] tmp = rs.getBytes("eventPoster");
                     eventPoster = Base64.getEncoder().encodeToString(tmp);
                     organizerName = rs.getString("organizerName");
-                    Date dateFromDB = rs.getTimestamp("date");
+                    Date dateFromDB = rs.getTimestamp("date", Calendar.getInstance(TimeZone.getDefault()));
+                    System.out.println("***_*** BEFORE DATE FROM DB" + dateFromDB);
                     date = formatter.format(dateFromDB).toString();
+                    System.out.println("***_*** BEFORE " + date);
                     locationName = rs.getString("locationName");
                     following = rs.getInt("followers");
                     joining = rs.getInt("participants");
@@ -468,6 +470,7 @@ public class EventDAO {
                 }
                 location += listLocation.get(i);
                 String time = getTimeOfEventDetail(conn, eventId);
+                System.out.println("***_*** AFTER: " + date);
                 detail = new EventDetailDTO(eventId, eventName, eventPoster, location, date, time, organizerName, following, joining, description, organizerDescription, organizerAvatar, statusId, followUp);
             }
 
