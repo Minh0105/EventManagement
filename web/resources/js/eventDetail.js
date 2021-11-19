@@ -34,7 +34,7 @@ $('#menu_container').hide();
 function onMenuIconClick () {
     if ($('#menu_container').css("display") == "none") {
         $('#menu_container').show();
-        document.getElementById('btn_event_operation_menu').scrollIntoView({ behavior: 'smooth', block: 'center'});
+        document.getElementById('btn_add_summary').scrollIntoView({ behavior: 'smooth', block: 'center'});
     } else {
         $('#menu_container').hide();
         resetMenu();

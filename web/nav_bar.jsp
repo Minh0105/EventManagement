@@ -71,37 +71,25 @@
                             </div>
                         </div>
 
-                        <div id="nav_expanded_panel">
+                        <div id="nav_expanded_panel" class="text-right">
 
-                                <div id="logout_button_panel">
-                                    <a id="logout_link" href="logout">
-                                        <img src="resources/icon/log_out_icon.svg" />
-                                        <span id="btn_log_out">Log out</span> 
-                                    </a> 
-                                </div>
-
-                                <div id="logout_button_panel">
-                                    <a id="logout_link" href="redirectListEvent?action=all">
-                                        <img src="resources/icon/log_out_icon.svg" />
-                                        <span id="btn_log_out">View All Event</span> 
-                                    </a> 
-                                </div>
+                            <a class="extend_link" href="redirectListEvent?action=all">
+                                <span id="btn_log_out">Tra cứu sự kiện</span> 
+                            </a> 
                             <c:if test="${sessionScope.USER.roleName eq 'STUDENT'}">
-                                <div id="logout_button_panel">
-                                    <a id="logout_link" href="redirectListEvent?action=joined">
-                                        <img src="resources/icon/log_out_icon.svg" />
-                                        <span id="btn_log_out">View Joined Event</span> 
-                                    </a> 
-                                </div>
+                                <a class="extend_link" href="redirectListEvent?action=joined">
+                                    <span id="btn_log_out">Các sự kiện đã tham gia</span> 
+                                </a> 
                             </c:if>
                             <c:if test="${sessionScope.USER.roleName eq 'LECTURER'}">
-                                <div id="logout_button_panel">
-                                    <a id="logout_link" href="redirectListEvent?action=added">
-                                        <img src="resources/icon/log_out_icon.svg" />
-                                        <span id="btn_log_out">View Added Event</span> 
-                                    </a> 
-                                </div>
+                                <a class="extend_link" href="redirectListEvent?action=added">
+                                    <span id="btn_log_out">Các sự kiện đã được mời</span> 
+                                </a> 
                             </c:if>
+
+                            <a class="extend_link" href="logout">
+                                <span id="btn_log_out">Đăng xuất</span> 
+                            </a> 
                         </div>   	
                     </ul>
                 </div>
