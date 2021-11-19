@@ -182,6 +182,15 @@
 
                                     return dayOfWeek;
                                 }
+
+                                private int getTodayDay () { 
+                                    int dayOfWeek = Calendar.getInstance().getTime().getDay();
+                                    if (dayOfWeek == 0) {
+                                        return SUNDAY;
+                                    } else {
+                                        return dayOfWeek + 1;
+                                    }
+                                } 
                             %>
 
                         <%
@@ -197,6 +206,7 @@
                             }
                             int lastDayOfWeek = getValidLastDayOfWeek(startDate);
                             int firstDayOfWeek = getValidFirstDayOfWeek(startDate);
+                            int todayDayOfWeek = getTodayDay();
                             for (int slot = SLOT_1; slot <= LAST_SLOT; slot++) {
                         %>
                                 <tr class="slot_row">
@@ -209,6 +219,13 @@
                                     </td>
                         <%
                                 for (int day = MONDAY; day <= SUNDAY; day++) {
+                                    
+                                    if (day < todayDayOfWeek) { 
+                        %>
+                                        <td class="busy_slot_cell past_cell" ></td>
+                        <%
+                                        continue;
+                                    }
                                     
                                     if ((listBusySlot != null) && listBusySlot.contains(new RangeDateDTO(slot, day))) { 
                         %>

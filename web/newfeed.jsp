@@ -47,13 +47,19 @@
 
         <div class="d-flex">
             <section id="filter_bar">
-                <div id="decorating_text">
-                    Sự kiện
-                </div>
+
+                <% if (userRoleName.equals("STUDENT") || userRoleName.equals("LECTURER")) { %>
+                    <div id="decorating_text">
+                        Khám phá sự kiện
+                    </div>
+                <% } else { %>
+                    <div id="decorating_text">
+                        Sự kiện của bạn
+                    </div>
+                <% } %>
 
                 <div id="filter_button_container">
                     <% if (userRoleName.equals("STUDENT")) { %>
-
                         <div class="filter_button">
                             <button class="chosen_button" onclick="showAllEvents(this)">Tất cả</button>
                         </div>
@@ -80,6 +86,7 @@
 
                     <% } else if (userRoleName.equals("CLUB'S LEADER") || userRoleName.equals("DEPARTMENT'S MANAGER")) { %>
 
+
                         <div class="filter_button">
                             <button class="chosen_button" onclick="showOrganizerIncomingEvents(this)">Sắp diễn ra</button>
                         </div>
@@ -94,6 +101,8 @@
                         </div>
 
                     <% } else if (userRoleName.equals("LECTURER")) { %>
+                       
+
                         <div class="filter_button">
                             <button class="chosen_button" onclick="showAllEvents(this)">Tất cả</button>
                         </div>

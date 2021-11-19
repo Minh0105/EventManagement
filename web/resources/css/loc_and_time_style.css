@@ -215,6 +215,13 @@ div.scrollmenu div > p {
     background-color: #b0b0b0;
 }
 
+.past_cell {
+    width: 12.3%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #d2d2d2;
+}
+
 .day_cell span {
     text-align: center;
     display: block;

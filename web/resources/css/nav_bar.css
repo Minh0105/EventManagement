@@ -122,7 +122,7 @@ a, a:hover {
 
 #new_notification_badge {
     display:none; 
-    background-color: rgb(0, 60, 255); 
+    background-color: rgb(83, 25, 255); 
     height: 12px; width: 12px;
     border-radius: 6px;
     position: absolute;

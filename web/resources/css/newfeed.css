@@ -105,6 +105,7 @@ body {
 
 #btn_create_event {
     background-color: #FA5810;
+    box-shadow: 0 0 5px #d84100;
     border-radius: 6px;
     display: flex;
     align-items: center;    
