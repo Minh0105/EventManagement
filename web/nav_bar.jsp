@@ -49,10 +49,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link">
-                                <img id="btn_bell" src="resources/icon/bell_icon.svg" alt="Bell_icon" />
+                            <a class="nav-link" style="position: relative;">
+                                <img id="btn_bell" src="resources/icon/bell_icon.svg" alt="Bell_icon">
+                                <div id="new_notification_badge"></div>
+                            </img>
                             </a>
                         </li>
+
                         <li class="nav-item dropdown">
                         <a href="#" class="nav-link">
                             <img id="btn_menu" src="resources/icon/hamburger_button_icon.svg" alt="hamburger_button" />

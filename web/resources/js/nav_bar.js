@@ -12,7 +12,9 @@ $('#btn_menu').click(function () {
 $('#btn_bell').click (function () {
     if ($('#notification_board').css("display") == "none") {
         $('#notification_board').show();
+        seenAllNotification();
     } else {
         $('#notification_board').hide();
+        resetAllSeenState();
     }
 })

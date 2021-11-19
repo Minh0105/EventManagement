@@ -186,7 +186,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title my_modal_title" id="exampleModalLabel">Gửi thông báo</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    filterEve        <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
 
