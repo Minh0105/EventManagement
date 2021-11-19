@@ -91,7 +91,7 @@ public class Schedule {
                     scheduler.schedule(()
                             -> {
                         try {
-                            eventDao.updateEventStatus(s.getEventId(), 3);
+                            eventDao.updateEventStatus(s.getEventId(), 4);
 
                         } catch (Exception ex) {
                             //Chua biet ghi gi hmu

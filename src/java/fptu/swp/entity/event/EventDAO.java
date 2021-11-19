@@ -1093,6 +1093,7 @@ public class EventDAO {
         String eventName = "";
         String organizerName = "";
         String date = "";
+        String eventPoster = "";
         int following = 0;
         int joining = 0;
         int statusId = 0;
@@ -1101,7 +1102,7 @@ public class EventDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                sql = "SELECT s.id id, s.name eventName, m.name organizerName, t.date date,\n"
+                sql = "SELECT s.id id, s.name eventName, s.poster eventPoster, m.name organizerName, t.date date,\n"
                         + "t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants, s.statusId statusId\n"
                         + " FROM tblEvents s\n"
                         + " LEFT JOIN tblUsers m ON s.userId = m.id\n"
@@ -1124,12 +1125,15 @@ public class EventDAO {
                             }
                             location += listLocation.get(i);
                             String time = getTimeOfEventDetail(conn, currentEventId);
-                            list.add(new EventDetailDTO(currentEventId, eventName, location, date, time, organizerName, following, joining, statusId));
+                            list.add(new EventDetailDTO(currentEventId, eventName, eventPoster, location, date, time, organizerName, following, joining, "", "", "", statusId, ""));
+                            //list.add(new EventDetailDTO(currentEventId, eventName, location, date, time, organizerName, following, joining, statusId));
                         }
                         listLocation.clear();
                         currentEventId = eventId;
                         eventName = rs.getString("eventName");
                         organizerName = rs.getString("organizerName");
+                        byte[] tmp = rs.getBytes("eventPoster");
+                        eventPoster = Base64.getEncoder().encodeToString(tmp);
                         Date dateFromDB = rs.getTimestamp("date");
                         date = formatter.format(dateFromDB).toString();
                         locationName = rs.getString("locationName");
@@ -1151,7 +1155,8 @@ public class EventDAO {
                 if (listLocation.size() != 0) {
                     location += listLocation.get(i);
                     String time = getTimeOfEventDetail(conn, currentEventId);
-                    list.add(new EventDetailDTO(currentEventId, eventName, location, date, time, organizerName, following, joining, statusId));
+                    list.add(new EventDetailDTO(currentEventId, eventName, eventPoster, location, date, time, organizerName, following, joining, "", "", "", statusId, ""));
+// list.add(new EventDetailDTO(currentEventId, eventName, location, date, time, organizerName, following, joining, statusId));
                     Collections.reverse(list); //Added Date: 26-10-2021
                 }
             }
@@ -1184,6 +1189,7 @@ public class EventDAO {
         String eventName = "";
         String organizerName = "";
         String date = "";
+        String eventPoster = "";
         int following = 0;
         int joining = 0;
         int statusId = 0;
@@ -1192,7 +1198,7 @@ public class EventDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                sql = "SELECT s.id id, s.name eventName, m.name organizerName, t.date date,\n"
+                sql = "SELECT s.id id, s.name eventName, s.poster eventPoster, m.name organizerName, t.date date,\n"
                         + "t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants, s.statusId statusId\n"
                         + " FROM tblEvents s\n"
                         + " LEFT JOIN tblUsers m ON s.userId = m.id\n"
@@ -1215,12 +1221,15 @@ public class EventDAO {
                             }
                             location += listLocation.get(i);
                             String time = getTimeOfEventDetail(conn, currentEventId);
-                            list.add(new EventDetailDTO(currentEventId, eventName, location, date, time, organizerName, following, joining, statusId));
+                            list.add(new EventDetailDTO(currentEventId, eventName, eventPoster, location, date, time, organizerName, following, joining, "", "", "", statusId, ""));
+                            //list.add(new EventDetailDTO(currentEventId, eventName, location, date, time, organizerName, following, joining, statusId));
                         }
                         listLocation.clear();
                         currentEventId = eventId;
                         eventName = rs.getString("eventName");
                         organizerName = rs.getString("organizerName");
+                        byte[] tmp = rs.getBytes("eventPoster");
+                        eventPoster = Base64.getEncoder().encodeToString(tmp);
                         Date dateFromDB = rs.getTimestamp("date");
                         date = formatter.format(dateFromDB).toString();
                         locationName = rs.getString("locationName");
@@ -1242,7 +1251,8 @@ public class EventDAO {
                 if (listLocation.size() != 0) {
                     location += listLocation.get(i);
                     String time = getTimeOfEventDetail(conn, currentEventId);
-                    list.add(new EventDetailDTO(currentEventId, eventName, location, date, time, organizerName, following, joining, statusId));
+                    list.add(new EventDetailDTO(currentEventId, eventName, eventPoster, location, date, time, organizerName, following, joining, "", "", "", statusId, ""));
+                    //list.add(new EventDetailDTO(currentEventId, eventName, location, date, time, organizerName, following, joining, statusId));
                     Collections.reverse(list); //Added Date: 26-10-2021
                 }
             }
@@ -1335,7 +1345,7 @@ public class EventDAO {
                 stm.setInt(1, eventId);
                 if (stm.executeUpdate() > 0) {
                     sql = " UPDATE tblEvents"
-                            + " SET statusId = 4"
+                            + " SET statusId = 3"
                             + " WHERE id=?";
                     stm = conn.prepareStatement(sql);
                     stm.setInt(1, eventId);
