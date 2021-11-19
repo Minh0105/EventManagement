@@ -346,7 +346,8 @@
 
                         </div>
                     </c:if>
-
+                        
+                    <!--quản lý bình luận-->
                     <c:if test="${requestScope.mapComment ne null}">
                         <div class="top_title">
                             <h3 class="right_title">Quản lí bình luận</h3>
@@ -393,7 +394,7 @@
                             </table>
                         </div>
                     </c:if>
-
+                    <!--quản lý sự kiện-->
                     <c:if test="${requestScope.LIST_ORGANIZER_EVENT ne null}">
                         <div class="top_title">
                             <h3 class="right_title">Quản lí sự kiện</h3>
@@ -489,7 +490,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <!--           Nếu chọn "Club's leader" ở cái select trên-->
+                            <!-- Nếu chọn "Club's leader" ở cái select trên-->
                             <div id="CL">
                                 <div class="col-md-6"> <label class="labels">Tên nhà tổ chức:</label>
                                     <select

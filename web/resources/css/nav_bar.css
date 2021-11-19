@@ -118,3 +118,8 @@ a, a:hover {
 #logout_link, #logout_link:hover, #logout_link:focus, #logout_link:active {
     text-decoration: none !important;
 }
+
+.service table {
+    width: 95%;
+    margin: auto;
+}
