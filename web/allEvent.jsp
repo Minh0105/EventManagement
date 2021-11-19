@@ -1,8 +1,4 @@
-<%-- 
-    Document   : allEvent
-    Created on : Oct 25, 2021, 12:40:27 PM
-    Author     : triet
---%>
+
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,7 +12,8 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  
+        <link rel="stylesheet" href="resources/css/admin.css" >
         <link rel="stylesheet" href="resources/css/nav_bar.css" >
     </head>
     <body>
@@ -113,35 +110,71 @@
             </div></div><br>
         <div>
             <c:if test="${requestScope.LIST_EVENT ne null}">
-                <div class="service">
-                    <table border="1">
-                        <thead>
+                <div class="service" style="overflow-x:scroll; margin-top: 1.5rem">
+                    <table class="table table-bordered text-center">
+                        <thead class="thead-light">
                             <tr class="service1">
                                 <th>No</th>
-                                <th>Name</th>
-                                <th>Location</th>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Organizer Name</th>
-                                <th>Following</th>
-                                <th>Joining</th>
-                                <th>Status</th>
-                                <th>View detail</th>
+                                <th>Tên</th>
+                                <th>Địa điểm</th>
+                                <th>Ngày</th>
+                                <th>Giờ</th>
+                                <th>Người tổ chức</th>
+                                <th>Quan tâm</th>
+                                <th>Tham gia</th>
+                                <th>Trạng thái</th>
+                                <th>Chi Tiết</th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach var="event" items="${requestScope.LIST_EVENT}" varStatus="status">
                                 <tr class="service2">
-                                    <td>${status.count}</td>
-                                    <td>${event.name}</td>
-                                    <td>${event.location}</td>
-                                    <td>${event.date}</td>
-                                    <td>${event.time}</td>
-                                    <td>${event.organizerName}</td>
-                                    <td>${event.following}</td>
-                                    <td>${event.joining}</td>
-                                    <td>${event.statusId}</td>
-                                    <td><a href="viewEventDetail?eventId=${event.id}">Chi tiết</a></td>
+                                    <td><p>${status.count}</p></td>
+                                    <td>
+                                        <a href="viewEventDetail?eventId=${event.id}">${event.name}</a>
+                                    </td>
+                           
+                                    <td>
+                                        <p>${event.location}</p>
+                                    </td> 
+                                    <td>
+                                        <p>${event.date}</p>
+                                    </td>
+                                    <td>
+                                        <p>${event.time}</p>
+                                    </td>
+                                    <td>
+                                        <p>${event.organizerName}</p>
+                                    </td>
+                                    <td>
+                                        <p>${event.following}</p>
+                                    </td>
+                                    <td>
+                                        <p>${event.joining}</p>
+                                    </td>
+                                    <td>
+                                        <p>${event.statusId}</p>
+                                    </td>
+                                    <td>
+                                        <a href="viewEventDetail?eventId=${event.id}">Chi tiết</a>
+                                    </td>
+                                    
+                                    <td>
+                                                            <c:if test="${event.statusId == 1 || event.statusId == 2}">
+                                                                <form action="cancelEvent" method="POST">
+                                                                    <input type="hidden" name="eventId"
+                                                                        value="${event.id}" />
+                                                                    <input type="hidden" name="organizerType"
+                                                                        value="$${param.organizerType}" />
+                                                                    <input type="hidden" name="eventStatus"
+                                                                        value="${param.eventStatus}" />
+                                                                    <input type="hidden" name="idOrganizer"
+                                                                        value="${param.idOrganizer}" />
+                                                                    <input 
+                                                                        type="submit" name="action" value="Cancel" />
+                                                                </form>
+                                                            </c:if>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </tbody>

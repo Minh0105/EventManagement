@@ -137,3 +137,7 @@ a, a:hover {
     top: 16px;
     left: 8px;
 }
+.service table {
+    width: 95%;
+    margin: auto;
+}
