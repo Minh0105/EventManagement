@@ -91,10 +91,12 @@ public class HandleMultipartServlet extends HttpServlet {
 
         //default URL
         final String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
+        final String SEARCH_LOCATION_SERVLET = context.getInitParameter("SEARCH_LOCATION_SERVLET");
         final String REVIEW_EVENT_PAGE_LABEL = context.getInitParameter("REVIEW_EVENT_PAGE_LABEL");
 
         String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
         String REVIEW_EVENT_PAGE_PATH = roadmap.get(REVIEW_EVENT_PAGE_LABEL);
+        String SEARCH_LOCATION_SERVLET_PATH = roadmap.get(SEARCH_LOCATION_SERVLET);
         
         String url = INVALID_PAGE_PATH;
 
@@ -145,6 +147,7 @@ public class HandleMultipartServlet extends HttpServlet {
                         }
                         if (inputName.equalsIgnoreCase("action")) {
                             action = (String) item.getString();
+                            LOGGER.info("Action: "+ action);
                         }
                         if (inputName.equalsIgnoreCase("eventName")) {
                             eventName = (String) item.getString();
@@ -179,9 +182,13 @@ public class HandleMultipartServlet extends HttpServlet {
                 session.setAttribute("EVENT_POSTER_STREAM", posterStream);
                 LOGGER.info("Session attribute: ChosenLecturerList: " + chosenLecturerList);
                 session.setAttribute("ChosenLecturerList", chosenLecturerList);
+                if ("Go back".equals(action)) {
+                    url = SEARCH_LOCATION_SERVLET_PATH + "?txtSearch=";
+                }
                 if ("Review".equals(action)) {
                     url = REVIEW_EVENT_PAGE_PATH;
                 }
+                
             }
         } catch (Exception ex) {
             LOGGER.error(ex);

@@ -197,6 +197,32 @@ function sendDataToServer () {
     document.getElementById("submit_form").submit();
 }
 
+function sendDataBackToChooseDateTimeLocationPage() {
+    var form = '<form id="submit_form_back" action="handleMultipart" method="POST" enctype="multipart/form-data">'
+
+        var eventContent = createEventDetailToBackToChooseDateTimeLocationPage();
+        if (eventContent == undefined) {
+            return;
+        }
+
+        form += eventContent;
+
+        form += createChosenLecturerParameter();
+
+        form += '<input type="hidden" name="action" value="Go back" />\n';
+    form += "</form>"    
+    
+    var eventImageBackgroundInput = document.getElementById("upload-button").cloneNode();
+    eventImageBackgroundInput.style.display = "none";
+
+    document.getElementById("submiter").innerHTML = form;
+    document.getElementById("submit_form_back").appendChild(eventImageBackgroundInput);
+    console.log(document.getElementById("submit_form_back").innerHTML);
+
+    // Trigger send Request
+    document.getElementById("submit_form_back").submit();
+}
+
 function createChosenLecturerParameter() {
     var htmlContent = "";
     var chosenLecturerElements = document.getElementsByClassName("chosen_lecturer_id");
@@ -232,6 +258,22 @@ function createEventDetailParameter() {
         return undefined;
     }
 
+    var eventDescriptionInput = '<textarea style="display:none;" name="description">'+ eventDescriptionTest + '</textarea>';
+
+    htmlContent += eventNameInput;
+    htmlContent += eventDescriptionInput;
+
+    return htmlContent;
+}
+
+function createEventDetailToBackToChooseDateTimeLocationPage(){
+    var htmlContent = "";
+
+    var eventName = document.getElementById("input_event_name").value;
+    var eventNameInput = '<textarea style="display:none;" name="eventName">'+ eventName + '</textarea>';
+
+    var eventDescriptionTest = CKEDITOR.instances.input_event_description.getData();
+    
     var eventDescriptionInput = '<textarea style="display:none;" name="description">'+ eventDescriptionTest + '</textarea>';
 
     htmlContent += eventNameInput;

@@ -54,7 +54,7 @@
 
                 <!-- BACK BUTTON -->
                 <div id="btn_back_container d-flex align-items-center" class="col-5 col-md-2 col-lg-2">
-                    <p style="float:right; margin-bottom: 0 !important;" class="mybutton btn-blue" onclick="goBackToDateAndTimeScreen()">
+                    <p style="float:right; margin-bottom: 0 !important;" class="mybutton btn-blue" onclick="sendDataBackToChooseDateTimeLocationPage()">
                         Quay về trước
                     </p>
                 </div>
