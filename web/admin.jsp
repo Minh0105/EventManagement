@@ -186,47 +186,55 @@
                                     <form action="manageUserByAdmin" method="POST">
                                         <input type="hidden" name="userId" value="${organizer.id}" />
                                         <c:if test="${organizer.status eq 'Activated'}">
-                                            <button type="button" class="deac_button" data-toggle="modal"
-                                                    data-target="#exampleModal${organizer.id}">
-                                                Deactivate
-                                            </button>
+                                            <c:if test="${sessionScope.AUTHORIZING_SENDING_EMAIL eq 'false'}">
+                                                <button type="submit" class="deac_button" formaction="authorizeSendingEmail">
+                                                    Deactivate
+                                                </button>
+                                            </c:if>
+                                            <c:if test="${sessionScope.AUTHORIZING_SENDING_EMAIL eq 'true'}">
+                                                <button type="button" class="deac_button" data-toggle="modal"
+                                                        data-target="#exampleModal${organizer.id}">
+                                                    Deactivate
+                                                </button>
 
-                                            <div class="modal fade" id="exampleModal${organizer.id}" tabindex="-1" role="dialog"
-                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">     
+                                                <div class="modal fade" id="exampleModal${organizer.id}" tabindex="-1" role="dialog"
+                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">     
 
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Nội dung của việc khóa tài khoản</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">                                                        
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Nội dung của việc khóa tài khoản</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">                                                        
 
 
-                                                            <div class="col-md-12 ">                                                                                
-                                                                <div class="">
-                                                                    <input type="hidden" name="userId" value="${organizer.id}" />
-                                                   
+                                                                <div class="col-md-12 ">                                                                                
+                                                                    <div class="">
+                                                                        <input type="hidden" name="userId" value="${organizer.id}" />
 
-                                                                    </select>
-                                                                    <label class="labels">Nội Dung</label>
 
-                                                                    <input
-                                                                        class="form-control" type="text" name="reason" required />                                                             
+                                                                        </select>
+                                                                        <label class="labels">Nội Dung</label>
+
+                                                                        <input
+                                                                            class="form-control" type="text" name="reason" required />                                                             
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="text-right"><input type="submit" name="action" value="Deactivate" /> </div>
+
                                                                 </div>
-                                                                <br>
-                                                                <div class="text-right"><input type="submit" name="action" value="Deactivate" /> </div>
 
                                                             </div>
 
                                                         </div>
-
                                                     </div>
-                                                </div>
 
-                                            </div>
+                                                </div>
+                                            </c:if>
+
 
                                         </c:if>
                                         <c:if test="${organizer.status eq 'Deactivated'}">
@@ -277,49 +285,60 @@
                                     </td>
                                     <td class="button_td">
                                         <form action="manageUserByAdmin" method="POST">
-                                            <input type="hidden" name="userId" value="${student.id}" />
-                                            <c:if test="${student.status eq 'Activated'}">
-                                             <button type="button" class="deac_button" data-toggle="modal"
-                                                    data-target="#exampleModal${student.id}">
-                                                Deactivate
-                                            </button>
+                                            <input type="hidden" name="userId" value="${organizer.id}" />
+                                            <c:if test="${organizer.status eq 'Activated'}">
+                                                <c:if test="${sessionScope.AUTHORIZING_SENDING_EMAIL eq 'false'}">
+                                                    <button type="submit" class="deac_button" formaction="authorizeSendingEmail">
+                                                        Deactivate
+                                                    </button>
+                                                </c:if>
+                                                <c:if test="${sessionScope.AUTHORIZING_SENDING_EMAIL eq 'true'}">
+                                                    <button type="button" class="deac_button" data-toggle="modal"
+                                                            data-target="#exampleModal${organizer.id}">
+                                                        Deactivate
+                                                    </button>
 
-                                            <div class="modal fade" id="exampleModal${student.id}" tabindex="-1" role="dialog"
-                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">     
+                                                    <div class="modal fade" id="exampleModal${organizer.id}" tabindex="-1" role="dialog"
+                                                         aria-labelledby="exampleModalLabel" aria-hidden="true">     
 
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Nội dung của việc khóa tài khoản</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">                                                        
-
-
-                                                            <div class="col-md-12 ">                                                                                
-                                                                <div class="">
-                                                                    <input type="hidden" name="userId" value="${student.id}" />
-                                                           
-                                                                    <label class="labels">Nội Dung</label>
-
-                                                                    <input
-                                                                        class="form-control" type="text" name="reason" required />                                                             
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Nội dung của việc khóa tài khoản</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
                                                                 </div>
-                                                                <br>
-                                                                <div class="text-right"><input type="submit" name="action" value="Deactivate" /> </div>
+                                                                <div class="modal-body">                                                        
+
+
+                                                                    <div class="col-md-12 ">                                                                                
+                                                                        <div class="">
+                                                                            <input type="hidden" name="userId" value="${organizer.id}" />
+
+
+                                                                            </select>
+                                                                            <label class="labels">Nội Dung</label>
+
+                                                                            <input
+                                                                                class="form-control" type="text" name="reason" required />                                                             
+                                                                        </div>
+                                                                        <br>
+                                                                        <div class="text-right"><input type="submit" name="action" value="Deactivate" /> </div>
+
+                                                                    </div>
+
+                                                                </div>
 
                                                             </div>
-
                                                         </div>
 
                                                     </div>
-                                                </div>
+                                                </c:if>
 
-                                            </div>
+
                                             </c:if>
-                                            <c:if test="${student.status eq 'Deactivated'}">
+                                            <c:if test="${organizer.status eq 'Deactivated'}">
                                                 <input type="submit" name="action" value="Activate" />
                                             </c:if>
                                         </form>
@@ -411,54 +430,60 @@
                                     </td>
                                     <td class="button_td">
                                         <form action="manageUserByAdmin" method="POST">
-                                            <input type="hidden" name="userId" value="${lecturer.id}" />
-                                            <c:if test="${lecturer.status eq 'Activated'}">
-                                             <button type="button" class="deac_button" data-toggle="modal"
-                                                    data-target="#exampleModal${lecturer.id}">
-                                                Deactivate
-                                            </button>
+                                            <input type="hidden" name="userId" value="${organizer.id}" />
+                                            <c:if test="${organizer.status eq 'Activated'}">
+                                                <c:if test="${sessionScope.AUTHORIZING_SENDING_EMAIL eq 'false'}">
+                                                    <button type="submit" class="deac_button" formaction="authorizeSendingEmail">
+                                                        Deactivate
+                                                    </button>
+                                                </c:if>
+                                                <c:if test="${sessionScope.AUTHORIZING_SENDING_EMAIL eq 'true'}">
+                                                    <button type="button" class="deac_button" data-toggle="modal"
+                                                            data-target="#exampleModal${organizer.id}">
+                                                        Deactivate
+                                                    </button>
 
-                                            <div class="modal fade" id="exampleModal${lecturer.id}" tabindex="-1" role="dialog"
-                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">     
+                                                    <div class="modal fade" id="exampleModal${organizer.id}" tabindex="-1" role="dialog"
+                                                         aria-labelledby="exampleModalLabel" aria-hidden="true">     
 
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Nội dung của việc khóa tài khoản</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">                                                        
-
-
-                                                            <div class="col-md-12 ">                                                                                
-                                                                <div class="">
-                                                                    <input type="hidden" name="userId" value="${lecturer.id}" />
-                                                                    <label class="labels">Lý do</label>
-                                                                    <select class="form-control">
-                                                                        <option>Bạn ngu quá</option>
-                                                                        <option>Ok bạn </option>
-
-                                                                    </select>
-                                                                    <label class="labels">Nội Dung</label>
-
-                                                                    <input
-                                                                        class="form-control" type="text" name="reason" required />                                                             
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Nội dung của việc khóa tài khoản</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
                                                                 </div>
-                                                                <br>
-                                                                <div class="text-right"><input type="submit" name="action" value="Deactivate" /> </div>
+                                                                <div class="modal-body">                                                        
+
+
+                                                                    <div class="col-md-12 ">                                                                                
+                                                                        <div class="">
+                                                                            <input type="hidden" name="userId" value="${organizer.id}" />
+
+
+                                                                            </select>
+                                                                            <label class="labels">Nội Dung</label>
+
+                                                                            <input
+                                                                                class="form-control" type="text" name="reason" required />                                                             
+                                                                        </div>
+                                                                        <br>
+                                                                        <div class="text-right"><input type="submit" name="action" value="Deactivate" /> </div>
+
+                                                                    </div>
+
+                                                                </div>
 
                                                             </div>
-
                                                         </div>
 
                                                     </div>
-                                                </div>
+                                                </c:if>
 
-                                            </div>
+
                                             </c:if>
-                                            <c:if test="${lecturer.status eq 'Deactivated'}">
+                                            <c:if test="${organizer.status eq 'Deactivated'}">
                                                 <input type="submit" name="action" value="Activate" />
                                             </c:if>
                                         </form>
