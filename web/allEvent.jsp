@@ -14,100 +14,151 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  
         <link rel="stylesheet" href="resources/css/admin.css" >
+        <link rel="stylesheet" href="resources/css/mybutton.css" >
         <link rel="stylesheet" href="resources/css/nav_bar.css" >
     </head>
     <body>
 
         <%@include file="nav_bar.jsp" %>
         <section id="filter_bar">
-            <div id="decorating_text">
-                <h1>Chi Tiết Sự Kiện</h1>
-            </div>
+                <div class="top_title">
+                    <h3 class="right_title">Tra Cứu Sự Kiện</h3>
+                </div>
         </section>
-        <div class="col-md-6 "><h3>Tìm event theo: </h3></div><br>
+        <div class="col-md-6 ">
+            <h5 style="font-weight: 400">Tìm event theo: </h5>
+        </div>
 
         <!--           ĐÃ LOAD LIST ALL ORGANIZER, Select o day là khi nguoi dùng ho chon option nào thì mình show LIST ORGANIZER-->
-        <div class="col-md-6"><label class="labels">Kiểu nhà tổ chức:</label><select class="form-control" id="organizerType" onchange="organizerTypeHandler(this)" >
-                <option value="allOrganizer" selected='selected'>Tất cả</option> <!-- (ĐÂY LÀ MAC ĐINH KHI BAM VÀO "Event Management"-->
-                <option value="CL">Club's leader</option>
-                <option value="DM">Department's manager</option>
-            </select>
-            <form action ="filterEvent">
-                <div id="filter_organizer">
-                    <label class="labels">Tên nhà tổ chức:</label><div id="organizer_name">
-                        <!--           Neu chon "Tất cả" ở cái select trên  (ĐÂY LÀ MAC ĐINH KHI BAM VÀO "Event Management"-->
-                        <select class="form-control" name="idOrganizer">
-                            <option value="0">Tất cả</option>
-                            <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
-                                <c:if test="${param.idOrganizer eq organizer.id}">
-                                    <option value="${organizer.id}" selected>${organizer.name}</option>
-                                </c:if>
-                                <c:if test="${param.idOrganizer ne organizer.id}">
-                                    <option value="${organizer.id}">${organizer.name}</option>
-                                </c:if>
-                            </c:forEach>  
-                        </select>
+                            <form action="filterEvent">
+                                <div class="col-md-6">
+                                    <label class="labels">Chức vụ</label>
+                                    <select class="form-control" name="organizerType" id="organizerType"
+                                        onchange="organizerTypeHandler(this)">
+                                        <option value="allOrganizer">Tất cả</option>
+                                        <!-- (ĐÂY LÀ MAC ĐINH KHI BAM VÀO "Event Management"-->
+                                        <option value="CL">Club's leader</option>
+                                        <option value="DM">Department's manager</option>
+                                    </select>
+                                </div>
+                                <br>
+                                <script>
+                                    var items = document.getElementById("organizerType").options;
+                                    for (var i = 0; i < items.length; i++) {
+                                        if (items[i].value == "${param.organizerType}") {
+                                            items[i].selected = true;
+                                        }
+                                    }
+                                </script>
 
-                    </div>
-                    <div >
-                        <label class="labels">Tình Trạng Sư Kiện:</label><select class="form-control" name="eventStatus" >
-                            <option value="0">Tất cả</option>
-                            <option value="1">Sắp diễn ra</option>
-                            <option value="2">Đóng đăng kí</option>
-                            <option value="4">Đã kết thúc</option>
-                            <option value="3">Đã hủy</option>
-                        </select>
-                    </div><br>
-                    <input type="submit" value="Search" class="btn btn-primary"/>
-                </div>
-            </form>
-            <div id="allOrganizer">
-                <!--           Neu chon "Tất cả" ở cái select trên  (ĐÂY LÀ MAC ĐINH KHI BAM VÀO "Event Management"-->
-                <select class="form-control" name="idOrganizer">
-                    <option value="0">Tất cả</option>
-                    <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
-                        <c:if test="${param.idOrganizer eq organizer.id}">
-                            <option value="${organizer.id}" selected>${organizer.name}</option>
-                        </c:if>
-                        <c:if test="${param.idOrganizer ne organizer.id}">
-                            <option value="${organizer.id}">${organizer.name}</option>
-                        </c:if>
-                    </c:forEach>  
-                </select>
-            </div>
+                                <div id="filter_organizer">
+
+                                    <div id="organizer_name">
+                                        <!--           Neu chon "Tất cả" ở cái select trên  (ĐÂY LÀ MAC ĐINH KHI BAM VÀO "Event Management"-->
+                                        <div class="col-md-6"> <label class="labels">Tên nhà tổ chức:</label>
+                                            <select
+                                                class="form-control" name="idOrganizer">
+                                                <option value="0">Tất cả</option>
+                                                <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
+                                                    <c:if test="${param.idOrganizer eq organizer.id}">
+                                                        <option value="${organizer.id}" selected>${organizer.name}
+                                                        </option>
+                                                    </c:if>
+                                                    <c:if test="${param.idOrganizer ne organizer.id}">
+                                                        <option value="${organizer.id}">${organizer.name}</option>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br>
+
+                                    <div class="row mx-0">
+                                        <div class="col-md-6"> <label class="labels">Tình trạng sự kiện:</label> <select
+                                                class="form-control" name="eventStatus" id="eventStatus">
+                                                <option value="0">Tất cả</option>
+                                                <option value="1">Sắp diễn ra</option>
+                                                <option value="2">Đóng đăng kí</option>
+                                                <option value="3">Đã kết thúc</option>
+                                                <option value="4">Đã hủy</option>
+                                            </select>
+                                        </div>
+                                        <script>
+                                            var items = document.getElementById("eventStatus").options;
+                                            for (var i = 0; i < items.length; i++) {
+                                                if (items[i].value == "${param.eventStatus}") {
+                                                    items[i].selected = true;
+                                                }
+                                            }
+                                        </script>
+                                        <div class="col-md-4 ml-2 d-flex align-items-end">
+                                            <input type="submit" style="height: fit-content" value="Tìm kiếm" class="mybutton btn-orange" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+            
+            
+            
+            
+            
+                            <div id="allOrganizer">
+                                <!--           Neu chon "Tất cả" ở cái select trên  (ĐÂY LÀ MAC ĐINH KHI BAM VÀO "Event Management"-->
+                                <div class="col-md-6"> <label class="labels">Tên nhà tổ chức:</label>
+                                    <select
+                                        class="form-control" name="idOrganizer">
+                                        <option value="0">Tất cả</option>
+                                        <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
+                                            <c:if test="${param.idOrganizer eq organizer.id}">
+                                                <option value="${organizer.id}" selected>${organizer.name}</option>
+                                            </c:if>
+                                            <c:if test="${param.idOrganizer ne organizer.id}">
+                                                <option value="${organizer.id}">${organizer.name}</option>
+                                            </c:if>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
             <!--           Nếu chọn "Club's leader" ở cái select trên-->
-            <div id="CL">
-                <select class="form-control" name="idOrganizer">
-                    <option value="-1">Tất cả</option>
-                    <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
-                        <c:if test="${organizer.roleName eq 'CL'}">
-                            <c:if test="${param.idOrganizer eq organizer.id}">
-                                <option value="${organizer.id}" selected>${organizer.name}</option>
-                            </c:if>
-                            <c:if test="${param.idOrganizer ne organizer.id}">
-                                <option value="${organizer.id}">${organizer.name}</option>
-                            </c:if>
-                        </c:if>
-                    </c:forEach>  
-                </select>
-            </div>
+                            <div id="CL">
+                                <div class="col-md-6"> <label class="labels">Tên nhà tổ chức:</label>
+                                    <select
+                                        class="form-control" name="idOrganizer">
+                                        <option value="-1">Tất cả</option>
+                                        <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
+                                            <c:if test="${organizer.roleName eq 'CL'}">
+                                                <c:if test="${param.idOrganizer eq organizer.id}">
+                                                    <option value="${organizer.id}" selected>${organizer.name}</option>
+                                                </c:if>
+                                                <c:if test="${param.idOrganizer ne organizer.id}">
+                                                    <option value="${organizer.id}">${organizer.name}</option>
+                                                </c:if>
+                                            </c:if>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
 
             <!--           Nếu chọn "Department's manager" ở cái select trên-->
-            <div id="DM">
-                <select class="form-control" name="idOrganizer">
-                    <option value="-2">Tất cả</option>
-                    <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
-                        <c:if test="${organizer.roleName eq 'DM'}">
-                            <c:if test="${param.idOrganizer eq organizer.id}">
-                                <option value="${organizer.id}" selected>${organizer.name}</option>
-                            </c:if>
-                            <c:if test="${param.idOrganizer ne organizer.id}">
-                                <option value="${organizer.id}">${organizer.name}</option>
-                            </c:if>
-                        </c:if>
-                    </c:forEach>  
-                </select>
-            </div></div><br>
+                            <div id="DM">
+                                <div class="col-md-6"> <label class="labels">Tên nhà tổ chức:</label>
+                                    <select
+                                        class="form-control" name="idOrganizer">
+                                        <option value="-2">Tất cả</option>
+                                        <c:forEach var="organizer" items="${requestScope.LIST_ORGANIZER_EVENT}">
+                                            <c:if test="${organizer.roleName eq 'DM'}">
+                                                <c:if test="${param.idOrganizer eq organizer.id}">
+                                                    <option value="${organizer.id}" selected>${organizer.name}</option>
+                                                </c:if>
+                                                <c:if test="${param.idOrganizer ne organizer.id}">
+                                                    <option value="${organizer.id}">${organizer.name}</option>
+                                                </c:if>
+                                            </c:if>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+            <br>
         <div>
             <c:if test="${requestScope.LIST_EVENT ne null}">
                 <div class="service" style="overflow-x:scroll; margin-top: 1.5rem">
@@ -133,7 +184,6 @@
                                     <td>
                                         <a href="viewEventDetail?eventId=${event.id}">${event.name}</a>
                                     </td>
-                           
                                     <td>
                                         <p>${event.location}</p>
                                     </td> 
@@ -158,32 +208,17 @@
                                     <td>
                                         <a href="viewEventDetail?eventId=${event.id}">Chi tiết</a>
                                     </td>
-                                    
-                                    <td>
-                                                            <c:if test="${event.statusId == 1 || event.statusId == 2}">
-                                                                <form action="cancelEvent" method="POST">
-                                                                    <input type="hidden" name="eventId"
-                                                                        value="${event.id}" />
-                                                                    <input type="hidden" name="organizerType"
-                                                                        value="$${param.organizerType}" />
-                                                                    <input type="hidden" name="eventStatus"
-                                                                        value="${param.eventStatus}" />
-                                                                    <input type="hidden" name="idOrganizer"
-                                                                        value="${param.idOrganizer}" />
-                                                                    <input 
-                                                                        type="submit" name="action" value="Cancel" />
-                                                                </form>
-                                                            </c:if>
-                                    </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
-
                 </div>
             </c:if>
         </div>
     </div>
+
+    <%@include file="footer.jsp" %>
+
     <script>
         var organizerTypeSelect = document.getElementById("organizerType");
         document.getElementById("allOrganizer").style.display = "none";
@@ -204,7 +239,6 @@
                 document.getElementById("organizer_name").innerHTML = DM;
             }
         }
-
     </script>
 </body>
 </html>

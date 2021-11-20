@@ -103,7 +103,7 @@ a, a:hover {
     justify-content: center;
 }
 
-.nav-item a {
+.side_bar_option a {
     gap: 20px;
     font-size: 1.15rem;
     color: white;
@@ -111,17 +111,17 @@ a, a:hover {
     border-radius: 10px;
 }
 
-.nav-item a:hover{
+.side_bar_option a:hover{
     background-color: #FFFFFF;
     color: #ff5922;
 }
 
-.nav-item a.selected {
+.side_bar_option a.selected {
     background-color: #FFFFFF !important;
     color: #ff5922 !important;
 }
 
-.nav-item{
+.side_bar_option{
     list-style-type:none;
     display: flex;
     margin-top: 0.5rem;
@@ -175,7 +175,7 @@ a, a:hover {
         margin-left: 10px;
     }
    
-    .nav-item a{
+    .side_bar_option a{
         width: 100%;
         display:block;        
     }
@@ -355,7 +355,7 @@ input[value="Deactivate"]:hover, .button_td > button:hover {
     font-weight: 400;
 }
 
-.nav-item > .nav-link {
+.side_bar_option > .nav-link {
     color: white;
 }
 
@@ -395,11 +395,11 @@ td {
     position: relative;
 }
 
-ul {
+#side_bar_menu {
     padding: 1.5rem 1rem!important;
 }
 
-ul li {
+#side_bar_menu li {
     width: 100%;
 }
 
