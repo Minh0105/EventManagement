@@ -160,7 +160,7 @@ div.scrollmenu div > p {
 }
 
 #date_and_slot_table {
-    border: #5D5D5D 0.7px solid;
+    border: #b3b3b3 1px solid;
     border-collapse: inherit !important;
     border-spacing: 0px;
     border-radius: 6px;
@@ -177,7 +177,7 @@ div.scrollmenu div > p {
 }
 
 #date_and_slot_table th{
-    border-right: #5D5D5D 1px solid;
+    border-right: #b3b3b3 1px solid;
 }
 
 .last_day_cell, .last_row_cell {
@@ -188,10 +188,17 @@ div.scrollmenu div > p {
     border-radius: 0px 5px 0px 0px;
 }
 
+tr > td:last-child {
+    border-right: none;
+}
+
+tr:last-child > td:last-child {
+    border-bottom-right-radius: 5px;
+}
 
 #date_and_slot_table, td {
-    border-top: #5d5d5d 0.7px solid;
-    border-right: #5d5d5d 0.7px solid;
+    border-top: #b3b3b3 1px solid;
+    border-right: #b3b3b3 1px solid;
 }
 
 #week_infor_cell {
@@ -258,5 +265,12 @@ div.scrollmenu div > p {
 }
 
 
+
+/* DATE TIME SELECT  */
+
+select {
+    border-radius: 5px;
+    border: #b3b3b3 1px solid;
+}
 
 

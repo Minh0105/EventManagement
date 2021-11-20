@@ -117,7 +117,7 @@
                             <tr id="day_row">
                                 <th id="week_infor_cell">
                                 <div> 
-                                    <span style="width: 40%;">Year</span>
+                                    <span style="width: 40%;">Năm</span>
                                     
                                     <select onchange="onYearChange(this)" style="width: 60%; float: right;" id="year_option" class="inline-block">
 
@@ -131,7 +131,6 @@
                             </tr>
                         </thead>
                         <tbody id="date_and_slot_table_body">
-                        
                             <%! 
                                 private final int DECEMBER_LAST_DATE = 31;
                                 private final int JANUARY_FIRST_DATE = 1;
@@ -139,6 +138,7 @@
                                 private final int SUNDAY = 8;
                                 private final int SLOT_1 = 1;
                                 private final int LAST_SLOT = 8;
+                                private final long A_DAY_MILIS = 24 * 60 * 60 * 1000;
                                 private int getValidLastDayOfWeek(String date) { 
                                     int lastDay = -1;
                                     String[] dateInfor = date.split("-");
@@ -184,7 +184,12 @@
                                 }
 
                                 private Date getTodayDateTime() { 
-                                    return Calendar.getInstance().getTime();
+                                    Date todayDate = Calendar.getInstance().getTime();
+                                    todayDate.setHours(0);
+                                    todayDate.setMinutes(0);
+                                    todayDate.setSeconds(0);
+
+                                    return todayDate;
                                 } 
 
                                 private int getAppDayOfWeek (Date date) {
@@ -202,10 +207,15 @@
                                     if (dayOfWeek == 0) {
                                         dayOfWeek = 7;
                                     }
+
                                     int offsetDay = dayOfWeek - 1;
-                                    long mondayTimeMilis = aDate.getTime() - offsetDay * 24 * 60 * 60 * 100;
+                                    long mondayTimeMilis = aDate.getTime() - offsetDay * A_DAY_MILIS;
                                     monday = new Date(mondayTimeMilis);
                                     
+                                    monday.setHours(0);
+                                    monday.setMinutes(0);
+                                    monday.setSeconds(0);
+
                                     return monday;
                                 }
 
@@ -216,15 +226,25 @@
                                     int year = Integer.valueOf(dateInfor[0]);
                                     int month = Integer.valueOf(dateInfor[1]);
                                     int date = Integer.valueOf(dateInfor[2]);
-
-                                    startDate_Date.setYear(year);
-                                    startDate_Date.setDate(date);
+                                    System.out.println("YEAR MONTH DATE " + year + " - " + month + " - " + date);
                                     startDate_Date.setMonth(month - 1);
-                                    startDate_Date.setHours(todayDate.getHours());
-                                    startDate_Date.setMinutes(todayDate.getMinutes());
-                                    startDate_Date.setSeconds(todayDate.getSeconds());
+                                    startDate_Date.setYear(year - 1900);
+                                    startDate_Date.setDate(date);
+
+                                    startDate_Date.setHours(0);
+                                    startDate_Date.setMinutes(0);
+                                    startDate_Date.setSeconds(0);
 
                                     return startDate_Date;
+                                }
+
+                                Date thisWeekMondayDate = null;
+                                private Date getDateByDayOfWeek (int appDayOfWeek) { 
+                                    int offset = appDayOfWeek - MONDAY;
+                                    long resultTime = thisWeekMondayDate.getTime() + offset * A_DAY_MILIS;
+                                    Date result = new Date(resultTime);
+
+                                    return result;
                                 }
                             %>
 
@@ -242,9 +262,15 @@
                             
                             int lastDayOfWeek = getValidLastDayOfWeek(startDate);
                             int firstDayOfWeek = getValidFirstDayOfWeek(startDate);
+                            
                             Date startDate_Date = getStartDate_Date(startDate);
+                            thisWeekMondayDate = getMondayDateFromADateOfWeek(startDate_Date);
                             Date todayDate = getTodayDateTime();
-                            Date mondayDate = getMondayDateFromADateOfWeek(startDate_Date);
+                            System.out.println("*****START DATE " + startDate_Date);
+
+                            System.out.println("*****MONDAY " + thisWeekMondayDate);
+                            
+                            System.out.println("*****TODAY DATE " + todayDate);
                             int todayDayOfWeek = getAppDayOfWeek(todayDate);
                             
                             for (int slot = SLOT_1; slot <= LAST_SLOT; slot++) {
@@ -260,19 +286,21 @@
                         <%
                                 for (int day = MONDAY; day <= SUNDAY; day++) {
                                     
-                                    if (startDate_Date.getTime() > mondayDate.getTime() && day < todayDayOfWeek) { 
-                        %>
-                                        <td class="busy_slot_cell past_cell" ></td>
-                        <%
-                                        continue;
-                                    }
-                                    
                                     if ((listBusySlot != null) && listBusySlot.contains(new RangeDateDTO(slot, day))) { 
                         %>
                                         <td class="busy_slot_cell disabled_cell" ></td>
                         <%
                                         continue;
                                     }
+
+
+                                    if (getDateByDayOfWeek(day).getTime() < todayDate.getTime()) { 
+                        %>
+                                        <td class="busy_slot_cell past_cell" ></td>
+                        <%
+                                        continue;
+                                    }
+                                    
 
                                     if (day < firstDayOfWeek || day > lastDayOfWeek) { 
                                         if (day == SUNDAY) {

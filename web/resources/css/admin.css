@@ -312,7 +312,7 @@ a, a:hover {
 }
 
 .deac_button, input[value="Deactivate"], input[value="Cancel"], .button_td > button {
-    background-color: none !important;
+    background-color: transparent !important;
     color: rgb(89, 89, 89);
     border: none;
     width: 100%;
@@ -322,7 +322,7 @@ a, a:hover {
     border: none !important;
 }
 
-.deac_button, input[value="Deactivate"]:hover, input[value="Cancel"], .button_td > button:hover {
+.deac_button:hover, input[value="Deactivate"]:hover, input[value="Cancel"], .button_td > button:hover {
     color: rgb(230, 51, 51);
 }
 
@@ -379,7 +379,7 @@ td p, td a {
     display: inline-block;
     margin-bottom: 0 !important;
     max-width: 15vw;
-    min-width: 5vw;
+    min-width: 4vw;
     text-overflow: ellipsis;
     overflow: hidden;
     background-color: white;

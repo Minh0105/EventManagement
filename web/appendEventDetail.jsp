@@ -83,7 +83,7 @@
 
                 <div id="image_container" class="col-12">
                     <figure id="figure_image" >
-                        <img id="chosen-image" 
+                        <img id="chosen-image" referrerpolicy="no-referrer" 
                         <c:if test="${not empty eventDetail.poster}">
                             src="data:image/jpg;base64,${eventDetail.poster}">
                         </c:if>
@@ -111,7 +111,7 @@
                     <div class="place_holder">
                         <div>
                             <span class="mr-3" style="visibility: hidden;">Placleholder name</span>
-                            <img class="btn_remove_lec" style="visibility:hidden;" src="resources/icon/icon_remove_lecturer.svg">
+                            <img class="btn_remove_lec" style="visibility:hidden;" src="resources/icon/icon_remove_lecturer.svg"  referrerpolicy="no-referrer" >
                         </div>
                     </div>
                     <c:forEach var="chosenLec" items="${sessionScope.ChosenLecturerList}">
