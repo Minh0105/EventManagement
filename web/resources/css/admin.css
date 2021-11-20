@@ -311,17 +311,18 @@ a, a:hover {
     padding: 12px!important;
 }
 
-input[value="Deactivate"], input[value="Cancel"], .button_td > button {
-    background-color: white;
+.deac_button, input[value="Deactivate"], input[value="Cancel"], .button_td > button {
+    background-color: none !important;
     color: rgb(89, 89, 89);
     border: none;
     width: 100%;
     display: block;
     height: 5.2vh;
     min-height: 30px;
+    border: none !important;
 }
 
-input[value="Deactivate"]:hover, input[value="Cancel"], .button_td > button:hover {
+.deac_button, input[value="Deactivate"]:hover, input[value="Cancel"], .button_td > button:hover {
     color: rgb(230, 51, 51);
 }
 

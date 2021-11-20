@@ -58,24 +58,25 @@
                 </div>
 
                 <!-- MENU  -->
-                <ul>
-                    <li class="nav-item">
+                <ul id="side_bar_menu">
+
+                    <li class="nav-item side_bar_option">
                         <a class="nav-link <%if (organizerSelected) {%> selected<%}%>" href="manageByAdmin?management=organizer">Câu lạc bộ, phòng ban</a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item side_bar_option">
                         <a class="nav-link <%if (eventSelected) {%> selected<%}%>" href="manageByAdmin?management=event">Sự kiện</a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item side_bar_option">
                         <a class="nav-link <%if (studentSelected) {%> selected<%}%>" href="manageByAdmin?management=student">Sinh viên</a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item side_bar_option">
                         <a class="nav-link <%if (lecturerSelected) {%> selected<%}%>" href="manageByAdmin?management=lecturer">Giảng viên</a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item side_bar_option">
                         <a class="nav-link <%if (commentSelected) {%> selected<%}%>" href="manageByAdmin?management=comment">Bình luận</a>
                     </li>
 
@@ -185,7 +186,7 @@
                                     <form action="manageUserByAdmin" method="POST">
                                         <input type="hidden" name="userId" value="${organizer.id}" />
                                         <c:if test="${organizer.status eq 'Activated'}">
-                                            <button type="button" class="button_td" data-toggle="modal"
+                                            <button type="button" class="deac_button" data-toggle="modal"
                                                     data-target="#exampleModal${organizer.id}">
                                                 Deactivate
                                             </button>
@@ -278,7 +279,7 @@
                                         <form action="manageUserByAdmin" method="POST">
                                             <input type="hidden" name="userId" value="${student.id}" />
                                             <c:if test="${student.status eq 'Activated'}">
-                                             <button type="button" class="button_td" data-toggle="modal"
+                                             <button type="button" class="deac_button" data-toggle="modal"
                                                     data-target="#exampleModal${student.id}">
                                                 Deactivate
                                             </button>
@@ -412,7 +413,7 @@
                                         <form action="manageUserByAdmin" method="POST">
                                             <input type="hidden" name="userId" value="${lecturer.id}" />
                                             <c:if test="${lecturer.status eq 'Activated'}">
-                                             <button type="button" class="button_td" data-toggle="modal"
+                                             <button type="button" class="deac_button" data-toggle="modal"
                                                     data-target="#exampleModal${lecturer.id}">
                                                 Deactivate
                                             </button>
