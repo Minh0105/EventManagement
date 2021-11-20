@@ -165,7 +165,7 @@
                     <table class="table table-bordered text-center">
                         <thead class="thead-light">
                             <tr class="service1">
-                                <th>No</th>
+                                <th>STT</th>
                                 <th>Tên</th>
                                 <th>Địa điểm</th>
                                 <th>Ngày</th>
@@ -174,7 +174,6 @@
                                 <th>Quan tâm</th>
                                 <th>Tham gia</th>
                                 <th>Trạng thái</th>
-                                <th>Chi Tiết</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -204,9 +203,6 @@
                                     </td>
                                     <td>
                                         <p>${event.statusId}</p>
-                                    </td>
-                                    <td>
-                                        <a href="viewEventDetail?eventId=${event.id}">Chi tiết</a>
                                     </td>
                                 </tr>
                             </c:forEach>

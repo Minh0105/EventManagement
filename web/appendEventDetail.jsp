@@ -74,7 +74,7 @@
 
                 <h5 class="title col-12">Nội Dung Sự Kiện</h5>
                 <textarea class="col-12" id="input_event_description" rows="7" cols="12"
-                        type="text"name="description">${eventDetail.description}</textarea>
+                        type="text"name="description" minlength="3">${eventDetail.description}</textarea>
 
                 <script src="resources/js/setUpCKEditor.js"></script>
 
