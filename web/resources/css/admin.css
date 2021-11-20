@@ -30,7 +30,7 @@ a, a:hover {
 
 .header3 {
     background: rgb(230,75,13);
-    background: linear-gradient(307deg, rgba(230,75,13,1) 0%, rgb(240, 105, 56) 100%);
+    background: linear-gradient(307deg, rgba(230,75,13) 0%, rgb(240, 105, 56) 100%);
     top: 0px;
     width: 300px;
     height: 100vh;

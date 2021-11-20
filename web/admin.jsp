@@ -809,8 +809,7 @@
                     </div>
                 </div>
             </div>
-
-            <%@include file="footer.jsp" %>
+            
             <script>
                 var organizerTypeSelect = document.getElementById("organizerType");
                 var eventStatusSelect = document.getElementById("eventStatus");
@@ -834,6 +833,8 @@
                 }
             </script>
         </c:if>
+
+        <%@include file="footer.jsp" %>
 
         <script src="<c:url value=" https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js" />">
         </script>
