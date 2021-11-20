@@ -174,7 +174,13 @@ function onRemoveChosenLecturerClick(removedLecturerID, button) {
 function sendDataToServer () {
     var form = '<form id="submit_form" action="handleMultipart" method="POST" enctype="multipart/form-data">'
 
-        form += createEventDetailParameter();
+        var eventContent = createEventDetailParameter();
+        if (eventContent == undefined) {
+            return;
+        }
+
+        form += eventContent;
+
         form += createChosenLecturerParameter();
         form += createActionParameter();
 
@@ -206,9 +212,26 @@ function createEventDetailParameter() {
     var htmlContent = "";
 
     var eventName = document.getElementById("input_event_name").value;
+    if (eventName.length == 0) {
+        window.alert("Tên sự kiện không được để trống");
+        return undefined;
+
+    } 
+    console.log("HAHA:" + eventName.length)
+    if (eventName.length > 99) {
+        window.alert("Tên sự kiện không được quá 99 kí tự");
+        return undefined;
+    }
+
     var eventNameInput = '<textarea style="display:none;" name="eventName">'+ eventName + '</textarea>';
 
     var eventDescriptionTest = CKEDITOR.instances.input_event_description.getData();
+    
+    if (eventDescriptionTest.length == 0) {
+        window.alert("Nội dung sự kiện không được để trống");
+        return undefined;
+    }
+
     var eventDescriptionInput = '<textarea style="display:none;" name="description">'+ eventDescriptionTest + '</textarea>';
 
     htmlContent += eventNameInput;

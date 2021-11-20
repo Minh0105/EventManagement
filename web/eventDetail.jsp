@@ -452,6 +452,9 @@
     
                     <!-- QUESTION & ANSWER -->
                     <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                        <% if ("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName())) { %>
+                            <p id="no_question_text" style="color:rgba(0, 0, 0, 0.5)">Chưa có câu hỏi nào</p>
+                        <% } %>
                         <div class="ask">
                             <%
                                 if ("STUDENT".equals(loginUser.getRoleName())) {
@@ -464,22 +467,26 @@
                                         </div>
                                         
                                         <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
-    
                                     </form>
                             <%
                                 }
                                 List<CommentDTO> listQuestion = (List<CommentDTO>) request.getAttribute("LIST_QUESTION");
+                            
+                                if (listQuestion.size() > 0) {
+                            %> 
+                                    <script>$('#no_question_text').hide()</script>
+                            <%  } 
+
                                 for (CommentDTO question : listQuestion) {
                             %>
                             <div class="comment_item">
                                 <div class="avatar_container">
-                                    <img class="rounded-circle lec_avatar" src="<%= question.getUserAvatar()%>" class="rounded-circle" alt="">
+                                    <img class="rounded-circle lec_avatar" src="<%= question.getUserAvatar()%>" class="rounded-circle" alt="" referrerpolicy="no-referrer">
                                 </div>
     
                                 <div class="comment_infor">
                                     <p class="comment_username"><%= question.getUserName()%> - <%= question.getUserRoleName()%></p>
                                     <p class="comment_content"><%= question.getContents()%></p>
-    
                                 <%
                                     if (!"STUDENT".equals(loginUser.getRoleName())) {
                                 %>
@@ -501,7 +508,7 @@
                             %>
                                     <div class="repComment2">
                                         <div class="repComment2a">
-                                            <img src="<%= reply.getUserAvatar()%>" class="rounded-circle" class="rounded-circle" alt="">
+                                            <img src="<%= reply.getUserAvatar()%>" class="rounded-circle" class="rounded-circle" alt="" referrerpolicy="no-referrer">
                                         </div>
                                         <div class="repComment2b">
                                             <p class="comment_username"><%= reply.getUserName()%> - <%= reply.getUserRoleName()%></p>
