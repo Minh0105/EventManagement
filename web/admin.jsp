@@ -196,7 +196,6 @@
                                                         data-target="#exampleModal${organizer.id}">
                                                     Deactivate
                                                 </button>
-
                                                 <div class="modal fade" id="exampleModal${organizer.id}" tabindex="-1" role="dialog"
                                                      aria-labelledby="exampleModalLabel" aria-hidden="true">     
 
@@ -285,8 +284,8 @@
                                     </td>
                                     <td class="button_td">
                                         <form action="manageUserByAdmin" method="POST">
-                                            <input type="hidden" name="userId" value="${organizer.id}" />
-                                            <c:if test="${organizer.status eq 'Activated'}">
+                                            <input type="hidden" name="userId" value="${student.id}" />
+                                            <c:if test="${student.status eq 'Activated'}">
                                                 <c:if test="${sessionScope.AUTHORIZING_SENDING_EMAIL eq 'false'}">
                                                     <button type="submit" class="deac_button" formaction="authorizeSendingEmail">
                                                         Deactivate
@@ -294,11 +293,11 @@
                                                 </c:if>
                                                 <c:if test="${sessionScope.AUTHORIZING_SENDING_EMAIL eq 'true'}">
                                                     <button type="button" class="deac_button" data-toggle="modal"
-                                                            data-target="#exampleModal${organizer.id}">
+                                                            data-target="#exampleModal${student.id}">
                                                         Deactivate
                                                     </button>
 
-                                                    <div class="modal fade" id="exampleModal${organizer.id}" tabindex="-1" role="dialog"
+                                                    <div class="modal fade" id="exampleModal${student.id}" tabindex="-1" role="dialog"
                                                          aria-labelledby="exampleModalLabel" aria-hidden="true">     
 
                                                         <div class="modal-dialog" role="document">
@@ -314,7 +313,7 @@
 
                                                                     <div class="col-md-12 ">                                                                                
                                                                         <div class="">
-                                                                            <input type="hidden" name="userId" value="${organizer.id}" />
+                                                                            <input type="hidden" name="userId" value="${student.id}" />
 
 
                                                                             </select>
@@ -338,7 +337,7 @@
 
 
                                             </c:if>
-                                            <c:if test="${organizer.status eq 'Deactivated'}">
+                                            <c:if test="${student.status eq 'Deactivated'}">
                                                 <input type="submit" name="action" value="Activate" />
                                             </c:if>
                                         </form>
@@ -430,8 +429,8 @@
                                     </td>
                                     <td class="button_td">
                                         <form action="manageUserByAdmin" method="POST">
-                                            <input type="hidden" name="userId" value="${organizer.id}" />
-                                            <c:if test="${organizer.status eq 'Activated'}">
+                                            <input type="hidden" name="userId" value="${lecturer.id}" />
+                                            <c:if test="${lecturer.status eq 'Activated'}">
                                                 <c:if test="${sessionScope.AUTHORIZING_SENDING_EMAIL eq 'false'}">
                                                     <button type="submit" class="deac_button" formaction="authorizeSendingEmail">
                                                         Deactivate
@@ -439,11 +438,11 @@
                                                 </c:if>
                                                 <c:if test="${sessionScope.AUTHORIZING_SENDING_EMAIL eq 'true'}">
                                                     <button type="button" class="deac_button" data-toggle="modal"
-                                                            data-target="#exampleModal${organizer.id}">
+                                                            data-target="#exampleModal${lecturer.id}">
                                                         Deactivate
                                                     </button>
 
-                                                    <div class="modal fade" id="exampleModal${organizer.id}" tabindex="-1" role="dialog"
+                                                    <div class="modal fade" id="exampleModal${lecturer.id}" tabindex="-1" role="dialog"
                                                          aria-labelledby="exampleModalLabel" aria-hidden="true">     
 
                                                         <div class="modal-dialog" role="document">
@@ -459,7 +458,7 @@
 
                                                                     <div class="col-md-12 ">                                                                                
                                                                         <div class="">
-                                                                            <input type="hidden" name="userId" value="${organizer.id}" />
+                                                                            <input type="hidden" name="userId" value="${lecturer.id}" />
 
 
                                                                             </select>
@@ -483,7 +482,7 @@
 
 
                                             </c:if>
-                                            <c:if test="${organizer.status eq 'Deactivated'}">
+                                            <c:if test="${lecturer.status eq 'Deactivated'}">
                                                 <input type="submit" name="action" value="Activate" />
                                             </c:if>
                                         </form>
