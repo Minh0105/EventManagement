@@ -699,6 +699,31 @@ public class EventDAO {
         }
         return check;
     }
+    
+    public boolean removeAllLecturerInEvent(int eventId) throws SQLException, NamingException {
+        boolean check = false;
+        List<LecturerBriefInfoDTO> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "DELETE FROM tblLecturersInEvents WHERE eventId = ? ";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, eventId);
+                check = stm.executeUpdate() > 0;
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
 
     public boolean checkFollowed(int studentId, int eventId) throws SQLException {
         boolean check = false;

@@ -7,11 +7,14 @@ package fptu.swp.controller;
 
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
+import fptu.swp.entity.user.LecturerBriefInfoDTO;
 import fptu.swp.entity.user.UserDAO;
 import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -45,6 +48,7 @@ public class UpdateEventServlet extends HttpServlet {
         // declare var
         EventDAO eventDao = new EventDAO();
         UserDAO userDao = new UserDAO();
+        List<LecturerBriefInfoDTO> chosenLecturerListNew = new ArrayList<>();
 
         // get roadmap
         ServletContext context = request.getServletContext();
@@ -67,15 +71,26 @@ public class UpdateEventServlet extends HttpServlet {
             if (loginUserId == organizerIdOfEvent) {
                 String eventName = request.getParameter("eventName");
                 String description = request.getParameter("description");
+                String[] lecturerIdList = request.getParameterValues("chosen_lecturer");
 
                 EventDetailDTO detail = eventDao.getEventDetail(eventId);
                 if (detail != null) {
                     if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {
+                        for (String lecturerId : lecturerIdList) {
+                            LecturerBriefInfoDTO lec = userDao.getLecturerById(Integer.parseInt(lecturerId));
+                            if (lec != null) {
+                                chosenLecturerListNew.add(lec);
+                            }
+                        }
+                        eventDao.removeAllLecturerInEvent(eventId);
+                        eventDao.insertNewEventLecturer(chosenLecturerListNew, eventId);
                         detail.setDescription(description);
                         detail.setName(eventName);
                         if (eventDao.updateEventInfo(detail)) {
                             url = VIEW_EVENTDETAIL_SERVLET_PATH;
                         }
+                        request.getSession(false).removeAttribute("ChosenLecturerList");
+                        request.getSession(false).removeAttribute("LecturerList");
 
                     }
                 }

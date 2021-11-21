@@ -7,11 +7,14 @@ package fptu.swp.controller;
 
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
+import fptu.swp.entity.user.LecturerBriefInfoDTO;
 import fptu.swp.entity.user.UserDAO;
 import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -25,7 +28,9 @@ import javax.servlet.http.HttpSession;
  * @author triet
  */
 public class OrganizerRedirectServlet extends HttpServlet {
-static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(OrganizerRedirectServlet.class);
+
+    static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(OrganizerRedirectServlet.class);
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -38,7 +43,7 @@ static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(
         // get roadmap
         ServletContext context = request.getServletContext();
         HashMap<String, String> roadmap = (HashMap<String, String>) context.getAttribute("ROADMAP");
-        
+
         //default url
         final String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
         final String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
@@ -47,27 +52,40 @@ static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(
         final String UPDATE_FOLLOWUP_PAGE_LABEL = context.getInitParameter("UPDATE_FOLLOWUP_PAGE_LABEL");
         final String UPDATE_FOLLOWUP_PAGE_PATH = roadmap.get(UPDATE_FOLLOWUP_PAGE_LABEL);
         String url = INVALID_PAGE_PATH;
-        
-        try{
+
+        try {
             String action = request.getParameter("action");
             int eventId = Integer.parseInt(request.getParameter("eventId"));
             UserDTO loginUser = (UserDTO) session.getAttribute("USER");
             EventDetailDTO detail = eventDao.getEventDetail(eventId);
-            
+
             int loginUserId = loginUser.getId();
             int organizerIdOfEvent = userDao.getOrganizerIdByEventId(eventId);
 
             if (loginUserId == organizerIdOfEvent) {
 
                 request.setAttribute("UPDATING_EVENT", detail);
-                if("updateInformation".equals((action))){
-                    url=UPDATE_EVENT_PAGE_PATH;
-                } else if("updateFollowUp".equals((action))){
-                    url=UPDATE_FOLLOWUP_PAGE_PATH;
+                if ("updateInformation".equals((action))) {
+                    List<LecturerBriefInfoDTO> chosenLecturerList = new ArrayList<>();
+                    for (LecturerBriefInfoDTO lecturer : userDao.getListLecturerBriefInfo(eventId)) {
+                        chosenLecturerList.add(lecturer);
+                    }
+                    LOGGER.info("Session attribute: ChosenLecturerList: " + chosenLecturerList);
+                    session.setAttribute("ChosenLecturerList", chosenLecturerList);
+
+                    // LecturerList Attribute
+                    List<LecturerBriefInfoDTO> lecturerList;
+                    lecturerList = userDao.getAllLecturer();
+
+                    LOGGER.info("Session Attribute - LecturerList : " + lecturerList);
+                    session.setAttribute("LecturerList", lecturerList);
+                    url = UPDATE_EVENT_PAGE_PATH;
+                } else if ("updateFollowUp".equals((action))) {
+                    url = UPDATE_FOLLOWUP_PAGE_PATH;
                 }
-                
+
             }
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             LOGGER.error(ex);
         } finally {
             RequestDispatcher dis = request.getRequestDispatcher(url);
