@@ -277,6 +277,7 @@ body {
   position: absolute;
   display: none;
   flex-direction: column;
+  z-index: 10;
 }
 
 #floated_lecturer_list:last-child {

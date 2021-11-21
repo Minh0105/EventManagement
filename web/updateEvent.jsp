@@ -8,6 +8,8 @@
 <%@page import="fptu.swp.entity.user.LecturerBriefInfoDTO"%>
 <%@page import="fptu.swp.entity.event.EventDetailDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -55,9 +57,7 @@
                 <!-- EVENT DESCRIPTION        -->
                 <h5 class="title col-12">Nội Dung Sự Kiện</h5>
                 <textarea
-                    class="col-12 my-text-input" id="input_event_description" 
-
-                    rows="7" cols="12"
+                    class="col-12 my-text-input" id="input_event_description" rows="7" cols="12" 
                     type="text"><%= detail.getDescription()%></textarea>
 
                 <div id="update-desciption">
@@ -78,6 +78,7 @@
                         </div>
                     </div>
                     <c:forEach var="chosenLec" items="${sessionScope.ChosenLecturerList}">
+                        <script>$(".place_holder").hide()</script>
                         <div class="chosen_lecturer">
                             <div>
                                 <span class="mr-3">${chosenLec.name}</span>
@@ -107,11 +108,11 @@
                     %>
                     <div class="lec_item" onclick="onChooseLecturer(this)" 
                          <%
-                             if ((chosenLecturerList != null) && chosenLecturerList.contains(lecturer)) {
+                            if ((chosenLecturerList != null) && chosenLecturerList.contains(lecturer)) {
                          %>
-                         style="display: none"
+                                style="display: none"
                          <%
-                             }
+                            }
                          %>      >
                         <img class="lec_ava" src="<%= lecturer.getAvatar()%>">
                         <p class="d-inline-block mb-0 ml-3 lec_name" style="color: #303030;"><%= lecturer.getName()%></p>
@@ -123,43 +124,10 @@
                 </div> 
 
                 <div id="btn_update_description_container">
-                    <button id="btn_update_description" class="mybutton btn-big btn-orange" onclick="updateNameDescriptionLecturerList()">Cập nhật thông tin</button>
+                    <button id="btn_update_description" class="mybutton btn-big btn-orange" onclick="updateNameDescriptionLecturerList(<%= detail.getId()%>)">Cập nhật thông tin</button>
                 </div>
 
                 <script src="resources/js/setUpCKEditor.js"></script>
-                <script>
-                        function updateNameDescriptionLecturerList() {
-                            var eventDescriptionTest = CKEDITOR.instances.input_event_description.getData();
-                            var eventName = document.getElementById("input_event_name").value;
-                            var form = document.createElement("form");
-                            document.body.appendChild(form);
-                            form.method = "POST";
-                            form.action = "updateEvent";
-                            var inputEventId = document.createElement("INPUT");
-                            inputEventId.name = "eventId";
-                            inputEventId.value = '<%= detail.getId()%>';
-                            inputEventId.type = 'hidden'
-                            form.appendChild(inputEventId);
-                            var inputEventName = document.createElement("INPUT");
-                            inputEventName.name = "eventName";
-                            inputEventName.value = eventName;
-                            inputEventName.type = 'hidden';
-                            form.appendChild(inputEventName);
-                            var inputDescription = document.createElement("INPUT");
-                            inputDescription.name = "description";
-                            inputDescription.value = eventDescriptionTest;
-                            inputDescription.type = 'hidden';
-                            form.appendChild(inputDescription);
-                            
-//                            var inputChosenLecturer = document.querySelectorAll('input[name="chosen_lecturer"]');
-//                            for(var inputLecturer in inputChosenLecturer){
-//                                form.appendChild(inputLecturer);
-//                            }
-//                            console.log(form);
-                            
-                            
-                        }
-                </script>
             </div>
 
             <!-- EVENT IMAGE  -->
@@ -190,22 +158,22 @@
         <script src="resources/js/create_event.js"></script>
 
         <script>
-                        function updatePoster() {
-                            var form = '';
-                            form += '<form id="submit_form" action="changePoster" method="POST" enctype="multipart/form-data">'
-                            form += '<input type="hidden" name="eventId" value="<%= detail.getId()%>" />'
-                            form += "</form>"
+            function updatePoster() {
+                var form = '';
+                form += '<form id="submit_form" action="changePoster" method="POST" enctype="multipart/form-data">'
+                form += '<input type="hidden" name="eventId" value="<%= detail.getId()%>" />'
+                form += "</form>"
 
-                            var eventImageBackgroundInput = document.getElementById("upload-button").cloneNode();
-                            eventImageBackgroundInput.style.display = "none";
+                var eventImageBackgroundInput = document.getElementById("upload-button").cloneNode();
+                eventImageBackgroundInput.style.display = "none";
 
-                            document.getElementById("submiter").innerHTML = form;
-                            document.getElementById("submit_form").appendChild(eventImageBackgroundInput);
-                            console.log(document.getElementById("submit_form").innerHTML);
+                document.getElementById("submiter").innerHTML = form;
+                document.getElementById("submit_form").appendChild(eventImageBackgroundInput);
+                console.log(document.getElementById("submit_form").innerHTML);
 
-                            // Trigger send Request
-                            document.getElementById("submit_form").submit();
-                        }
+                // Trigger send Request
+                document.getElementById("submit_form").submit();
+            }
         </script>
     </body>
 </html>

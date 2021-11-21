@@ -285,3 +285,34 @@ function createEventDetailToBackToChooseDateTimeLocationPage(){
 function createActionParameter () {
     return '<input type="hidden" name="action" value="Review" />\n';
 }
+
+function updateNameDescriptionLecturerList(eventId) {
+    var eventDescriptionTest = CKEDITOR.instances.input_event_description.getData();
+    var eventName = document.getElementById("input_event_name").value;
+    var form = document.createElement("form");
+    document.body.appendChild(form);
+    form.method = "POST";
+    form.action = "updateEvent";
+    var inputEventId = document.createElement("INPUT");
+    inputEventId.name = "eventId";
+    inputEventId.value = eventId;
+    inputEventId.type = 'hidden'
+    form.appendChild(inputEventId);
+    var inputEventName = document.createElement("INPUT");
+    inputEventName.name = "eventName";
+    inputEventName.value = eventName;
+    inputEventName.type = 'hidden';
+    form.appendChild(inputEventName);
+    var inputDescription = document.createElement("INPUT");
+    inputDescription.name = "description";
+    inputDescription.value = eventDescriptionTest;
+    inputDescription.type = 'hidden';
+    form.appendChild(inputDescription);
+    
+   var inputChosenLecturer = document.querySelectorAll('input[name="chosen_lecturer"]');
+   for(var inputLecturer of inputChosenLecturer){
+       console.log(inputLecturer);
+       form.appendChild(inputLecturer);
+   }
+   form.submit();
+}

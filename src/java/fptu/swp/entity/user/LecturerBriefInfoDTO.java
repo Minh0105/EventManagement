@@ -35,7 +35,7 @@ public class LecturerBriefInfoDTO implements Serializable{
         this.id = id;
         this.avatar = avatar;
         this.name = name;
-	this.description = description;
+	    this.description = description;
     }
 
     public LecturerBriefInfoDTO(int id, String avatar, String name) {

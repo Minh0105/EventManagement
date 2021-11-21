@@ -115,6 +115,7 @@
                         </div>
                     </div>
                     <c:forEach var="chosenLec" items="${sessionScope.ChosenLecturerList}">
+                        <script>$(".place_holder").hide()</script>
                         <div class="chosen_lecturer">
                             <div>
                                 <span class="mr-3">${chosenLec.name}</span>
