@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @author admin
  */
 public class UserDTO implements Serializable, Comparable<UserDTO> {
+
     private int id;
     private String email;
     private String name;
@@ -22,6 +23,7 @@ public class UserDTO implements Serializable, Comparable<UserDTO> {
     private String status;
     private String description;
     private int numOfEvent;
+    private String studentCode;
 
     public UserDTO() {
     }
@@ -31,7 +33,6 @@ public class UserDTO implements Serializable, Comparable<UserDTO> {
         this.name = name;
         this.phoneNum = phoneNum;
     }
-    
 
     public UserDTO(int id, String email, String name, String avatar, String address, String phoneNum, String roleName) {
         this.id = id;
@@ -159,6 +160,21 @@ public class UserDTO implements Serializable, Comparable<UserDTO> {
         this.numOfEvent = numOfEvent;
     }
 
+    public String getStudentCode() {
+        if ("STUDENT".equals(getRoleName())) {
+            int i = getEmail().indexOf("@");
+            String studentCode = "";
+            while (Character.isDigit(getEmail().charAt(--i))) {
+                studentCode = getEmail().charAt(i) + studentCode;
+            }
+            studentCode = getEmail().charAt(i--) + studentCode;
+            studentCode = getEmail().charAt(i) + studentCode;
+            studentCode = studentCode.toUpperCase();
+            return studentCode;
+        }
+        return "";
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" + "id=" + id + ", email=" + email + ", name=" + name + ", avatar=" + avatar + ", address=" + address + ", phoneNum=" + phoneNum + ", roleName=" + roleName + '}';
@@ -166,6 +182,6 @@ public class UserDTO implements Serializable, Comparable<UserDTO> {
 
     @Override
     public int compareTo(UserDTO t) {
-       return t.getNumOfEvent() - this.getNumOfEvent();
-    }    
+        return t.getNumOfEvent() - this.getNumOfEvent();
+    }
 }
