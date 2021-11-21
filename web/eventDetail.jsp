@@ -487,7 +487,7 @@
                             <div class="comment_infor">
                                 <p class="comment_username"><%= question.getUserName()%> - <%= question.getUserRoleName()%> -
                                     <%
-                                        if (question.getUserId() == loginUser.getId() || loginUser.getRoleName().equals("CLUB'S LEADER") || loginUser.getRoleName().equals("DEPARTMENT'S MANAGER")) {
+                                        if (question.getUserId() == loginUser.getId() || (loginUser.getRoleName().equals("CLUB'S LEADER") || loginUser.getRoleName().equals("DEPARTMENT'S MANAGER") && request.getAttribute("ORGANIZER_ID").equals(loginUser.getId()))) {
                                     %>
                                     <a href="deactivateQuestionAndReply?commentId=<%= question.getCommentId() %>" >Xóa</a>
                                     <%

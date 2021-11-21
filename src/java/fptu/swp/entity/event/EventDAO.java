@@ -49,7 +49,7 @@ public class EventDAO {
         String organizerName = "";
         String date = "";
         String locationName = "";
-        int statusId=0;
+        int statusId = 0;
         int following = 0;
         int joining = 0;
         List<String> listLocation = new ArrayList<>();
@@ -139,7 +139,7 @@ public class EventDAO {
         String organizerName = "";
         String date = "";
         String locationName = "";
-        int statusId=0;
+        int statusId = 0;
         int following = 0;
         int joining = 0;
         List<String> listLocation = new ArrayList<>();
@@ -278,7 +278,7 @@ public class EventDAO {
                         Date dateFromDB = rs.getTimestamp("date");
                         date = formatter.format(dateFromDB).toString();
                         locationName = rs.getString("locationName");
-                        statusId=rs.getInt("statusId");
+                        statusId = rs.getInt("statusId");
                         following = rs.getInt("followers");
                         joining = rs.getInt("participants");
                         listLocation.add(locationName);
@@ -580,6 +580,7 @@ public class EventDAO {
         }
         return list;
     }
+
     public CommentDTO getCommentByCommentId(int commentId) throws SQLException {
         CommentDTO comment = null;
         Connection conn = null;
@@ -644,7 +645,7 @@ public class EventDAO {
                     if (replyList.size() > 0) {
                         Collections.sort(replyList);
                     }
-                    comment = new CommentDTO(commentId, contents, eventId, userId, userAvatar, userName, isQuestion, commentDatetime, userRoleName, replyList);
+                    comment = new CommentDTO(commentId, contents, eventId, userId, userAvatar, userName, isQuestion, commentDatetime, userRoleName, replyList, statusId);
                     System.out.println();
                 }
             }
@@ -669,7 +670,40 @@ public class EventDAO {
         }
         return comment;
     }
-    
+
+    public int getLastCommentId() throws SQLException {
+        int lastCommentId = 0;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT MAX(commentId) commentId"
+                        + " FROM tblComments";
+                stm = conn.prepareStatement(sql);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    lastCommentId = rs.getInt("commentId");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return lastCommentId;
+    }
+
     public boolean deactivateQuestionAndReply(int commentId) throws SQLException, NamingException {
         boolean check = false;
         List<LecturerBriefInfoDTO> list = new ArrayList<>();
@@ -695,6 +729,7 @@ public class EventDAO {
         }
         return check;
     }
+
     public int insertNewEvent(EventDetailDTO detail, int organizerId, FileInputStream savedPic) throws SQLException, IOException {
         int eventId = 0;
         boolean check = false;
@@ -733,7 +768,7 @@ public class EventDAO {
             if (conn != null) {
                 conn.close();
             }
-            if(savedPic != null){
+            if (savedPic != null) {
                 savedPic.close();
             }
         }
@@ -813,7 +848,7 @@ public class EventDAO {
         }
         return check;
     }
-    
+
     public boolean removeAllLecturerInEvent(int eventId) throws SQLException, NamingException {
         boolean check = false;
         List<LecturerBriefInfoDTO> list = new ArrayList<>();
@@ -837,7 +872,6 @@ public class EventDAO {
         }
         return check;
     }
-
 
     public boolean checkFollowed(int studentId, int eventId) throws SQLException {
         boolean check = false;
@@ -1317,6 +1351,7 @@ public class EventDAO {
         }
         return list;
     }
+
     public List<EventDetailDTO> getListAddedEventOfLecturer(int lecturerId) throws SQLException {
         List<EventDetailDTO> list = new ArrayList<>();
         Connection conn = null;
@@ -1640,7 +1675,7 @@ public class EventDAO {
             if (conn != null) {
                 conn.close();
             }
-            if(savedPic != null){
+            if (savedPic != null) {
                 savedPic.close();
             }
         }

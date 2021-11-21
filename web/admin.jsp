@@ -79,6 +79,10 @@
                     <li class="nav-item side_bar_option">
                         <a class="nav-link <%if (commentSelected) {%> selected<%}%>" href="manageByAdmin?management=comment">Bình luận</a>
                     </li>
+                    
+                    <li class="nav-item side_bar_option">
+                        <a class="nav-link <%if (commentSelected) {%> selected<%}%>" href="manageByAdmin?management=question">Hỏi đáp</a>
+                    </li>
 
                     <a id="btn_logout" href="logout">Đăng xuất</a>
                 </ul>
@@ -842,6 +846,87 @@
                 }
             </script>
         </c:if>
+            <!--quản lý hỏi đáp-->
+            <c:if test="${requestScope.LIST_QUESTION ne null}">
+                <div class="top_title">
+                    <h3 class="right_title">Quản lí hỏi đáp</h3>
+                </div>
+                <div class="service">
+                    <table class="table table-bordered text-center">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>SST</th>
+                                <th>Nội dung</th>
+                                <th>Sự kiện</th>
+                                <th>Tên</th>
+                                <th>Chức vụ</th>
+                                <th>Tr. thái</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="question" items="${requestScope.LIST_QUESTION}" varStatus="status">
+                                <tr>
+                                    <td><p>${status.count}</p></td>
+                                    <td><p>${question.contents}</p></td>
+                                    <td><a href="viewEventDetail?eventId=${question.eventId}"><p>Xem</p></a></td>
+                                    <td><p>${question.userName}</p></td>
+                                    <td><p>${question.userRoleName}</p></td>
+                                    <c:if test="${question.statusId eq 'AC'}">
+                                        <!-- 3.svg -->
+                                        <td><div class="rec_green"></div></td>
+
+                                        <td class="button_td">
+                                            <button type="button" class="deac_button" data-toggle="modal"
+                                                    data-target="#exampleModalBanComment${question.commentId}">
+                                                Ban
+                                            </button>
+
+                                            <div class="modal fade" id="exampleModalBanComment${question.commentId}" tabindex="-1" role="dialog"
+                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">     
+
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Ban câu hỏi</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">                                                        
+
+
+                                                            <div class="col-md-12 ">                                                                                
+                                                                <br>
+                                                                <form action="deactivateQuestionAndReply">
+                                                                    <div class="text-right"> <button type="submit">Ban</button> </div>
+                                                                    <input type="hidden" name="commentId" value="${question.commentId}"/>
+                                                                </form>
+                                                                </form>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+                                    </c:if>
+                                    <c:if test="${question.statusId eq 'DE'}">
+                                        <!-- 4.svg -->
+                                        <td><div class="rec_red"></div></td>
+                                        <td class="button_td" style="visibility: hidden;">
+                                            <button>__</button>
+                                        </td>
+                                    </c:if>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </c:if>
 
         <%@include file="footer.jsp" %>
 

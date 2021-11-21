@@ -7,6 +7,7 @@ package fptu.swp.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import static fptu.swp.controller.FirebaseServlet.LOGGER;
+import fptu.swp.entity.event.CommentDTO;
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
 import fptu.swp.entity.user.UserDAO;
@@ -17,6 +18,7 @@ import fptu.swp.utils.firebaseBinding.firebase4j.model.CommentFirebaseDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -104,9 +106,23 @@ public class ManageByAdminServlet extends HttpServlet {
                 
                 
                 request.setAttribute("mapComment", mapComment);
-                LOGGER.info("Request Attribute LIST_ORGANIZER_EVENT: " + mapComment);
+                LOGGER.info("Request Attribute mapComment: " + mapComment);
                 url = ADMIN_PAGE_PATH;
 
+            } else if ("question".equals(type)) {
+                List<CommentDTO> listQuestion = new ArrayList<>();
+                int lastCommentId = eventDao.getLastCommentId();
+                if(lastCommentId != 0){
+                    for(int cmtId = 1; cmtId <= lastCommentId; cmtId ++){
+                        CommentDTO tmp = eventDao.getCommentByCommentId(cmtId);
+                        if(tmp != null){
+                            listQuestion.add(tmp);
+                        }
+                    }
+                }
+                request.setAttribute("LIST_QUESTION", listQuestion);
+                LOGGER.info("Request Attribute LIST_QUESTION: " + listQuestion);
+                url = ADMIN_PAGE_PATH;
             }
         } catch (JsonProcessingException ex) {
             LOGGER.error(ex);

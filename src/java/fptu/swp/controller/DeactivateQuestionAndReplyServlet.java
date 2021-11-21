@@ -61,6 +61,8 @@ public class DeactivateQuestionAndReplyServlet extends HttpServlet {
         final String INVALID_PAGE_PATH = roadmap.get(INVALID_PAGE_LABEL);
         final String VIEW_EVENTDETAIL_SERVLET = context.getInitParameter("VIEW_EVENTDETAIL_SERVLET");
         final String VIEW_EVENTDETAIL_SERVLET_PATH = roadmap.get(VIEW_EVENTDETAIL_SERVLET);
+        final String MANAGE_BY_ADMIN_SERVLET = context.getInitParameter("MANAGE_BY_ADMIN_SERVLET");
+        final String MANAGE_BY_ADMIN_SERVLET_PATH = roadmap.get(MANAGE_BY_ADMIN_SERVLET);
         String url = INVALID_PAGE_PATH;
         try {
             HttpSession session = request.getSession(false);
@@ -80,9 +82,19 @@ public class DeactivateQuestionAndReplyServlet extends HttpServlet {
                 FirebaseBindingSingleton firebase = FirebaseBindingSingleton.getInstance(linkToFirebase);
                 EventDetailDTO detail = eventDao.getEventDetail(cmt.getEventId());
                 if (loginUser.getRoleName().equals("ADMIN")) {
-                    
-                    //url=VIEW_EVENTDETAIL_SERVLET_PATH +"?eventId="+cmt.getEventId();
-                } else if(loginUser.getRoleName().equals("CLUB'S LEADER") || loginUser.getRoleName().equals("DEPARTMENT'S MANAGER")){
+                    eventDao.deactivateQuestionAndReply(commentId);
+                    url = VIEW_EVENTDETAIL_SERVLET_PATH + "?eventId=" + cmt.getEventId();
+                    ScheduleDTO s = new ScheduleDTO();
+                    s.setEventId(cmt.getEventId());
+                    s.setEventName(detail.getName());
+                    s.setOrganizerAvatar(detail.getOrganizerAvatar());
+                    s.setRunningTime(new Date());
+                    String message = "Câu hỏi của bạn trong sự kiện " + detail.getName() + " đã bị xóa.";
+                    s.setMessage(message);
+                    s.setUserId(cmt.getUserId());
+                    System.out.println("Send noti when deactivate question of student: " + firebase.sendNotificationToUserID(s));
+                    url = MANAGE_BY_ADMIN_SERVLET_PATH + "?management=question";
+                } else if (loginUser.getRoleName().equals("CLUB'S LEADER") || loginUser.getRoleName().equals("DEPARTMENT'S MANAGER")) {
 
                     if (userDao.getOrganizerIdByEventId(cmt.getEventId()) == loginUser.getId()) {
                         eventDao.deactivateQuestionAndReply(commentId);
