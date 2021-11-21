@@ -5,6 +5,7 @@
  */
 package fptu.swp.controller;
 
+import fptu.swp.email.EmailSender;
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
 import fptu.swp.entity.schedule.Schedule;
@@ -67,7 +68,7 @@ public class CancelEventServlet extends HttpServlet {
         final String FILTER_EVENT_SERVLET_PATH = roadmap.get(FILTER_EVENT_SERVLET);
         final String VIEW_NEWFEED_SERVLET = context.getInitParameter("VIEW_NEWFEED_SERVLET");
         final String VIEW_NEWFEED = roadmap.get(VIEW_NEWFEED_SERVLET);
-        
+
         String url = INVALID_PAGE_PATH;
         int eventId = Integer.parseInt(request.getParameter("eventId"));
         try {
@@ -78,6 +79,7 @@ public class CancelEventServlet extends HttpServlet {
                 String linkToFirebase = "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/";
                 FirebaseBindingSingleton firebase = FirebaseBindingSingleton.getInstance(linkToFirebase);
                 if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {
+                    String reason = request.getParameter("reason");
                     if (eventDao.cancelEvent(eventId)) {
                         List<Integer> listFollowers = userDao.getFollowersIdByEventId(eventId);
                         for (int studentId : listFollowers) {
@@ -94,10 +96,47 @@ public class CancelEventServlet extends HttpServlet {
                         Schedule.updateSchedule();
                         if ("ADMIN".equals(loginUser.getRoleName())) {
                             url = FILTER_EVENT_SERVLET_PATH;
-                        }if ("DEPARTMENT'S MANAGER".equals(loginUser.getRoleName()) || "CLUB'S LEADER".equals(loginUser.getRoleName())) {
+                        }
+                        if ("DEPARTMENT'S MANAGER".equals(loginUser.getRoleName()) || "CLUB'S LEADER".equals(loginUser.getRoleName())) {
                             url = VIEW_NEWFEED;
                         }
                     }
+                    if (reason != null && loginUser.getRoleName().equals("ADMIN")) {
+                        UserDTO receiver = userDao.getUserById(userDao.getOrganizerIdByEventId(eventId));
+                        String TO_USER_EMAIL = receiver.getEmail();
+                        String FROM_USER_ACCESSTOKEN = (String) session.getAttribute("ACCESS_TOKEN");
+
+                        //default oauth2
+                        String SMTP_SERVER_HOST = "smtp.gmail.com";
+                        String SMTP_SERVER_PORT = "587";
+
+                        //mail's content
+                        String SUBJECT = "Về sự kiện của bạn trên hệ thống FPT Event Management";
+                        String BODY = "Chào bạn " + receiver.getName() + ",<br><br>Sự kiện của bạn trên hệ thống FPT Event Management đã <strong>bị hủy</strong>!<br>"
+                                + "<br>Lí do: " + reason + ".<br><br>Mọi thắc mắc xin vui lòng liên hệ theo thông tin bên dưới."
+                                + "<br>--<br>"
+                                + "Phòng ban Quản lí sự kiện Đại học FPT"
+                                + "<br>"
+                                + "Liên hệ:<br>"
+                                + "Email: fptuni.event.department@gmail.com"
+                                + "<br>"
+                                + "Tel: (+84) 123456789<br>"
+                                + "________<br>"
+                                + "FPT UNIVERSITY HCM E2a-7, D1 Street, Saigon Hi-tech Park, Tan Phu Ward, District 9, HCM City<br>"
+                                + "Tel: (028) 7300 5588 | Website: hcmuni.fpt.edu.vn";
+
+                        String FROM_USER_EMAIL = loginUser.getEmail();
+                        String FROM_USER_FULLNAME = (String) session.getAttribute("EMAIL_NAME");
+
+                        if (EmailSender.sendMail(SMTP_SERVER_HOST, SMTP_SERVER_PORT, FROM_USER_EMAIL, FROM_USER_ACCESSTOKEN, FROM_USER_EMAIL, FROM_USER_FULLNAME, TO_USER_EMAIL, SUBJECT, BODY)) {
+                            //if (EmailSender.sendEmail(FROM_USER_EMAIL, loginUser, userDao.getUserById(userId), SUBJECT, BODY, FROM_USER_ACCESSTOKEN)){
+                            request.setAttribute("NOTIFICATION", "Gửi mail thành công!");
+                        } else {
+                            request.setAttribute("NOTIFICATION", "Gửi mail không thành công!");
+
+                        }
+                    }
+
                 }
             }
         } catch (Exception ex) {

@@ -526,43 +526,43 @@
                                         <td><div class="rec_green"></div></td>
 
                                         <td class="button_td">
-                                              <button type="button" class="deac_button" data-toggle="modal"
-                                                                data-target="#exampleModalBanComment">
-                                                            Ban
-                                                        </button>
+                                            <button type="button" class="deac_button" data-toggle="modal"
+                                                    data-target="#exampleModalBanComment">
+                                                Ban
+                                            </button>
 
-                                                        <div class="modal fade" id="exampleModalBanComment" tabindex="-1" role="dialog"
-                                                             aria-labelledby="exampleModalLabel" aria-hidden="true">     
+                                            <div class="modal fade" id="exampleModalBanComment" tabindex="-1" role="dialog"
+                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">     
 
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">Ban Comment</h5>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">                                                        
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Ban Comment</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">                                                        
 
 
-                                                                        <div class="col-md-12 ">                                                                                
-                                                                            <div class="">                                                                       
-                                                                                    <label class="labels">Nội Dung</label>
-                                                                                    <input
-                                                                                        class="form-control" type="text" required />                                                             
-                                                                            </div>
-                                                                            <br>
-                                                                            <div class="text-right"> <button onclick="banComment('${comment.key}')">Ban</button> </div>
-                                                                            </form>
-                                                                        </div>
-
-                                                                    </div>
-
+                                                            <div class="col-md-12 ">                                                                                
+                                                                <div class="">                                                                       
+                                                                    <label class="labels">Nội Dung</label>
+                                                                    <input
+                                                                        class="form-control" type="text" required />                                                             
                                                                 </div>
+                                                                <br>
+                                                                <div class="text-right"> <button onclick="banComment('${comment.key}')">Ban</button> </div>
+                                                                </form>
                                                             </div>
 
                                                         </div>
-                                      
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
                                         </td>
                                     </c:if>
                                     <c:if test="${comment.value.statusId eq 'DA'}">
@@ -716,6 +716,7 @@
                     <div>
                         <c:if test="${requestScope.LIST_EVENT ne null}">
                             <div class="service" style="overflow-x:scroll; margin-top: 1.5rem">
+                                <span>${requestScope.NOTIFICATION}</span>
                                 <table class="table table-bordered text-center">
                                     <thead class="thead-light">
                                         <tr class="service1">
@@ -749,56 +750,64 @@
                                                 <td><p>${event.joining}</p></td>
                                                 <td><p>${event.statusId}</p></td>
                                                 <td>
-                                                    <c:if test="${event.statusId == 1 || event.statusId == 2}">
-                                                        <button type="button" class="deac_button" data-toggle="modal"
-                                                                data-target="#exampleModal${event.id}">
-                                                            Cancel
-                                                        </button>
+                                                    <form action="cancelEvent" method="POST">
+                                                        <c:if test="${event.statusId == 1 || event.statusId == 2}">
+                                                            <c:if test="${sessionScope.AUTHORIZING_SENDING_EMAIL eq 'false'}">
+                                                                <button type="submit" class="deac_button" formaction="authorizeSendingEmail">
+                                                                    Cancel
+                                                                </button>
+                                                            </c:if>
+                                                            <c:if test="${sessionScope.AUTHORIZING_SENDING_EMAIL eq 'true'}">
+                                                                <button type="button" class="deac_button" data-toggle="modal"
+                                                                        data-target="#exampleModal${event.id}">
+                                                                    Cancel
+                                                                </button>
 
-                                                        <div class="modal fade" id="exampleModal${event.id}" tabindex="-1" role="dialog"
-                                                             aria-labelledby="exampleModalLabel" aria-hidden="true">     
+                                                                <div class="modal fade" id="exampleModal${event.id}" tabindex="-1" role="dialog"
+                                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">     
 
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">Cancel Event</h5>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">                                                        
-
-
-                                                                        <div class="col-md-12 ">                                                                                
-                                                                            <div class="">
-                                                                                <form action="cancelEvent" method="POST">
-                                                                                    <input type="hidden" name="eventId"
-                                                                                           value="${event.id}" />
-                                                                                    <input type="hidden" name="organizerType"
-                                                                                           value="${param.organizerType}" />
-                                                                                    <input type="hidden" name="eventStatus"
-                                                                                           value="${param.eventStatus}" />
-                                                                                    <input type="hidden" name="idOrganizer"
-                                                                                           value="${param.idOrganizer}" />
-                                                                                    <label class="labels">Nội Dung</label>
-                                                                                    <input
-                                                                                        class="form-control" type="text" required />                                                             
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title" id="exampleModalLabel">Cancel Event</h5>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                </button>
                                                                             </div>
-                                                                            <br>
-                                                                            <div class="text-right"><input 
-                                                                                    type="submit" name="action" value="Confirm" /> </div>
-                                                                            </form>
-                                                                        </div>
+                                                                            <div class="modal-body">                                                        
 
+
+                                                                                <div class="col-md-12 ">                                                                                
+                                                                                    <div class="">
+
+                                                                                        <input type="hidden" name="eventId"
+                                                                                               value="${event.id}" />
+                                                                                        <input type="hidden" name="organizerType"
+                                                                                               value="${param.organizerType}" />
+                                                                                        <input type="hidden" name="eventStatus"
+                                                                                               value="${param.eventStatus}" />
+                                                                                        <input type="hidden" name="idOrganizer"
+                                                                                               value="${param.idOrganizer}" />
+                                                                                        <label class="labels">Nội Dung</label>
+                                                                                        <input
+                                                                                            class="form-control" type="text" name="reason" required />                                                             
+                                                                                    </div>
+                                                                                    <br>
+                                                                                    <div class="text-right"><input 
+                                                                                            type="submit" name="action" value="Confirm" /> </div>
+
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                        </div>
                                                                     </div>
 
                                                                 </div>
-                                                            </div>
-
-                                                        </div>
-
-                                                    </c:if>
-                                                  </td>
+                                                            </c:if>
+                                                        </c:if>
+                                                    </form>
+                                                </td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
@@ -809,7 +818,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <script>
                 var organizerTypeSelect = document.getElementById("organizerType");
                 var eventStatusSelect = document.getElementById("eventStatus");
