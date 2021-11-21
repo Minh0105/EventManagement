@@ -252,6 +252,10 @@
         <servlet-name>UpdateEventStatusServlet</servlet-name>
         <servlet-class>fptu.swp.controller.UpdateEventStatusServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeactivateQuestionAndReplyServlet</servlet-name>
+        <servlet-class>fptu.swp.controller.DeactivateQuestionAndReplyServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -359,6 +363,10 @@
     <servlet-mapping>
         <servlet-name>UpdateEventStatusServlet</servlet-name>
         <url-pattern>/UpdateEventStatusServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeactivateQuestionAndReplyServlet</servlet-name>
+        <url-pattern>/DeactivateQuestionAndReplyServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

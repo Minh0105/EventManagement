@@ -580,7 +580,121 @@ public class EventDAO {
         }
         return list;
     }
+    public CommentDTO getCommentByCommentId(int commentId) throws SQLException {
+        CommentDTO comment = null;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        PreparedStatement stm2 = null;
+        ResultSet rs2 = null;
+        int userId = 0;
+        int eventId = 0;
+        String contents = "";
+        String userAvatar = "";
+        String userName = "";
+        String userRoleName = "";
+        Date commentDatetime;
+        String statusId = "";
+        boolean isQuestion = true;
+        List<ReplyDTO> replyList = new ArrayList<>();
 
+        SimpleDateFormat formatter = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT u.commentId commentId, u.contents contents, u.eventId eventId, v.avatar userAvatar, v.id userId,"
+                        + " v.name userName, t.roleName roleName, u.isQuestion isQuestion, u.commentDatetime commentDatetime, u.statusId statusId"
+                        + " FROM tblComments u"
+                        + " LEFT JOIN tblUsers v ON u.userId = v.id"
+                        + " LEFT JOIN tblRoles t ON t.id = v.roleId"
+                        + " WHERE u.commentId = ? AND u.replyId IS NULL AND u.isQuestion = 1";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, commentId);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    commentId = rs.getInt("commentId");
+                    contents = rs.getString("contents");
+                    eventId = rs.getInt("eventId");
+                    userAvatar = rs.getString("userAvatar");
+                    userId = rs.getInt("userId");
+                    userName = rs.getString("userName");
+                    isQuestion = rs.getBoolean("isQuestion");
+                    userRoleName = rs.getString("roleName");
+                    statusId = rs.getString("statusId");
+                    commentDatetime = rs.getTimestamp("commentDatetime");
+                    String sql2 = "SELECT u.commentId commentId, u.contents contents, v.avatar userAvatar, v.id userId,"
+                            + " v.name userName, t.roleName roleName, u.commentDatetime replyDatetime"
+                            + " FROM tblComments u"
+                            + " LEFT JOIN tblUsers v ON u.userId = v.id"
+                            + " LEFT JOIN tblRoles t ON t.id = v.roleId"
+                            + " WHERE replyId = ?";
+                    stm2 = conn.prepareStatement(sql2);
+                    stm2.setInt(1, commentId);
+                    rs2 = stm2.executeQuery();
+                    while (rs2.next()) {
+                        int replyCommentId = rs2.getInt("commentId");
+                        String replyContents = rs2.getString("contents");
+                        String replyUserAvatar = rs2.getString("userAvatar");
+                        int userReplyId = rs2.getInt("userId");
+                        String replyUserName = rs2.getString("userName");
+                        String replyUserRoleName = rs2.getString("roleName");
+                        Date replyCommentDatetime = rs2.getTimestamp("replyDatetime");
+                        replyList.add(new ReplyDTO(replyCommentId, replyContents, userReplyId, replyUserAvatar, replyUserName, replyUserRoleName, replyCommentDatetime));
+                    }
+                    if (replyList.size() > 0) {
+                        Collections.sort(replyList);
+                    }
+                    comment = new CommentDTO(commentId, contents, eventId, userId, userAvatar, userName, isQuestion, commentDatetime, userRoleName, replyList);
+                    System.out.println();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs2 != null) {
+                rs2.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm2 != null) {
+                stm2.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return comment;
+    }
+    
+    public boolean deactivateQuestionAndReply(int commentId) throws SQLException, NamingException {
+        boolean check = false;
+        List<LecturerBriefInfoDTO> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "UPDATE tblComments"
+                        + " SET statusId = 'DE'"
+                        + " WHERE commentId = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, commentId);
+                check = stm.executeUpdate() > 0;
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
     public int insertNewEvent(EventDetailDTO detail, int organizerId, FileInputStream savedPic) throws SQLException, IOException {
         int eventId = 0;
         boolean check = false;

@@ -93,6 +93,22 @@ public class ReplyDTO implements Comparable<ReplyDTO>{
         this.userRoleName = userRoleName;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(String statusId) {
+        this.statusId = statusId;
+    }
+
     @Override
     public int compareTo(ReplyDTO t) {
         return this.getReplyDatetime().compareTo(t.getReplyDatetime());

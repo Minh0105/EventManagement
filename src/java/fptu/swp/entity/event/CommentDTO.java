@@ -150,7 +150,7 @@ public class CommentDTO implements Comparable<CommentDTO>{
 
     @Override
     public String toString() {
-        return "CommentDTO{" + "commentId=" + commentId + ", contents=" + contents + ", eventId=" + eventId + ", userAvatar=" + userAvatar + ", userName=" + userName + ", isQuestion=" + isQuestion + ", commentDatetime=" + commentDatetime + ", replyList=" + replyList.toString() + '}';
+        return "CommentDTO{" + "commentId=" + commentId + ", contents=" + contents + ", eventId=" + eventId + ", userId=" + userId + ", userAvatar=" + userAvatar + ", userName=" + userName + ", isQuestion=" + isQuestion + ", commentDatetime=" + commentDatetime + ", userRoleName=" + userRoleName + ", replyList=" + replyList + ", statusId=" + statusId + '}';
     }
     
 }
