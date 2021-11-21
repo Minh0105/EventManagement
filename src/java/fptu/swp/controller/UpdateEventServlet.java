@@ -76,14 +76,16 @@ public class UpdateEventServlet extends HttpServlet {
                 EventDetailDTO detail = eventDao.getEventDetail(eventId);
                 if (detail != null) {
                     if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {
-                        for (String lecturerId : lecturerIdList) {
-                            LecturerBriefInfoDTO lec = userDao.getLecturerById(Integer.parseInt(lecturerId));
-                            if (lec != null) {
-                                chosenLecturerListNew.add(lec);
-                            }
-                        }
                         eventDao.removeAllLecturerInEvent(eventId);
-                        eventDao.insertNewEventLecturer(chosenLecturerListNew, eventId);
+                        if (lecturerIdList != null) {
+                            for (String lecturerId : lecturerIdList) {
+                                LecturerBriefInfoDTO lec = userDao.getLecturerById(Integer.parseInt(lecturerId));
+                                if (lec != null) {
+                                    chosenLecturerListNew.add(lec);
+                                }
+                            }
+                            eventDao.insertNewEventLecturer(chosenLecturerListNew, eventId);
+                        }
                         detail.setDescription(description);
                         detail.setName(eventName);
                         if (eventDao.updateEventInfo(detail)) {

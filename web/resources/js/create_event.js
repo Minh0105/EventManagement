@@ -309,7 +309,8 @@ function updateNameDescriptionLecturerList(eventId) {
     inputDescription.type = 'hidden';
     form.appendChild(inputDescription);
     
-   var inputChosenLecturer = document.querySelectorAll('input[name="chosen_lecturer"]');
+   //var inputChosenLecturer = document.querySelectorAll('input[name="chosen_lecturer"]');
+   var inputChosenLecturer = document.getElementsByClassName("chosen_lecturer_id");
    for(var inputLecturer of inputChosenLecturer){
        console.log(inputLecturer);
        form.appendChild(inputLecturer);
