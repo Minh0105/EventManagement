@@ -3,11 +3,33 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/ManageUserByAdminServlet.java</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/controller/DeactivateQuestionAndReplyServlet.java</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/eventDetail.jsp</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/web/WEB-INF/roadmap.txt</file>
-            <file>file:/C:/Users/triet/Desktop/kì%205/SWP/Project/EventManagement/src/java/fptu/swp/entity/event/CommentDTO.java</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/WEB-INF/roadmap.txt</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/appendEventDetail.jsp</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/controller/JoinEventServlet.java</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/resources/js/eventDetail.js</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/entity/event/ReplyDTO.java</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/controller/CommentServlet.java</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/controller/Constants.java</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/admin.jsp</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/controller/AskQuestionServlet.java</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/allEvent.jsp</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/eventDetail.jsp</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/entity/event/EventDAO.java</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/controller/ManageUserByAdminServlet.java</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/resources/js/realtime_notification.js</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/META-INF/context.xml</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/resources/js/comment.js</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/utils/firebaseBinding/firebase4j/service/Firebase.java</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/resources/js/function.js</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/resources/js/configFirebase.js</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/controller/SendEventNotificationServlet.java</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/web/WEB-INF/web.xml</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/entity/event/CommentDTO.java</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/controller/ViewEventDetailServlet.java</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/email/EmailSender.java</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/controller/FilterEventServlet.java</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/controller/DeactivateQuestionAndReplyServlet.java</file>
+            <file>file:/D:/Download2/Kì%205/SWP/EventManagement/src/java/fptu/swp/controller/CancelEventServlet.java</file>
         </group>
     </open-files>
 </project-private>
