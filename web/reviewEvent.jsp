@@ -188,7 +188,7 @@
             </div>
         </section>
 
-        <div class="col-12 text-center d-flex justify-content-center align-items-center" style="margin-top: 20vh;">
+        <div class="col-12 text-center d-flex justify-content-center align-items-center" style="margin-top: 20vh; color: white">
             <% if (session.getAttribute("CHANGING_EVENT_ID") != null) { %>
                 <a href="createEvent" class="mybutton btn-orange btn-big">Cập nhật sự kiện</a>
 

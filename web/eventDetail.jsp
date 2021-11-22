@@ -152,24 +152,57 @@
                     </div>
 
                     <div class="modal-footer">
+
+                        <!-- CLOSE / OPEN REGISTER BUTTONS -->
                         <form action="updateEventStatus" method="POST">
                             <% if (detail.getStatusId() == 1) { %>
 
-                            <button type="submit" class="mybutton btn_close_register">Đóng đăng kí</button>
+                                <button id="btn_close_register" type="submit" class="mybutton btn_close_register">Đóng đăng kí</button>
 
                             <% } else if (detail.getStatusId() == 2) { %>
 
-                            <button type="submit" class="mybutton btn-blue">Mở đăng kí</button>
+                                <button id="btn_open_register" type="submit" class="mybutton btn-blue">Mở đăng kí</button>
 
-                            <% }%>
-
+                            <% } %>
                             <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
                         </form>
 
-                        <form action="cancelEvent" method="POST">
-                            <button type="submit" class="mybutton btn_cancel_event">Ngừng sự kiện</button>
-                            <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                        <!-- CANCEL EVENT BUTTON -->
+                        <button id="btn_cancel_event" onclick="showCancelEventConfirmation()" class="mybutton btn_cancel_event">Ngừng sự kiện</button>
+
+                        <!-- CANCEL EVENT CONFIRMATION BUTTON -->
+                        <form id="cancelEventConfirmationForm" action="cancelEvent" method="POST" style="display:none">
+                            <p>Xác nhận ngừng sự kiện <b><%=detail.getName()%></b></p>
+                            <div class="d-flex text-right justify-content-end"  >
+                                <button type="submit" class="mybutton btn_cancel_event">Xác nhận</button>
+                                <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                                <button type="button" onclick="hideCancelEventConfirmation()" class="mybutton btn-grey ml-3">Hủy</button>    
+                            </div>
                         </form>
+
+                        <script>
+                            function showCancelEventConfirmation () {
+                                $("#cancelEventConfirmationForm").show();
+                                $("#btn_cancel_event").hide();
+                                if ($("#btn_close_register") != undefined) { 
+                                    $("#btn_close_register").hide();
+                                }
+                                if ($("#btn_open_register") != undefined) { 
+                                    $("#btn_open_register").hide();
+                                }
+                            }
+
+                            function hideCancelEventConfirmation () {
+                                $("#cancelEventConfirmationForm").hide();
+                                $("#btn_cancel_event").show();
+                                if ($("#btn_close_register") != undefined) { 
+                                    $("#btn_close_register").show();
+                                }
+                                if ($("#btn_open_register") != undefined) { 
+                                    $("#btn_open_register").show();
+                                }
+                            }
+                        </script>
 
                     </div>
                 </div>
