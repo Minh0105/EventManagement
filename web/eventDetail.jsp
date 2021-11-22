@@ -453,80 +453,76 @@
                 <!-- QUESTION & ANSWER -->
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                     <% if ("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName())) { %>
-                    <p id="no_question_text" style="color:rgba(0, 0, 0, 0.5)">Chưa có câu hỏi nào</p>
+                        <p id="no_question_text" style="color:rgba(0, 0, 0, 0.5)">Chưa có câu hỏi nào</p>
                     <% } %>
+
                     <div class="ask">
                         <%
                             if ("STUDENT".equals(loginUser.getRoleName())) {
                         %>
-                        <form action ="askQuestion">
-                            <textarea id="question_input" class="my-text-input dicussion_input" type="text" placeholder="Vui lòng nhập câu hỏi của bạn....." name="content" required></textarea>
+                                <form action ="askQuestion">
+                                    <textarea id="question_input" class="my-text-input dicussion_input" type="text" placeholder="Vui lòng nhập câu hỏi của bạn....." name="content" required></textarea>
 
-                            <div style="width: 100%; display:flex; justify-content:flex-end">
-                                <button type="submit" class="mybutton btn-orange mt-2">Gửi câu hỏi</button>
-                            </div>
+                                    <div style="width: 100%; display:flex; justify-content:flex-end">
+                                        <button type="submit" class="mybutton btn-orange mt-2">Gửi câu hỏi</button>
+                                    </div>
 
-                            <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
-                        </form>
+                                    <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                                </form>
                         <%
                             }
                             List<CommentDTO> listQuestion = (List<CommentDTO>) request.getAttribute("LIST_QUESTION");
-
-                            if (listQuestion.size() > 0) {
-                        %> 
-                        <script>$('#no_question_text').hide()</script>
-                        <%  }
-
                             for (CommentDTO question : listQuestion) {
                         %>
-                        <div class="comment_item">
-                            <div class="avatar_container">
-                                <img class="rounded-circle lec_avatar" src="<%= question.getUserAvatar()%>" class="rounded-circle" alt="" referrerpolicy="no-referrer">
-                            </div>
+                                <script>$('#no_question_text').hide()</script>
+                                <div class="comment_item">
+                                    <div class="comment_infor_section">
+                                        <div class="avatar_container">
+                                            <img class="organizer_ava" src="<%= question.getUserAvatar()%>" class="rounded-circle" alt="" referrerpolicy="no-referrer">
+                                        </div>
 
-                            <div class="comment_infor">
-                                <p class="comment_username"><%= question.getUserName()%> - <%= question.getUserRoleName()%> -
-                                    <%
-                                        if (question.getUserId() == loginUser.getId() || (loginUser.getRoleName().equals("CLUB'S LEADER") || loginUser.getRoleName().equals("DEPARTMENT'S MANAGER") && request.getAttribute("ORGANIZER_ID").equals(loginUser.getId()))) {
-                                    %>
-                                    <a href="deactivateQuestionAndReply?commentId=<%= question.getCommentId() %>" >Xóa</a>
-                                    <%
-                                        }
-                                    %>
-                                </p>
-                                <p class="comment_content"><%= question.getContents()%></p>
-                                <%
-                                    if (!"STUDENT".equals(loginUser.getRoleName())) {
-                                %>
-                                <p class="btn_show_reply" onclick="showReply(this)">Trả lời</p>
-                                <form class="reply_box" action ="reply" >
-                                    <input class="input_reply" type="text" name="content" placeholder="Nhập nội dung câu trả lời" required/>
-                                    <input type="hidden" name="commentId" value = "<%= question.getCommentId()%>"/>
-                                    <input type="hidden" name="eventId" value = "<%= detail.getId()%>"/>
-                                    <input onclick="sendReply()" class="btn_reply" value="Gửi"/>
-                                </form>
-                                <%
-                                    }
-                                %>
-                            </div>
-                        </div>
+                                        <div class="comment_infor">
+                                            <p class="comment_username"><%= question.getUserName()%> - <%= question.getUserRoleName()%></p>
+                                            <p class="comment_content"><%= question.getContents()%></p>
+                                            <div class="d-flex align-items-center">
+                                                <% if (!"STUDENT".equals(loginUser.getRoleName())) { %>
+                                                    <p class="btn_show_reply" onclick="showAnswerReplyBox(this)">Trả lời</p>
+                                                <% } %>   
+
+                                                <% if (question.getUserId() == loginUser.getId() || (loginUser.getRoleName().equals("CLUB'S LEADER") || loginUser.getRoleName().equals("DEPARTMENT'S MANAGER") && request.getAttribute("ORGANIZER_ID").equals(loginUser.getId()))) { %>
+                                                    <a class="btn_delete_question" href="deactivateQuestionAndReply?commentId=<%= question.getCommentId()%>">Xóa</a>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <% if (!"STUDENT".equals(loginUser.getRoleName())) { %>
+                                        <form class="reply_box" action ="reply" >
+                                            <input class="input_reply" type="text" name="content" placeholder="Nhập nội dung câu trả lời" required/>
+                                            <input type="hidden" name="commentId" value = "<%= question.getCommentId()%>"/>
+                                            <input type="hidden" name="eventId" value = "<%= detail.getId()%>"/>
+                                            <button onclick="sendReply()" class="btn_reply">Gửi</button>
+                                            <button onclick="hideReplyBox(this)" class="btn_hide_reply mybutton btn-grey">Hủy</button>
+                                        </form>
+                                    <% } %>
+                                </div>
+
+                                <div class="question_answers_container">
                         <%
-                            List<ReplyDTO> listReply = question.getReplyList();
-                            for (ReplyDTO reply : listReply) {
-                        %>
-                        <div class="repComment2">
-                            <div class="repComment2a">
-                                <img src="<%= reply.getUserAvatar()%>" class="rounded-circle" class="rounded-circle" alt="" referrerpolicy="no-referrer">
-                            </div>
-                            <div class="repComment2b">
-                                <p class="comment_username"><%= reply.getUserName()%> - <%= reply.getUserRoleName()%></p>
-                                <p class="comment_content"><%= reply.getContents()%></p>
-                            </div>
-                        </div>
-                        <%
-                                }
-                            }
-                        %>
+                                    List<ReplyDTO> listReply = question.getReplyList();
+                                    for (ReplyDTO reply : listReply) { %>
+                                        <div class="repComment2">
+                                            <div class="repComment2a">
+                                                <img src="<%= reply.getUserAvatar()%>" class="organizer_ava" class="rounded-circle" alt="" referrerpolicy="no-referrer">
+                                            </div>
+                                            <div class="repComment2b">
+                                                <p class="comment_username"><%= reply.getUserName()%> - <%= reply.getUserRoleName()%></p>
+                                                <p class="comment_content"><%= reply.getContents()%></p>
+                                            </div>
+                                        </div>
+                                <%  } %> 
+                                </div>
+                        <% } %>
                     </div>
                 </div>
             </div>

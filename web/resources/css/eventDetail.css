@@ -441,14 +441,26 @@ body {
 
 .comment_infor .btn_show_reply {
     margin-bottom: 2px;
+    margin-right: 1rem;
     font-weight: 500;
     color: #1472E1;
     font-size: 1rem;
 }
 
+.comment_infor .btn_delete_question {
+    margin-bottom: 2px;
+    font-weight: 500;
+    color: #c13636 !important;
+    font-size: 1rem;
+}
+
 /* REPLY COMMENT */
 
-.reply_container {
+#contact p {
+    font-size: 1rem !important;
+}
+
+.reply_container, .question_answers_container {
     margin-left: calc(3.125rem + 12px);
 }
 

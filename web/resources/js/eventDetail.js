@@ -7,6 +7,14 @@ function showReplyBox (replyButton) {
     hideOtherReplyBox(replyBox);
 }
 
+function showAnswerReplyBox (replyButton) {
+    var replyBox = replyButton.parentNode.parentNode.parentNode.parentNode.getElementsByClassName("reply_box")[0];
+    replyButton.style.display = "none";
+    replyBox.style.display = "block";
+
+    hideOtherReplyBox(replyBox);
+}
+
 
 function hideOtherReplyBox (focusedReplyBox) {
     var replyBox_list = document.getElementsByClassName("reply_box")
