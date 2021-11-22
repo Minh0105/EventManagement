@@ -332,9 +332,11 @@
                     </section>   
 
                     <!-- LECTURER -->
-                    <section class="single">
-                        <h4 class="content_title">Giảng viên</h4>
-                    </section>
+                    <% if (listLecturer.size() > 0) { %> 
+                        <section class="single">
+                            <h4 class="content_title">Giảng viên</h4>
+                        </section>
+                    <% } %>
 
                     <!-- LECTURER CARD -->
                     <section id="lecturer_section">

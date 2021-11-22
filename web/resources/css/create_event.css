@@ -2,6 +2,10 @@
 @import url(mybutton.css);
 @import url(myInputField.css);
 
+a, a:hover {
+  text-decoration: none !important;
+}
+
 .loc_background{
   width: 181px;
   height: 51px;

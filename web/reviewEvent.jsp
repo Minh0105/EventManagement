@@ -188,14 +188,21 @@
             </div>
         </section>
 
-        <div class="col-12 text-center" style="margin-top: 20vh;">
+        <div class="col-12 text-center d-flex justify-content-center align-items-center" style="margin-top: 20vh;">
             <% if (session.getAttribute("CHANGING_EVENT_ID") != null) { %>
                 <a href="createEvent" class="mybutton btn-orange btn-big">Cập nhật sự kiện</a>
 
             <% } else { %>
                 <a href="createEvent" class="mybutton btn-orange btn-big">Tạo sự kiện</a>
             <% } %>
+
+            <button onclick="goBack()" class="mybutton btn-blue btn-big ml-3">Quay về trước</button>
         </div>
+        <script>
+            function goBack() {
+                window.history.back();
+            }
+        </script>
 
 
     <%@include file="footer.jsp" %>

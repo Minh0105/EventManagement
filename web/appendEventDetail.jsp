@@ -111,7 +111,7 @@
                     <div class="place_holder">
                         <div>
                             <span class="mr-3" style="visibility: hidden;">Placleholder name</span>
-                            <img class="btn_remove_lec" style="visibility:hidden;" src="resources/icon/icon_remove_lecturer.svg"  referrerpolicy="no-referrer" >
+                            <img class="btn_remove_lec" style="visibility:hidden;" src="resources/icon/icon_remove_lecturer.svg"  referrerpolicy="no-referrer">
                         </div>
                     </div>
                     <c:forEach var="chosenLec" items="${sessionScope.ChosenLecturerList}">
@@ -119,7 +119,7 @@
                         <div class="chosen_lecturer">
                             <div>
                                 <span class="mr-3">${chosenLec.name}</span>
-                                <img onclick="onRemoveChosenLecturerClick('${chosenLec.id}', this)" class="btn_remove_lec"src="resources/icon/icon_remove_lecturer.svg">
+                                <img onclick="onRemoveChosenLecturerClick('${chosenLec.id}', this)" class="btn_remove_lec" src="resources/icon/icon_remove_lecturer.svg" referrerpolicy="no-referrer">
                                 <input class="chosen_lecturer_id d-none" type="hidden" name="chosen_lecturer" value="${chosenLec.id}"/>
                             </div>
                         </div>
@@ -135,7 +135,7 @@
                 <!-- LECTURER LIST -->
                 <div id="floated_lecturer_list">
                     <div id="btn_hide_lecturer_list" onclick="hideLecturerList()">
-                        <img src="resources/icon/icon_btn_gray_x.svg" >
+                        <img src="resources/icon/icon_btn_gray_x.svg" referrerpolicy="no-referrer">
                     </div>
                     <%
                         ArrayList<LecturerBriefInfoDTO> lecturerList = (ArrayList) session.getAttribute("LecturerList");
@@ -151,7 +151,7 @@
                         <%
                             }
                         %>      >
-                                <img class="lec_ava" src="<%= lecturer.getAvatar()%>">
+                                <img class="lec_ava" src="<%= lecturer.getAvatar()%>" referrerpolicy="no-referrer">
                                 <p class="d-inline-block mb-0 ml-3 lec_name" style="color: #303030;"><%= lecturer.getName()%></p>
                                 <input type="hidden" name="chosen_lecturer" value="<%= lecturer.getId()%>"/>
                             </div>
