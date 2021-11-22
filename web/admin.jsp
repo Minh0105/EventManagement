@@ -94,7 +94,6 @@
 
             </div>
         </div>
-    </div>
 
     <div class="header4">
         <c:if test="${requestScope.LIST_ORGANIZER ne null}">
@@ -217,11 +216,7 @@
                                                                 <div class="col-md-12 ">                                                                                
                                                                     <div class="">
                                                                         <input type="hidden" name="userId" value="${organizer.id}" />
-
-
-                                                                        </select>
                                                                         <label class="labels">Nội Dung</label>
-
                                                                         <input
                                                                             class="form-control" type="text" name="reason" required />                                                             
                                                                     </div>
@@ -319,8 +314,6 @@
                                                                         <div class="">
                                                                             <input type="hidden" name="userId" value="${student.id}" />
 
-
-                                                                            </select>
                                                                             <label class="labels">Nội Dung</label>
 
                                                                             <input
@@ -556,7 +549,6 @@
                                                                 </div>
                                                                 <br>
                                                                 <div class="text-right"> <button onclick="banComment('${comment.key}')">Ban</button> </div>
-                                                                </form>
                                                             </div>
 
                                                         </div>
@@ -901,16 +893,11 @@
                                                                     <div class="text-right"> <button type="submit">Ban</button> </div>
                                                                     <input type="hidden" name="commentId" value="${question.commentId}"/>
                                                                 </form>
-                                                                </form>
                                                             </div>
-
                                                         </div>
-
                                                     </div>
                                                 </div>
-
                                             </div>
-
                                         </td>
                                     </c:if>
                                     <c:if test="${question.statusId eq 'DE'}">
@@ -927,21 +914,14 @@
                 </div>
             </c:if>
 
-        <%@include file="footer.jsp" %>
 
-        <script src="<c:url value=" https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js" />">
-        </script>
-        <script src="<c:url value=" https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js" />">
-        </script>
-        <script src="resources/js/configFirebase.js">
-        </script>
-        <script src="resources/js/comment.js">
-        </script>
+        <script src="<c:url value=" https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js" />"></script>
+        <script src="<c:url value=" https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js" />"></script>
+        <script src="resources/js/configFirebase.js"></script>
+        <script src="resources/js/comment.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
                 integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
-                crossorigin="anonymous">
-        </script>
+                crossorigin="anonymous"></script>
 </body>
-
 </html>
 

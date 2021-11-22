@@ -20,12 +20,15 @@
     <body>
 
         <%@include file="nav_bar.jsp" %>
-        <section id="filter_bar">
+        <div id="body_container" style="padding: 0 1vw;">
+
+            <section id="filter_bar">
                 <div class="top_title">
                     <h3 class="right_title">Tra Cứu Sự Kiện</h3>
                 </div>
         </section>
-        <div class="col-md-6 ">
+
+        <div class="col-md-6">
             <h5 style="font-weight: 400">Tìm event theo: </h5>
         </div>
 
@@ -211,6 +214,7 @@
                 </div>
             </c:if>
         </div>
+    </div>
     </div>
 
     <%@include file="footer.jsp" %>
