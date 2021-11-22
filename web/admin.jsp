@@ -528,14 +528,13 @@
                                     <c:if test="${comment.value.statusId eq 'AC'}">
                                         <!-- 3.svg -->
                                         <td><div class="rec_green"></div></td>
-
                                         <td class="button_td">
                                             <button type="button" class="deac_button" data-toggle="modal"
-                                                    data-target="#exampleModalBanComment">
+                                                    data-target="#exampleModal${comment.key}">
                                                 Ban
                                             </button>
 
-                                            <div class="modal fade" id="exampleModalBanComment" tabindex="-1" role="dialog"
+                                            <div class="modal fade" id="exampleModal${comment.key}" tabindex="-1" role="dialog"
                                                  aria-labelledby="exampleModalLabel" aria-hidden="true">     
 
                                                 <div class="modal-dialog" role="document">
