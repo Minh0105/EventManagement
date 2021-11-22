@@ -86,7 +86,8 @@ public class EventDAO {
                         byte[] tmp = rs.getBytes("eventPoster");
                         eventPoster = Base64.getEncoder().encodeToString(tmp);
                         organizerName = rs.getString("organizerName");
-                        Date dateFromDB = rs.getTimestamp("date");
+                        //Date dateFromDB = rs.getTimestamp("date");
+                        java.sql.Date dateFromDB = rs.getDate("date");
                         date = formatter.format(dateFromDB).toString();
                         locationName = rs.getString("locationName");
                         statusId = rs.getInt("statusId");
@@ -176,7 +177,8 @@ public class EventDAO {
                         byte[] tmp = rs.getBytes("eventPoster");
                         eventPoster = Base64.getEncoder().encodeToString(tmp);
                         organizerName = rs.getString("organizerName");
-                        Date dateFromDB = rs.getTimestamp("date");
+                        //Date dateFromDB = rs.getTimestamp("date");
+                        java.sql.Date dateFromDB = rs.getDate("date");
                         date = formatter.format(dateFromDB).toString();
                         locationName = rs.getString("locationName");
                         statusId = rs.getInt("statusId");
@@ -275,7 +277,8 @@ public class EventDAO {
                         byte[] tmp = rs.getBytes("eventPoster");
                         eventPoster = Base64.getEncoder().encodeToString(tmp);
                         organizerName = rs.getString("organizerName");
-                        Date dateFromDB = rs.getTimestamp("date");
+                        //Date dateFromDB = rs.getTimestamp("date");
+                        java.sql.Date dateFromDB = rs.getDate("date");
                         date = formatter.format(dateFromDB).toString();
                         locationName = rs.getString("locationName");
                         statusId = rs.getInt("statusId");
@@ -364,7 +367,8 @@ public class EventDAO {
                         byte[] tmp = rs.getBytes("eventPoster");
                         eventPoster = Base64.getEncoder().encodeToString(tmp);
                         organizerName = rs.getString("organizerName");
-                        Date dateFromDB = rs.getTimestamp("date");
+                        //Date dateFromDB = rs.getTimestamp("date");
+                        java.sql.Date dateFromDB = rs.getDate("date");
                         date = formatter.format(dateFromDB).toString();
                         locationName = rs.getString("locationName");
                         statusId = rs.getInt("statusId");
@@ -444,7 +448,8 @@ public class EventDAO {
                     byte[] tmp = rs.getBytes("eventPoster");
                     eventPoster = Base64.getEncoder().encodeToString(tmp);
                     organizerName = rs.getString("organizerName");
-                    Date dateFromDB = rs.getTimestamp("date", Calendar.getInstance(TimeZone.getDefault()));
+                    //Date dateFromDB = rs.getTimestamp("date", Calendar.getInstance(TimeZone.getDefault()));
+                    java.sql.Date dateFromDB = rs.getDate("date");
                     System.out.println("***_*** BEFORE DATE FROM DB" + dateFromDB);
                     date = formatter.format(dateFromDB).toString();
                     System.out.println("***_*** BEFORE " + date);
