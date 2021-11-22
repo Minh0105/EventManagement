@@ -294,7 +294,7 @@
                                     }
 
 
-                                    if (getDateByDayOfWeek(day).getTime() < todayDate.getTime()) { 
+                                    if (getDateByDayOfWeek(day).getTime() <= todayDate.getTime()) { 
                         %>
                                         <td class="busy_slot_cell past_cell" ></td>
                         <%

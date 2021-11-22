@@ -49,6 +49,7 @@
             boolean lecturerSelected = action.equals("lecturer");
             boolean eventSelected = action.equals("event");
             boolean commentSelected = action.equals("comment");
+            boolean questionSelected = action.equals("question");
         %>
 
         <div class="header1" id="b">
@@ -81,7 +82,7 @@
                     </li>
 
                     <li class="nav-item side_bar_option">
-                        <a class="nav-link <%if (commentSelected) {%> selected<%}%>" href="manageByAdmin?management=question">Hỏi đáp</a>
+                        <a class="nav-link <%if (questionSelected) {%> selected<%}%>" href="manageByAdmin?management=question">Hỏi đáp</a>
                     </li>
 
                     <a id="btn_logout" href="logout">Đăng xuất</a>
@@ -152,7 +153,9 @@
             </div>
 
             <script>
-                window.alert("${requestScope.NOTIFICATION}");
+                <c:if test="${not empty requestScope.NOTIFICATION}">
+                    window.alert("${requestScope.NOTIFICATION}");
+                </c:if>
             </script>
 
             <div class="service">
@@ -928,8 +931,6 @@
                 </table>
             </div>
         </c:if>
-
-        <%@include file="footer.jsp" %>
 
         <script src="<c:url value=" https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js" />">
         </script>

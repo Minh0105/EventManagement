@@ -20,7 +20,6 @@ import javax.sql.DataSource;
 public class DBHelper implements Serializable{
     public static Connection makeConnection() 
             throws NamingException, SQLException {
-        
         //1. get current system file 
         Context context = new InitialContext();
         //2. get container context 
