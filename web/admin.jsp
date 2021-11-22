@@ -79,7 +79,7 @@
                     <li class="nav-item side_bar_option">
                         <a class="nav-link <%if (commentSelected) {%> selected<%}%>" href="manageByAdmin?management=comment">Bình luận</a>
                     </li>
-                    
+
                     <li class="nav-item side_bar_option">
                         <a class="nav-link <%if (commentSelected) {%> selected<%}%>" href="manageByAdmin?management=question">Hỏi đáp</a>
                     </li>
@@ -94,6 +94,7 @@
 
             </div>
         </div>
+    </div>
 
     <div class="header4">
         <c:if test="${requestScope.LIST_ORGANIZER ne null}">
@@ -219,12 +220,16 @@
                                                                 <div class="col-md-12 ">                                                                                
                                                                     <div class="">
                                                                         <input type="hidden" name="userId" value="${organizer.id}" />
-                                                                        <label class="labels">Nội Dung</label>
-                                                                        <input
-                                                                            class="form-control" type="text" name="reason" required />                                                             
+
+
+                                                                        </select>
+                                                                        <div class="text-left"> <label class="labels">Nội Dung</label></div>
+
+                                                                        <textarea
+                                                                            rows="5"   class="form-control" type="text" name="reason" required ></textarea>                                                                        
                                                                     </div>
                                                                     <br>
-                                                                    <div class="text-right"><input type="submit" name="action" value="Deactivate" /> </div>
+                                                                    <div class="text-right"><Button type="submit" name="action" value="Deactivate" class="btn btn-primary" >Deactivate</button> </div>
 
                                                                 </div>
 
@@ -317,13 +322,14 @@
                                                                         <div class="">
                                                                             <input type="hidden" name="userId" value="${student.id}" />
 
-                                                                            <label class="labels">Nội Dung</label>
 
-                                                                            <input
-                                                                                class="form-control" type="text" name="reason" required />                                                             
+                                                                            <div class="text-left"> <label class="labels">Nội Dung</label></div>
+
+                                                                            <textarea
+                                                                                rows="5"   class="form-control" type="text" name="reason" required ></textarea>                                                                        
                                                                         </div>
                                                                         <br>
-                                                                        <div class="text-right"><input type="submit" name="action" value="Deactivate" /> </div>
+                                                                        <div class="text-right"><Button type="submit" name="action" value="Deactivate" class="btn btn-primary" >Deactivate</button> </div>
 
                                                                     </div>
 
@@ -380,7 +386,7 @@
                                         <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
                                     </div>
                                     <div class="col-md-12">
-                                        <label class="labels">Name</label>
+                                        <label class="labels">Tên</label>
                                         <input
                                             class="form-control" type="text" name="name" required />
                                         <br>
@@ -458,18 +464,13 @@
 
                                                                     <div class="col-md-12 ">                                                                                
                                                                         <div class="">
-                                                                            <input type="hidden" name="userId" value="${lecturer.id}" />
+                                                                            <div class="text-left"> <label class="labels">Nội Dung</label></div>
 
-
-
-                                                                            <label class="labels">Nội Dung</label>
-
-                                                                            <input
-                                                                                class="form-control" type="text" name="reason" required />                                                             
+                                                                            <textarea
+                                                                                rows="5"   class="form-control" type="text" name="reason" required ></textarea>                                                                        
                                                                         </div>
                                                                         <br>
-                                                                        <div class="text-right"><input type="submit" name="action" value="Deactivate" /> </div>
-
+                                                                        <div class="text-right"><Button type="submit" name="action" value="Deactivate" class="btn btn-primary" >Deactivate</button> </div>
                                                                     </div>
 
                                                                 </div>
@@ -546,12 +547,13 @@
 
                                                             <div class="col-md-12 ">                                                                                
                                                                 <div class="">                                                                       
-                                                                    <label class="labels">Nội Dung</label>
-                                                                    <input
-                                                                        class="form-control" type="text" required />                                                             
+                                                                    <div class="text-left"><label class="labels">Nội Dung</label></div>
+                                                                    <textarea
+                                                                        rows="5"   class="form-control" type="text" required ></textarea>                                                                        
                                                                 </div>
                                                                 <br>
-                                                                <div class="text-right"> <button onclick="banComment('${comment.key}')">Ban</button> </div>
+                                                                <div class="text-right"> <button class="btn btn-primary" onclick="banComment('${comment.key}')">Ban</button> </div>
+                                                                </form>
                                                             </div>
 
                                                         </div>
@@ -766,8 +768,9 @@
 
                                                                     <div class="modal-dialog" role="document">
                                                                         <div class="modal-content">
+
                                                                             <div class="modal-header">
-                                                                                <h5 class="modal-title" id="exampleModalLabel">Cancel Event</h5>
+                                                                                <h5 class="modal-title" id="exampleModalLabel">Xác Nhận Hủy Event</h5>
                                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                                     <span aria-hidden="true">&times;</span>
                                                                                 </button>
@@ -777,23 +780,23 @@
 
                                                                                 <div class="col-md-12 ">                                                                                
                                                                                     <div class="">
-
-                                                                                        <input type="hidden" name="eventId"
-                                                                                               value="${event.id}" />
-                                                                                        <input type="hidden" name="organizerType"
-                                                                                               value="${param.organizerType}" />
-                                                                                        <input type="hidden" name="eventStatus"
-                                                                                               value="${param.eventStatus}" />
-                                                                                        <input type="hidden" name="idOrganizer"
-                                                                                               value="${param.idOrganizer}" />
-                                                                                        <label class="labels">Nội Dung</label>
-                                                                                        <input
-                                                                                            class="form-control" type="text" name="reason" required />                                                             
+                                                                                        <form action="cancelEvent">
+                                                                                            <input type="hidden" name="eventId"
+                                                                                                   value="${event.id}" />
+                                                                                            <input type="hidden" name="organizerType"
+                                                                                                   value="${param.organizerType}" />
+                                                                                            <input type="hidden" name="eventStatus"
+                                                                                                   value="${param.eventStatus}" />
+                                                                                            <input type="hidden" name="idOrganizer"
+                                                                                                   value="${param.idOrganizer}" />
+                                                                                            <div class="text-left"><label class="labels">Nội Dung</label></div>
+                                                                                            <textarea
+                                                                                                rows="5"   class="form-control" type="text" name="reason" required  ></textarea>                                                                      
                                                                                     </div>
                                                                                     <br>
-                                                                                    <div class="text-right"><input 
-                                                                                            type="submit" name="action" value="Confirm" /> </div>
-
+                                                                                    <div class="text-right"><button
+                                                                                            type="submit" name="action" value="Confirm" class="btn btn-primary" >Confirm</button> </div>
+                                                                                    </form>
                                                                                 </div>
 
                                                                             </div>
@@ -840,91 +843,107 @@
                 }
             </script>
         </c:if>
-            <!--quản lý hỏi đáp-->
-            <c:if test="${requestScope.LIST_QUESTION ne null}">
-                <div class="top_title">
-                    <h3 class="right_title">Quản lí hỏi đáp</h3>
-                </div>
-                <div class="service">
-                    <table class="table table-bordered text-center">
-                        <thead class="thead-light">
+        <!--quản lý hỏi đáp-->
+        <c:if test="${requestScope.LIST_QUESTION ne null}">
+            <div class="top_title">
+                <h3 class="right_title">Quản lí hỏi đáp</h3>
+            </div>
+            <div class="service">
+                <table class="table table-bordered text-center">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>SST</th>
+                            <th>Nội dung</th>
+                            <th>Sự kiện</th>
+                            <th>Tên</th>
+                            <th>Chức vụ</th>
+                            <th>Tr. thái</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="question" items="${requestScope.LIST_QUESTION}" varStatus="status">
                             <tr>
-                                <th>SST</th>
-                                <th>Nội dung</th>
-                                <th>Sự kiện</th>
-                                <th>Tên</th>
-                                <th>Chức vụ</th>
-                                <th>Tr. thái</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="question" items="${requestScope.LIST_QUESTION}" varStatus="status">
-                                <tr>
-                                    <td><p>${status.count}</p></td>
-                                    <td><p>${question.contents}</p></td>
-                                    <td><a href="viewEventDetail?eventId=${question.eventId}"><p>Xem</p></a></td>
-                                    <td><p>${question.userName}</p></td>
-                                    <td><p>${question.userRoleName}</p></td>
-                                    <c:if test="${question.statusId eq 'AC'}">
-                                        <!-- 3.svg -->
-                                        <td><div class="rec_green"></div></td>
+                                <td><p>${status.count}</p></td>
+                                <td><p>${question.contents}</p></td>
+                                <td><a href="viewEventDetail?eventId=${question.eventId}"><p>Xem</p></a></td>
+                                <td><p>${question.userName}</p></td>
+                                <td><p>${question.userRoleName}</p></td>
+                                <c:if test="${question.statusId eq 'AC'}">
+                                    <!-- 3.svg -->
+                                    <td><div class="rec_green"></div></td>
 
-                                        <td class="button_td">
-                                            <button type="button" class="deac_button" data-toggle="modal"
-                                                    data-target="#exampleModalBanComment${question.commentId}">
-                                                Ban
-                                            </button>
+                                    <td class="button_td">
+                                        <button type="button" class="deac_button" data-toggle="modal"
+                                                data-target="#exampleModalBanComment${question.commentId}">
+                                            Ban
+                                        </button>
 
-                                            <div class="modal fade" id="exampleModalBanComment${question.commentId}" tabindex="-1" role="dialog"
-                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">     
+                                        <div class="modal fade" id="exampleModalBanComment${question.commentId}" tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalLabel" aria-hidden="true">     
 
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Ban câu hỏi</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">                                                        
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Ban câu hỏi</h5>
 
-
-                                                            <div class="col-md-12 ">                                                                                
-                                                                <br>
-                                                                <form action="deactivateQuestionAndReply">
-                                                                    <div class="text-right"> <button type="submit">Ban</button> </div>
-                                                                    <input type="hidden" name="commentId" value="${question.commentId}"/>
-                                                                </form>
-                                                            </div>
-                                                        </div>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
                                                     </div>
+                                                    <div class="modal-body">                                                        
+
+
+                                                        <div class="col-md-12 ">                                                                                
+                                                            <br>
+                                                            <form action="deactivateQuestionAndReply">
+
+                                                                <h3>Xác nhận xóa câu hỏi</h3>
+                                                                <br>
+                                                                <div class="text-right"> <button class="btn btn-primary" type="submit">Confirm</button> </div>
+                                                                <input type="hidden" name="commentId" value="${question.commentId}"/>
+                                                            </form>
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+
                                                 </div>
                                             </div>
-                                        </td>
-                                    </c:if>
-                                    <c:if test="${question.statusId eq 'DE'}">
-                                        <!-- 4.svg -->
-                                        <td><div class="rec_red"></div></td>
-                                        <td class="button_td" style="visibility: hidden;">
-                                            <button>__</button>
-                                        </td>
-                                    </c:if>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-            </c:if>
 
+                                        </div>
 
-        <script src="<c:url value=" https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js" />"></script>
-        <script src="<c:url value=" https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js" />"></script>
-        <script src="resources/js/configFirebase.js"></script>
-        <script src="resources/js/comment.js"></script>
+                                    </td>
+                                </c:if>
+                                <c:if test="${question.statusId eq 'DE'}">
+                                    <!-- 4.svg -->
+                                    <td><div class="rec_red"></div></td>
+                                    <td class="button_td" style="visibility: hidden;">
+                                        <button>__</button>
+                                    </td>
+                                </c:if>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </c:if>
+
+        <%@include file="footer.jsp" %>
+
+        <script src="<c:url value=" https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js" />">
+        </script>
+        <script src="<c:url value=" https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js" />">
+        </script>
+        <script src="resources/js/configFirebase.js">
+        </script>
+        <script src="resources/js/comment.js">
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
                 integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
-                crossorigin="anonymous"></script>
+                crossorigin="anonymous">
+        </script>
 </body>
+
 </html>
 
