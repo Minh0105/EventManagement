@@ -150,8 +150,11 @@
                 </div>
             </div>
 
+            <script>
+                window.alert("${requestScope.NOTIFICATION}");
+            </script>
+
             <div class="service">
-                <span>${requestScope.NOTIFICATION}</span>
                 <table class="table table-bordered text-center">
                     <thead class="thead-light">
                         <tr class="service1">
