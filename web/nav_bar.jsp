@@ -47,7 +47,7 @@
                 </c:if>
 
                 <c:if test="${sessionScope.USER.roleName ne 'ADMIN'}">
-                    <a id="navbar_branch" href="viewNewfeed">
+                    <a id="navbar_branch_back" href="viewNewfeed">
                         <img id="app_icon" src="resources/icon/app_icon.svg">
                         <h5 class="d-none d-md-block">FPT Event Management</h5>
                     </a>
