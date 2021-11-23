@@ -57,14 +57,16 @@ a, a:hover {
     position: relative;
 }
 
-#navbar_branch {
+#navbar_branch_back  {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    background-color: transparent!important;
+    border: none !important;
 }
 
-#navbar_branch > h5 {
+#navbar_branch_back > h5 {
     display: inline-block;
     color: #FFFFFF;
     margin: 0px 0px 0px 16px;

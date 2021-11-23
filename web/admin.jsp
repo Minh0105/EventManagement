@@ -129,20 +129,20 @@
 
                                     </select>
                                     <input type="hidden" name="action" value="Create" />
-                                    <div class="">
+                                    <div class="mt-3">
                                         <label class="labels">Email</label>
                                         <input
                                             class="form-control" type="email" name="email" required />
                                         <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
                                     </div>
-                                    <div class="">
+                                    <div class="mt-3">
                                         <label class="labels">Tên</label>
                                         <input
                                             class="form-control" type="text" name="name" required />
                                     </div>
                                     <br>
-                                    <div class="text-right"> <button type="submit"
-                                                                     class="btn btn-primary">Tạo tài khoản mới</button> </div>
+                                    <div class="text-right mb-3"> <button type="submit"
+                                                                     class="mybutton btn-blue">Tạo tài khoản mới</button> </div>
                                 </form>
                             </div>
 
@@ -232,7 +232,7 @@
                                                                             rows="5"   class="form-control" type="text" name="reason" required ></textarea>                                                                        
                                                                     </div>
                                                                     <br>
-                                                                    <div class="text-right"><Button type="submit" name="action" value="Deactivate" class="btn btn-primary" >Deactivate</button> </div>
+                                                                    <div class="text-right"><Button type="submit" name="action" value="Deactivate" class="mybutton btn-orange" >Khóa tài khoản</button> </div>
 
                                                                 </div>
 
@@ -243,7 +243,6 @@
 
                                                 </div>
                                             </c:if>
-
 
                                         </c:if>
                                         <c:if test="${organizer.status eq 'Deactivated'}">
@@ -372,7 +371,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Tạo tài khoản</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Đăng kí tài khoản giảng viên</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -388,17 +387,14 @@
                                             class="form-control" type="email" name="email" required />
                                         <!--pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"-->
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 mt-3">
                                         <label class="labels">Tên</label>
-                                        <input
-                                            class="form-control" type="text" name="name" required />
-                                        <br>
+                                        <input class="form-control" type="text" name="name" required />
                                     </div>
-                                    <div class="col-md-12 text-right">
-                                        <button type="submit"
-                                                class="btn btn-primary">Thêm tài khoản giảng viên</button>
+                                    <div class="col-md-12 text-right mt-4 mb-3">
+                                        <button type="submit" class="mybutton btn-blue">Tạo</button>
                                     </div>
-                                </form> <br>
+                                </form> 
                             </div>
 
                         </div>
@@ -546,16 +542,19 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">                                                        
-
-
-                                                            <div class="col-md-12 ">                                                                                
-                                                                <div class="">                                                                       
-                                                                    <div class="text-left"><label class="labels">Nội Dung</label></div>
-                                                                    <textarea
-                                                                        rows="5"   class="form-control" type="text" required ></textarea>                                                                        
-                                                                </div>
-                                                                <br>
-                                                                <div class="text-right"> <button class="btn btn-primary" onclick="banComment('${comment.key}')">Ban</button> </div>
+                                                            <div class="col-md-12 ">                                                    
+                                                                <form action="sendNotificationToUser" method="POST">
+                                                                    <div class="d-block">                                                                       
+                                                                        <div class="text-left"><label class="labels">Nội Dung</label></div>
+                                                                        <textarea class="input_message form-control" rows="5"
+                                                                        style="width: 100%;" 
+                                                                        type="text" name="message" required="true"></textarea>                                                                        
+                                                                    </div>
+                                                                    <input type="hidden" name="userId" value="${comment.value.userId}">
+                                                                    <input type="hidden" name="eventId" value="${comment.value.eventId}">
+                                                                    <div class="text-right mt-3"> 
+                                                                        <button type="button" class="btn btn-primary" onclick="banComment('${comment.key}', this)">Ban</button> 
+                                                                    </div>
                                                                 </form>
                                                             </div>
 
@@ -751,7 +750,19 @@
                                                 <td><p>${event.organizerName}</p></td>
                                                 <td><p>${event.following}</p></td>
                                                 <td><p>${event.joining}</p></td>
-                                                <td><p>${event.statusId}</p></td>
+                                                <c:if test="${event.statusId == 1}">
+                                                    <td><div class="rec_green"></div></td>    
+                                                </c:if>
+                                                <c:if test="${event.statusId == 2}">
+                                                    <td><div class="rec_yellow"></div></td>    
+                                                </c:if>
+                                                <c:if test="${event.statusId == 3}">
+                                                    <td><div class="rec_red"></div></td>    
+                                                </c:if>
+                                                <c:if test="${event.statusId == 4}">
+                                                    <td><div class="rec_grey"></div></td>    
+                                                </c:if>
+                                                
                                                 <td>
                                                     <form action="cancelEvent" method="POST">
                                                         <c:if test="${event.statusId == 1 || event.statusId == 2}">
@@ -771,7 +782,6 @@
 
                                                                     <div class="modal-dialog" role="document">
                                                                         <div class="modal-content">
-
                                                                             <div class="modal-header">
                                                                                 <h5 class="modal-title" id="exampleModalLabel">Xác Nhận Hủy Event</h5>
                                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -779,8 +789,6 @@
                                                                                 </button>
                                                                             </div>
                                                                             <div class="modal-body">                                                        
-
-
                                                                                 <div class="col-md-12 ">                                                                                
                                                                                     <div class="">
                                                                                         <form action="cancelEvent">
@@ -790,7 +798,7 @@
                                                                                                    value="${param.organizerType}" />
                                                                                             <input type="hidden" name="eventStatus"
                                                                                                    value="${param.eventStatus}" />
-                                                                                            <input type="hidden" name="idOrganizer"
+                                                                                            <input type="hidden" name="idODeacadminrganizer"
                                                                                                    value="${param.idOrganizer}" />
                                                                                             <div class="text-left"><label class="labels">Nội Dung</label></div>
                                                                                             <textarea
@@ -801,7 +809,6 @@
                                                                                             type="submit" name="action" value="Confirm" class="btn btn-primary" >Confirm</button> </div>
                                                                                     </form>
                                                                                 </div>
-
                                                                             </div>
 
                                                                         </div>

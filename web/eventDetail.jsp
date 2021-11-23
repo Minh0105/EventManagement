@@ -622,7 +622,7 @@
         </div>
 
         <div id="export_option_menu">
-            <a class="mybutton no-shadow" href="downloadMemberListInExcelFile?eventId=<%=detail.getId()%>&people=participant">
+            <a class="mybutton no-show" href="downloadMemberListInExcelFile?eventId=<%=detail.getId()%>&people=participant">
                 Thành viên tham gia
             </a>
 

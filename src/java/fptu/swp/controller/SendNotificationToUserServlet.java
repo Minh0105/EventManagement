@@ -16,13 +16,11 @@ import fptu.swp.utils.firebaseBinding.firebase4j.error.JacksonUtilityException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,8 +29,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author triet
  */
-@WebServlet(name = "SendEventNotificationServlet", urlPatterns = {"/SendEventNotificationServlet"})
-public class SendEventNotificationServlet extends HttpServlet {
+public class SendNotificationToUserServlet extends HttpServlet {
 
     static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(SendEventNotificationServlet.class);
 
@@ -66,9 +63,11 @@ public class SendEventNotificationServlet extends HttpServlet {
         EventDAO eventDao = new EventDAO();
         UserDAO userDao = new UserDAO();
         int eventId = 0;
+        int studentId = -1;
         String message = "";
         try {
             eventId = Integer.parseInt(request.getParameter("eventId"));
+            studentId = Integer.parseInt(request.getParameter("userId"));
 
             UserDTO loginUser = (UserDTO) request.getSession(false).getAttribute("USER");
             int loginUserId = loginUser.getId();
@@ -76,24 +75,22 @@ public class SendEventNotificationServlet extends HttpServlet {
 
             if (loginUserId == organizerIdOfEvent || loginUser.getRoleName().equals("ADMIN")) {
                 message = request.getParameter("message");
+                message = "Bình luận của bạn đã bị xóa, lí do: " + message;
                 if (message != null) {
                     EventDetailDTO detail = eventDao.getEventDetail(eventId);
                     if (detail != null) {
                         String linkToFirebase = "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/";
                         FirebaseBindingSingleton firebase = FirebaseBindingSingleton.getInstance(linkToFirebase);
-                        List<Integer> listFollowers = userDao.getFollowersIdByEventId(eventId);
                         url = VIEW_EVENTDETAIL_SERVLET_PATH + "?eventId=" + eventId;
 
-                        for (int studentId : listFollowers) {
-                            ScheduleDTO s = new ScheduleDTO();
-                            s.setEventId(eventId);
-                            s.setEventName(detail.getName());
-                            s.setOrganizerAvatar(detail.getOrganizerAvatar());
-                            s.setRunningTime(new Date());
-                            s.setMessage(message);
-                            s.setUserId(studentId);
-                            firebase.sendNotificationToUserID(s);
-                        }
+                        ScheduleDTO s = new ScheduleDTO();
+                        s.setEventId(eventId);
+                        s.setEventName(detail.getName());
+                        s.setOrganizerAvatar(detail.getOrganizerAvatar());
+                        s.setRunningTime(new Date());
+                        s.setMessage(message);
+                        s.setUserId(studentId);
+                        firebase.sendNotificationToUserID(s);
                     }
                 }
             }

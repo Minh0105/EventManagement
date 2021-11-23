@@ -1,3 +1,5 @@
+@import url(event_status_modal.css);
+
 * { 
     margin: 0;
     padding: 0;
@@ -6,7 +8,6 @@
 
 a, a:hover {
     text-decoration: none !important;
-    white-space: nowrap !important;
 }
 
 /* Header */
@@ -258,6 +259,10 @@ a, a:hover {
 
 /* Service */
 
+.service {
+    margin-bottom: 30vh !important;
+}
+
 .service table {
     width: 100%;
     margin-bottom: 0!important;
@@ -387,6 +392,7 @@ td p, td a {
 
 td p:hover, td a:hover {
     overflow: visible;
+    white-space: normal;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
     border-radius: 5px; 
 }

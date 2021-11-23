@@ -189,14 +189,15 @@
         </section>
 
         <div class="col-12 text-center d-flex justify-content-center align-items-center" style="margin-top: 20vh; color: white">
+            <button onclick="goBack()" class="mybutton btn-blue btn-big">Quay về trước</button>
+
             <% if (session.getAttribute("CHANGING_EVENT_ID") != null) { %>
-                <a href="createEvent" class="mybutton btn-orange btn-big">Cập nhật sự kiện</a>
+                <a href="createEvent" class="mybutton btn-orange btn-big ml-3">Cập nhật sự kiện</a>
 
             <% } else { %>
-                <a href="createEvent" class="mybutton btn-orange btn-big">Tạo sự kiện</a>
+                <a href="createEvent" class="mybutton btn-orange btn-big ml-3">Tạo sự kiện</a>
             <% } %>
 
-            <button onclick="goBack()" class="mybutton btn-blue btn-big ml-3">Quay về trước</button>
         </div>
         <script>
             function goBack() {
