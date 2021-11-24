@@ -60,6 +60,7 @@ public class ReplyServlet extends HttpServlet {
             String content = request.getParameter("content");
             if(eventDao.insertReply(eventId, userId, commentId, content)){
                 url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
+                url += "&lastAction=askQuestion";
             }
 
         } catch (Exception e) {

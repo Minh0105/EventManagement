@@ -452,6 +452,9 @@ body {
     font-weight: 500;
     color: #c13636 !important;
     font-size: 1rem;
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0px !important;
 }
 
 /* REPLY COMMENT */

@@ -59,6 +59,7 @@ public class AskQuestionServlet extends HttpServlet {
             String content = request.getParameter("content");
             if(eventDao.insertComment(eventId, userId, content, true)){
                 url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
+            url += "&lastAction=askQuestion";
             }
 
         } catch (Exception e) {

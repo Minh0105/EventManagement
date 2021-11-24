@@ -76,6 +76,7 @@ public class DeactivateQuestionAndReplyServlet extends HttpServlet {
                 if (cmt.getUserId() == loginUser.getId()) {
                     eventDao.deactivateQuestionAndReply(commentId);
                     url = VIEW_EVENTDETAIL_SERVLET_PATH + "?eventId=" + cmt.getEventId();
+                    url += "&lastAction=askQuestion";
                 }
             } else {
                 String linkToFirebase = "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/";
@@ -99,6 +100,8 @@ public class DeactivateQuestionAndReplyServlet extends HttpServlet {
                     if (userDao.getOrganizerIdByEventId(cmt.getEventId()) == loginUser.getId()) {
                         eventDao.deactivateQuestionAndReply(commentId);
                         url = VIEW_EVENTDETAIL_SERVLET_PATH + "?eventId=" + cmt.getEventId();
+                        url += "&lastAction=askQuestion";
+
                         ScheduleDTO s = new ScheduleDTO();
 
                         s.setEventId(cmt.getEventId());

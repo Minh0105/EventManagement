@@ -115,4 +115,11 @@ $("#btn_export_excel").click(function () {
 });
 
 
+function confirmDeleteQuestion (button) {
+    if (window.confirm("Bạn muốn xóa câu hỏi này?")) {
+        var deleteLink = button.parentNode.getElementsByTagName("a")[0].click();
+        deleteLink.click();
+    }
+}
+
 

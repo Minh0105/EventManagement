@@ -497,7 +497,6 @@
                         %>
                                 <form action ="askQuestion">
                                     <textarea id="question_input" class="my-text-input dicussion_input" type="text" placeholder="Vui lòng nhập câu hỏi của bạn....." name="content" required></textarea>
-
                                     <div style="width: 100%; display:flex; justify-content:flex-end">
                                         <button type="submit" class="mybutton btn-orange mt-2">Gửi câu hỏi</button>
                                     </div>
@@ -525,7 +524,8 @@
                                                 <% } %>   
 
                                                 <% if (question.getUserId() == loginUser.getId() || (loginUser.getRoleName().equals("CLUB'S LEADER") || loginUser.getRoleName().equals("DEPARTMENT'S MANAGER") && request.getAttribute("ORGANIZER_ID").equals(loginUser.getId()))) { %>
-                                                    <a class="btn_delete_question" href="deactivateQuestionAndReply?commentId=<%= question.getCommentId()%>">Xóa</a>
+                                                    <a class="d-none" href="deactivateQuestionAndReply?commentId=<%= question.getCommentId()%>">___</a>
+                                                    <button class="btn_delete_question" onclick="confirmDeleteQuestion(this)">Xóa</button>
                                                 <% } %>
                                             </div>
                                         </div>
@@ -536,7 +536,7 @@
                                             <input class="input_reply" type="text" name="content" placeholder="Nhập nội dung câu trả lời" required/>
                                             <input type="hidden" name="commentId" value = "<%= question.getCommentId()%>"/>
                                             <input type="hidden" name="eventId" value = "<%= detail.getId()%>"/>
-                                            <button onclick="sendReply()" class="btn_reply">Gửi</button>
+                                            <button type="submit" class="btn_reply">Gửi</button>
                                             <button onclick="hideReplyBox(this)" class="btn_hide_reply mybutton btn-grey">Hủy</button>
                                         </form>
                                     <% } %>
@@ -641,6 +641,7 @@
 
     <%@include file="footer.jsp" %>
 
+
     <!-- -------------------------gắn link------------------------------- -->
 
     <script>
@@ -679,5 +680,20 @@
         startOnAddCommentListener();
         startOnAddReplyListener();
     </script>
+
+
+    <% 
+    String lastAction = request.getParameter("lastAction");
+    if (lastAction != null) {
+        if (lastAction.equals("askQuestion")) {
+    %>
+            <script>
+                document.getElementById("contact-tab").click();
+                document.getElementById("contact-tab").scrollIntoView();
+            </script>
+    <%
+        }
+    } 
+    %>
 </body>
 </html>
