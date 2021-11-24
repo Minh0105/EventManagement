@@ -53,6 +53,7 @@ static final Logger LOGGER = Logger.getLogger(AuthorizeSendingEmailServlet.class
             url= AUTHORIZING_SENDINGEMAIL_PAGE_LABEL;
         }catch(Exception ex){
             LOGGER.info(ex);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!!!");
         }finally {
             response.sendRedirect(url);
         }

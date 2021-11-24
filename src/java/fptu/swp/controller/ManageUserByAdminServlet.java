@@ -204,10 +204,12 @@ public class ManageUserByAdminServlet extends HttpServlet {
                         request.setAttribute("TEXT_SEARCH", searchTxt);
                     }
                 }
-
+            }else{
+                request.getSession(true).setAttribute("errorMessage", "Hệ thống không nhận diện được tương tác của bạn với user!");
             }
         } catch (Exception ex) {
             LOGGER.error(ex);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!");
         } finally {
             RequestDispatcher dis = request.getRequestDispatcher(url);
             dis.forward(request, response);

@@ -7,14 +7,22 @@ package fptu.swp.controller;
 
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
+import fptu.swp.entity.schedule.ScheduleDTO;
 import fptu.swp.entity.user.LecturerBriefInfoDTO;
 import fptu.swp.entity.user.UserDAO;
 import fptu.swp.entity.user.UserDTO;
+import fptu.swp.utils.firebaseBinding.firebase4j.demo.FirebaseBindingSingleton;
+import fptu.swp.utils.firebaseBinding.firebase4j.error.FirebaseException;
+import fptu.swp.utils.firebaseBinding.firebase4j.error.JacksonUtilityException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -84,22 +92,52 @@ public class UpdateEventServlet extends HttpServlet {
                                     chosenLecturerListNew.add(lec);
                                 }
                             }
-                            eventDao.insertNewEventLecturer(chosenLecturerListNew, eventId);
                         }
                         detail.setDescription(description);
                         detail.setName(eventName);
+                        eventDao.insertNewEventLecturer(chosenLecturerListNew, eventId);
                         if (eventDao.updateEventInfo(detail)) {
+                            String linkToFirebase = "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/";
+                            FirebaseBindingSingleton firebase = FirebaseBindingSingleton.getInstance(linkToFirebase);
+                            List<Integer> listFollowers = userDao.getFollowersIdByEventId(eventId);
+                            for (int studentId : listFollowers) {
+                                ScheduleDTO s = new ScheduleDTO();
+                                s.setEventId(eventId);
+                                s.setEventName(detail.getName());
+                                s.setOrganizerAvatar(detail.getOrganizerAvatar());
+                                s.setRunningTime(new Date());
+                                String message = "Thông tin sự kiện " + detail.getName() + " đã được cập nhật.";
+                                s.setMessage(message);
+                                s.setUserId(studentId);
+                                System.out.println("Send noti of update event's information with Id: " + eventId + "  is " + firebase.sendNotificationToUserID(s));
+                            }
+                            List<LecturerBriefInfoDTO> listLec = userDao.getListLecturerBriefInfo(eventId);
+                            for (LecturerBriefInfoDTO lec : listLec) {
+                                ScheduleDTO s = new ScheduleDTO();
+                                s.setEventId(eventId);
+                                s.setEventName(detail.getName());
+                                s.setOrganizerAvatar(detail.getOrganizerAvatar());
+                                s.setRunningTime(new Date());
+                                String message = "Thông tin sự kiện " + detail.getName() + " đã được cập nhật.";
+                                s.setMessage(message);
+                                s.setUserId(lec.getId());
+                                System.out.println("Send noti of update event's information with Id: " + eventId + "  is " + firebase.sendNotificationToUserID(s));
+                            }
                             url = VIEW_EVENTDETAIL_SERVLET_PATH;
                         }
                         request.getSession(false).removeAttribute("ChosenLecturerList");
                         request.getSession(false).removeAttribute("LecturerList");
-
                     }
                 }
             }
 
         } catch (Exception ex) {
             LOGGER.error(ex);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!");
+        } catch (FirebaseException ex) {
+            Logger.getLogger(UpdateEventServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JacksonUtilityException ex) {
+            Logger.getLogger(UpdateEventServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             RequestDispatcher dis = request.getRequestDispatcher(url);
             dis.forward(request, response);

@@ -22,7 +22,9 @@ import javax.servlet.http.HttpSession;
  * @author triet
  */
 public class ReplyServlet extends HttpServlet {
+
     static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(ReplyServlet.class);
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -58,9 +60,15 @@ public class ReplyServlet extends HttpServlet {
             int commentId = Integer.parseInt(request.getParameter("commentId"));
             int eventId = Integer.parseInt(request.getParameter("eventId"));
             String content = request.getParameter("content");
-            if(eventDao.insertReply(eventId, userId, commentId, content)){
-                url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
-                url += "&lastAction=askQuestion";
+            if (loginUser.getRoleName().equals("STUDENT") || loginUser.getRoleName().equals("ADMIN")) {
+                request.getSession(true).setAttribute("errorMessage", "Bạn không thể trả lời câu hỏi của học sinh!");
+            } else {
+                if (eventDao.insertReply(eventId, userId, commentId, content)) {
+                    url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
+                    url += "&lastAction=askQuestion";
+                } else {
+                    request.getSession(true).setAttribute("errorMessage", "Xảy ra lỗi trong quá trình xử lí câu trả lời!");
+                }
             }
 
         } catch (Exception e) {

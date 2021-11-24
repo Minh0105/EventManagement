@@ -310,10 +310,11 @@ function updateNameDescriptionLecturerList(eventId) {
     form.appendChild(inputDescription);
     
    //var inputChosenLecturer = document.querySelectorAll('input[name="chosen_lecturer"]');
-   var inputChosenLecturer = document.getElementsByClassName("chosen_lecturer_id");
-   for(var inputLecturer of inputChosenLecturer){
-       console.log(inputLecturer);
-       form.appendChild(inputLecturer);
+   const inputChosenLecturer = document.getElementsByClassName("chosen_lecturer_id");
+   for(let i = 0; i < inputChosenLecturer.length; i++ ){
+       form.appendChild(inputChosenLecturer[0]);
+       console.log(inputChosenLecturer[i]);
    }
+   console.log(form);
    form.submit();
 }

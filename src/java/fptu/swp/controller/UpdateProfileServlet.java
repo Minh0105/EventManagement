@@ -111,6 +111,7 @@ public class UpdateProfileServlet extends HttpServlet {
 
         } catch (Exception e) {
             LOGGER.error(e);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!!!");
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

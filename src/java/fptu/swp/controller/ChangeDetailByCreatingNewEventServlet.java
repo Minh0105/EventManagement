@@ -123,7 +123,7 @@ public class ChangeDetailByCreatingNewEventServlet extends HttpServlet {
                                             s.setEventName(detailNew.getName());
                                             s.setOrganizerAvatar(detailNew.getOrganizerAvatar());
                                             s.setRunningTime(new Date());
-                                            String message = "Sự kiện " + oldEventName + " vừa được cập nhật thông tin." + (oldEventName.equals(detailNew.getName()) ? ("") : ("Sự kiện được đổi tên thành: " + detailNew.getName()));
+                                            String message = "Sự kiện <strong>" + oldEventName + "</strong> vừa được cập nhật thông tin." + (oldEventName.equals(detailNew.getName()) ? ("") : (" Sự kiện được đổi tên thành: <strong>" + detailNew.getName()))+"</strong>.";
                                             s.setMessage(message);
                                             s.setUserId(studentId);
                                             System.out.println("Send noti of Update Event with Id: " + oldEventId + " to new event with Id: " + eventId + "  is " + firebase.sendNotificationToUserID(s));
@@ -135,6 +135,18 @@ public class ChangeDetailByCreatingNewEventServlet extends HttpServlet {
                                 }
                                 Schedule.updateSchedule();
                                 if (check) {
+                                    List<LecturerBriefInfoDTO> listLec = userDao.getListLecturerBriefInfo(eventId);
+                                    for (LecturerBriefInfoDTO lec : listLec) {
+                                        ScheduleDTO s = new ScheduleDTO();
+                                        s.setEventId(eventId);
+                                        s.setEventName(detail.getName());
+                                        s.setOrganizerAvatar(detail.getOrganizerAvatar());
+                                        s.setRunningTime(new Date());
+                                        String message = "Sự kiện <strong>" + oldEventName + "</strong> vừa được cập nhật thông tin." + (oldEventName.equals(detailNew.getName()) ? ("") : (" Sự kiện được đổi tên thành: <strong>" + detailNew.getName()))+"</strong>.";
+                                        s.setMessage(message);
+                                        s.setUserId(lec.getId());
+                                        System.out.println("Send noti of Update Event with Id: " + eventId + "  is " + firebase.sendNotificationToUserID(s));
+                                    }
                                     url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
                                 }
                             }

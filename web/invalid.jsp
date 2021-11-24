@@ -4,6 +4,7 @@
     Author     : tangtantai
 --%>
 
+<%@page import="fptu.swp.entity.user.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -18,7 +19,7 @@
                 width: 100%;
                 display: flex;
             }
-            
+
             #error_section {
                 display: flex;
                 justify-content: center;
@@ -50,24 +51,42 @@
         </style>
     </head>
     <body>
-        
-        <%@include file="nav_bar.jsp"%>
-        
-        <% 
+
+
+
+        <%
+            session = request.getSession(true);
             String errorMessage = (String) session.getAttribute("errorMessage");
+            UserDTO loginUser = (UserDTO) session.getAttribute("USER");
+            if (loginUser != null) {
+        %>
+        <%@include file="nav_bar.jsp"%>        
+        <%
+                if (errorMessage == null) {
+                    errorMessage = "Tính năng này không khả dụng đối với tài khoản của bạn.";
+                }
+            } else {
+                if (errorMessage == null) {
+                    errorMessage = "Something went wrong!!!";
+                }
+
+            }
         %> 
 
         <div id="big_background">
             <div id="error_section">
                 <p id="error_message"><%=errorMessage%></p>
-                <p id="error_message">Tính năng này không khả dụng đối với tài khoản của bạn</p>
+                <!--                <p id="error_message">Tính năng này không khả dụng đối với tài khoản của bạn</p>-->
                 <img id="img_sad_face" src="resources/image/image_sad_face.svg"> 
             </div>
             <div id="trapezoid"></div>
         </div>
 
-        <% 
+        <%
             session.removeAttribute("errorMessage");
+            if (loginUser == null) {
+                session.invalidate();
+            }
         %>
 
 

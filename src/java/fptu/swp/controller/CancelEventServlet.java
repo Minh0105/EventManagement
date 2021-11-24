@@ -10,6 +10,7 @@ import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
 import fptu.swp.entity.schedule.Schedule;
 import fptu.swp.entity.schedule.ScheduleDTO;
+import fptu.swp.entity.user.LecturerBriefInfoDTO;
 import fptu.swp.entity.user.UserDAO;
 import fptu.swp.entity.user.UserDTO;
 import fptu.swp.utils.firebaseBinding.firebase4j.demo.FirebaseBindingSingleton;
@@ -88,11 +89,24 @@ public class CancelEventServlet extends HttpServlet {
                             s.setEventName(detail.getName());
                             s.setOrganizerAvatar(detail.getOrganizerAvatar());
                             s.setRunningTime(new Date());
-                            String message = "Sự kiện " + detail.getName() + " đã bị hủy.";
+                            String message = "Sự kiện <strong>" + detail.getName() + "</strong> đã bị hủy.";
                             s.setMessage(message);
                             s.setUserId(studentId);
                             System.out.println("Send noti of Cancel Event with Id: " + eventId + "  is " + firebase.sendNotificationToUserID(s));
                         }
+                        List<LecturerBriefInfoDTO> listLec = userDao.getListLecturerBriefInfo(eventId);
+                        for(LecturerBriefInfoDTO lec : listLec){
+                            ScheduleDTO s = new ScheduleDTO();
+                            s.setEventId(eventId);
+                            s.setEventName(detail.getName());
+                            s.setOrganizerAvatar(detail.getOrganizerAvatar());
+                            s.setRunningTime(new Date());
+                            String message = "Sự kiện <strong>" + detail.getName() + "</strong> đã bị hủy.";
+                            s.setMessage(message);
+                            s.setUserId(lec.getId());
+                            System.out.println("Send noti of Cancel Event with Id: " + eventId + "  is " + firebase.sendNotificationToUserID(s));
+                        }
+                        
                         Schedule.updateSchedule();
                         if ("ADMIN".equals(loginUser.getRoleName())) {
                             url = FILTER_EVENT_SERVLET_PATH;
@@ -137,14 +151,21 @@ public class CancelEventServlet extends HttpServlet {
                         }
                     }
 
+                }else{
+                    request.getSession(true).setAttribute("errorMessage", "Sự kiện này đã kết thúc hoặc bị hủy!");
                 }
+            }else{
+                request.getSession(true).setAttribute("errorMessage", "Không tìm thấy sự kiện");
             }
         } catch (Exception ex) {
             LOGGER.error(ex);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!!!");
         } catch (FirebaseException ex) {
             Logger.getLogger(CancelEventServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!!!");
         } catch (JacksonUtilityException ex) {
             Logger.getLogger(CancelEventServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!!!");
         } finally {
             RequestDispatcher dis = request.getRequestDispatcher(url);
             dis.forward(request, response);

@@ -99,11 +99,16 @@ public class CreateEventServlet extends HttpServlet {
                     session.removeAttribute("ChosenTimeRange");
                     session.removeAttribute("EVENT_DETAIL_REVIEW");
                     session.removeAttribute("EVENT_POSTER_STREAM");
+                }else{
+                    request.getSession(true).setAttribute("errorMessage", "Lỗi xảy ra khi thêm thời gian, đại điểm hoặc khi thêm giảng viên vào sự kiện!");
                 }
                  
+            }else{
+                request.getSession(true).setAttribute("errorMessage", "Lỗi xảy ra khi lưu thông tin sự kiện!");
             }
         } catch (Exception e) {
             LOGGER.error(e);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!!!");
         } finally {
             LOGGER.info("Redirect from CreateEventServlet to" + url);
             response.sendRedirect(url);

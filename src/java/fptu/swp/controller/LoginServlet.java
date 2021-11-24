@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.logging.Level;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -79,7 +80,7 @@ public class LoginServlet extends HttpServlet {
                     LOGGER.info("USER: " + user);
                     session.setAttribute("USER", user);
                     if ("ADMIN".equals(user.getRoleName())) {
-                        url = MANAGE_BY_ADMIN_SERVLET + "?management=organizer";
+                        url = MANAGE_BY_ADMIN_SERVLET_PATH + "?management=organizer";
                         String authorizing = (String) session.getAttribute("AUTHORIZING_SENDING_EMAIL");
                         if(authorizing != null){
                             if("true".equals(authorizing)){
@@ -88,17 +89,19 @@ public class LoginServlet extends HttpServlet {
                             }
                         }
                     } else {
-                        url = VIEW_NEWFEED_SERVLET;
+                        url = VIEW_NEWFEED_SERVLET_PATH;
                     }
                     
+                }else{
+                    request.getSession(true).setAttribute("errorMessage", "Tài khoản của bạn không có trong hệ thống hoặc đã bị hủy kích hoạt.");
                 }
             }
         } catch (Exception ex) { 
             LOGGER.fatal("LOGIN FAILED", ex);
         } finally {
-//            RequestDispatcher dis = request.getRequestDispatcher(url);
-//            dis.forward(request, response);
-            response.sendRedirect(url);
+            RequestDispatcher dis = request.getRequestDispatcher(url);
+            dis.forward(request, response);
+            //response.sendRedirect(url);
         }
         
     }

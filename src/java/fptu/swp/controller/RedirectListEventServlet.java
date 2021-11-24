@@ -82,6 +82,8 @@ public class RedirectListEventServlet extends HttpServlet {
                     request.setAttribute("LIST_EVENT", listEvent);
                     LOGGER.info("Request Attribute LIST_EVENT added to this LECTURER: " + listEvent);
                     url = RELEVANT_EVENT_PAGE_PATH;
+                }else{
+                    request.getSession(true).setAttribute("errorMessage", "Hệ thống không nhận diện được yêu cầu của bạn!");
                 }
                 
             }

@@ -63,7 +63,7 @@ public class FollowEventServlet extends HttpServlet {
             boolean isFollowed = Boolean.parseBoolean(request.getParameter("isFollowed"));
             EventDetailDTO detail = eventDao.getEventDetail(eventId);
             if (detail != null) {
-                if (detail.getStatusId() == 1) {
+                if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {
                     if (isFollowed) {     //Followed (have info in DB) => Unfollow
                         if (eventDao.setFollowingStatus(eventId, studentId, false)) {
                             url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
@@ -75,10 +75,15 @@ public class FollowEventServlet extends HttpServlet {
                             }
                         }
                     }
+                }else{
+                    request.getSession(true).setAttribute("errorMessage", "Sự kiện này đã kết thúc hoặc bị hủy!");
                 }
+            }else{
+                request.getSession(true).setAttribute("errorMessage", "Không tìm thấy sự kiện!");
             }
         } catch (Exception e) {
             LOGGER.error(e);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!");
         } finally {
             response.sendRedirect(url);
         }
