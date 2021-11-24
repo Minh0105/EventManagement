@@ -32,7 +32,7 @@
 
         <nav class="navbar navbar-expand-md navbar-light navbar-color sticky-top">
             <div id="nav_content" class="container-fluid">
-                <div id="navbar_branch">
+                <div id="navbar_branch_back">
                     <img id="app_icon" src="resources/icon/app_icon.svg">
                     <h5 class="d-none d-md-block">Chỉnh sửa thông tin sự kiện</h5>
                 </div>		

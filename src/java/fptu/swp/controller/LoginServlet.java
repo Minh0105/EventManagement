@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.logging.Level;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -63,8 +62,6 @@ public class LoginServlet extends HttpServlet {
         try {
             if (code == null || code.isEmpty()) {
                 LOGGER.error("Account not found!!!");
-                RequestDispatcher dis = request.getRequestDispatcher("login.html");
-                dis.forward(request, response);
             } else {
                 String accessToken = GoogleUtils.getToken(code);
                 GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);
@@ -96,6 +93,8 @@ public class LoginServlet extends HttpServlet {
                     
                 }
             }
+        } catch (Exception ex) { 
+            LOGGER.fatal("LOGIN FAILED", ex);
         } finally {
 //            RequestDispatcher dis = request.getRequestDispatcher(url);
 //            dis.forward(request, response);

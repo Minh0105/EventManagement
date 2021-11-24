@@ -5,10 +5,7 @@
  */
 package fptu.swp.controller;
 
-import fptu.swp.entity.event.EventDAO;
-import fptu.swp.entity.user.UserDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -44,7 +41,7 @@ static final Logger LOGGER = Logger.getLogger(AuthorizeSendingEmailServlet.class
 
         //default url
         final String INVALID_PAGE_LABEL = context.getInitParameter("INVALID_PAGE_LABEL");
-        final String AUTHORIZING_SENDINGEMAIL_PAGE_LABEL = "https://accounts.google.com/o/oauth2/auth?scope=profile+email+https://www.googleapis.com/auth/gmail.compose+https://mail.google.com/&redirect_uri=http://localhost:8084/EventManagement/login&response_type=code&client_id=253183940371-k316famgkbmmteshdv4ktc2021p1como.apps.googleusercontent.com&approval_prompt=force";
+        final String AUTHORIZING_SENDINGEMAIL_PAGE_LABEL = roadmap.get("AUTHORIZING_SENDINGEMAIL_PAGE_LABEL");
 
         String url = INVALID_PAGE_LABEL;
         

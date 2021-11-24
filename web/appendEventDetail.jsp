@@ -24,7 +24,7 @@
     <body>
         <nav class="navbar navbar-expand-md navbar-light navbar-color sticky-top">
             <div id="nav_content" class="container-fluid">
-                <a id="navbar_branch" href="#">
+                <a id="navbar_branch_back" href="#">
                     <img id="app_icon" src="resources/icon/app_icon.svg">
                     <h5 class="d-none d-md-block">Điền thông tin sự kiện</h5>
                 </a>		
