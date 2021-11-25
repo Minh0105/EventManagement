@@ -450,7 +450,7 @@ body {
     font-size: 1rem;
 }
 
-.comment_infor .btn_delete_question {
+.btn_delete_question {
     margin-bottom: 2px;
     font-weight: 500;
     color: #c13636 !important;

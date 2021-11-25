@@ -146,7 +146,7 @@
                     for (EventCardDTO card : listCard) {
             %>
                 <div class="col-12 col-md-6 col-lg-4 event_card" 
-                <% if (card.getStatusId() != 1) { %> 
+                <% if (card.getStatusId() != 1 || card.getStatusId() != 2) { %> 
                     style="display: none"
                 <% } %>>
                     

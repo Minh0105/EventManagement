@@ -141,7 +141,9 @@ function startOnAddCommentListener () {
       replyContainerHtmlCode += '<div class="reply_container"> \n'
 
         for (var replyObject of objectReplyList) {
+          
           var replyId = replyObject.commentID;
+          var replyUserId = replyObject['userId'];
           var content = replyObject['content'];
           var userAvatar = replyObject['userAvatar'];
           var userName = replyObject['userName'];
@@ -151,7 +153,7 @@ function startOnAddCommentListener () {
             continue;
           }
 
-          replyContainerHtmlCode += createReplyElement(userId, replyId, userAvatar, userName, content, userRoleName, commentID);
+          replyContainerHtmlCode += createReplyElement(replyUserId, replyId, userAvatar, userName, content, userRoleName, commentID);
         }
 
       replyContainerHtmlCode += '</div>'
@@ -202,10 +204,10 @@ function createReplyElement (userId, replyId, userAvatar, userName, content, use
       replyElementHtml += '        <div class="repComment2b"> \n'
       replyElementHtml += '            <p class="comment_username">' + userName + ' - ' + userRoleName + '</p> \n'
       replyElementHtml += '            <p class="comment_content">'+ content + '</p> \n'
-      replyElementHtml += '        </div> \n'
       if (userId == app_userId) {
-        replyElementHtml += '<button type="button" class="btn_delete_question" onclick="confirmDeleteReply(\''+replyId+'\',\''+commentId+'\')">Xóa</button>';
+          replyElementHtml += '<button type="button" class="btn_delete_question" onclick="confirmDeleteReply(\''+replyId+'\',\''+commentId+'\')">Xóa</button>';
       }
+      replyElementHtml += '        </div> \n'
       replyElementHtml += '    </div> \n'
 
   return replyElementHtml;
@@ -229,6 +231,7 @@ function startOnAddReplyListener () {
     var commentContent = snapshot.val();
     var commentID = snapshot.key;
     var isNotValidComment = commentContent['statusId'] == "DA";
+    var userId = commentContent['userId'];
     if (isNotValidComment) {
       return;
     }
@@ -241,19 +244,20 @@ function startOnAddReplyListener () {
     if (replyList != null && replyList != undefined) {
 
       var replyObjectList = Object.keys(replyList).map(replyId => replyList[replyId])
-  
+      
       replyContainer.innerHTML = '';
       for (var replyObject of replyObjectList) {
         var isNotValidComment = replyObject['statusId'] == "DA";
         if (isNotValidComment) {
           continue;
         }
-
+        var replyId = replyObject.commentID;
+        var replyUserId = replyObject['userId'];
         var userName = replyObject['userName'];
         var userRoleName = replyObject['userRoleName'];
         var userAvatar = replyObject['userAvatar'];
         var content = replyObject['content'];
-        replyContainer.innerHTML += createReplyElement (userId, replyId, userAvatar, userName, content, userRoleName, commentID);
+        replyContainer.innerHTML += createReplyElement (replyUserId, replyId, userAvatar, userName, content, userRoleName, commentID);
       }
 
     }

@@ -46,7 +46,7 @@
                                 <p>Địa chỉ</p>
 
                                 <%
-                                    if (role.equals("CLUB'S LEADER") || role.equals("DEPARTMENT'S MANAGER")) {
+                                    if (role.equals("LECTURER") || role.equals("CLUB'S LEADER") || role.equals("DEPARTMENT'S MANAGER")) {
                                 %>
                                 <p>Miêu tả</p>
                                 <%

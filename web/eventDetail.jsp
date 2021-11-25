@@ -250,55 +250,79 @@
                 </div>
 
                 <%
-                    if ("STUDENT".equals(loginUser.getRoleName()) && detail.getStatusId() == 1) {
+                    if ("STUDENT".equals(loginUser.getRoleName())) {
                         boolean checkFollowed = (boolean) request.getAttribute("IS_FOLLOWED");
                         boolean checkJoining = (boolean) request.getAttribute("IS_JOINING");
                 %>
                 <div class="buttons_section">
+                
+                    <% if (detail.getStatusId() == 1) { %> 
+                        <form action="joinEvent">
+                            <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                            <input type="hidden" name="isJoining" value="<%= checkJoining%>"/>
+                            <%
+                                if (checkJoining) {
+                            %>
+                            <button type="submit" class="care_buttons mybutton btn-grey btn-big mr-2" onclick="waitingForSubmit(this)">
+                                <img src="resources/icon/icon_cancel_white.svg" alt="">
+                                <p>Hủy tham gia</p>
+                            </button>
+                            <%
+                            } else {
+                            %>
+                            <button type="submit" class="care_buttons mybutton btn-blue btn-big mr-2" onclick="waitingForSubmit(this)">
+                                <img src="resources/icon/icon_join_white.svg" alt="">
+                                <p>Sẽ tham gia</p>
+                            </button>
+                            <%
+                                }
+                            %>
+                        </form>
 
-                    <form action="joinEvent">
-                        <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
-                        <input type="hidden" name="isJoining" value="<%= checkJoining%>"/>
-                        <%
-                            if (checkJoining) {
-                        %>
-                        <button type="submit" class="care_buttons mybutton btn-grey btn-big mr-2" onclick="waitingForSubmit(this)">
-                            <img src="resources/icon/icon_cancel_white.svg" alt="">
-                            <p>Hủy Tham Gia</p>
-                        </button>
-                        <%
-                        } else {
-                        %>
-                        <button type="submit" class="care_buttons mybutton btn-blue btn-big mr-2" onclick="waitingForSubmit(this)">
-                            <img src="resources/icon/icon_join_white.svg" alt="">
-                            <p>Sẽ Tham Gia</p>
-                        </button>
-                        <%
-                            }
-                        %>
-                    </form>
-
-                    <form action="followEvent">
-                        <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
-                        <input type="hidden" name="isFollowed" value="<%= checkFollowed%>"/>
-                        <%
-                            if (checkFollowed) {
-                        %>
-                        <button type="submit" class="care_buttons mybutton btn-grey btn-big mr-2" onclick="waitingForSubmit(this)">
-                            <img src="resources/icon/icon_cancel_white.svg" alt="">
-                            <p>Hủy Quan Tâm</p>
-                        </button>
-                        <%
-                        } else {
-                        %>
-                        <button type="submit" class="care_buttons mybutton btn-blue btn-big mr-2" onclick="waitingForSubmit(this)">
-                            <img src="resources/icon/icon_care_white.svg" alt="">
-                            <p>Quan Tâm</p>
-                        </button>
-                        <%
-                            }
-                        %>
-                    </form>
+                        <form action="followEvent">
+                            <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                            <input type="hidden" name="isFollowed" value="<%= checkFollowed%>"/>
+                            <%
+                                if (checkFollowed) {
+                            %>
+                            <button type="submit" class="care_buttons mybutton btn-grey btn-big mr-2" onclick="waitingForSubmit(this)">
+                                <img src="resources/icon/icon_cancel_white.svg" alt="">
+                                <p>Hủy quan tâm</p>
+                            </button>
+                            <%
+                            } else {
+                            %>
+                            <button type="submit" class="care_buttons mybutton btn-blue btn-big mr-2" onclick="waitingForSubmit(this)">
+                                <img src="resources/icon/icon_care_white.svg" alt="">
+                                <p>Quan tâm</p>
+                            </button>
+                            <%
+                                }
+                            %>
+                        </form>
+                    <% } else if (detail.getStatusId() == 2) { %>
+                        <form action="followEvent">
+                            <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
+                            <input type="hidden" name="isFollowed" value="<%= checkFollowed%>"/>
+                            <%
+                                if (checkFollowed) {
+                            %>
+                            <button type="submit" class="care_buttons mybutton btn-grey btn-big mr-2" onclick="waitingForSubmit(this)">
+                                <img src="resources/icon/icon_cancel_white.svg" alt="">
+                                <p>Hủy quan tâm</p>
+                            </button>
+                            <%
+                            } else {
+                            %>
+                            <button type="submit" class="care_buttons mybutton btn-blue btn-big mr-2" onclick="waitingForSubmit(this)">
+                                <img src="resources/icon/icon_care_white.svg" alt="">
+                                <p>Quan tâm</p>
+                            </button>
+                            <%
+                                }
+                            %>
+                        </form>
+                    <% } %>
                 </div>
                 <%
                 } else if (("CLUB'S LEADER".equals(loginUser.getRoleName())) || ("DEPARTMENT'S MANAGER".equals(loginUser.getRoleName()))) {
@@ -309,7 +333,7 @@
 
                 <% } %>
                 <%
-                    }
+                  }
                 %>
             </section>
 

@@ -52,6 +52,12 @@
             boolean questionSelected = action.equals("question");
         %>
 
+        <script>
+            <c:if test="${not empty requestScope.NOTIFICATION}">
+                window.alert("${requestScope.NOTIFICATION}");
+            </c:if>
+        </script>
+
         <div class="header1" id="b">
             <div class="header3">
                 <div id="big_title">
@@ -152,11 +158,6 @@
                 </div>
             </div>
 
-            <script>
-                <c:if test="${not empty requestScope.NOTIFICATION}">
-                    window.alert("${requestScope.NOTIFICATION}");
-                </c:if>
-            </script>
 
             <div class="service">
                 <table class="table table-bordered text-center">
@@ -389,7 +390,7 @@
                                     </div>
                                     <div class="col-md-12 mt-3">
                                         <label class="labels">Tên</label>
-                                        <input class="form-control" type="text" name="name" required />
+                                        <input class="form-control" type="text" name="name" required="true" minlength="12" maxlength="50"/>
                                     </div>
                                     <div class="col-md-12 text-right mt-4 mb-3">
                                         <button type="submit" class="mybutton btn-blue">Tạo</button>
@@ -718,7 +719,6 @@
                     <div>
                         <c:if test="${requestScope.LIST_EVENT ne null}">
                             <div class="service" style="overflow-x:scroll; margin-top: 1.5rem">
-                                <span>${requestScope.NOTIFICATION}</span>
                                 <table class="table table-bordered text-center">
                                     <thead class="thead-light">
                                         <tr class="service1">
