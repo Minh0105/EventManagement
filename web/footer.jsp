@@ -17,8 +17,8 @@
     </head>
     <body>
         <footer>
-            <p id="group_name">SWP391 Project by Alantatica Group, SE1506</p>
-            <p id="copyright">©2021 FPT Event Management</p>
+            <p id="group_name">SWP391 Project by Fendy B Group, SE1506</p>
+            <p id="copyright">2021 FPT Event Management</p>
         </footer>
     </body>
 </html>

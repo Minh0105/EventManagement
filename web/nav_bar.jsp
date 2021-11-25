@@ -33,101 +33,106 @@
     <body>
         <nav class="navbar navbar-expand-md navbar-light navbar-color sticky-top">
             <div id="nav_content" class="container-fluid">
-                <c:if test="${sessionScope.USER.roleName eq 'ADMIN'}">
-                    <button id="navbar_branch_back" class="btn_admin_back" onclick="goBack()">
-                        <img id="app_icon" src="resources/icon/app_icon.svg">
-                        <h5 class="d-none d-md-block">Trở lại</h5>
+
+
+                <c:if test="${not empty sessionScope.USER}">
+                    <c:if test="${sessionScope.USER.roleName eq 'ADMIN'}">
+                        <button id="navbar_branch_back" class="btn_admin_back" onclick="goBack()">
+                            <img id="app_icon" src="resources/icon/app_icon.svg">
+                            <h5 class="d-none d-md-block">Trở lại</h5>
+                        </button>
+    
+                        <script>
+                            function goBack () {
+                                window.history.back();
+                            }
+                        </script>
+                    </c:if>
+    
+                    <c:if test="${sessionScope.USER.roleName ne 'ADMIN'}">
+                        <a id="navbar_branch_back" href="viewNewfeed">
+                            <img id="app_icon" src="resources/icon/app_icon.svg">
+                            <h5 class="d-none d-md-block">FPT Event Management</h5>
+                        </a>
+                    </c:if>
+    
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" 
+                            data-target="#navbarResponsive">
+                        <span class="navbar-toggler-icon"></span>
                     </button>
-
-                    <script>
-                        function goBack () {
-                            window.history.back();
-                        }
-                    </script>
-                </c:if>
-
-                <c:if test="${sessionScope.USER.roleName ne 'ADMIN'}">
-                    <a id="navbar_branch_back" href="viewNewfeed">
-                        <img id="app_icon" src="resources/icon/app_icon.svg">
-                        <h5 class="d-none d-md-block">FPT Event Management</h5>
-                    </a>
-                </c:if>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" 
-                        data-target="#navbarResponsive">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul id="nav_infor_part" class="navbar-nav ml-auto nav-margin">
-
-                        <c:if test="${sessionScope.USER.roleName eq 'ADMIN'}">
-                            <li class="nav-item">
-                                <a id="icon_name_container" class="nav-link" href="#"> 
-                                    <img id="avatar_icon" class="rounded-circle" src="${sessionScope.USER.avatar}"  referrerpolicy="no-referrer"/>
-                                    <span id="avatar_name" class="text-white">${sessionScope.USER.name}</span>
-                                </a>
-                            </li>
-                        </c:if>
-
-
-                        <c:if test="${sessionScope.USER.roleName ne 'ADMIN'}">
-
-                            <li class="nav-item">
-                                <a id="icon_name_container" class="nav-link" href="ViewInfoPage"> 
-                                    <img id="avatar_icon" class="rounded-circle" src="${sessionScope.USER.avatar}"  referrerpolicy="no-referrer"/>
-                                    <span id="avatar_name" class="text-white">${sessionScope.USER.name}</span>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" style="position: relative;">
-                                    <img id="btn_bell" src="resources/icon/bell_icon.svg" alt="Bell_icon">
-                                    <div id="new_notification_badge"></div>
-                                </img>
-                                </a>
-                            </li>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                        <ul id="nav_infor_part" class="navbar-nav ml-auto nav-margin">
     
-                            <li class="nav-item dropdown">
-                            <a href="#" class="nav-link">
-                                <img id="btn_menu" src="resources/icon/hamburger_button_icon.svg" alt="hamburger_button" />
-                                </a>
-                            </li>
-                            
-                            <div id="notification_board" >
-                                <div id="notif_header">
-                                    <p>Thông báo</p>
+                            <c:if test="${sessionScope.USER.roleName eq 'ADMIN'}">
+                                <li class="nav-item">
+                                    <a id="icon_name_container" class="nav-link" href="#"> 
+                                        <img id="avatar_icon" class="rounded-circle" src="${sessionScope.USER.avatar}"  referrerpolicy="no-referrer"/>
+                                        <span id="avatar_name" class="text-white">${sessionScope.USER.name}</span>
+                                    </a>
+                                </li>
+                            </c:if>
+    
+    
+                            <c:if test="${sessionScope.USER.roleName ne 'ADMIN'}">
+    
+                                <li class="nav-item">
+                                    <a id="icon_name_container" class="nav-link" href="ViewInfoPage"> 
+                                        <img id="avatar_icon" class="rounded-circle" src="${sessionScope.USER.avatar}"  referrerpolicy="no-referrer"/>
+                                        <span id="avatar_name" class="text-white">${sessionScope.USER.name}</span>
+                                    </a>
+                                </li>
+    
+                                <li class="nav-item">
+                                    <a class="nav-link" style="position: relative;">
+                                        <img id="btn_bell" src="resources/icon/bell_icon.svg" alt="Bell_icon">
+                                        <div id="new_notification_badge"></div>
+                                    </img>
+                                    </a>
+                                </li>
+        
+                                <li class="nav-item dropdown">
+                                <a href="#" class="nav-link">
+                                    <img id="btn_menu" src="resources/icon/hamburger_button_icon.svg" alt="hamburger_button" />
+                                    </a>
+                                </li>
+                                
+                                <div id="notification_board" >
+                                    <div id="notif_header">
+                                        <p>Thông báo</p>
+                                    </div>
+                                    <div id="notif_body">
+                                        <p id="no_notif_text" class="text-white" style="margin-left:0.5rem">Bạn không có thông báo nào</p>
+                                    </div>
                                 </div>
-                                <div id="notif_body">
-                                    <p id="no_notif_text" class="text-white" style="margin-left:0.5rem">Bạn không có thông báo nào</p>
-                                </div>
-                            </div>
-    
-                            <div id="nav_expanded_panel" class="text-right">
-    
-                                <a class="extend_link" href="redirectListEvent?action=all">
-                                    <span id="btn_log_out">Tra cứu sự kiện</span> 
-                                </a> 
-    
-                                <c:if test="${sessionScope.USER.roleName eq 'STUDENT'}">
-                                    <a class="extend_link" href="redirectListEvent?action=joined">
-                                        <span id="btn_log_out">Các sự kiện đã tham gia</span> 
+        
+                                <div id="nav_expanded_panel" class="text-right">
+        
+                                    <a class="extend_link" href="redirectListEvent?action=all">
+                                        <span id="btn_log_out">Tra cứu sự kiện</span> 
                                     </a> 
-                                </c:if>
-    
-                                <c:if test="${sessionScope.USER.roleName eq 'LECTURER'}">
-                                    <a class="extend_link" href="redirectListEvent?action=added">
-                                        <span id="btn_log_out">Các sự kiện đã được mời</span> 
+        
+                                    <c:if test="${sessionScope.USER.roleName eq 'STUDENT'}">
+                                        <a class="extend_link" href="redirectListEvent?action=joined">
+                                            <span id="btn_log_out">Các sự kiện đã tham gia</span> 
+                                        </a> 
+                                    </c:if>
+        
+                                    <c:if test="${sessionScope.USER.roleName eq 'LECTURER'}">
+                                        <a class="extend_link" href="redirectListEvent?action=added">
+                                            <span id="btn_log_out">Các sự kiện đã được mời</span> 
+                                        </a> 
+                                    </c:if>
+        
+                                    <a class="extend_link" href="logout">
+                                        <span id="btn_log_out">Đăng xuất</span> 
                                     </a> 
-                                </c:if>
-    
-                                <a class="extend_link" href="logout">
-                                    <span id="btn_log_out">Đăng xuất</span> 
-                                </a> 
-                            </div>   	
-                        </c:if>
-                    </ul>
+                                </div>   	
+                            </c:if>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+                </c:if>
+                
         </nav>
 
         <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js""></script>

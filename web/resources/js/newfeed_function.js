@@ -1,5 +1,6 @@
 
 var eventContainer = document.getElementById("card_container_row")
+console.log("??? " + eventContainer);
 var allEventList = document.getElementsByClassName("event_card");
 var sortedAsDefault = true;
 sortToDefaultOrderAndShow();

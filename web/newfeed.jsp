@@ -31,7 +31,6 @@
 
         <link rel="stylesheet" type="text/css" href="resources/css/newfeed.css"/>
         <link rel="stylesheet" type="text/css" href="resources/css/mybutton.css"/>
-        <script type="text/javascript" src="resources/js/newfeed_function.js" ></script>
     </head>
 
     <body>
@@ -146,7 +145,7 @@
                     for (EventCardDTO card : listCard) {
             %>
                 <div class="col-12 col-md-6 col-lg-4 event_card" 
-                <% if (card.getStatusId() != 1 || card.getStatusId() != 2) { %> 
+                <% if (card.getStatusId() != 1 && card.getStatusId() != 2) { %> 
                     style="display: none"
                 <% } %>>
                     
@@ -260,6 +259,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
                 integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
         crossorigin="anonymous"></script>
+        
+        <script type="text/javascript" src="resources/js/newfeed_function.js" ></script>
 
     </body>
 
