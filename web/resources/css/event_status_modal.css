@@ -22,21 +22,25 @@
     font-size: 1.1rem !important;
 }
 
-add
 
- .btn_close_register {
-    background-color: #EBEBEB;
+ .btn_open_register {
+    background-color: #b2e1a6;
     color: #1C1919;
  }
 
- .btn_open_register {
-    background-color: #51c731;
-    color: #1C1919;
+ .btn_open_register:hover {
+    background-color: #34a714;
+    color: #FFFFFF;
  }
 
  .btn_close_register {
     background-color: #EBEBEB;
     color: #212121;
+ }
+
+ .btn_close_register:hover {
+    background-color: #EB8322;
+    color: #FFFFFF;
  }
 
  .btn_cancel_event {

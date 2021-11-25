@@ -161,7 +161,7 @@
 
                             <% } else if (detail.getStatusId() == 2) { %>
 
-                                <button id="btn_open_register" type="submit" class="mybutton btn-blue">Mở đăng kí</button>
+                                <button id="btn_open_register" type="submit" class="mybutton btn_open_register">Mở đăng kí</button>
 
                             <% } %>
                             <input type="hidden" name="eventId" value="<%= detail.getId()%>"/>
