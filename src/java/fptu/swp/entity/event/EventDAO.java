@@ -245,7 +245,7 @@ public class EventDAO {
                             + " LEFT JOIN tblUsers m ON s.userId = m.id"
                             + " LEFT JOIN ( SELECT DISTINCT eventId, date, u.name FROM tblDateTimeLocation"
                             + "                  LEFT JOIN tblLocations u ON locationId = u.id) t ON s.id = t.eventId"
-                            + " WHERE s.statusId = 1";
+                            + " WHERE s.statusId = 1 OR s.statusId = 2";
                     stm = conn.prepareStatement(sql);
                 } else if ("CLUB'S LEADER".equals(loginUser.getRoleName()) || "DEPARTMENT'S MANAGER".equals(loginUser.getRoleName())) {
                     sql = "SELECT s.id eventId, s.name eventName, s.poster eventPoster, m.name organizerName, s.statusId statusId, t.date date, t.name locationName, s.numberOfFollowers followers, s.numberOfParticipants participants"

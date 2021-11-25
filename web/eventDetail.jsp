@@ -575,13 +575,17 @@
         <c:if test="${not empty requestScope.LIST_PARTICIPANTS}">
             <table id="member_table">
                 <tr>
+                    <th>MSSV</th>
                     <th>Email</th>
                     <th>Tên</th>
+                    <th>SĐT</th>
                 </tr>
                 <c:forEach var="user" items="${requestScope.LIST_PARTICIPANTS}">
                     <tr>
+                        <td>${user.studentCode}</td>
                         <td>${user.email}</td>
                         <td>${user.name}</td>
+                        <td>${user.phoneNum}</td>
                     </tr>
                 </c:forEach>
             </table>
@@ -598,14 +602,18 @@
         </c:if>
         <c:if test="${not empty requestScope.LIST_FOLLOWERS}">
             <table id="member_table">
-                <tr>
+                <tr>Newfeed
+                    <th>MSSV</th>
                     <th>Email</th>
                     <th>Tên</th>
+                    <th>SĐT</th>
                 </tr>
                 <c:forEach var="user" items="${requestScope.LIST_FOLLOWERS}">
                     <tr>
+                        <td>${user.studentCode}</td>
                         <td>${user.email}</td>
                         <td>${user.name}</td>
+                        <td>${user.phoneNum}</td>
                     </tr>
                 </c:forEach>
             </table>
