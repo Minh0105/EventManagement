@@ -68,7 +68,7 @@
                             </div>    
                 <%
                             UserDTO user = (UserDTO) session.getAttribute("USER");
-                            if ("CLUB'S LEADER".equals(user.getRoleName()) || "DEPARTMENT'S MANAGER".equals(user.getRoleName())) {
+                            if ("LECTURER".equals(user.getRoleName()) || "CLUB'S LEADER".equals(user.getRoleName()) || "DEPARTMENT'S MANAGER".equals(user.getRoleName())) {
                 %>
                                 <div class="col-md-12">
                                     <label class="label">Miêu tả</label>

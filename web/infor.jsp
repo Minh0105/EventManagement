@@ -86,7 +86,7 @@
                                 </c:if>
 
                                 <%
-                                    if (role.equals("CLUB'S LEADER") || role.equals("DEPARTMENT'S MANAGER")) {
+                                    if (role.equals("LECTURER") || role.equals("CLUB'S LEADER") || role.equals("DEPARTMENT'S MANAGER")) {
                                         String description = user.getDescription();
                                         if (description.trim().length() > 0) {
                                 %> 

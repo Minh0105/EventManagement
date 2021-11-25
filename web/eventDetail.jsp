@@ -687,6 +687,7 @@
         setUserName("<%= loginUser.getName()%>");
         startOnAddCommentListener();
         startOnAddReplyListener();
+        startOnRemoveCommentListener();
     </script>
 
 

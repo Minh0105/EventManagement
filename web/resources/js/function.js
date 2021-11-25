@@ -97,6 +97,7 @@ function startOnAddCommentListener () {
       var commentID = snapshot.key; 
       var content = commentContent['content']; 
       var eventId = commentContent['eventId']; 
+      var userId = commentContent['userId'];
 
       var isNotValidComment = commentContent['statusId'] == "DA";
       if (isNotValidComment) {
@@ -112,36 +113,14 @@ function startOnAddCommentListener () {
       var comment_item_html = '';
 
       //#region Comment Item Html Code
-      comment_item_html +=' <div id="'+ commentID +'" class="comment_item">'
-      comment_item_html +='     <div class="comment_infor_section">'
-      comment_item_html +='         <div class="avatar_container">'
-      comment_item_html +='             <img class="organizer_ava" src="'+ userAvatar +'" alt="" referrerpolicy="no-referrer">'
-      comment_item_html +='         </div>'
-      comment_item_html +=''
-      comment_item_html +='         <div class="comment_infor">'
-      comment_item_html +='             <p class="comment_username">' + userName + ' - ' + userRoleName + '</p>'
-      comment_item_html +='             <p class="comment_content">'+content+'</p>'
-      comment_item_html +='             <p class="btn_show_reply" onclick="showReplyBox(this)">Trả lời</p>'
-      comment_item_html +='         </div>'
-      comment_item_html +='     </div>'
-      comment_item_html +=''
-      comment_item_html +='     <div class="reply_box" action ="replyObject">'
-      comment_item_html +='         <input class="input_reply" type="text" name="content" placeholder="Trả lời..." required/>'
-      comment_item_html +='         <input type="hidden" name="commentId" value = "'+commentID+'"/>'
-      comment_item_html +='         <input type="hidden" name="eventId" value = "'+eventId+'"/>'
-      comment_item_html +='         <button onclick="sendReply(\''+ commentID +'\', this)" class="btn_reply mybutton btn-blue">Gửi</button>'
-      comment_item_html +='         <button onclick="hideReplyBox(this)" class="btn_hide_reply mybutton btn-grey">Hủy</button>'
-      comment_item_html +='     </div>'
-      comment_item_html +=' </div>'
+      comment_item_html += createCommentItem(userId, commentID, userAvatar, userName, userRoleName, content, commentID, eventId);
 
       //#endregion
 
       // Add Comment Section
       comment_container.innerHTML = comment_item_html + comment_container.innerHTML;
 
-
       // PROCESS REPLY LIST
-
       var objectReplyList;
       if (replyList == undefined) {
         // Empty list
@@ -161,36 +140,88 @@ function startOnAddCommentListener () {
       var replyContainerHtmlCode = '';
       replyContainerHtmlCode += '<div class="reply_container"> \n'
 
-      for (var replyObject of objectReplyList) {
+        for (var replyObject of objectReplyList) {
+          var replyId = replyObject.commentID;
+          var content = replyObject['content'];
+          var userAvatar = replyObject['userAvatar'];
+          var userName = replyObject['userName'];
+          var userRoleName = replyObject['userRoleName'];
+          var isNotValidComment = replyObject['statusId'] == "DA";
+          if (isNotValidComment) {
+            continue;
+          }
 
-        var content = replyObject['content'];
-        var userAvatar = replyObject['userAvatar'];
-        var userName = replyObject['userName'];
-        var userRoleName = replyObject['userRoleName'];
-        var isNotValidComment = replyObject['statusId'] == "DA";
-        if (isNotValidComment) {
-          continue;
+          replyContainerHtmlCode += createReplyElement(userId, replyId, userAvatar, userName, content, userRoleName, commentID);
         }
 
-        //#region Reply Html Code
-        replyContainerHtmlCode += '    <div class="repComment2"> \n'
-        replyContainerHtmlCode += '        <div class="repComment2a"> \n'
-        replyContainerHtmlCode += '            <img src="'+ userAvatar +'" class="organizer_ava" alt="" referrerpolicy="no-referrer"> \n'
-        replyContainerHtmlCode += '        </div> \n'
-        replyContainerHtmlCode += '        <div class="repComment2b"> \n'
-        replyContainerHtmlCode += '            <p class="comment_username">' + userName + ' - ' + userRoleName + '</p> \n'
-        replyContainerHtmlCode += '            <p class="comment_content">'+ content +'</p> \n'
-        replyContainerHtmlCode += '        </div> \n'
-        replyContainerHtmlCode += '    </div> \n'
-        //#endregion
-      
-      }
       replyContainerHtmlCode += '</div>'
 
       // Above comment item, it is created above
       var commentItemDiv = document.getElementById(commentID);
       commentItemDiv.innerHTML += replyContainerHtmlCode;
     });
+}
+
+
+function createCommentItem (userId, commentID, userAvatar, userName, userRoleName, content, commentID, eventId) {
+  var comment_item_html = "";
+  comment_item_html +=' <div id="'+ commentID +'" class="comment_item">'
+  comment_item_html +='     <div class="comment_infor_section">'
+  comment_item_html +='         <div class="avatar_container">'
+  comment_item_html +='             <img class="organizer_ava" src="'+ userAvatar +'" alt="" referrerpolicy="no-referrer">'
+  comment_item_html +='         </div>'
+  comment_item_html +=''
+  comment_item_html +='         <div class="comment_infor">'
+  comment_item_html +='             <p class="comment_username">' + userName + ' - ' + userRoleName + '</p>'
+  comment_item_html +='             <p class="comment_content">'+content+'</p>'
+  comment_item_html +='             <p class="btn_show_reply d-inline-block" onclick="showReplyBox(this)">Trả lời</p>'
+  if (userId == app_userId) {
+    comment_item_html += '<button type="button" class="btn_delete_question" onclick="confirmDeleteComment(\''+commentID+'\')">Xóa</button>'
+  }
+  comment_item_html +='         </div>'
+  comment_item_html +='     </div>'
+  comment_item_html +=''
+  comment_item_html +='     <div class="reply_box" action ="replyObject">'
+  comment_item_html +='         <input class="input_reply" type="text" name="content" placeholder="Trả lời..." required/>'
+  comment_item_html +='         <input type="hidden" name="commentId" value = "'+commentID+'"/>'
+  comment_item_html +='         <input type="hidden" name="eventId" value = "'+eventId+'"/>'
+  comment_item_html +='         <button type="button" onclick="sendReply(\''+ commentID +'\', this)" class="btn_reply mybutton btn-blue">Gửi</button>'
+  comment_item_html +='         <button onclick="hideReplyBox(this)" class="btn_hide_reply mybutton btn-grey">Hủy</button>'
+  comment_item_html +='     </div>'
+  comment_item_html +=' </div>'
+
+      return comment_item_html;
+}
+
+function createReplyElement (userId, replyId, userAvatar, userName, content, userRoleName, commentId) {
+  var replyElementHtml = '';
+      replyElementHtml += '    <div id="'+ replyId +'" class="repComment2"> \n'
+      replyElementHtml += '        <div class="repComment2a"> \n'
+      replyElementHtml += '            <img src="'+ userAvatar +'" class="organizer_ava" alt="" referrerpolicy="no-referrer"> \n'
+      replyElementHtml += '        </div> \n'
+      replyElementHtml += '        <div class="repComment2b"> \n'
+      replyElementHtml += '            <p class="comment_username">' + userName + ' - ' + userRoleName + '</p> \n'
+      replyElementHtml += '            <p class="comment_content">'+ content + '</p> \n'
+      replyElementHtml += '        </div> \n'
+      if (userId == app_userId) {
+        replyElementHtml += '<button type="button" class="btn_delete_question" onclick="confirmDeleteReply(\''+replyId+'\',\''+commentId+'\')">Xóa</button>';
+      }
+      replyElementHtml += '    </div> \n'
+
+  return replyElementHtml;
+}
+
+function confirmDeleteComment (commentId) {
+  console.log(commentId);
+  if (window.confirm("Bạn muốn xóa bình luận?") == true) {
+    removeComment(commentId);
+  }
+}
+
+function confirmDeleteReply (replyId, commentId) {
+  if (window.confirm("Bạn muốn xóa bình luận?") == true) {
+    removeReply(replyId, commentId);
+  }
 }
 
 function startOnAddReplyListener () {
@@ -203,13 +234,14 @@ function startOnAddReplyListener () {
     }
 
     var commentItem = document.getElementById(commentID);
+    var replyContainer = commentItem.getElementsByClassName("reply_container")[0];
+    replyContainer.innerHTML = "";
     var replyList = commentContent['replyList'];
   
     if (replyList != null && replyList != undefined) {
 
       var replyObjectList = Object.keys(replyList).map(replyId => replyList[replyId])
   
-      var replyContainer = commentItem.getElementsByClassName("reply_container")[0];
       replyContainer.innerHTML = '';
       for (var replyObject of replyObjectList) {
         var isNotValidComment = replyObject['statusId'] == "DA";
@@ -221,27 +253,51 @@ function startOnAddReplyListener () {
         var userRoleName = replyObject['userRoleName'];
         var userAvatar = replyObject['userAvatar'];
         var content = replyObject['content'];
-        replyContainer.innerHTML += createComment(userName, userRoleName, userAvatar, content);
+        replyContainer.innerHTML += createReplyElement (userId, replyId, userAvatar, userName, content, userRoleName, commentID);
       }
 
     }
   });
-  
-  
-  function createComment (userName, userRoleName, userAvatar, content) {
-    var commentHtml = '';
-  
-    commentHtml += '    <div class="repComment2"> \n'
-    commentHtml += '        <div class="repComment2a"> \n'
-    commentHtml += '            <img src="'+ userAvatar +'" class="organizer_ava" alt="" referrerpolicy="no-referrer"> \n'
-    commentHtml += '        </div> \n'
-    commentHtml += '        <div class="repComment2b"> \n'
-    commentHtml += '            <p class="comment_username">' + userName + ' - ' + userRoleName + '</p> \n'
-    commentHtml += '            <p class="comment_content">'+ content +'</p> \n'
-    commentHtml += '        </div> \n'
-    commentHtml += '    </div> \n'
-  
-    return commentHtml;
-  }
 }
+
+
+function startOnRemoveCommentListener () { 
+
+  // ADD COMMENT INTO PAGE
+  cmtRef.orderByChild('eventId').equalTo(app_eventId).on("child_removed", function (snapshot) {
+    var commentID = snapshot.key; 
+
+    var commentItemList = document.getElementsByClassName("comment_item");
+
+    for (var item of commentItemList) {
+      console.log(item.id + " == " + commentID + ": " + (item.id == commentID));
+      if (item.id == commentID) {
+        item.parentNode.removeChild(item);
+        console.log("On Removed Success");
+        break;
+      }
+    }
+  });
+
+}
+
+function removeComment(commentId) {
+  console.log(commentId);
+  if (commentId != undefined) {
+    database.ref("comments/" + commentId).remove();
+  } 
+}
+
+function removeReply (replyId, commentId) {
+  console.log(replyId);
+  if (replyId != undefined) {
+    var link = "comments/" + commentId + "/replyList/" + replyId;
+    database.ref(link).remove();
+  } 
+}
+
+
+
+
+
 
