@@ -8,6 +8,7 @@ package fptu.swp.controller;
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
 import fptu.swp.entity.schedule.ScheduleDTO;
+import fptu.swp.entity.user.LecturerBriefInfoDTO;
 import fptu.swp.entity.user.UserDAO;
 import fptu.swp.entity.user.UserDTO;
 import fptu.swp.utils.firebaseBinding.firebase4j.demo.FirebaseBindingSingleton;
@@ -81,9 +82,11 @@ public class UpdateEventStatusServlet extends HttpServlet {
                     FirebaseBindingSingleton firebase = FirebaseBindingSingleton.getInstance(linkToFirebase);
 
                     List<Integer> listFollowers = null;
-
+                    List<LecturerBriefInfoDTO> listLec = null;
+                    
                     if (currentEventStatus == 1 || currentEventStatus == 2) {
                         listFollowers = userDao.getFollowersIdByEventId(eventId);
+                        listLec = userDao.getListLecturerBriefInfo(eventId);
                     }
 
                     if (currentEventStatus == 1) {
@@ -95,9 +98,20 @@ public class UpdateEventStatusServlet extends HttpServlet {
                                 s.setEventName(detail.getName());
                                 s.setOrganizerAvatar(detail.getOrganizerAvatar());
                                 s.setRunningTime(new Date());
-                                String message = "Sự kiện " + detail.getName() + " đã đóng đăng kí.";
+                                String message = "Sự kiện <strong>" + detail.getName() + "</strong> đã đóng đăng kí.";
                                 s.setMessage(message);
                                 s.setUserId(studentId);
+                                firebase.sendNotificationToUserID(s);
+                            }
+                            for (LecturerBriefInfoDTO lec : listLec) {
+                                ScheduleDTO s = new ScheduleDTO();
+                                s.setEventId(eventId);
+                                s.setEventName(detail.getName());
+                                s.setOrganizerAvatar(detail.getOrganizerAvatar());
+                                s.setRunningTime(new Date());
+                                String message = "Sự kiện <strong>" + detail.getName() + "</strong> đã đóng đăng kí.";
+                                s.setMessage(message);
+                                s.setUserId(lec.getId());
                                 firebase.sendNotificationToUserID(s);
                             }
                         }
@@ -111,11 +125,22 @@ public class UpdateEventStatusServlet extends HttpServlet {
                                 s.setEventName(detail.getName());
                                 s.setOrganizerAvatar(detail.getOrganizerAvatar());
                                 s.setRunningTime(new Date());
-                                String message = "Sự kiện " + detail.getName() + " đã mở đăng kí tiếp tục.";
+                                String message = "Sự kiện <strong>" + detail.getName() + "</strong> đã mở đăng kí tiếp tục.";
                                 s.setMessage(message);
                                 s.setUserId(studentId);
                                 firebase.sendNotificationToUserID(s);
                             }
+                            for (LecturerBriefInfoDTO lec : listLec) {
+                                ScheduleDTO s = new ScheduleDTO();
+                                s.setEventId(eventId);
+                                s.setEventName(detail.getName());
+                                s.setOrganizerAvatar(detail.getOrganizerAvatar());
+                                s.setRunningTime(new Date());
+                                String message = "Sự kiện <strong>" + detail.getName() + "</strong> đã mở đăng kí tiếp tục.";
+                                s.setMessage(message);
+                                s.setUserId(lec.getId());
+                                firebase.sendNotificationToUserID(s);
+                            }                          
                         }
                     }
                 }

@@ -166,10 +166,13 @@ public class AppendEventDetailServlet extends HttpServlet {
 
         } catch (NamingException ex) {
             LOGGER.error(ex);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!!!");
         } catch (SQLException ex) {
             LOGGER.error(ex);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!!!");
         } catch (ParseException ex) {
             LOGGER.error(ex);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!!!");
         } finally {
             LOGGER.info("Forward from AppendEventDetailServlet to " + url);
             response.sendRedirect(url);

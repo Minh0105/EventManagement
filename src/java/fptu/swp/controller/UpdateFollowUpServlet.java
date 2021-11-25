@@ -7,11 +7,21 @@ package fptu.swp.controller;
 
 import fptu.swp.entity.event.EventDAO;
 import fptu.swp.entity.event.EventDetailDTO;
+import fptu.swp.entity.schedule.ScheduleDTO;
+import fptu.swp.entity.user.LecturerBriefInfoDTO;
 import fptu.swp.entity.user.UserDAO;
 import fptu.swp.entity.user.UserDTO;
+import fptu.swp.utils.firebaseBinding.firebase4j.demo.FirebaseBindingSingleton;
+import fptu.swp.utils.firebaseBinding.firebase4j.error.FirebaseException;
+import fptu.swp.utils.firebaseBinding.firebase4j.error.JacksonUtilityException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -73,6 +83,33 @@ public class UpdateFollowUpServlet extends HttpServlet {
                     if (detail.getStatusId() == 1 || detail.getStatusId() == 2) {
                         detail.setFollowUp(followUp);
                         if (eventDao.updateEventFollowUp(detail)) {
+                            String linkToFirebase = "https://react-getting-started-30bc6-default-rtdb.firebaseio.com/";
+                            FirebaseBindingSingleton firebase = FirebaseBindingSingleton.getInstance(linkToFirebase);
+                            List<Integer> listFollowers = userDao.getFollowersIdByEventId(eventId);
+                            for (int studentId : listFollowers) {
+                                ScheduleDTO s = new ScheduleDTO();
+                                s.setEventId(eventId);
+                                s.setEventName(detail.getName());
+                                s.setOrganizerAvatar(detail.getOrganizerAvatar());
+                                s.setRunningTime(new Date());
+                                String message = "Tiến trình sự kiện " + detail.getName() + " đã được cập nhật.";
+                                s.setMessage(message);
+                                s.setUserId(studentId);
+                                System.out.println("Send noti of Update Event follow up with Id: " + eventId + "  is " + firebase.sendNotificationToUserID(s));
+                            }
+                            List<LecturerBriefInfoDTO> listLec = userDao.getListLecturerBriefInfo(eventId);
+                            for (LecturerBriefInfoDTO lec : listLec) {
+                                ScheduleDTO s = new ScheduleDTO();
+                                s.setEventId(eventId);
+                                s.setEventName(detail.getName());
+                                s.setOrganizerAvatar(detail.getOrganizerAvatar());
+                                s.setRunningTime(new Date());
+                                String message = "Tiến trình sự kiện " + detail.getName() + " đã được cập nhật.";
+                                s.setMessage(message);
+                                s.setUserId(lec.getId());
+                                System.out.println("Send noti of Update Event follow up with Id: " + eventId + "  is " + firebase.sendNotificationToUserID(s));
+                            }
+
                             url = VIEW_EVENTDETAIL_SERVLET_PATH;
                         }
 
@@ -82,6 +119,10 @@ public class UpdateFollowUpServlet extends HttpServlet {
 
         } catch (Exception ex) {
             LOGGER.error(ex);
+        } catch (FirebaseException ex) {
+            Logger.getLogger(UpdateFollowUpServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JacksonUtilityException ex) {
+            Logger.getLogger(UpdateFollowUpServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             RequestDispatcher dis = request.getRequestDispatcher(url);
             dis.forward(request, response);

@@ -123,15 +123,21 @@ public class ManageByAdminServlet extends HttpServlet {
                 request.setAttribute("LIST_QUESTION", listQuestion);
                 LOGGER.info("Request Attribute LIST_QUESTION: " + listQuestion);
                 url = ADMIN_PAGE_PATH;
+            }else{
+                request.getSession(true).setAttribute("errorMessage", "Hệ thống không nhận diện được loại quản lý bạn đang yêu cầu!");
             }
         } catch (JsonProcessingException ex) {
             LOGGER.error(ex);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!");
         } catch (FirebaseException ex) {
             LOGGER.error(ex);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!");
         } catch (UnsupportedEncodingException ex) {
             LOGGER.error(ex);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!");
         } catch (Exception ex) {
             LOGGER.error(ex);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!");
         } finally {
             RequestDispatcher dis = request.getRequestDispatcher(url);
             dis.forward(request, response);

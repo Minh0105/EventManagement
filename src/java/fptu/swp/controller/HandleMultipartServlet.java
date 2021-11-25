@@ -121,6 +121,7 @@ public class HandleMultipartServlet extends HttpServlet {
             boolean isMutiPart = ServletFileUpload.isMultipartContent(request);
             if (!isMutiPart) {
                 LOGGER.info("No File Found");
+                request.getSession(true).setAttribute("errorMessage", "Lỗi xử lý file!");
             } else {
                 LOGGER.info("Found a File");
                 FileItemFactory factory = new DiskFileItemFactory();
@@ -171,6 +172,7 @@ public class HandleMultipartServlet extends HttpServlet {
                             }
                         } catch (Exception ex) {
                             LOGGER.error(ex);
+                            request.getSession(true).setAttribute("errorMessage", "Something went wrong!");
                         }
                     }
                 }

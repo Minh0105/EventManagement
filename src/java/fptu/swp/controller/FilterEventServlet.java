@@ -85,6 +85,7 @@ static final Logger LOGGER = Logger.getLogger(FilterEventServlet.class);
             }
         }catch(Exception ex){
             LOGGER.error(ex);
+            request.getSession(true).setAttribute("errorMessage", "Lỗi xảy ra khi lưu thông tin sự kiện!");
         }finally {
             RequestDispatcher dis = request.getRequestDispatcher(url);
             dis.forward(request, response);

@@ -22,7 +22,9 @@ import javax.servlet.http.HttpSession;
  * @author triet
  */
 public class AskQuestionServlet extends HttpServlet {
+
     static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(AskQuestionServlet.class);
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -57,18 +59,20 @@ public class AskQuestionServlet extends HttpServlet {
             int userId = loginUser.getId();
             int eventId = Integer.parseInt(request.getParameter("eventId"));
             String content = request.getParameter("content");
-            if(eventDao.insertComment(eventId, userId, content, true)){
+            if (eventDao.insertComment(eventId, userId, content, true)) {
                 url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
-            url += "&lastAction=askQuestion";
+                url += "&lastAction=askQuestion";
+            }else{
+                request.getSession(true).setAttribute("errorMessage", "Gửi câu hỏi thất bại!!! Thử lại sau!");
             }
 
         } catch (Exception e) {
             LOGGER.error(e);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!!!");
         } finally {
             response.sendRedirect(url);
         }
     }
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

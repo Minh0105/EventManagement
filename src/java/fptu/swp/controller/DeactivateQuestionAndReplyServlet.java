@@ -118,10 +118,13 @@ public class DeactivateQuestionAndReplyServlet extends HttpServlet {
 
         } catch (Exception e) {
             LOGGER.error(e);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!!!");
         } catch (FirebaseException ex) {
             java.util.logging.Logger.getLogger(DeactivateQuestionAndReplyServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!!!");
         } catch (JacksonUtilityException ex) {
             java.util.logging.Logger.getLogger(DeactivateQuestionAndReplyServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!!!");
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

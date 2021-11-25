@@ -70,6 +70,7 @@ public class ChangePosterServlet extends HttpServlet {
             boolean isMutiPart = ServletFileUpload.isMultipartContent(request);
             if (!isMutiPart) {
                 LOGGER.info("No File Found");
+                request.getSession(true).setAttribute("errorMessage", "Không thể xử lý dữ liệu!");
             } else {
                 LOGGER.info("Found a File");
                 FileItemFactory factory = new DiskFileItemFactory();
@@ -100,16 +101,20 @@ public class ChangePosterServlet extends HttpServlet {
                             }
                         } catch (Exception ex) {
                             LOGGER.error(ex);
+                            request.getSession(true).setAttribute("errorMessage", "Something went wrong!!!");
                         }
                         if(posterStream != null && detail != null && userDao.getOrganizerIdByEventId(eventId) == ((UserDTO) request.getSession(false).getAttribute("USER")).getId()){
                             eventDao.updateEventPoster(eventId, posterStream);
                             url = VIEW_EVENTDETAIL_SERVLET_PATH+"?eventId=" + eventId;
+                        }else{
+                            request.getSession(true).setAttribute("errorMessage", "Không tìm thấy sự kiện hoặc bạn không phải là nhà tổ chức sự kiện của sự kiện này!");
                         }
                     }
                 }
             }
         }catch(Exception ex){
             LOGGER.error(ex);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!!!");
         }finally {
             LOGGER.info("Forward from ChangePosterServlet to" + url);
             RequestDispatcher rd = request.getRequestDispatcher(url);

@@ -6,6 +6,7 @@
 package fptu.swp.controller;
 
 import fptu.swp.entity.event.EventDAO;
+import fptu.swp.entity.event.EventDetailDTO;
 import fptu.swp.entity.user.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,7 +23,9 @@ import javax.servlet.http.HttpSession;
  * @author triet
  */
 public class JoinEventServlet extends HttpServlet {
-static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(JoinEventServlet.class);
+
+    static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(JoinEventServlet.class);
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,7 +38,7 @@ static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-                LOGGER.info("Begin JoinEventServlet");
+        LOGGER.info("Begin JoinEventServlet");
 
         // declare var
         HttpSession session;
@@ -57,21 +60,30 @@ static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(
             int studentId = loginUser.getId();
             int eventId = Integer.parseInt(request.getParameter("eventId"));
             boolean isJoining = Boolean.parseBoolean(request.getParameter("isJoining"));
-
-            if (isJoining) {     //Joining (have info in DB) => Unjoin
-                if (eventDao.setJoiningStatus(eventId, studentId, false)) {
-                    url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
-                }
-            } else {
-                if (eventDao.checkExistenceAndOrInsertStudentInEvent(eventId, studentId)) {
-                    if (eventDao.setJoiningStatus(eventId, studentId, true)) {
-                        url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
+            EventDetailDTO detail = eventDao.getEventDetail(eventId);
+            if (detail != null) {
+                if (detail.getStatusId() == 1) {
+                    if (isJoining) {     //Joining (have info in DB) => Unjoin
+                        if (eventDao.setJoiningStatus(eventId, studentId, false)) {
+                            url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
+                        }
+                    } else {
+                        if (eventDao.checkExistenceAndOrInsertStudentInEvent(eventId, studentId)) {
+                            if (eventDao.setJoiningStatus(eventId, studentId, true)) {
+                                url = VIEW_EVENTDETAIL_SERVLET + "?eventId=" + eventId;
+                            }
+                        }
                     }
+                }else{
+                    request.getSession(true).setAttribute("errorMessage", "Sự kiện này không còn nhận đăng ký tham gia!");
                 }
+            }else{
+                request.getSession(true).setAttribute("errorMessage", "Không tìm thấy sự kiện!");
             }
 
         } catch (Exception e) {
             LOGGER.error(e);
+            request.getSession(true).setAttribute("errorMessage", "Something went wrong!");
         } finally {
             response.sendRedirect(url);
         }
