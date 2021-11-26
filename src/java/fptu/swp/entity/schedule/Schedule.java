@@ -60,6 +60,7 @@ public class Schedule {
                         scheduler.schedule(()
                                 -> {
                             try {
+                                eventDao.updateEventStatus(s.getEventId(), 2);
                                 List<Integer> listUserId = userDao.getFollowersIdByEventId(s.getEventId());
                                 //System.out.println(s.getEventId() + " - User ID da quan tam: " + listUserId.toString());
                                 for (int userId : listUserId) {
