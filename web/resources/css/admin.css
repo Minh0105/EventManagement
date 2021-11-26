@@ -430,14 +430,14 @@ li .nav-link {
     background-color: limegreen;
 }
 
-.rec_red {
+.rec_grey {
     width: 100%;
     height: 2rem;
     border-radius: 0.5rem;
     background-color: rgb(198, 198, 198);
 }
 
-.rec_green {
+.rec_yellow {
     width: 100%;
     height: 2rem;
     border-radius: 0.5rem;
