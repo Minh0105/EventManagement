@@ -60,7 +60,7 @@ Manage all data of application, includes:
 
 ## Team member
 
-#### Tăng Tấn Tài (Team leader - Front end)
+#### Tăng Tấn Tài (Team leader & Front-end)
 - Github: https://github.com/tangtaidvlp
 - Email: tommytaitang@gmail.com
 - Phone: 0795 895 430
