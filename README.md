@@ -1,4 +1,4 @@
-![FEM Logo](https://github.com/SWP-Group1/EventManagement/blob/triet-ui-check/ProjectResource/resource_doc/image_EMS_logo.png?raw=true)
+![FEM Logo](https://github.com/SWP-Group1/EventManagement/blob/master/ProjectResource/resource_doc/image_EMS_logo.png?raw=true)
 
 ## FPT Event Management 
 FPT Event Management is a web application where Events Organizer can create and post their events on it and students can view all of them to follow, interact and register for participating, etc. 
@@ -93,29 +93,29 @@ Manage all data of application, includes:
 ## Web Application Appearance
 
 #### Login
-![Login screen](https://raw.githubusercontent.com/SWP-Group1/EventManagement/triet-ui-check/ProjectResource/resource_doc/login_screen.png)
+![Login screen](https://raw.githubusercontent.com/SWP-Group1/EventManagement/master/ProjectResource/resource_doc/login_screen.png)
 
 _________________
 
 #### News feed
-![News feed](https://github.com/SWP-Group1/EventManagement/blob/triet-ui-check/ProjectResource/resource_doc/new_feed.png?raw=true)
+![News feed](https://github.com/SWP-Group1/EventManagement/blob/master/ProjectResource/resource_doc/new_feed.png?raw=true)
 
 _________________
 
 #### Event detail
-![Event detail (Poster part)](https://github.com/SWP-Group1/EventManagement/blob/triet-ui-check/ProjectResource/resource_doc/event_detail.png?raw=true)
+![Event detail (Poster part)](https://github.com/SWP-Group1/EventManagement/blob/master/ProjectResource/resource_doc/event_detail.png?raw=true)
 
 _________________
 
 #### Create event (Choose location and date)
-![Choose location and date](https://github.com/SWP-Group1/EventManagement/blob/triet-ui-check/ProjectResource/resource_doc/choose_date_and_loc.png?raw=true)
+![Choose location and date](https://github.com/SWP-Group1/EventManagement/blob/master/ProjectResource/resource_doc/choose_date_and_loc.png?raw=true)
 
 
 #### Create event (Fill event detail)
-![Fill event detail](https://github.com/SWP-Group1/EventManagement/blob/triet-ui-check/ProjectResource/resource_doc/append_event_detail.png?raw=true)
+![Fill event detail](https://github.com/SWP-Group1/EventManagement/blob/master/ProjectResource/resource_doc/append_event_detail.png?raw=true)
 
 #### Profile
-![Profile](https://github.com/SWP-Group1/EventManagement/blob/triet-ui-check/ProjectResource/resource_doc/profile.png?raw=true)
+![Profile](https://github.com/SWP-Group1/EventManagement/blob/master/ProjectResource/resource_doc/profile.png?raw=true)
 
 
 **NOTE**
